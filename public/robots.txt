@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://hackerstats.io/sitemap.xml
