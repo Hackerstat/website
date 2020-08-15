@@ -1,12 +1,18 @@
 import * as React from 'react';
 import { AppProps } from 'next/app';
-import { ThemeProvider, CSSReset } from '@chakra-ui/core';
+import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
+import defaultTheme from '../themes/default';
+import Layout from '../Components/Layout';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={defaultTheme}>
       <CSSReset />
-      <Component {...pageProps} />
+      <ColorModeProvider>
+        <Layout title={'Hackerstats'} description={'A better profile'}>
+          <Component {...pageProps} />
+        </Layout>
+      </ColorModeProvider>
     </ThemeProvider>
   );
 };
