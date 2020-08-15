@@ -135,3 +135,6 @@ sketch
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+# Our Sitemap is automatically generated
+public/sitemap.xml
