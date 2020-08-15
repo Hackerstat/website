@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Stack, Box } from '@chakra-ui/core';
+import { Stack } from '@chakra-ui/core';
 import { CopyrightNotice } from './Copyright-Notice';
 import Link from '../Link';
 import dynamic from 'next/dynamic';
