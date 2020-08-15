@@ -1,5 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import Head from 'next/head';
+import Footer from './Footer';
 
 interface LayoutProps {
   children: ReactNode;
@@ -25,6 +26,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children, title, description }
     >
       {children}
     </div>
+    <Footer />
   </div>
 );
 
