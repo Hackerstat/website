@@ -7,8 +7,8 @@ import Layout from '../Components/Layout';
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <CSSReset />
       <ColorModeProvider>
+        <CSSReset />
         <Layout title={'Hackerstats'} description={'A better profile'}>
           <Component {...pageProps} />
         </Layout>
