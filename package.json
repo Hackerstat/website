@@ -23,6 +23,7 @@
     "fetch": "^1.1.0",
     "mongodb": "^3.6.0",
     "next": "^9.4.4",
+    "npm-user-packages": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
