@@ -17,6 +17,7 @@
     "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@louisiv/react-contribution-graph": "^0.1.0",
     "deepmerge": "^4.2.2",
     "emotion-theming": "^10.0.27",
     "next": "^9.4.4",
