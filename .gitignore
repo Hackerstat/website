@@ -138,3 +138,6 @@ sketch
 
 # Our Sitemap is automatically generated
 public/sitemap.xml
+
+
+.npmrc
