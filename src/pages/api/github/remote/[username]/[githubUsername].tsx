@@ -17,6 +17,7 @@ const createQuery = (username) => {
                 name
                 description
                 pushedAt
+                forkCount
                 stargazers {
                   totalCount
                 }
