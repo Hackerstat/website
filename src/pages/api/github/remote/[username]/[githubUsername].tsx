@@ -9,11 +9,17 @@ const createQuery = (username) => {
   return `query {
           user(login: "${username}") {
             login
+            followers {
+              totalCount
+            }
             repositories(first: 10){
     	        nodes {
                 name
                 description
                 pushedAt
+                stargazers {
+                  totalCount
+                }
                 languages(first: 5) {
                   nodes {
                     name,
