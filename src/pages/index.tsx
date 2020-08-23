@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Stack, Box, Text, Flex, Image, SimpleGrid, Avatar, Button } from '@chakra-ui/core';
+import { Heading, Stack, Box, Text, Flex, Avatar, Button } from '@chakra-ui/core';
 
 const IndexPage: NextPage = () => (
   <PageBase>
