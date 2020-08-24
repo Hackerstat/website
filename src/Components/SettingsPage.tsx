@@ -3,57 +3,65 @@ import { Box, Flex, Stack, Heading, Text } from '@chakra-ui/core';
 
 const SettingsBase: FunctionComponent = ({ children }) => (
   <Box p={3}>
-    <Flex flexDirection={'column'} width={'100%'} justifyContent={'space-between'} alignItems={'left'}>
+    <Flex flexDirection={'row'} width={'100%'} justifyContent={'space-between'} alignItems={'left'}>
       <Heading color={'primary-bg'}>Profile Settings</Heading>
+      <Heading color={'primary-bg'}>User-Logo</Heading>
     </Flex>
     <Flex
-      mt={'100px'}
       width={'100%'}
       flexDirection={'row'}
-      justifyContent={'space-between'}
+      justifyContent={'space-evenly'}
       maxW={'xlg'}
       minW={'md'}
       minH={'lg'}
+      mt={'100px'}
     >
-      <Box backgroundColor={'black'} borderColor={'red'} borderRadius={'.5em'} maxH={'sm'} maxW={'sm'} minW={'sm'}>
+      {/* <Flex flexDirection={'column'}> */}
+      <Box borderColor={'red'} borderRadius={'.5em'} maxH={'sm'} maxW={'20%'} minW={'20%'}>
+        <Heading>Settings</Heading>
         <Flex
+          mt={'.3em'}
+          backgroundColor={'black'}
           flexDirection={'column'}
-          p={'1.0em'}
           maxW={'100%'}
           minW={'100%'}
           minH={'100%'}
           alignItems={'center'}
-          justifyContent={'space-evenly'}
+          justifyContent={'center'}
           alignContent={'center'}
+          borderRadius={'.5em'}
         >
-          <Stack spacing={20}>
-            <Text>Stuff1</Text>
-          </Stack>
-          <Stack spacing={8}>
-            <Text>Stuff2</Text>
-          </Stack>
-          <Stack spacing={8}>
-            <Text>Stuff3</Text>
-          </Stack>
-          <Stack spacing={8}>
-            <Text>Stuff3</Text>
-          </Stack>
-          <Stack spacing={8}>
-            <Text>Stuff3</Text>
-          </Stack>
-          <Stack spacing={8}>
-            <Text>Stuff3</Text>
-          </Stack>
+          <Box py={'1.5em'}>
+            <Text>My Profile Information</Text>
+          </Box>
+          <Box py={'1.5em'} backgroundColor={'white'} minH={'100%'} minW={'100%'} textAlign={'center'}>
+            <Text color={'black'}>My Work Experience</Text>
+          </Box>
+          <Box py={'1.5em'}>
+            <Text>Messages</Text>
+          </Box>
+          <Box py={'1.5em'}>
+            <Text>Security</Text>
+          </Box>
+          <Box py={'1.5em'}>
+            <Text>Integrations</Text>
+          </Box>
+          <Box py={'1.75em'}>
+            <Text>Delete My Account</Text>
+          </Box>
         </Flex>
       </Box>
-      <Flex minW={'md'} maxW={'xlg'} borderColor={'red'} ml={'2em'}>
-        <Box backgroundColor={'black'} p={'.5em'} borderRadius={'.5em'}>
-          <Text>
-            adsdsaads dasasddsa dasdas dsa dsa ads ads dsa sad dsa sad ads dsa dsa dassaddsa sad sad das asd asd asd ads
-            dsadsa das das asd asd dsa asd das sad dsa sad das{' '}
-          </Text>
-          {/* {children} */}
-        </Box>
+      <Flex minW={'60%'} maxW={'60%'} borderColor={'red'} ml={'2em'} flexDirection={'column'}>
+        <Heading>My Work Experience</Heading>
+        <Flex minW={'100%'} maxW={'100%'} borderColor={'red'} mt={'.3em'}>
+          <Box backgroundColor={'black'} p={'.5em'} borderRadius={'.5em'}>
+            <Text>
+              adsdsaads dasasddsa dasdas dsa dsa ads ads dsa sad dsa sad ads dsa dsa dassaddsa sad sad das asd asd asd
+              ads dsadsa das das asd asd dsa asd das sad dsa sad das{' '}
+            </Text>
+            {children}
+          </Box>
+        </Flex>
       </Flex>
     </Flex>
   </Box>
