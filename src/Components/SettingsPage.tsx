@@ -65,7 +65,7 @@ const SettingsBase = ({ children, title }): JSX.Element => (
         </Flex>
       </Box>
       <Flex minW={'xlg'} maxW={'xlg'} borderColor={'red'} flexDirection={'column'}>
-        <Heading>{title}</Heading>
+        <Heading ml={'.7em'}>{title}</Heading>
         <Flex minW={'100%'} maxW={'100%'} borderColor={'red'} mt={'.3em'}>
           <Box backgroundColor={'black'} p={'.5em'} borderRadius={'.5em'}>
             {children}

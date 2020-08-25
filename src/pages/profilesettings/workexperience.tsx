@@ -47,7 +47,7 @@ function WorkExperienceForm() {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box mt={'3em'} minW={'50%'} maxW={'50%'}>
+          <Box p={2} mt={'3em'} minW={'50%'} maxW={'50%'}>
             <Text>Work Experience #1</Text>
             <Field name="name_of_WE1" validate={validateName}>
               {({ field, form }) => (
@@ -182,10 +182,11 @@ function WorkExperienceForm() {
               </Box>
             </Flex>
           </Box>
-
-          <Button mt={'2em'} variantColor="teal" isLoading={props.isSubmitting} type="submit">
-            Submit
-          </Button>
+          <Flex flexDirection={'row'} justifyContent={'flex-end'}>
+            <Button textAlign={'right'} mt={'2em'} variantColor="teal" isLoading={props.isSubmitting} type="submit">
+              Submit
+            </Button>
+          </Flex>
         </form>
       )}
     </Formik>
@@ -194,8 +195,10 @@ function WorkExperienceForm() {
 
 const WorkExperiencePage: NextPage = () => (
   <SettingsPage title="My Work Experience">
-    <Text>Enter past Working Positions that you have held including position, time-length, and company name.</Text>
-    <WorkExperienceForm />
+    <Box p={5}>
+      <Text>Enter past Working Positions that you have held including position, time-length, and company name.</Text>
+      <WorkExperienceForm />
+    </Box>
   </SettingsPage>
 );
 
