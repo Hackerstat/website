@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
     "fetch": "^1.1.0",
+    "formik": "^2.1.5",
     "mongodb": "^3.6.0",
     "next": "^9.4.4",
     "npm-user-packages": "^3.0.0",
