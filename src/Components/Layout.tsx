@@ -1,6 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import Head from 'next/head';
 import Footer from './Footer';
+import Navbar from './NavBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,25 +10,30 @@ interface LayoutProps {
 }
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, title, description }) => (
-  <div>
-    <Head>
-      {/* Primary Meta Tags */}
-      <title>{title}</title>
-      <meta name="title" content={title} />
-      <meta name="description" content={description} />
-    </Head>
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-      }}
-    >
-      {children}
+  <>
+    <Navbar />
+
+    <div>
+      <Head>
+        {/* Primary Meta Tags */}
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
+      </Head>
+
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        {children}
+      </div>
+      <Footer />
     </div>
-    <Footer />
-  </div>
+  </>
 );
 
 export default Layout;
