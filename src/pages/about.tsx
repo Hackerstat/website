@@ -5,7 +5,7 @@ import { Heading } from '@chakra-ui/core';
 
 const AboutPage: NextPage = () => (
   <PageBase>
-    <Heading>About Page</Heading>
+    <Heading color={'primary-bg'}>About Page</Heading>
   </PageBase>
 );
 
