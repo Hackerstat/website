@@ -1,7 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Flex, Stack, Heading, Text } from '@chakra-ui/core';
 
-const SettingsBase: FunctionComponent = ({ children }) => (
+const SelectedOne = ({ text }) => {
+  return (
+    <Box py={'1.5em'} backgroundColor={'white'} minH={'100%'} minW={'100%'} textAlign={'center'} borderRadius={'.3em'}>
+      <Text color={'text-secondary'}>{text}</Text>
+    </Box>
+  );
+};
+
+const NotSelectedOne = ({ text }) => {
+  return (
+    <Box py={'1.5em'}>
+      <Text>{text}</Text>
+    </Box>
+  );
+};
+
+const CheckIfSelected = ({ givenText, titleOfPage }) => {
+  if (titleOfPage === givenText) {
+    return <SelectedOne text={titleOfPage} />;
+  } else {
+    return <NotSelectedOne text={titleOfPage} />;
+  }
+};
+
+const SettingsBase = ({ children, title }): JSX.Element => (
   <Box p={3}>
     <Flex flexDirection={'row'} width={'100%'} justifyContent={'space-between'} alignItems={'left'} flexWrap={'wrap'}>
       <Heading color={'primary-bg'}>Profile Settings</Heading>
@@ -32,28 +56,16 @@ const SettingsBase: FunctionComponent = ({ children }) => (
           alignContent={'center'}
           borderRadius={'.5em'}
         >
-          <Box py={'1.5em'}>
-            <Text>My Profile Information</Text>
-          </Box>
-          <Box py={'1.5em'} backgroundColor={'white'} minH={'100%'} minW={'100%'} textAlign={'center'}>
-            <Text color={'black'}>My Work Experience</Text>
-          </Box>
-          <Box py={'1.5em'}>
-            <Text>Messages</Text>
-          </Box>
-          <Box py={'1.5em'}>
-            <Text>Security</Text>
-          </Box>
-          <Box py={'1.5em'}>
-            <Text>Integrations</Text>
-          </Box>
-          <Box py={'1.75em'}>
-            <Text>Delete My Account</Text>
-          </Box>
+          {<CheckIfSelected titleOfPage={'My Profile Information'} givenText={title} />}
+          {<CheckIfSelected titleOfPage={'My Work Experience'} givenText={title} />}
+          {<CheckIfSelected titleOfPage={'Messages'} givenText={title} />}
+          {<CheckIfSelected titleOfPage={'Security'} givenText={title} />}
+          {<CheckIfSelected titleOfPage={'Integrations'} givenText={title} />}
+          {<CheckIfSelected titleOfPage={'Delete My Account'} givenText={title} />}
         </Flex>
       </Box>
       <Flex minW={'xlg'} maxW={'xlg'} borderColor={'red'} flexDirection={'column'}>
-        <Heading>My Work Experience</Heading>
+        <Heading>{title}</Heading>
         <Flex minW={'100%'} maxW={'100%'} borderColor={'red'} mt={'.3em'}>
           <Box backgroundColor={'black'} p={'.5em'} borderRadius={'.5em'}>
             {children}

@@ -193,7 +193,7 @@ function WorkExperienceForm() {
 }
 
 const WorkExperiencePage: NextPage = () => (
-  <SettingsPage>
+  <SettingsPage title="My Work Experience">
     <Text>Enter past Working Positions that you have held including position, time-length, and company name.</Text>
     <WorkExperienceForm />
   </SettingsPage>
