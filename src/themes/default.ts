@@ -27,6 +27,8 @@ const defaultTheme = {
       800: '#282626',
       900: '#150a0d',
     },
+    lightMenuBackground: 'gray.200',
+    darkMenuBackground: 'gray.700',
   },
   radii: {
     none: '0',
