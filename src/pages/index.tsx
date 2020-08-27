@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
 import { Heading, Stack, Box, Text, Flex, Avatar, Button } from '@chakra-ui/core';
-import WakaTime from '../Components/Dashboard/WakaTime/index';
+// import WakaTime from '../Components/Dashboard/WakaTime/index';
 
 const IndexPage: NextPage = () => (
   <PageBase>
