@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { useColorMode, Box, PseudoBox, BoxProps } from '@chakra-ui/core';
+import { useColorMode, PseudoBox, BoxProps } from '@chakra-ui/core';
 
 type CardProps = BoxProps;
 

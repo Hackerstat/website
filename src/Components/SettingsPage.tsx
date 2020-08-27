@@ -16,6 +16,10 @@ const sidebarMenuItems: Array<TSidebarMenuItem> = [
     name: 'Work History',
   },
   {
+    href: '/settings/integrations',
+    name: 'Integrations',
+  },
+  {
     href: '#',
     name: 'Delete Account',
   },
@@ -34,8 +38,13 @@ const SettingsBase: FunctionComponent = ({ children }): JSX.Element => {
 
   return (
     <PageBase>
-      <Flex width={'100%'} flexDirection={'row'} flexWrap={'wrap'} mt={[2, 2, 2, 16]} justifyContent={'space-between'}>
-        <Flex flexGrow={1} justifyContent={'flex-start'} mb={8}>
+      <Flex
+        width={'100%'}
+        flexDirection={['column', 'column', 'column', 'row']}
+        mt={[2, 2, 2, 16]}
+        justifyContent={'space-between'}
+      >
+        <Flex flexGrow={1} justifyContent={'flex-start'} mb={8} width={'25%'}>
           <SidebarMenu title={'Settings'} items={sidebarMenuItems} selectedItem={router.pathname} />
         </Flex>
         <Flex flexGrow={4}>{children}</Flex>

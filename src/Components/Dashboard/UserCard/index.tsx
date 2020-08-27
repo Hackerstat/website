@@ -28,7 +28,7 @@ const UserCard = ({ name = 'Louis Lombardo', username = 'Louisiv', photo, status
 
   return (
     <Skeleton isLoaded={loaded} display={!loaded && isHidden ? 'none' : 'unset'}>
-      <Card height={['120px', '240px']} {...rest}>
+      <Card height={'240px'} {...rest}>
         {!!status && <UserBadge>{status}</UserBadge>}
         <Flex alignItems={'center'} flexDirection={'column'} justifyContent={'center'} height={'100%'}>
           <Avatar mt={4} name={name} size={'2xl'} src={photo} onLoad={onLoad} />
@@ -38,7 +38,7 @@ const UserCard = ({ name = 'Louis Lombardo', username = 'Louisiv', photo, status
             fontWeight={'bold'}
             letterSpacing={'wide'}
             color={'gray.500'}
-            fontSize={'sm'}
+            fontSize={['xs', 'sm']}
           >
             @{username}
           </Text>
@@ -48,7 +48,7 @@ const UserCard = ({ name = 'Louis Lombardo', username = 'Louisiv', photo, status
             fontWeight={'bold'}
             letterSpacing={'wide'}
             color={color[colorMode]}
-            fontSize={'lg'}
+            fontSize={['sm', 'md', 'lg']}
           >
             {name}
           </Text>
