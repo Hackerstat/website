@@ -13,8 +13,8 @@ const UserBubble = () => {
       <MenuButton>
         <Skeleton isLoaded={!loading}>
           <Flex flexDirection={'row'} alignItems={'center'}>
-            <Avatar src={user?.picture} />
-            <Icon ml={1} name="triangle-down" color="gray.500" />
+            <Avatar size={'sm'} src={user?.picture} />
+            <Icon ml={1} fontSize={'xs'} name="triangle-down" color="gray.500" />
           </Flex>
         </Skeleton>
       </MenuButton>
