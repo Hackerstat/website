@@ -38,6 +38,17 @@ const UserProfilePage: NextPage = () => {
         >
           <ContributionGraph gitHubUsername={user as string} gitlabUsername={gitLabUsername as string} />
         </PseudoBox>
+        <figure>
+          <embed src="https://wakatime.com/share/@louisIV/278e8e3f-528a-4e0f-8f5b-0b842e86100b.svg"></embed>
+        </figure>
+        <a
+          className="twitter-timeline"
+          href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw"
+          style={{ height: '100px' }}
+        >
+          Tweets by TwitterDev
+        </a>
+        <script async src="https://platform.twitter.com/widgets.js"></script>
       </Stack>
     </PageBase>
   );

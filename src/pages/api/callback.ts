@@ -6,9 +6,9 @@ export default async function callback(req, res) {
       onUserLoaded: async (req, res, session, state) => {
         return {
           ...session,
+          ...state,
           user: {
             ...session.user,
-            username: 'Username from the database',
           },
         };
       },
