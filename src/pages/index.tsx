@@ -6,11 +6,10 @@ import { Heading, Stack, Box, Text, Flex, Avatar, Button } from '@chakra-ui/core
 
 const IndexPage: NextPage = () => (
   <PageBase>
-    <Heading>Hello World</Heading>
     <Stack shouldWrapChildren alignItems={'center'} spacing={32}>
       {/* INTEGRATIONS */}
       <Flex flexWrap={'wrap-reverse'}>
-        <Box width={'100%'} minW={'md'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'} mr={3}>
+        <Box width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'} mr={3}>
           <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
             Show Off More than Just Your GitHub
           </Heading>
@@ -59,7 +58,7 @@ const IndexPage: NextPage = () => (
             <Avatar size={'xl'} />
           </Stack>
         </Flex>
-        <Box width={'100%'} minW={'md'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'}>
+        <Box width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'}>
           <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
             Find Your Community
           </Heading>

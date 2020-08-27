@@ -1,5 +1,4 @@
 import React from 'react';
-import { MainLayout } from '../Components/layouts/MainLayout';
 import { useFetchUser } from '../utils/user';
 import Router from 'next/router';
 
