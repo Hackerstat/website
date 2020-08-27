@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Flex, Stack } from '@chakra-ui/core';
 
-const PageBase: FunctionComponent = ({ children }) => (
+const PageBase: FunctionComponent = ({ children, ...rest }) => (
   <Box p={3}>
     <Flex flexDirection={'column'} width={'100%'} justifyContent={'space-between'} alignItems={'center'}>
       <Stack maxW={'120rem'} width={'100%'} shouldWrapChildren spacing={3}>

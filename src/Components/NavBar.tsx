@@ -1,7 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import { Stack, Text, Flex, Heading, Box, Button } from '@chakra-ui/core';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { Stack, Text, Flex, Heading, Box, Button, Image, useColorMode } from '@chakra-ui/core';
 import { useFetchUser } from '../utils/user';
 import Link from './Link';
+import Logo from './Logo';
+import UserBubble from './UserBubble';
 
 const MenuItems = ({ children, href }) => (
   <Link href={href}>
@@ -11,26 +13,39 @@ const MenuItems = ({ children, href }) => (
   </Link>
 );
 
+const backgroundColors = { light: 'whiteAlpha.100', dark: 'gray.700' };
+const textColors = { light: 'black', dark: 'white' };
+
 const Navbar: FunctionComponent = () => {
   const { user, loading } = useFetchUser();
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
 
+  const { colorMode } = useColorMode();
+
+  const [backgroundColor, setBackgroundColor] = useState<string>(backgroundColors['dark']);
+  const [textColor, setTextColor] = useState(textColors['dark']);
+
+  useEffect(() => {
+    setBackgroundColor(backgroundColors[colorMode]);
+    setTextColor(textColors[colorMode]);
+  }, [colorMode]);
+
   return (
     <Flex
       as="nav"
       align="center"
-      bg={['salmon', 'teal.500', 'gray.300']}
+      bg={'gray.900'}
       justify={'space-between'}
       wrap={'wrap'}
       padding={'1.5rem'}
       color={'white'}
+      shadow={'lg'}
+      backgroundColor={backgroundColor}
     >
       <Flex align="center" mr={5}>
         <Link href={'/'}>
-          <Heading as="h1" size="lg">
-            HackerStats
-          </Heading>
+          <Logo main={'white'} height={['30px', '30px', '40xp', '40px']} />
         </Link>
       </Flex>
 
@@ -47,6 +62,11 @@ const Navbar: FunctionComponent = () => {
         flexDirection={['column', 'column', 'row']}
         alignItems="center"
         flexGrow={1}
+        color={textColor}
+        fontFamily={'monospace'}
+        fontSize={'lg'}
+        fontWeight={'bold'}
+        letterSpacing={'wide'}
       >
         {user && !loading
           ? [
@@ -65,7 +85,9 @@ const Navbar: FunctionComponent = () => {
           <Link href="/api/login">
             <Text>Login</Text>
           </Link>
-        ) : null}
+        ) : (
+          <UserBubble />
+        )}
       </Box>
 
       {/* <Box display={{ sm: show ? 'block' : 'none', md: 'block' }} mt={{ base: 4, md: 0 }}>

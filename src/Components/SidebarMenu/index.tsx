@@ -99,7 +99,7 @@ const SidebarMenuLinks: FunctionComponent<SidebarMenuLinksProps> = ({
     {items.map(({ href, name, ...additionalMenuItemProps }) => {
       return (
         <SidebarMenuItem
-          selected={name === selectedItem}
+          selected={href === selectedItem}
           key={name}
           href={href}
           name={name}

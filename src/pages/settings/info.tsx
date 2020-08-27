@@ -2,23 +2,21 @@ import * as React from '../../../node_modules/react';
 import { NextPage } from '../../../node_modules/next';
 import SettingsPage from '../../Components/SettingsPage';
 import {
-  Text,
   FormControl,
   FormLabel,
   Input,
   FormErrorMessage,
-  Button,
-  Box,
   Flex,
-  Textarea,
   Stack,
-  SimpleGrid,
+  Button,
+  Textarea,
 } from '../../../node_modules/@chakra-ui/core';
 import { Formik, Field } from '../../../node_modules/formik';
 import { useEffect, useState } from 'react';
 import Loader from '../../Components/Loader';
 
 const FormWidth = ['min(800px, 90vw)', 'sm', 'xs', 'md'];
+const DoubleFormWidth = ['100%'];
 
 const ProfileInfo = () => {
   function validateName(value) {
@@ -37,31 +35,24 @@ const ProfileInfo = () => {
   }
 
   return (
-    <Formik
-      initialValues={{}}
-      onSubmit={async (values, actions) => {
-        try {
-          await fetch('/api/profilesettings/chris/profileinfo', {
-            method: 'post',
-            body: JSON.stringify(values),
-          });
-        } catch (e) {
-          alert('Could not save work experience. Please send again.');
-        }
-        actions.setSubmitting(false);
-      }}
-    >
-      {(props) => (
-        <form onSubmit={props.handleSubmit}>
-          <Flex flexDirection={'column'}>
-            <Stack
-              isInline
-              shouldWrapChildren
-              spacing={2}
-              flexWrap={'wrap'}
-              width={'100%'}
-              justifyContent={'flex-start'}
-            >
+    <Flex flexDirection={'column'}>
+      <Formik
+        initialValues={{}}
+        onSubmit={async (values, actions) => {
+          try {
+            await fetch('/api/profilesettings/chris/profileinfo', {
+              method: 'post',
+              body: JSON.stringify(values),
+            });
+          } catch (e) {
+            alert('Could not save work experience. Please send again.');
+          }
+          actions.setSubmitting(false);
+        }}
+      >
+        {(props) => (
+          <form onSubmit={props.handleSubmit} style={{ width: '100%' }}>
+            <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'}>
               <Field name="userName" validate={validateName}>
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.userName}>
@@ -81,15 +72,7 @@ const ProfileInfo = () => {
                 )}
               </Field>
             </Stack>
-            <Stack
-              mt={2}
-              isInline
-              shouldWrapChildren
-              spacing={2}
-              flexWrap={'wrap'}
-              width={'100%'}
-              justifyContent={'flex-start'}
-            >
+            <Stack mt={2} isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
               <Field name="website" validate={validateName}>
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.website}>
@@ -110,19 +93,17 @@ const ProfileInfo = () => {
                 )}
               </Field>
             </Stack>
-          </Flex>
-          <Flex flexDirection={'column'}>
-            <Box mt={4}>
+            <Stack mt={2} spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'} width={'100%'}>
               <Field name="Bio">
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.Bio}>
                     <FormLabel htmlFor="Bio">Bio</FormLabel>
-                    <Textarea {...field} id="Bio" placeholder="I did ..." type="text" minW={'100%'} />
+                    <Textarea {...field} id="Bio" placeholder="I did ..." type="text" minW={DoubleFormWidth} />
                     <FormErrorMessage>{form.errors.Bio}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-            </Box>
+            </Stack>
             <Stack
               mt={4}
               isInline
@@ -151,15 +132,15 @@ const ProfileInfo = () => {
                 )}
               </Field>
             </Stack>
-            <Flex flexDirection={'row'} justifyContent={'flex-end'}>
+            <Flex flexDirection={'row'} justifyContent={'flex-start'}>
               <Button textAlign={'right'} mt={'2em'} variantColor="teal" isLoading={props.isSubmitting} type="submit">
                 Submit
               </Button>
             </Flex>
-          </Flex>
-        </form>
-      )}
-    </Formik>
+          </form>
+        )}
+      </Formik>
+    </Flex>
   );
 };
 
@@ -170,7 +151,7 @@ const ProfileInfoPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage title="My Profile Information">{mounted ? <ProfileInfo /> : <Loader />}</SettingsPage>;
+  return <SettingsPage>{mounted ? <ProfileInfo /> : <Loader />}</SettingsPage>;
 };
 
 export default ProfileInfoPage;

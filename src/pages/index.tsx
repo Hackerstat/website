@@ -5,7 +5,6 @@ import { Heading, Stack, Box, Text, Flex, Avatar, Button } from '@chakra-ui/core
 
 const IndexPage: NextPage = () => (
   <PageBase>
-    <Heading>Hello World</Heading>
     <Stack shouldWrapChildren alignItems={'center'} spacing={32}>
       {/* INTEGRATIONS */}
       <Flex flexWrap={'wrap-reverse'}>
