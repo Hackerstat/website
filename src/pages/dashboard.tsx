@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { SimpleGrid, Box, Flex, Text, Heading } from '@chakra-ui/core';
+import { SimpleGrid, Box, Flex, Text, Heading, Grid } from '@chakra-ui/core';
 import UserCard from '../Components/Dashboard/UserCard';
 
 import axios from 'axios';
@@ -43,7 +43,11 @@ const Dashboard: NextPage = () => {
             </Flex>
           </Card>
         </Flex>
-        <SimpleGrid minW={'lg'} minChildWidth="240px" spacing={3} flex={1} flexWrap={'wrap'}>
+        <Grid
+          flex={1}
+          gridTemplateColumns={['repeat(auto-fit, 50%)', 'repeat(auto-fit, 220px)']}
+          justifyItems={'stretch'}
+        >
           {users.map((user) => {
             return (
               <UserCard
@@ -58,7 +62,7 @@ const Dashboard: NextPage = () => {
               />
             );
           })}
-        </SimpleGrid>
+        </Grid>
       </Flex>
     </PageBase>
   );

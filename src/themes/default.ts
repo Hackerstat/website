@@ -13,7 +13,7 @@ const defaultTheme = {
       600: '#595959',
       700: '#404040',
       800: '#262626',
-      900: '#0d0d0d',
+      900: '#0f0f0f',
     },
     gray: {
       50: '#fbf0f2',
@@ -27,6 +27,8 @@ const defaultTheme = {
       800: '#282626',
       900: '#150a0d',
     },
+    lightMenuBackground: 'gray.200',
+    darkMenuBackground: 'gray.700',
   },
   radii: {
     none: '0',
