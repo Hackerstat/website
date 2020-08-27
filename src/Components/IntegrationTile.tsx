@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Box, Flex, Text, PseudoBox, useColorMode } from '@chakra-ui/core';
+import { Flex, Text, useColorMode } from '@chakra-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from './Card';
 

@@ -4,7 +4,7 @@ export default initAuth0({
   domain: process.env.domain,
   clientId: process.env.clientId,
   clientSecret: process.env.clientSecret,
-  scope: 'openid profile',
+  scope: 'openid profile username',
   redirectUri: process.env.redirectUri,
   postLogoutRedirectUri: process.env.postLogoutRedirectUri,
   session: {
