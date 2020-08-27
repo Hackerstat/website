@@ -14,18 +14,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
     const npmInfo = await client.db('Atlas').collection('userProfiles').findOne({ username: username });
 
-    client
-      .db('Atlas')
-      .collection('userProfiles')
-      .updateOne(
-        { username: username },
-        {
-          $setOnInsert: { username: username },
-          $set: { npmUsername: npmUsername, packages: packageNames },
-        },
-        { useUnifiedTopology: true, upsert: true },
-      );
-
     console.log(npmInfo);
     // perform actions on the collection object
     client.close();

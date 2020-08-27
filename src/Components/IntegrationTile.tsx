@@ -2,10 +2,16 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Flex, Text, useColorMode } from '@chakra-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from './Card';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const colors = { light: 'gray.800', dark: 'white' };
 
-const IntegrationTile: FunctionComponent = ({ icon, name }) => {
+interface IntegrationTileProps {
+  icon: IconProp;
+  name: string;
+}
+
+const IntegrationTile: FunctionComponent<IntegrationTileProps> = ({ icon, name }) => {
   const { colorMode } = useColorMode();
 
   const [color, setColor] = useState(colors[colorMode]);
