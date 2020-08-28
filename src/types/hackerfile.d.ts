@@ -3,7 +3,7 @@ type HackerFileType = 'project';
 type ProjectImage = {
   description: string;
   alt: string;
-  url: string; // imgur link
+  url: string;
 };
 
 export interface HackerFile {
@@ -31,5 +31,5 @@ export interface HackerFile {
    */
   externalURLDescription?: string;
 
-  images: Array<ProjectImage>;
+  images?: Array<ProjectImage>;
 }
