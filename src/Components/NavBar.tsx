@@ -154,7 +154,7 @@ const Navbar: FunctionComponent = () => {
             </Flex>
           </DrawerHeader>
           <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
-            <MenuItems key={'integrations'} href="/integrations" color={textColor}>
+            <MenuItems key={'integrations'} href="/integrations">
               Integrations
             </MenuItems>
           </DrawerBody>
