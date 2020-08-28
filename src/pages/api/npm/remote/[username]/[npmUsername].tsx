@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserSettings } from '../../../../../utils/getUserSettings';
+import auth0 from '../../../../../utils/auth';
 
 const MAX_COUNT = 10;
 
@@ -21,31 +22,34 @@ const retrievePackagesFromUser = async (userName: string | string[]) => {
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
 
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  const {
-    query: { npmUsername, username },
-  } = req;
-
+export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    const packages = await retrievePackagesFromUser(npmUsername);
+    const { user } = await auth0.getSession(req);
+    const { sub, name } = user;
+
+    const { username } = await getUserSettings(req, 'npm');
+    const packages = await retrievePackagesFromUser(username);
     const packageInfo = [];
     const returnResults = [];
 
     const packagePromises = [];
     const packageNames = [];
 
-    for (let i = 0; i <= packages.length && i <= MAX_COUNT; ++i) {
+    console.log(name);
+
+    for (let i = 0; i < packages.length; ++i) {
       packageInfo.push(packages[i]);
+      console.log(name);
       packageNames.push(packages[i].name);
       packagePromises.push(retrieveNPMInfo(packages[i]['name']));
     }
 
     const packageResults = await Promise.all(packagePromises);
 
-    for (let i = 0; i <= packageResults.length || i <= MAX_COUNT; ++i) {
+    for (let i = 0; i < packageResults.length; ++i) {
       returnResults.push({ ...packageInfo[i], lastMonthDownloads: packageResults[i] });
     }
-    console.log(packageNames[0]);
+
     returnResults.pop();
     const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
@@ -53,8 +57,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       .db('Atlas')
       .collection('userProfiles')
       .updateOne(
-        { username: username },
-        { $setOnInsert: { username: username }, $set: { npmUsername: npmUsername, packages: packageNames } },
+        { authID: sub },
+        { $setOnInsert: { authID: sub, username: name }, $set: { npmUsername: username, packages: packageNames } },
         { useUnifiedTopology: true, upsert: true },
       );
     // perform actions on the collection object
@@ -64,4 +68,4 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     console.log(e);
     res.status(400).send('FAIL');
   }
-};
+});

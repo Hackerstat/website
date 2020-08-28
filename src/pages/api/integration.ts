@@ -14,6 +14,26 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
 
     const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+    const userProfileInfo = await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
+    if (userProfileInfo) {
+      if (Object(userProfileInfo).hasOwnProperty('integrations')) {
+        if (userProfileInfo.integrations.includes(integrationType)) {
+          await client
+            .db('Atlas')
+            .collection('userProfiles')
+            .updateOne(
+              { authID: sub },
+              {
+                $setOnInsert: { authID: sub, username: name },
+                $set: { [`integration_settings.${integrationType}`]: { username: username } },
+              },
+              { useUnifiedTopology: true, upsert: true },
+            );
+          res.status(200).send('OK');
+          return;
+        }
+      }
+    }
     await client
       .db('Atlas')
       .collection('userProfiles')
@@ -21,11 +41,12 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         { authID: sub },
         {
           $setOnInsert: { authID: sub, username: name },
-          $set: { [`integration_settings.${integrationType}`]: username },
+          $set: { [`integration_settings.${integrationType}`]: { username: username } },
           $push: { integrations: integrationType },
         },
         { useUnifiedTopology: true, upsert: true },
       );
+    res.status(200).send('OK');
   } catch (e) {
     console.error(e);
     res.status(500).send('Server Error');

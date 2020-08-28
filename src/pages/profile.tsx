@@ -18,12 +18,12 @@ export default function Profile() {
       <h1>🤸</h1>
       <p>Welcome to the Profile Page! Here is your profile information:</p>
       <p>{JSON.stringify(user)}</p>
-      {/* <Button
+      <Button
         onClick={() => {
           fetch('/api/integration', {
             credentials: 'same-origin',
             method: 'POST',
-            body: JSON.stringify({ integrationType: 'github', username: 'cgunter1' }),
+            body: JSON.stringify({ integrationType: 'gitlab', username: '23123123' }),
           })
             .then((res) => {
               console.log(res);
@@ -32,9 +32,25 @@ export default function Profile() {
               console.error(err);
             });
         }}
-      > */}
-      {/* <Text>Hello</Text>
-      </Button> */}
+      >
+        <Text>Hello</Text>
+      </Button>
+      <Button
+        onClick={() => {
+          fetch('/api/npm/remote/sad/sadasd', {
+            credentials: 'same-origin',
+            method: 'POST',
+          })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }}
+      >
+        <Text>Bye</Text>
+      </Button>
     </>
   );
 }
