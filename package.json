@@ -39,6 +39,7 @@
     "react-dom": "^16.13.1",
     "react-twitter-embed": "^3.0.3",
     "react-vis": "^1.11.7",
+    "rss-parser": "^3.9.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
