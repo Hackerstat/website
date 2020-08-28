@@ -10,7 +10,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     const { user } = await auth0.getSession(req);
     const { sub, name } = user;
 
-    const { integrationType, username } = await JSON.parse(req.body);
+    const { integrationType, username } = JSON.parse(req.body);
 
     const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });

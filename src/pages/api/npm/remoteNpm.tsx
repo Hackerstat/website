@@ -61,8 +61,8 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         {
           $setOnInsert: { authID: sub, username: name },
           $set: {
-            integration_settings: { npm: { username: username } },
-            integration_cache: { npm: { packages: packageNames } },
+            'integration_settings.npm.username': username,
+            'integration_cache.npm.packages': packageNames,
           },
         },
         { useUnifiedTopology: true, upsert: true },

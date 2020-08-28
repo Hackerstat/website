@@ -20,9 +20,10 @@ export default function Profile() {
       <p>{JSON.stringify(user)}</p>
       <Button
         onClick={() => {
-          fetch('/api/npm/localNpm', {
+          fetch('/api/github/remoteGithub', {
             credentials: 'same-origin',
             method: 'POST',
+            body: JSON.stringify({ integrationType: 'npm', username: 'dougwilson' }),
           })
             .then(async (res) => {
               console.log(await res.json());
