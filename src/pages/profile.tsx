@@ -24,12 +24,12 @@ export default function Profile() {
       </Button>
       <Button
         onClick={() => {
-          fetch('/api/npm/remote/sad/sadasd', {
+          fetch('/api/batchusers', {
             credentials: 'same-origin',
-            method: 'POST',
+            method: 'GET',
           })
-            .then((res) => {
-              console.log(res);
+            .then(async (res) => {
+              console.log(await res.json());
             })
             .catch((err) => {
               console.error(err);
