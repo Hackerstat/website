@@ -20,7 +20,7 @@ export default function Profile() {
       <p>{JSON.stringify(user)}</p>
       <Button
         onClick={() => {
-          fetch('/api/github/remoteGithub', {
+          fetch('/api/github/localGithub', {
             credentials: 'same-origin',
             method: 'POST',
             body: JSON.stringify({ integrationType: 'npm', username: 'dougwilson' }),

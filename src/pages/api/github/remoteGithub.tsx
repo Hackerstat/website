@@ -52,7 +52,7 @@ const createQuery = (username) => {
         }`;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     const { username } = await getUserSettings(req, 'github');
 
@@ -91,4 +91,4 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     console.error(e);
     res.status(500).send('Server Error');
   }
-};
+});
