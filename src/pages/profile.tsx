@@ -19,7 +19,7 @@ export default function Profile() {
       <h1>🤸</h1>
       <p>Welcome to the Profile Page! Here is your profile information:</p>
       <p>{JSON.stringify(user)}</p>
-      <Button
+      {/* <Button
         onClick={() => {
           fetch('/api/integration', {
             credentials: 'same-origin',
@@ -33,9 +33,9 @@ export default function Profile() {
               console.error(err);
             });
         }}
-      >
-        <Text>Hello</Text>
-      </Button>
+      > */}
+      {/* <Text>Hello</Text>
+      </Button> */}
     </>
   );
 }
