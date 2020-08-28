@@ -105,12 +105,10 @@ const Navbar: FunctionComponent = () => {
       >
         {user && !loading
           ? [
-              <MenuItems key={'logout'} href="/api/logout">
-                Logout
+              <MenuItems key={'integrations'} href="/integrations">
+                Integrations
               </MenuItems>,
-              <MenuItems key={'profile'} href="/profile">
-                Profile
-              </MenuItems>,
+              ,
             ]
           : null}
       </Flex>
@@ -118,7 +116,7 @@ const Navbar: FunctionComponent = () => {
       <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
         {!user && !loading ? (
           <Link href="/api/login">
-            <Text>Login</Text>
+            <Text color={textColor}>Login</Text>
           </Link>
         ) : null}
       </Box>
@@ -156,11 +154,8 @@ const Navbar: FunctionComponent = () => {
             </Flex>
           </DrawerHeader>
           <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
-            <MenuItems key={'logout'} href="/api/logout">
-              Logout
-            </MenuItems>
-            <MenuItems key={'profile'} href="/profile">
-              Profile
+            <MenuItems key={'integrations'} href="/integrations" color={textColor}>
+              Integrations
             </MenuItems>
           </DrawerBody>
         </DrawerContent>

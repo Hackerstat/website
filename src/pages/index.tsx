@@ -11,6 +11,7 @@ import {
   faTwitter,
   faBehance,
 } from '@fortawesome/free-brands-svg-icons';
+import Link from 'next/link';
 // import WakaTime from '../Components/Dashboard/WakaTime/index';
 
 const IndexPage: NextPage = () => (
@@ -43,9 +44,11 @@ const IndexPage: NextPage = () => (
           <IntegrationTile icon={faTwitter} />
           <IntegrationTile icon={faBehance} />
         </Grid>
-        <Button mt={4} variant={'solid'} variantColor={'green'} alignSelf={'center'}>
-          See Integrations
-        </Button>
+        <Link href={'/integrations'}>
+          <Button mt={4} variant={'solid'} variantColor={'green'} alignSelf={'center'}>
+            See Integrations
+          </Button>
+        </Link>
       </Flex>
       <Flex flexWrap={'wrap'}>
         <Flex flexDirection={'column'} alignItems={'center'} justifyContent={'center'} padding={4}>
