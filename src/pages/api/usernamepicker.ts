@@ -3,41 +3,31 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
-import auth0 from '../../utils/auth';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const { user } = await auth0.getSession(req);
-    const { sub } = user;
+export default async function usernameChecker(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    try {
+      const { newUsername } = req.query;
 
-    const { newUsername } = JSON.parse(req.body);
+      if (!newUsername) {
+        res.status(400).send('You need to provide a username');
+        return;
+      }
 
-    const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-    const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+      const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+      const client = await MongoClient.connect(uri, { useNewUrlParser: true });
 
-    const possibleUser = await client.db('Atlas').collection('userProfiles').findOne({ username: newUsername });
+      const possibleUser = await client.db('Atlas').collection('userProfiles').findOne({ username: newUsername });
 
-    if (!possibleUser) {
-      await client
-        .db('Atlas')
-        .collection('userProfiles')
-        .updateOne(
-          { authID: sub },
-          {
-            $setOnInsert: { authID: sub },
-            $set: {
-              username: newUsername,
-            },
-          },
-          { useUnifiedTopology: true, upsert: true },
-        );
-      res.status(200).json({ result: true });
-    } else {
-      res.status(200).json({ result: false });
+      if (!possibleUser) {
+        res.status(200).json({ result: true });
+      } else {
+        res.status(200).json({ result: false });
+      }
+      client.close();
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('FAIL');
     }
-    client.close();
-  } catch (e) {
-    console.error(e);
-    res.status(500).send('FAIL');
   }
-});
+}
