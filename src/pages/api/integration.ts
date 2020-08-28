@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import auth0 from '../../utils/auth';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
-import auth0 from '../../utils/auth';
 
 export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -12,8 +12,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       const { sub, name } = user;
 
       const { integrationType, settings } = req.body;
-
-      console.log(req.body, integrationType, !integrationType);
 
       if (!integrationType) {
         throw new Error('No integration type provided');
@@ -37,12 +35,21 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
           },
           { useUnifiedTopology: true, upsert: true },
         );
+      client.close();
+
       res.status(200).send('Added Account');
     } catch (e) {
       console.error(e);
       res.status(500).send('Server Error');
     }
   } else if (req.method === 'GET') {
+    const { username } = req.body;
+
+    if (!username) {
+      res.status(400).send('You have to provide a username');
+      return;
+    }
+
     const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
     const userProfile = await client.db('Atlas').collection('userProfiles').findOne({ username: username });
