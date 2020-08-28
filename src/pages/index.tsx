@@ -1,14 +1,23 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Stack, Box, Text, Flex, Avatar, Button } from '@chakra-ui/core';
+import { Heading, Stack, Box, Text, Flex, Avatar, Button, Grid } from '@chakra-ui/core';
+import IntegrationTile from '../Components/IntegrationTile';
+import {
+  faGithub,
+  faGitlab,
+  faStackOverflow,
+  faDocker,
+  faTwitter,
+  faBehance,
+} from '@fortawesome/free-brands-svg-icons';
 // import WakaTime from '../Components/Dashboard/WakaTime/index';
 
 const IndexPage: NextPage = () => (
   <PageBase>
     <Stack shouldWrapChildren alignItems={'center'} spacing={32}>
       {/* INTEGRATIONS */}
-      <Flex flexWrap={'wrap-reverse'}>
+      <Flex flexWrap={'wrap'} flexDirection={'row'}>
         <Box width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'} mr={3}>
           <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
             Show Off More than Just Your GitHub
@@ -19,31 +28,24 @@ const IndexPage: NextPage = () => (
             Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
             dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
           </Text>
-          <Button mt={3} variant={'solid'} variantColor={'green'}>
-            See Integrations
-          </Button>
         </Box>
-        <Stack
-          spacing={3}
-          shouldWrapChildren
-          isInline
-          flexWrap={'wrap'}
-          maxW={['100%', '100%', '250px']}
+        <Grid
+          gap={2}
+          mt={4}
+          gridTemplateColumns={'repeat(auto-fit, 100px)'}
+          maxW={['xs', 'sm', 'lg', '250px']}
           width={'100%'}
         >
-          <Box height={'100px'} width={'100px'} bg={'salmon'}></Box>
-          <Box height={'100px'} width={'100px'} bg={'salmon'}></Box>
-          <Box height={'100px'} width={'100px'} bg={'salmon'}></Box>
-          <Box height={'100px'} width={'100px'} bg={'salmon'}></Box>
-          <Box height={'100px'} width={'100px'} bg={'salmon'}></Box>
-          <Box height={'100px'} width={'100px'}>
-            <Flex justifyContent={'center'} alignItems={'center'} flex={1} height={'100%'} width={'100%'}>
-              <Text fontSize={'3xl'} fontWeight={'bold'} letterSpacing={'wide'} fontFamily={'mono'}>
-                +7
-              </Text>
-            </Flex>
-          </Box>
-        </Stack>
+          <IntegrationTile icon={faGithub} />
+          <IntegrationTile icon={faGitlab} />
+          <IntegrationTile icon={faStackOverflow} />
+          <IntegrationTile icon={faDocker} />
+          <IntegrationTile icon={faTwitter} />
+          <IntegrationTile icon={faBehance} />
+        </Grid>
+        <Button mt={4} variant={'solid'} variantColor={'green'} alignSelf={'center'}>
+          See Integrations
+        </Button>
       </Flex>
       <Flex flexWrap={'wrap'}>
         <Flex flexDirection={'column'} alignItems={'center'} justifyContent={'center'} padding={4}>

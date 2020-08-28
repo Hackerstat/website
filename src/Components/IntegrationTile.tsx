@@ -10,7 +10,7 @@ const colors = { light: 'gray.800', dark: 'white' };
 
 interface IntegrationTileProps {
   icon?: IconProp;
-  name: string;
+  name?: string;
   link?: string;
   disabled?: boolean;
 }
