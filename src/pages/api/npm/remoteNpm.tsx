@@ -2,10 +2,10 @@ const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
 import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserSettings } from '../../../../../utils/getUserSettings';
-import auth0 from '../../../../../utils/auth';
+import { getUserSettings } from '../../../utils/getUserSettings';
+import auth0 from '../../../utils/auth';
 
-const MAX_COUNT = 10;
+// const MAX_COUNT = 10;
 
 const retrieveNPMInfo = async (packageName: string) => {
   const res = await fetch(`${NPM_URL_COUNT}/${packageName}`);
@@ -58,12 +58,18 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       .collection('userProfiles')
       .updateOne(
         { authID: sub },
-        { $setOnInsert: { authID: sub, username: name }, $set: { npmUsername: username, packages: packageNames } },
+        {
+          $setOnInsert: { authID: sub, username: name },
+          $set: {
+            integration_settings: { npm: { username: username } },
+            integration_cache: { npm: { packages: packageNames } },
+          },
+        },
         { useUnifiedTopology: true, upsert: true },
       );
     // perform actions on the collection object
     client.close();
-    res.status(200).json(JSON.stringify(returnResults));
+    res.status(200).json(returnResults);
   } catch (e) {
     console.log(e);
     res.status(400).send('FAIL');

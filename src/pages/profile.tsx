@@ -20,13 +20,12 @@ export default function Profile() {
       <p>{JSON.stringify(user)}</p>
       <Button
         onClick={() => {
-          fetch('/api/integration', {
+          fetch('/api/npm/localNpm', {
             credentials: 'same-origin',
             method: 'POST',
-            body: JSON.stringify({ integrationType: 'gitlab', username: '23123123' }),
           })
-            .then((res) => {
-              console.log(res);
+            .then(async (res) => {
+              console.log(await res.json());
             })
             .catch((err) => {
               console.error(err);
