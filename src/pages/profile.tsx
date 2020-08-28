@@ -18,12 +18,28 @@ export default function Profile() {
       <h1>🤸</h1>
       <p>Welcome to the Profile Page! Here is your profile information:</p>
       <p>{JSON.stringify(user)}</p>
-      {/* <Button
+      <Button
         onClick={() => {
-          fetch('/api/integration', {
+          fetch('/api/usernamepicker', {
             credentials: 'same-origin',
             method: 'POST',
-            body: JSON.stringify({ integrationType: 'github', username: 'cgunter1' }),
+            body: JSON.stringify({ newUsername: 'louislombardoiv@gmail.co' }),
+          })
+            .then(async (res) => {
+              console.log(await res.json());
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }}
+      >
+        <Text>Hello</Text>
+      </Button>
+      <Button
+        onClick={() => {
+          fetch('/api/npm/remote/sad/sadasd', {
+            credentials: 'same-origin',
+            method: 'POST',
           })
             .then((res) => {
               console.log(res);
@@ -32,9 +48,9 @@ export default function Profile() {
               console.error(err);
             });
         }}
-      > */}
-      {/* <Text>Hello</Text>
-      </Button> */}
+      >
+        <Text>Bye</Text>
+      </Button>
     </>
   );
 }
