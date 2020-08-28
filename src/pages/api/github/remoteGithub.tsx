@@ -1,5 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import auth0 from '../../../utils/auth';
+import { getUserSettings } from '../../../utils/getUserSettings';
 
 const API_KEY = process.env.GITHUB_API_KEY;
 const USERNAME = process.env.DB_USERNAME;
@@ -50,17 +52,18 @@ const createQuery = (username) => {
         }`;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    const {
-      query: { username, githubUsername },
-    } = req;
+    const { username } = await getUserSettings(req, 'github');
+
+    const { user } = await auth0.getSession(req);
+    const { sub, name } = user;
 
     const resu = await fetch('https://api.github.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `bearer ${API_KEY}` },
       body: JSON.stringify({
-        query: createQuery(githubUsername),
+        query: createQuery(username),
       }),
     });
 
@@ -72,17 +75,20 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       .db('Atlas')
       .collection('userProfiles')
       .updateOne(
-        { username: username },
+        { authID: sub },
         {
-          $setOnInsert: { username: username },
-          $set: { npmUsername: githubUsername, githubRepositories: response.data.user.repositories.nodes },
+          $setOnInsert: { authID: sub, username: name },
+          $set: {
+            'integration_settings.github.username': username,
+            'integration_cache.github.repositories': response.data.user.repositories.nodes,
+          },
         },
         { useUnifiedTopology: true, upsert: true },
       );
 
-    res.status(200).send(response);
+    res.status(200).json(response);
   } catch (e) {
     console.error(e);
     res.status(500).send('Server Error');
   }
-};
+});
