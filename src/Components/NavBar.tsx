@@ -116,7 +116,9 @@ const Navbar: FunctionComponent = () => {
       <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
         {!user && !loading ? (
           <Link href="/api/login">
-            <Text color={textColor}>Login</Text>
+            <Button>
+              <Text color={textColor}>Login</Text>
+            </Button>
           </Link>
         ) : (
           <Box>
