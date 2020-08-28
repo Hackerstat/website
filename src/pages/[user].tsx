@@ -1,22 +1,57 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Flex, Avatar, Stack, PseudoBox } from '@chakra-ui/core';
+import { Heading, Flex, Avatar, Stack, PseudoBox, Spinner, Image } from '@chakra-ui/core';
 import { useRouter } from 'next/dist/client/router';
 
 import ContributionGraph from '@louisiv/react-contribution-graph';
 import Card from '../Components/Card';
+import dynamic from 'next/dynamic';
+import Axios from 'axios';
+
+const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
+NPM.displayName = 'NPM';
+
+const Medium = dynamic(() => import('../Components/Dashboard/Medium'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <p>Loading...</p>,
+});
+Medium.displayName = 'Medium';
+
+const Twitter = dynamic(() => import('../Components/Dashboard/Twitter'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <p>Loading...</p>,
+});
+Twitter.displayName = 'Twitter';
 
 const UserProfilePage: NextPage = () => {
   const router = useRouter();
   const { user, gitLabUsername = undefined } = router.query;
 
+  const [integrations, setIntegrations] = useState();
+
+  const [integrationSettings, setIntegrationSettings] = useState();
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    Axios.get(`/api/users/${user}`).then((integrationData) => {
+      setIntegrations(integrationData.data.integrations);
+      setIntegrationSettings(integrationData.data.settings);
+    });
+  }, [user]);
+
   return (
     <PageBase>
       <Heading>{user}</Heading>
-
-      <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'}>
-        <Card minWidth={'lg'} minHeight={'200px'} borderWidth={3} borderColor={'white'}>
+      <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'}>
+        {/* <Card minWidth={['xs', 'lg']} width={'100%'} minHeight={'200px'} borderWidth={3} borderColor={'white'}>
           <Flex flexDirection={'column'} alignItems={'flex-start'}>
             <Avatar
               mt={2}
@@ -26,32 +61,60 @@ const UserProfilePage: NextPage = () => {
               size={'xl'}
             />
           </Flex>
-        </Card>
-        <PseudoBox
-          alignItems={'center'}
-          justifyContent={'center'}
-          flexDirection={'column'}
-          padding={3}
-          borderBottomStyle={'solid'}
-          borderBottomColor={'green.500'}
-          borderBottomWidth={3}
-        >
+        </Card> */}
+        <Card padding={3} mt={3} color={'white'}>
           <ContributionGraph gitHubUsername={user as string} gitlabUsername={gitLabUsername as string} />
-        </PseudoBox>
-        <figure>
-          <embed src="https://wakatime.com/share/@louisIV/278e8e3f-528a-4e0f-8f5b-0b842e86100b.svg"></embed>
-        </figure>
-        <a
-          className="twitter-timeline"
-          href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw"
-          style={{ height: '100px' }}
-        >
-          Tweets by TwitterDev
-        </a>
-        <script async src="https://platform.twitter.com/widgets.js"></script>
+        </Card>
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings && integrationSettings?.medium?.username && (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <Medium user={`@${integrationSettings?.medium?.username}`} />
+          )
+        }
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings && integrationSettings?.npm?.username && (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <NPM username={integrationSettings?.npm?.username} />
+          )
+        }
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings && integrationSettings?.twitter?.username && (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <Twitter screenName={integrationSettings?.twitter?.username} />
+          )
+        }
       </Stack>
     </PageBase>
   );
 };
+
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const username = context?.params?.user;
+
+//   console.log('USERNAME', context);
+
+//   try {
+//     const integrationData = await Axios.get(`/api/users/${username}`);
+//     console.log(integrationData);
+//     return {
+//       props: { ...integrationData.data }, // will be passed to the page component as props
+//     };
+//   } catch (err) {
+//     console.error('ERROR', err);
+//   }
+
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   };
+// };
 
 export default UserProfilePage;
