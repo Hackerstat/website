@@ -20,10 +20,10 @@ export default function Profile() {
       <p>{JSON.stringify(user)}</p>
       <Button
         onClick={() => {
-          fetch('/api/integrations/removeintegration', {
+          fetch('/api/usernamepicker', {
             credentials: 'same-origin',
             method: 'POST',
-            body: JSON.stringify({ integrationType: 'github' }),
+            body: JSON.stringify({ newUsername: 'louislombardoiv@gmail.co' }),
           })
             .then(async (res) => {
               console.log(await res.json());
