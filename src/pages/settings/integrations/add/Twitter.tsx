@@ -120,9 +120,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
         </Button>
 
         <Grid gap={2} gridTemplateColumns={'repeat(auto-fit, 400px)'}></Grid>
-        <Button isDisabled={fetchingHackerFile} onClick={() => {}}>
-          Add NPM
-        </Button>
+        <Button isDisabled={fetchingHackerFile}>Add NPM</Button>
       </Stack>
     </Flex>
   );

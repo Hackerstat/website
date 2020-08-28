@@ -129,9 +129,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
               return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
             })}
         </Grid>
-        <Button isDisabled={fetchingHackerFile} onClick={() => {}}>
-          Add NPM
-        </Button>
+        <Button isDisabled={fetchingHackerFile}>Add NPM</Button>
       </Stack>
     </Flex>
   );
