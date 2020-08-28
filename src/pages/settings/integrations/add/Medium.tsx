@@ -46,7 +46,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   const addMediumAccount = async (username) => {
     try {
       await Axios.post('/api/integration', {
-        integrationType: 'npm',
+        integrationType: 'medium',
         settings: { username: username },
       });
       toast({

@@ -1,6 +1,5 @@
-import Axios from 'axios';
-import { verifyType, stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
 import Parser from 'rss-parser';
+import { stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
 
 export default async (req, res) => {
   try {
@@ -11,7 +10,7 @@ export default async (req, res) => {
     const result = await parser.parseURL('https://medium.com/feed/' + username);
     res.status(200).json({
       articles: result.items.map((article) => {
-        return { title: article.title, link: article.link };
+        return { title: article.title, link: addRefToURL(stripQueryParameters(article.link)), date: article.pubDate };
       }),
     });
   } catch (err) {

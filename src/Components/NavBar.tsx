@@ -50,88 +50,90 @@ const Navbar: FunctionComponent = () => {
   }, [colorMode]);
 
   return (
-    <>
+    <Flex
+      // as="nav"
+      align="center"
+      bg={'gray.900'}
+      justify={'space-between'}
+      wrap={'wrap'}
+      padding={'1.5rem'}
+      color={'white'}
+      shadow={'lg'}
+      width={'100%'}
+      maxW={'100vw'}
+      overflowX={'hidden'}
+      flexDirection={'row'}
+      backgroundColor={backgroundColor}
+    >
+      <Box display={['block', 'block', 'none']} onClick={onOpen}>
+        <svg
+          fill={colorMode === 'dark' ? 'white' : 'gray.700'}
+          width="12px"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>Menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+        </svg>
+      </Box>
+
       <Flex
-        // as="nav"
         align="center"
-        bg={'gray.900'}
-        justify={'space-between'}
-        wrap={'wrap'}
-        padding={'1.5rem'}
-        color={'white'}
-        shadow={'lg'}
-        flexDirection={'row'}
-        backgroundColor={backgroundColor}
+        mr={5}
+        justifySelf={'center'}
+        alignSelf={'center'}
+        position={['absolute', 'absolute', 'relative']}
+        // left={'calc(50% - 15px)'}
+        left={[...LogoSizes.map((size) => `calc(50% - ${size / 2}px)`).slice(0, 2), 0]}
       >
-        <Box display={['block', 'block', 'none']} onClick={onOpen}>
-          <svg
-            fill={colorMode === 'dark' ? 'white' : 'gray.700'}
-            width="12px"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </svg>
-        </Box>
+        <Link href={'/'}>
+          <Logo size="small" height={LogoSizes.map((size) => `${+size}px`)} />
+        </Link>
+      </Flex>
 
-        <Flex
-          align="center"
-          mr={5}
-          justifySelf={'center'}
-          alignSelf={'center'}
-          position={['absolute', 'absolute', 'relative']}
-          // left={'calc(50% - 15px)'}
-          left={[...LogoSizes.map((size) => `calc(50% - ${size / 2}px)`).slice(0, 2), 0]}
-        >
-          <Link href={'/'}>
-            <Logo size="small" height={LogoSizes.map((size) => `${+size}px`)} />
+      <Flex
+        display={[show ? 'block' : 'none', show ? 'block' : 'none', 'flex']}
+        width={['full', 'full', 'auto']}
+        flexDirection={['column', 'column', 'row']}
+        alignItems="center"
+        flexGrow={1}
+        color={textColor}
+        fontFamily={'monospace'}
+        fontSize={'lg'}
+        fontWeight={'bold'}
+        letterSpacing={'wide'}
+      >
+        {user && !loading
+          ? [
+              <MenuItems key={'logout'} href="/api/logout">
+                Logout
+              </MenuItems>,
+              <MenuItems key={'profile'} href="/profile">
+                Profile
+              </MenuItems>,
+            ]
+          : null}
+      </Flex>
+
+      <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
+        {!user && !loading ? (
+          <Link href="/api/login">
+            <Text>Login</Text>
           </Link>
-        </Flex>
+        ) : null}
+      </Box>
 
-        <Flex
-          display={[show ? 'block' : 'none', show ? 'block' : 'none', 'flex']}
-          width={['full', 'full', 'auto']}
-          flexDirection={['column', 'column', 'row']}
-          alignItems="center"
-          flexGrow={1}
-          color={textColor}
-          fontFamily={'monospace'}
-          fontSize={'lg'}
-          fontWeight={'bold'}
-          letterSpacing={'wide'}
-        >
-          {user && !loading
-            ? [
-                <MenuItems key={'logout'} href="/api/logout">
-                  Logout
-                </MenuItems>,
-                <MenuItems key={'profile'} href="/profile">
-                  Profile
-                </MenuItems>,
-              ]
-            : null}
-        </Flex>
+      <Box>
+        <UserBubble />
+      </Box>
 
-        <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
-          {!user && !loading ? (
-            <Link href="/api/login">
-              <Text>Login</Text>
-            </Link>
-          ) : null}
-        </Box>
-
-        <Box>
-          <UserBubble />
-        </Box>
-
-        {/* <Box display={{ sm: show ? 'block' : 'none', md: 'block' }} mt={{ base: 4, md: 0 }}>
+      {/* <Box display={{ sm: show ? 'block' : 'none', md: 'block' }} mt={{ base: 4, md: 0 }}>
         <Button bg="transparent" border="1px">
           Create account
         </Button>
       </Box> */}
 
-        {/* <Stack isInline>
+      {/* <Stack isInline>
         <Text>Home</Text>
         {user && !loading
           ? [
@@ -145,7 +147,6 @@ const Navbar: FunctionComponent = () => {
           : null}
       
       </Stack> */}
-      </Flex>
       <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -164,7 +165,7 @@ const Navbar: FunctionComponent = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </Flex>
   );
 };
 
