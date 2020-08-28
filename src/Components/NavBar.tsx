@@ -118,11 +118,11 @@ const Navbar: FunctionComponent = () => {
           <Link href="/api/login">
             <Text color={textColor}>Login</Text>
           </Link>
-        ) : null}
-      </Box>
-
-      <Box>
-        <UserBubble />
+        ) : (
+          <Box>
+            <UserBubble />
+          </Box>
+        )}
       </Box>
 
       {/* <Box display={{ sm: show ? 'block' : 'none', md: 'block' }} mt={{ base: 4, md: 0 }}>
