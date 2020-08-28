@@ -33,15 +33,25 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const packagePromises = [];
     const packageNames = [];
 
-    for (let i = 0; i <= packages.length && i <= MAX_COUNT; ++i) {
+    if (!packages) {
+      res.status(404).send('Could not get packages');
+    }
+
+    for (let i = 0; i <= Math.min(packages.length, MAX_COUNT); ++i) {
+      if (!packages[i]) {
+        console.log('Package', i, packages[i]);
+        console.error('Package not there!');
+        continue;
+      }
+
       packageInfo.push(packages[i]);
       packageNames.push(packages[i].name);
-      packagePromises.push(retrieveNPMInfo(packages[i]['name']));
+      packagePromises.push(retrieveNPMInfo(packages[i].name));
     }
 
     const packageResults = await Promise.all(packagePromises);
 
-    for (let i = 0; i <= packageResults.length || i <= MAX_COUNT; ++i) {
+    for (let i = 0; i <= Math.min(packageResults.length, MAX_COUNT); ++i) {
       returnResults.push({ ...packageInfo[i], lastMonthDownloads: packageResults[i] });
     }
     console.log(packageNames[0]);

@@ -3,41 +3,65 @@ import { Flex, Text, useColorMode } from '@chakra-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from './Card';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const colors = { light: 'gray.800', dark: 'white' };
 
 interface IntegrationTileProps {
-  icon: IconProp;
+  icon?: IconProp;
   name: string;
+  link?: string;
+  disabled?: boolean;
 }
 
-const IntegrationTile: FunctionComponent<IntegrationTileProps> = ({ icon, name }) => {
+const IntegrationTile: FunctionComponent<IntegrationTileProps> = ({ icon, name, link, disabled = false }) => {
   const { colorMode } = useColorMode();
 
   const [color, setColor] = useState(colors[colorMode]);
 
+  const router = useRouter();
+
   useEffect(() => {
-    setColor(color[colorMode]);
+    setColor(colors[colorMode]);
   }, [colorMode]);
 
   return (
     <Card
       height={'100px'}
       width={'100px'}
-      onClick={() => {
-        console.log('h');
-      }}
+      onClick={
+        !disabled
+          ? () => {
+              router.push(`/settings/integrations/add/${link}`);
+            }
+          : undefined
+      }
+      opacity={disabled ? 0.6 : undefined}
     >
-      <Flex flexDirection={'column'} justifyContent={'center'} alignItems={'center'} height={'100%'} width={'100%'}>
+      <Flex
+        flexDirection={'column'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        height={'100%'}
+        width={'100%'}
+        color={color}
+      >
         <FontAwesomeIcon
           icon={icon}
           size={'3x'}
-          color={color[colorMode]}
           style={{
             textAlign: 'center',
           }}
         />
-        <Text fontFamily={'monospace'} fontSize={'sm'} textAlign={'center'}>
+        <Text
+          fontWeight={'bold'}
+          letterSpacing={'wide'}
+          fontFamily={'monospace'}
+          fontSize={'sm'}
+          textAlign={'center'}
+          width={'80%'}
+        >
           {name}
         </Text>
       </Flex>
