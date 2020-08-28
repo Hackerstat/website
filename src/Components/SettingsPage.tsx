@@ -8,6 +8,10 @@ const backgroundColors = { light: 'gray.200', dark: 'gray.700' };
 
 const sidebarMenuItems: Array<TSidebarMenuItem> = [
   {
+    href: '/settings/username',
+    name: 'Username',
+  },
+  {
     href: '/settings/info',
     name: 'Personal Information',
   },

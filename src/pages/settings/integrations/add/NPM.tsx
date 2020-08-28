@@ -72,7 +72,11 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         return;
       }
 
-      const result = await Axios.get(`/api/npm/remote/louisiv/${username}`, {});
+      const result = await Axios.get(`/api/npm/remote`, {
+        params: {
+          username: username,
+        },
+      });
 
       if (result?.data?.error) {
         setFetchError(result?.data?.error);
