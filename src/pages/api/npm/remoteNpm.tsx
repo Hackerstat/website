@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserSettings } from '../../../utils/getUserSettings';
 import auth0 from '../../../utils/auth';
 
-// const MAX_COUNT = 10;
+const MAX_COUNT = 10;
 
 const retrieveNPMInfo = async (packageName: string) => {
   const res = await fetch(`${NPM_URL_COUNT}/${packageName}`);
@@ -35,18 +35,26 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     const packagePromises = [];
     const packageNames = [];
 
-    console.log(name);
+    if (!packages) {
+      res.status(404).send('Could not get packages');
+    }
 
-    for (let i = 0; i < packages.length; ++i) {
+    for (let i = 0; i <= Math.min(packages.length, MAX_COUNT); ++i) {
+      if (!packages[i]) {
+        console.log('Package', i, packages[i]);
+        console.error('Package not there!');
+        continue;
+      }
+
       packageInfo.push(packages[i]);
       console.log(name);
       packageNames.push(packages[i].name);
-      packagePromises.push(retrieveNPMInfo(packages[i]['name']));
+      packagePromises.push(retrieveNPMInfo(packages[i].name));
     }
 
     const packageResults = await Promise.all(packagePromises);
 
-    for (let i = 0; i < packageResults.length; ++i) {
+    for (let i = 0; i <= Math.min(packageResults.length, MAX_COUNT); ++i) {
       returnResults.push({ ...packageInfo[i], lastMonthDownloads: packageResults[i] });
     }
 

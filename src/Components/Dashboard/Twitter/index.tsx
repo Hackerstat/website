@@ -28,15 +28,14 @@ const TwitterCard = ({ screenName }) => {
   }, []);
 
   return (
-    <Card height={['650px', '300px']}>
-      <Flex alignItems={'center'} flexDirection={'column'} justifyContent={'center'} height={'100%'}>
-        <TwitterTimelineEmbed
-          sourceType="profile"
-          screenName={screenName}
-          options={{ height: 600 }}
-          onComplete={onLoad}
-        />
-      </Flex>
+    <Card height={['650px', '300px']} maxW={'md'}>
+      <TwitterTimelineEmbed
+        sourceType="profile"
+        screenName={screenName}
+        theme={'dark'}
+        options={{ height: 600 }}
+        onComplete={onLoad}
+      />
     </Card>
   );
 };
