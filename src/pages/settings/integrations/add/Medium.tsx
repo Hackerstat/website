@@ -1,20 +1,33 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Input, FormLabel, FormControl, Heading, Button, Stack, FormErrorMessage } from '@chakra-ui/core';
+import {
+  Flex,
+  Input,
+  FormLabel,
+  FormControl,
+  Heading,
+  Button,
+  Stack,
+  Text,
+  FormErrorMessage,
+  Box,
+  Grid,
+} from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faNpm, faTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TwitterCard from '../../../../Components/Dashboard/Twitter';
 import Axios from 'axios';
 
-const AddTwitterIntegrationPage: FunctionComponent = () => {
+const AddMediumIntegrationPage: FunctionComponent = () => {
   const [username, setUsername] = useState<string>();
   const [fetchError, setFetchError] = useState<string>();
+
   const [twitterName, setTwitterName] = useState();
+
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
-  const setTwitterUsername = async (username) => {
+  const CheckForHackerStatFile = async (username) => {
     try {
       if (!username) {
         setFetchError('Required');
@@ -27,9 +40,9 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
     }
   };
 
-  const addTwitterToAccount = async (username) => {
+  const addMediumAccount = async (username) => {
     await Axios.post('/api/integration', {
-      integrationType: 'twitter',
+      integrationType: 'npm',
       settings: { username: username },
     });
   };
@@ -37,12 +50,12 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
   return (
     <Flex width={'100%'} flexDirection={'column'}>
       <Flex mb={4}>
-        <FontAwesomeIcon icon={faTwitter} size={'3x'} />
-        <Heading ml={3}>Twitter</Heading>
+        <FontAwesomeIcon icon={faMedium} size={'3x'} />
+        <Heading ml={3}>Medium</Heading>
       </Flex>
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
-          <FormLabel>Twitter Username</FormLabel>
+          <FormLabel>Medium Username</FormLabel>
           <Input placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
@@ -51,7 +64,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
           onClick={() => {
             setFetchingHackerFile(true);
             try {
-              setTwitterUsername(username);
+              CheckForHackerStatFile(username);
             } catch (err) {
               console.log(err);
             } finally {
@@ -59,16 +72,16 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
             }
           }}
         >
-          Get Tweets
+          Get Posts
         </Button>
-        {twitterName && <TwitterCard screenName={username} />}
+
         <Button
-          isDisabled={fetchingHackerFile || !username}
+          isDisabled={fetchingHackerFile}
           onClick={() => {
-            addTwitterToAccount(username);
+            addMediumAccount(username);
           }}
         >
-          Add Twitter
+          Add Medium
         </Button>
       </Stack>
     </Flex>
@@ -84,7 +97,7 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <>
-      <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+      <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
     </>
   );
 };

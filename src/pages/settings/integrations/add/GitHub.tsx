@@ -13,6 +13,7 @@ interface RepoInfo {
   repo: string;
   repoURL: string;
   result: Partial<HackerFile>;
+  user: string;
 }
 
 const AddGithubIntegrationPage: FunctionComponent = () => {
@@ -47,6 +48,13 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const addProjectToAccount = async (repo: RepoInfo) => {
+    await Axios.post('/api/integration', {
+      integrationType: 'github',
+      settings: { [`${repo.user}+${repo.repo}`]: repoURL },
+    });
   };
 
   return (
@@ -107,7 +115,7 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
         <Button
           isDisabled={!repoInfo || fetchingHackerFile}
           onClick={() => {
-            CheckForHackerStatFile(repoURL);
+            addProjectToAccount(repoInfo);
           }}
         >
           Add Repo

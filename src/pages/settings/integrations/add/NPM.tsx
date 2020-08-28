@@ -63,7 +63,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
-  const CheckForHackerStatFile = async (username) => {
+  const GetNPMPackages = async (username) => {
     try {
       if (!username) {
         setFetchError('Required');
@@ -91,6 +91,13 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
     }
   };
 
+  const addNPMToAccount = async (username) => {
+    await Axios.post('/api/integration', {
+      integrationType: 'npm',
+      settings: { username: username },
+    });
+  };
+
   return (
     <Flex width={'100%'} flexDirection={'column'}>
       <Flex mb={4}>
@@ -113,7 +120,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
           onClick={() => {
             setFetchingHackerFile(true);
             try {
-              CheckForHackerStatFile(username);
+              GetNPMPackages(username);
             } catch (err) {
               console.log(err);
             } finally {
@@ -129,7 +136,14 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
               return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
             })}
         </Grid>
-        <Button isDisabled={fetchingHackerFile}>Add NPM</Button>
+        <Button
+          isDisabled={fetchingHackerFile || !username}
+          onClick={() => {
+            addNPMToAccount(username);
+          }}
+        >
+          Add NPM
+        </Button>
       </Stack>
     </Flex>
   );
