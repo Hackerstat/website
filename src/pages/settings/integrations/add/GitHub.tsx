@@ -1,6 +1,17 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Input, FormLabel, FormControl, Heading, Button, Stack, Text, FormErrorMessage } from '@chakra-ui/core';
+import {
+  Flex,
+  Input,
+  FormLabel,
+  FormControl,
+  Heading,
+  Button,
+  Stack,
+  Text,
+  FormErrorMessage,
+  useToast,
+} from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -22,6 +33,8 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
   const [repoInfo, setRepoInfo] = useState<RepoInfo>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
+
+  const toast = useToast();
 
   const CheckForHackerStatFile = async (repoURL) => {
     try {
@@ -51,10 +64,23 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
   };
 
   const addProjectToAccount = async (repo: RepoInfo) => {
-    await Axios.post('/api/integration', {
-      integrationType: 'github',
-      settings: { [`${repo.user}+${repo.repo}`]: repoURL },
-    });
+    try {
+      await Axios.post('/api/integration', {
+        integrationType: 'github',
+        settings: { [`${repo.user}+${repo.repo}`]: repoURL },
+      });
+      toast({
+        title: 'Added Integration',
+        status: 'success',
+        description: 'We added this integration to your account',
+      });
+    } catch (err) {
+      toast({
+        title: 'Something Went Wrong',
+        status: 'error',
+        description: 'Could not add integration to your account. Please try again later.',
+      });
+    }
   };
 
   return (

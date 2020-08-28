@@ -12,6 +12,7 @@ import {
   FormErrorMessage,
   Box,
   Grid,
+  useToast,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
@@ -62,6 +63,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   const [packages, setPackages] = useState<Array<Package>>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
+  const toast = useToast();
 
   const GetNPMPackages = async (username) => {
     try {
@@ -92,10 +94,23 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   };
 
   const addNPMToAccount = async (username) => {
-    await Axios.post('/api/integration', {
-      integrationType: 'npm',
-      settings: { username: username },
-    });
+    try {
+      await Axios.post('/api/integration', {
+        integrationType: 'npm',
+        settings: { username: username },
+      });
+      toast({
+        title: 'Added Integration',
+        status: 'success',
+        description: 'We added this integration to your account',
+      });
+    } catch (err) {
+      toast({
+        title: 'Something Went Wrong',
+        status: 'error',
+        description: 'Could not add integration to your account. Please try again later.',
+      });
+    }
   };
 
   return (

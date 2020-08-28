@@ -12,6 +12,7 @@ import {
   FormErrorMessage,
   Box,
   Grid,
+  useToast,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
@@ -27,6 +28,8 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
+  const toast = useToast();
+
   const CheckForHackerStatFile = async (username) => {
     try {
       if (!username) {
@@ -41,10 +44,23 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   };
 
   const addMediumAccount = async (username) => {
-    await Axios.post('/api/integration', {
-      integrationType: 'npm',
-      settings: { username: username },
-    });
+    try {
+      await Axios.post('/api/integration', {
+        integrationType: 'npm',
+        settings: { username: username },
+      });
+      toast({
+        title: 'Added Integration',
+        status: 'success',
+        description: 'We added this integration to your account',
+      });
+    } catch (err) {
+      toast({
+        title: 'Something Went Wrong',
+        status: 'error',
+        description: 'Could not add integration to your account. Please try again later.',
+      });
+    }
   };
 
   return (

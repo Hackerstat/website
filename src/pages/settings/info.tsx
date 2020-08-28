@@ -10,29 +10,29 @@ import {
   Stack,
   Button,
   Textarea,
+  useToast,
 } from '../../../node_modules/@chakra-ui/core';
 import { Formik, Field } from '../../../node_modules/formik';
 import { useEffect, useState } from 'react';
 import Loader from '../../Components/Loader';
+import Axios from 'axios';
+
+import * as Yup from 'yup';
+
+const InfoSchema = Yup.object().shape({
+  firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  email: Yup.string().email('Invalid email'),
+  website: Yup.string().url(),
+  school: Yup.string().min(2, 'Too Short!').max(120, 'Too Long'),
+  bio: Yup.string().min(10, 'Too Short').max(240, 'Too Long!'),
+});
 
 const FormWidth = ['min(800px, 90vw)', 'sm', 'xs', 'md'];
 const DoubleFormWidth = ['100%'];
 
 const ProfileInfo = () => {
-  function validateName(value) {
-    let error;
-    if (!value) {
-      error = 'Value is required';
-    }
-    return error;
-  }
-
-  function validateLocation(value) {
-    if (value && value.split(', ').length === 2) {
-      return null;
-    }
-    return 'Location Name is not in correct form City,Country';
-  }
+  const toast = useToast();
 
   return (
     <Flex flexDirection={'column'}>
@@ -40,40 +40,49 @@ const ProfileInfo = () => {
         initialValues={{}}
         onSubmit={async (values, actions) => {
           try {
-            await fetch('/api/profilesettings/chris/profileinfo', {
-              method: 'post',
-              body: JSON.stringify(values),
+            await Axios.post('/api/settings/info', {
+              ...values,
+            });
+            toast({
+              title: 'Success',
+              status: 'success',
+              description: 'Updated profile information.',
             });
           } catch (e) {
-            alert('Could not save work experience. Please send again.');
+            toast({
+              title: 'Something Went Wrong',
+              status: 'error',
+              description: 'Could not save profile info. Please send again.',
+            });
           }
           actions.setSubmitting(false);
         }}
+        validationSchema={InfoSchema}
       >
         {(props) => (
           <form onSubmit={props.handleSubmit} style={{ width: '100%' }}>
             <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'}>
-              <Field name="userName" validate={validateName}>
+              <Field name="firstName">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.userName}>
-                    <FormLabel htmlFor="userName">Username</FormLabel>
-                    <Input {...field} id="userName" placeholder="John Doe" minW={FormWidth} />
-                    <FormErrorMessage>{form.errors.userName}</FormErrorMessage>
+                  <FormControl isInvalid={form.errors.firstName}>
+                    <FormLabel htmlFor="firstName">First</FormLabel>
+                    <Input {...field} id="firstName" placeholder="John" minW={FormWidth} />
+                    <FormErrorMessage>{form.errors.firstName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-              <Field name="password" validate={validateName}>
+              <Field name="lastName">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.password}>
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                    <Input {...field} id="password" placeholder="******" minW={FormWidth} />
-                    <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                  <FormControl isInvalid={!!form.errors.lastName}>
+                    <FormLabel htmlFor="lastName">Last</FormLabel>
+                    <Input {...field} id="lastName" placeholder="Doe" minW={FormWidth} />
+                    <FormErrorMessage>{form.errors.lastName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
             </Stack>
             <Stack mt={2} isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
-              <Field name="website" validate={validateName}>
+              <Field name="website">
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.website}>
                     <FormLabel htmlFor="website">Website</FormLabel>
@@ -83,7 +92,7 @@ const ProfileInfo = () => {
                 )}
               </Field>
 
-              <Field name="Email" validate={validateName}>
+              <Field name="Email">
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.Email}>
                     <FormLabel htmlFor="Email">Email</FormLabel>
@@ -122,7 +131,7 @@ const ProfileInfo = () => {
                   </FormControl>
                 )}
               </Field>
-              <Field name="Location" validate={validateLocation}>
+              <Field name="Location">
                 {({ field, form }) => (
                   <FormControl isInvalid={form.errors.Location}>
                     <FormLabel htmlFor="Location">Location</FormLabel>
