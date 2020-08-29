@@ -24,12 +24,13 @@ export default function Profile() {
       </Button>
       <Button
         onClick={() => {
-          fetch('/api/npm/remote/sad/sadasd', {
+          fetch('/api/userinfo', {
             credentials: 'same-origin',
             method: 'POST',
+            body: JSON.stringify({ username: 'louislombardoiv@gmail.co' }),
           })
-            .then((res) => {
-              console.log(res);
+            .then(async (res) => {
+              console.log(await res.json());
             })
             .catch((err) => {
               console.error(err);
