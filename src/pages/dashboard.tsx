@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { SimpleGrid, Box, Flex, Text, Heading, Grid } from '@chakra-ui/core';
+import { Flex, Heading, Grid } from '@chakra-ui/core';
 import UserCard from '../Components/Dashboard/UserCard';
 
 import axios from 'axios';
@@ -35,21 +35,20 @@ const Dashboard: NextPage = () => {
           gridTemplateColumns={['repeat(auto-fit, 50%)', 'repeat(auto-fit, 220px)']}
           justifyItems={'stretch'}
         >
-          {users.map((user) => {
-            console.log(user);
-            return (
-              <UserCard
-                key={user._id}
-                photo={''}
-                name={`Bobby Fisher`}
-                username={user.username}
-                status={'Alive'}
-                onClick={() => {
-                  router.push(`/${user.u}`);
-                }}
-              />
-            );
-          })}
+          {!!users &&
+            users.map((user) => {
+              return (
+                <UserCard
+                  key={user._id}
+                  photo={user?.info?.photo || `https://api.adorable.io/avatars/285/${user.username}.png`}
+                  name={`${user?.info?.firstName || ''} ${user?.info?.lastName || ''}`}
+                  username={user.username}
+                  onClick={() => {
+                    router.push(`/${user.u}`);
+                  }}
+                />
+              );
+            })}
         </Grid>
       </Flex>
     </PageBase>
