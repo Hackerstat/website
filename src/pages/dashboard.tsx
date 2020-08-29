@@ -6,7 +6,6 @@ import UserCard from '../Components/Dashboard/UserCard';
 
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import Card from '../Components/Card';
 
 const getUsers = async () => {
   const res = await axios.get('/api/batchusers');
@@ -40,7 +39,7 @@ const Dashboard: NextPage = () => {
               return (
                 <UserCard
                   key={user._id}
-                  photo={user?.info?.photo || `https://api.adorable.io/avatars/285/${user.username}.png`}
+                  photo={user?.picture || `https://api.adorable.io/avatars/285/${user.username}.png`}
                   name={`${user?.info?.firstName || ''} ${user?.info?.lastName || ''}`}
                   username={user.username}
                   onClick={() => {
