@@ -37,7 +37,6 @@ const Navbar: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, loading } = useFetchUser();
   const [show, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!show);
 
   const { colorMode } = useColorMode();
 
@@ -83,7 +82,6 @@ const Navbar: FunctionComponent = () => {
         justifySelf={'center'}
         alignSelf={'center'}
         position={['absolute', 'absolute', 'relative']}
-        // left={'calc(50% - 15px)'}
         left={[...LogoSizes.map((size) => `calc(50% - ${size / 2}px)`).slice(0, 2), 0]}
       >
         <Link href={'/'}>
@@ -103,14 +101,12 @@ const Navbar: FunctionComponent = () => {
         fontWeight={'bold'}
         letterSpacing={'wide'}
       >
-        {user && !loading
-          ? [
-              <MenuItems key={'integrations'} href="/integrations">
-                Integrations
-              </MenuItems>,
-              ,
-            ]
-          : null}
+        <MenuItems key={'integrations'} href="/integrations">
+          Integrations
+        </MenuItems>
+        <MenuItems key={'dashboard'} href="/dashboard">
+          Dashboard
+        </MenuItems>
       </Flex>
 
       <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
@@ -127,26 +123,6 @@ const Navbar: FunctionComponent = () => {
         )}
       </Box>
 
-      {/* <Box display={{ sm: show ? 'block' : 'none', md: 'block' }} mt={{ base: 4, md: 0 }}>
-        <Button bg="transparent" border="1px">
-          Create account
-        </Button>
-      </Box> */}
-
-      {/* <Stack isInline>
-        <Text>Home</Text>
-        {user && !loading
-          ? [
-              <Link key={'logout'} href="/api/logout">
-                Logout
-              </Link>,
-              <Link key={'profile'} href="/profile">
-                Profile
-              </Link>,
-            ]
-          : null}
-      
-      </Stack> */}
       <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -158,6 +134,9 @@ const Navbar: FunctionComponent = () => {
           <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
             <MenuItems key={'integrations'} href="/integrations">
               Integrations
+            </MenuItems>
+            <MenuItems key={'dashboard'} href="/dashboard">
+              Dashboard
             </MenuItems>
           </DrawerBody>
         </DrawerContent>

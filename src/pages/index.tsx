@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Stack, Box, Text, Flex, Avatar, Button, Grid } from '@chakra-ui/core';
+import { Heading, Stack, Box, Text, Flex, Avatar, Button, Grid, Image } from '@chakra-ui/core';
 import IntegrationTile from '../Components/IntegrationTile';
 import {
   faGithub,
@@ -24,10 +24,8 @@ const IndexPage: NextPage = () => (
             Show Off More than Just Your GitHub
           </Heading>
           <Text>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-            dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+            HackerStats has tons of integrations for you to show off on your page! These integrations will let you show
+            off more than just your GitHub and can be looked at by tech recruiters!
           </Text>
         </Box>
         <Grid
@@ -37,12 +35,12 @@ const IndexPage: NextPage = () => (
           maxW={['xs', 'sm', 'lg', '250px']}
           width={'100%'}
         >
-          <IntegrationTile icon={faGithub} />
-          <IntegrationTile icon={faGitlab} />
-          <IntegrationTile icon={faStackOverflow} />
-          <IntegrationTile icon={faDocker} />
-          <IntegrationTile icon={faTwitter} />
-          <IntegrationTile icon={faBehance} />
+          <IntegrationTile icon={faGithub} disabled />
+          <IntegrationTile icon={faGitlab} disabled />
+          <IntegrationTile icon={faStackOverflow} disabled />
+          <IntegrationTile icon={faDocker} disabled />
+          <IntegrationTile icon={faTwitter} disabled />
+          <IntegrationTile icon={faBehance} disabled />
         </Grid>
         <Link href={'/integrations'}>
           <Button mt={4} variant={'solid'} variantColor={'green'} alignSelf={'center'}>
@@ -50,33 +48,26 @@ const IndexPage: NextPage = () => (
           </Button>
         </Link>
       </Flex>
-      <Flex flexWrap={'wrap'}>
-        <Flex flexDirection={'column'} alignItems={'center'} justifyContent={'center'} padding={4}>
+      <Flex flexWrap={'wrap'} flexDirection={'row'} maxW={'lg'} justifyContent={'center'} alignItems={'center'}>
+        <Box flexGrow={3} width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'flex-start'} justifySelf={'flex-start'}>
+          <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
+            Find Your Community
+          </Heading>
+        </Box>
+
+        <Box height={'100%'} padding={4} flexGrow={1}>
           <Heading display={'flex'} fontSize={'3xl'} textAlign={'center'} mb={4}>
             1,233,524 Hackers and Growing!
           </Heading>
           <Stack spacing={3} shouldWrapChildren isInline flexWrap={'wrap'}>
-            <Avatar size={'xl'} />
-            <Avatar size={'xl'} />
-            <Avatar size={'xl'} />
-            <Avatar size={'xl'} />
-            <Avatar size={'xl'} />
+            <Image src={'https://temppr.com/images/User-Bubbles.svg'} />
           </Stack>
-        </Flex>
-        <Box width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'}>
-          <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
-            Find Your Community
-          </Heading>
-          <Text>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-            aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-            dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-          </Text>
+        </Box>
+        <Link href={'/dashboard'} passHref>
           <Button mt={3} variant={'solid'} variantColor={'green'}>
             Explore HackerStat
           </Button>
-        </Box>
+        </Link>
       </Flex>
     </Stack>
   </PageBase>
