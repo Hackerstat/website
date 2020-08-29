@@ -16,7 +16,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         .collection('userProfiles')
         .find({ username: { $exists: true } })
         .limit(20);
-      console.log(await users.toArray());
       const userInfo = await users.toArray();
       res.status(200).json({ users: userInfo });
     }

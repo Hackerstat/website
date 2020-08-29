@@ -9,7 +9,8 @@ import { useRouter } from 'next/router';
 import Card from '../Components/Card';
 
 const getUsers = async () => {
-  return (await axios.get('/api/dashboard')).data;
+  const res = await axios.get('/api/batchusers');
+  return res.data;
 };
 
 const Dashboard: NextPage = () => {
@@ -29,33 +30,20 @@ const Dashboard: NextPage = () => {
     <PageBase>
       <Heading>Dashboard</Heading>
       <Flex flexDirection={'row'} flexWrap={'wrap'}>
-        <Flex mr={3} width={'100%'} minW={'xs'} maxW={'md'} mb={3}>
-          <Card height={'fit-content'} padding={3}>
-            <Heading>Alerts</Heading>
-            <Flex flexDirection={'column'} width={'100%'}>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-              <Text color={'black'}>Ji</Text>
-            </Flex>
-          </Card>
-        </Flex>
         <Grid
           flex={1}
           gridTemplateColumns={['repeat(auto-fit, 50%)', 'repeat(auto-fit, 220px)']}
           justifyItems={'stretch'}
         >
           {users.map((user) => {
+            console.log(user);
             return (
               <UserCard
-                key={user.u}
-                photo={user.p}
-                name={user.n}
-                username={user.u}
-                status={user.s}
+                key={user._id}
+                photo={''}
+                name={`Bobby Fisher`}
+                username={user.username}
+                status={'Alive'}
                 onClick={() => {
                   router.push(`/${user.u}`);
                 }}
