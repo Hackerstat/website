@@ -44,7 +44,7 @@ const Dashboard: NextPage = () => {
                   name={`${user?.info?.firstName || ''} ${user?.info?.lastName || ''}`}
                   username={user.username}
                   onClick={() => {
-                    router.push(`/${user.u}`);
+                    router.push(`/${user.username}`);
                   }}
                 />
               );
