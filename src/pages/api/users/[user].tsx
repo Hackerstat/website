@@ -13,7 +13,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       const client = await MongoClient.connect(uri, { useNewUrlParser: true });
       const userData = await client.db('Atlas').collection('userProfiles').findOne({ username: user });
 
-      res.status(200).json({ integrations: userData?.integrations, settings: userData?.integration_settings });
+      res
+        .status(200)
+        .json({ integrations: userData?.integrations, settings: userData?.integration_settings, info: userData?.info });
     } catch (err) {
       console.log(err);
       res.status(500).send('Server Error');
