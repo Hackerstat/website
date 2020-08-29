@@ -14,17 +14,17 @@ const UserCard = ({ name = 'Louis Lombardo', username = 'Louisiv', photo, status
     setLoaded(true);
   };
 
-  // const onError = () => {
-  //   console.log('Something went wrong');
-  //   setIsHidden(true);
-  // };
+  const onError = () => {
+    console.log('Something went wrong');
+    setIsHidden(true);
+  };
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     onError();
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onError();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Skeleton isLoaded={loaded} display={!loaded && isHidden ? 'none' : 'unset'}>
