@@ -44,7 +44,7 @@ const UserProfilePage: NextPage = () => {
 
   const [integrations, setIntegrations] = useState();
 
-  const [info, setInfo] = useState<UserInfo>({});
+  const [info, setInfo] = useState<Partial<UserInfo>>({});
 
   const [integrationSettings, setIntegrationSettings] = useState();
 
@@ -69,7 +69,7 @@ const UserProfilePage: NextPage = () => {
           width={'100%'}
           photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
           name={`${info?.firstName || ''} ${info?.lastName || ''}`}
-          username={user}
+          username={user as string}
         />
         <BioCard {...info} />
       </Stack>

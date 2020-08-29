@@ -13,7 +13,7 @@ interface BioCardProps {
 
 const colors = { light: 'gray.800', dark: 'white' };
 
-const BioCard: FunctionComponent<BioCardProps> = ({ bio, email, school, location, website }) => {
+const BioCard: FunctionComponent<Partial<BioCardProps>> = ({ bio, email, school, location, website }) => {
   const { colorMode } = useColorMode();
   const [color, setColor] = useState(colors['dark']);
 
