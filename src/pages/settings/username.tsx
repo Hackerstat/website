@@ -15,8 +15,11 @@ import {
 import { NextPage } from 'next';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
+import { useFetchUser } from '../../utils/user';
 
 const UsernameSettingsPage = () => {
+  const { user } = useFetchUser();
+
   const [currentUsername, setCurrentUsername] = useState<string>();
   const [username, setUsername] = useState<string>();
 
@@ -55,6 +58,7 @@ const UsernameSettingsPage = () => {
         title: 'Changed Username',
         description: 'Your username was updated',
       });
+
       return result?.data?.result || false;
     } catch (err) {
       toast({
@@ -62,9 +66,11 @@ const UsernameSettingsPage = () => {
         title: 'Error',
         description: 'Something went changing your username',
       });
+      console.error(err);
       return false;
     } finally {
       setSettingUsername(false);
+      await Axios.post('/api/settings/picture', { newPicture: user.picture });
     }
   };
 
