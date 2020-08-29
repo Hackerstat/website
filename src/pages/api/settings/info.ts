@@ -63,8 +63,8 @@ export default auth0.requireAuthentication(
           .db('Atlas')
           .collection('userProfiles')
           .updateOne(
-            { authId: sub },
-            { $setOnInsert: { authId: sub }, $set: { info: { ...userProfileData } } },
+            { authID: sub },
+            { $setOnInsert: { authID: sub }, $set: { info: { ...userProfileData } } },
             { useUnifiedTopology: true, upsert: true },
           );
 
