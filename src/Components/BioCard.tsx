@@ -50,7 +50,7 @@ const BioCard: FunctionComponent<Partial<BioCardProps>> = ({ bio, email, school,
       {!!website && (
         <Flex flexDirection={'row'} alignItems={'center'}>
           <Icon color={color} name={'link'} />
-          <ExternalLink ml={1}>
+          <ExternalLink ml={1} href={website}>
             <Text color={color}>{website}</Text>
           </ExternalLink>
         </Flex>
