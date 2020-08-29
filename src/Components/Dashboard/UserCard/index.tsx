@@ -10,6 +10,7 @@ interface UserCardProps {
   status?: string;
   onClick: () => void;
 }
+const colors = { light: 'gray.800', dark: 'white' };
 
 const UserCard: FunctionComponent<UserCardProps> = ({
   name = 'Louis Lombardo',
@@ -19,10 +20,9 @@ const UserCard: FunctionComponent<UserCardProps> = ({
   ...rest
 }) => {
   const { colorMode } = useColorMode();
+  const [color, setColor] = useState(colors['dark']);
   const [loaded, setLoaded] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-
-  const color = { light: 'gray.800', dark: 'white' };
 
   const onLoad = () => {
     setLoaded(true);
@@ -32,6 +32,10 @@ const UserCard: FunctionComponent<UserCardProps> = ({
     console.log('Something went wrong');
     setIsHidden(true);
   };
+
+  useEffect(() => {
+    setColor(colors[colorMode]);
+  }, [colorMode]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,8 +55,9 @@ const UserCard: FunctionComponent<UserCardProps> = ({
             textTransform={'uppercase'}
             fontWeight={'bold'}
             letterSpacing={'wide'}
-            color={'gray.500'}
+            color={color}
             fontSize={['xs', 'sm']}
+            opacity={0.6}
           >
             @{username}
           </Text>
@@ -61,7 +66,7 @@ const UserCard: FunctionComponent<UserCardProps> = ({
             textTransform={'uppercase'}
             fontWeight={'bold'}
             letterSpacing={'wide'}
-            color={color[colorMode]}
+            color={color}
             fontSize={['sm', 'md', 'lg']}
           >
             {name}

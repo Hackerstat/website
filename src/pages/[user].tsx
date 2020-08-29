@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Flex, Avatar, Stack, PseudoBox, Spinner, Image } from '@chakra-ui/core';
+import { Heading, Flex, Avatar, Stack, PseudoBox, Spinner, Image, Text } from '@chakra-ui/core';
 import { useRouter } from 'next/dist/client/router';
 
 import ContributionGraph from '@louisiv/react-contribution-graph';
 import Card from '../Components/Card';
 import dynamic from 'next/dynamic';
 import Axios from 'axios';
+import UserCard from '../Components/Dashboard/UserCard';
+import FocusCard from '../Components/FocusCard';
+import BioCard from '../Components/BioCard';
 
 const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
   // eslint-disable-next-line react/display-name
@@ -28,11 +31,20 @@ const Twitter = dynamic(() => import('../Components/Dashboard/Twitter'), {
 });
 Twitter.displayName = 'Twitter';
 
+interface UserInfo {
+  firstName: string;
+  lastName: string;
+  photo?: string;
+  bio?: string;
+}
+
 const UserProfilePage: NextPage = () => {
   const router = useRouter();
   const { user, gitLabUsername = undefined } = router.query;
 
   const [integrations, setIntegrations] = useState();
+
+  const [info, setInfo] = useState<UserInfo>({});
 
   const [integrationSettings, setIntegrationSettings] = useState();
 
@@ -44,12 +56,23 @@ const UserProfilePage: NextPage = () => {
     Axios.get(`/api/users/${user}`).then((integrationData) => {
       setIntegrations(integrationData.data.integrations);
       setIntegrationSettings(integrationData.data.settings);
+      setInfo(integrationData.data.info);
     });
   }, [user]);
 
   return (
     <PageBase>
-      <Heading>{user}</Heading>
+      <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'}>
+        <UserCard
+          maxW={'lg'}
+          minW={'md'}
+          width={'100%'}
+          photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
+          name={`${info?.firstName || ''} ${info?.lastName || ''}`}
+          username={user}
+        />
+        <BioCard {...info} />
+      </Stack>
       <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'}>
         {/* <Card minWidth={['xs', 'lg']} width={'100%'} minHeight={'200px'} borderWidth={3} borderColor={'white'}>
           <Flex flexDirection={'column'} alignItems={'flex-start'}>
