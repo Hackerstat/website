@@ -92,23 +92,23 @@ const ProfileInfo = () => {
                 )}
               </Field>
 
-              <Field name="Email">
+              <Field name="email">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.Email}>
-                    <FormLabel htmlFor="Email">Email</FormLabel>
-                    <Input {...field} id="Email" placeholder="johndoe@mail.com" minW={FormWidth} />
-                    <FormErrorMessage>{form.errors.Email}</FormErrorMessage>
+                  <FormControl isInvalid={form.errors.email}>
+                    <FormLabel htmlFor="email">Email</FormLabel>
+                    <Input {...field} id="email" placeholder="johndoe@mail.com" minW={FormWidth} />
+                    <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
             </Stack>
             <Stack mt={2} spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'} width={'100%'}>
-              <Field name="Bio">
+              <Field name="bio">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.Bio}>
-                    <FormLabel htmlFor="Bio">Bio</FormLabel>
-                    <Textarea {...field} id="Bio" placeholder="I did ..." type="text" minW={DoubleFormWidth} />
-                    <FormErrorMessage>{form.errors.Bio}</FormErrorMessage>
+                  <FormControl isInvalid={form.errors.bio}>
+                    <FormLabel htmlFor="bio">Bio</FormLabel>
+                    <Textarea {...field} id="bio" placeholder="I did ..." type="text" minW={DoubleFormWidth} />
+                    <FormErrorMessage>{form.errors.bio}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -122,18 +122,18 @@ const ProfileInfo = () => {
               width={'100%'}
               justifyContent={'flex-start'}
             >
-              <Field name="University">
+              <Field name="school">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.University}>
-                    <FormLabel htmlFor="University">University</FormLabel>
-                    <Input {...field} id="University" placeholder="Stanford" type="text" minW={FormWidth} />
-                    <FormErrorMessage>{form.errors.University}</FormErrorMessage>
+                  <FormControl isInvalid={form.errors.school}>
+                    <FormLabel htmlFor="school">University</FormLabel>
+                    <Input {...field} id="school" placeholder="Stanford" type="text" minW={FormWidth} />
+                    <FormErrorMessage>{form.errors.school}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
               <Field name="Location">
                 {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.Location}>
+                  <FormControl isInvalid={form.errors.location}>
                     <FormLabel htmlFor="Location">Location</FormLabel>
                     <Input {...field} id="Location" placeholder="Santa Cruz, California" type="text" minW={FormWidth} />
                     <FormErrorMessage>{form.errors.Location}</FormErrorMessage>
