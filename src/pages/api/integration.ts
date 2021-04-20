@@ -21,17 +21,18 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         throw new Error('No settings object provided');
       }
 
-      const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+      // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+      const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
       const client = await MongoClient.connect(uri, { useNewUrlParser: true });
       await client
-        .db('Atlas')
+        .db('HackerStat')
         .collection('userProfiles')
         .updateOne(
           { authID: sub },
           {
             $setOnInsert: { authID: sub, username: name },
             $set: { [`integration_settings.${integrationType}`]: settings },
-            $push: { integrations: integrationType },
+            $addToSet: { integrations: integrationType },
           },
           { useUnifiedTopology: true, upsert: true },
         );
@@ -50,9 +51,10 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       return;
     }
 
-    const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+    // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+    const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-    const userProfile = await client.db('Atlas').collection('userProfiles').findOne({ username: username });
+    const userProfile = await client.db('HackerStat').collection('userProfiles').findOne({ username: username });
     client.close();
 
     return userProfile;

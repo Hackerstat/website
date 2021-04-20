@@ -31,7 +31,8 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       const { username: passedUsername } = req.query;
 
       const { username } = await getUserSettings(req, 'npm');
-      const packages = await retrievePackagesFromUser(passedUsername || username);
+      console.log(username);
+      const packages = await retrievePackagesFromUser(passedUsername);
       const packageInfo = [];
       const returnResults = [];
 

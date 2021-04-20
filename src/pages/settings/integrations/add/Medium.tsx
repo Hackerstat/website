@@ -24,13 +24,14 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   const [username, setUsername] = useState<string>();
   const [fetchError, setFetchError] = useState<string>();
 
-  const [twitterName, setTwitterName] = useState();
+  const [twitterName, setTwitterName] = useState<string>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
   const toast = useToast();
 
-  const CheckForHackerStatFile = async (username) => {
+  // TODO: Retrieve Medium Posts.
+  const CheckForHackerStatFile = async (username: string) => {
     try {
       if (!username) {
         setFetchError('Required');

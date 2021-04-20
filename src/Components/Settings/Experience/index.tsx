@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { FormControl, FormLabel, Input, FormErrorMessage, Checkbox, Stack, Button, Textarea } from '@chakra-ui/core';
+import Axios from 'axios';
 
 export interface ExperienceFormFields {
   companyName: string;
@@ -22,6 +23,15 @@ interface ExperienceProps {
 }
 
 const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose }) => {
+  useEffect(() => {
+    const abortController = new AbortController();
+    console.log('weqwqe');
+    return () => {
+      abortController.abort();
+      console.log('adsads');
+    };
+  }, []);
+
   const [isCurrentPosition, setIsCurrentPosition] = useState(false);
 
   const validateForm = (values: Partial<ExperienceFormFields>) => {
@@ -61,7 +71,13 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
       startingDate: initialValues?.startingDate || undefined,
       endDate: initialValues?.endDate || undefined,
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      // console.log(values);
+      // try {
+      // await Axios.post('/api/settings/workexperience', values);
+      // } catch (e) {
+      //   console.error(e);
+      // }
       onClose(values as ExperienceFormFields);
       formik.setSubmitting(false);
     },

@@ -17,8 +17,15 @@ import {
 import Loader from '../../Components/Loader';
 import WorkExperienceForm, { ExperienceFormFields } from '../../Components/Settings/Experience';
 import Experience from '../../Components/Experience';
+import { useFetchUser } from '../../utils/user';
+import Axios from 'axios';
 
 function ExperienceSettings() {
+  useEffect(() => {
+    Axios.get('/api/settings/workexperience').then((res) => console.log(res));
+    console.log('asdsadsad');
+  }, []);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [startingValues, setStartingValues] = useState<ExperienceFormFields>();
@@ -33,14 +40,15 @@ function ExperienceSettings() {
 
   const onFinishEditExperience = (experience: ExperienceFormFields) => {
     setExperiences([...experiences.slice(0, currentIndex), experience, ...experiences.slice(currentIndex + 1)]);
+
     setCurrentIndex(null);
     onClose();
   };
 
-  const onAddExperience = (experience: ExperienceFormFields) => {
-    alert(JSON.stringify(experience, null, 2));
+  const onAddExperience = async (experience: ExperienceFormFields) => {
     setCurrentIndex(null);
     setExperiences([...experiences, experience]);
+    await Axios.post('/api/settings/workexperience', experience);
     onClose();
   };
 
@@ -86,7 +94,9 @@ const WorkExperiencePage: NextPage = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
     setMounted(true);
+    return () => abortController.abort();
   }, []);
 
   return <SettingsPage>{mounted ? <ExperienceSettings /> : <Loader />}</SettingsPage>;

@@ -12,38 +12,41 @@ export default auth0.requireAuthentication(
         const { user } = await auth0.getSession(req);
         const { sub } = user;
 
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+        // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
         const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        const workExperience = await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
+        const workExperience = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
         client.close();
 
         res.status(200).json({ workExperience: workExperience });
       } catch (e) {
         res.status(500).send('Server Error');
       }
-    } else if (req.method == 'POST') {
+    } else if (req.method === 'POST') {
       try {
         const { user } = await auth0.getSession(req);
         const { sub } = user;
 
         const workExperienceData = req.body;
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+        // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
 
         const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
-        client.close();
+        await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
 
         await client
-          .db('Atlas')
+          .db('HackerStat')
           .collection('userProfiles')
           .updateOne(
             { authID: sub },
-            { $setOnInsert: { authID: sub }, $set: { workExperience: workExperienceData } },
+            { $setOnInsert: { authID: sub }, $push: { workExperience: workExperienceData } },
             { useUnifiedTopology: true, upsert: true },
           );
+        client.close();
 
         res.status(200).send('OK');
       } catch (e) {
+        console.error(e);
         res.status(500).send('Server Error');
       }
     }

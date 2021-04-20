@@ -33,7 +33,7 @@ const downloadFile = async (fileURL: string) => {
   }
 };
 
-export default async (req, res) => {
+export default async (req, res): Promise<void> => {
   const { repoURL } = req.query;
 
   const { url: rawFileURL, repo, user } = getRepoFromURL(repoURL);
@@ -48,6 +48,8 @@ export default async (req, res) => {
   if (!verifyType(yaml.type)) {
     res.status(400).json({ error: 'Invalid Type' }).end();
   }
+
+  console.log(yaml);
 
   const file: HackerFile = {
     name: yaml.name,
