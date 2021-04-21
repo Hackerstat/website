@@ -34,10 +34,36 @@ const DoubleFormWidth = ['100%'];
 const ProfileInfo = () => {
   const toast = useToast();
 
+  const [fields, setFields] = useState({
+    firstName: '',
+    lastName: '',
+    school: '',
+    website: '',
+    email: '',
+    bio: '',
+    Location: '',
+  });
+
+  useEffect(() => {
+    Axios.get('/api/settings/info').then((res) => {
+      const data = res.data;
+      const newFields = Object.create(fields);
+      console.log(res.data);
+
+      Object.keys(fields).forEach((key) => {
+        if (Object(data).hasOwnProperty(key)) {
+          newFields[key] = data[key];
+        }
+      });
+      setFields(newFields);
+    });
+  }, []);
+
   return (
     <Flex flexDirection={'column'} minW="95%">
       <Formik
-        initialValues={{}}
+        enableReinitialize
+        initialValues={{ ...fields }}
         onSubmit={async (values, actions) => {
           try {
             await Axios.post('/api/settings/info', {

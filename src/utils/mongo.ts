@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import userinfo from '../pages/api/userinfo';
+import { IUserProfileData, RetrievedIUserProfileData } from './utils';
 import { NextApiRequest } from 'next';
 import auth0 from './auth';
 
@@ -118,30 +118,65 @@ export const getIntegrationUserName = async (req: NextApiRequest, integrationOpt
   return '';
 };
 
-// export const getNPM = async (req: NextApiRequest): Promise<string> => {
-//   const { user } = await auth0.getSession(req);
-//   const { sub } = user;
-//   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
-//   const possibleUser = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
-//   client.close();
-//   if (Object(possibleUser).hasOwnProperty('integration_settings')) {
-//     if (Object(possibleUser.integration_settings).hasOwnProperty('npm')) {
-//       return possibleUser.integration_settings.npm.username;
-//     }
-//   }
-//   return '';
-// };
+export const updateInfo = async (req: NextApiRequest): Promise<void> => {
+  const { user } = await auth0.getSession(req);
+  const { sub } = user;
 
-// export const getTwitter = async (req: NextApiRequest): Promise<string> => {
-//   const { user } = await auth0.getSession(req);
-//   const { sub } = user;
-//   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
-//   const possibleUser = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
-//   client.close();
-//   if (Object(possibleUser).hasOwnProperty('integration_settings')) {
-//     if (Object(possibleUser.integration_settings).hasOwnProperty('twitter')) {
-//       return possibleUser.integration_settings.twitter.username;
-//     }
-//   }
-//   return '';
-// };
+  const { firstName, lastName, website, email, bio, school, location } = req.body;
+
+  const userProfileData: Partial<IUserProfileData> = {};
+
+  if (firstName) {
+    userProfileData.firstName = firstName;
+  }
+
+  if (lastName) {
+    userProfileData.lastName = lastName;
+  }
+
+  if (website) {
+    userProfileData.website = website;
+  }
+
+  if (email) {
+    userProfileData.email = email;
+  }
+
+  if (bio) {
+    userProfileData.bio = bio;
+  }
+
+  if (school) {
+    userProfileData.school = school;
+  }
+
+  if (location) {
+    userProfileData.location = location;
+  }
+
+  const {} = req.body;
+
+  const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+
+  await client
+    .db('HackerStat')
+    .collection('userProfiles')
+    .updateOne(
+      { authID: sub },
+      { $setOnInsert: { authID: sub }, $set: { info: { ...userProfileData } } },
+      { useUnifiedTopology: true, upsert: true },
+    );
+};
+
+export const getInfo = async (req: NextApiRequest): Promise<RetrievedIUserProfileData> => {
+  const { user } = await auth0.getSession(req);
+  const { sub } = user;
+  const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+  const userInfo = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+  client.close();
+
+  if (userInfo.hasOwnProperty('info')) {
+    return userInfo.info as RetrievedIUserProfileData;
+  }
+  return {};
+};

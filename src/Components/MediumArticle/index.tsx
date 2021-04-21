@@ -17,7 +17,6 @@ const MediumArticle = ({ title, link, date }: MediumArticleProps): JSX.Element =
   return (
     <Box borderRadius={'lg'} borderWidth={2} pl={4} py={4}>
       <Link href={link}>
-        {/* <Text fontSize="lg">{title.slice(0, 80) + (title.length < 80 ? '...' : '')}</Text> */}
         <Text fontSize="lg">{title}</Text>
       </Link>
       <Text fontSize="xs" color={'gray.300'}>
