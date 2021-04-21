@@ -58,7 +58,11 @@ export interface Package {
 }
 
 const AddNPMIntegrationPage: FunctionComponent = () => {
-  const [username, setUsername] = useState<string>();
+  useEffect(() => {
+    Axios.get('/api/npm/getUserName').then((val) => setUsername(val.data?.username));
+  }, []);
+
+  const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
   const [packages, setPackages] = useState<Array<Package>>();
 
@@ -131,7 +135,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         </Text>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>NPM Username</FormLabel>
-          <Input placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
+          <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
         <Button

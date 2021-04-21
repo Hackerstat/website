@@ -103,3 +103,45 @@ export const usernameCheckerAPI = async (req: NextApiRequest): Promise<{ s: numb
 
   return !possibleUser ? { s: 200, m: 'true' } : { s: 200, m: 'false' };
 };
+
+export const getIntegrationUserName = async (req: NextApiRequest, integrationOption: string): Promise<string> => {
+  const { user } = await auth0.getSession(req);
+  const { sub } = user;
+  const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+  const possibleUser = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+  client.close();
+  if (Object(possibleUser).hasOwnProperty('integration_settings')) {
+    if (Object(possibleUser.integration_settings).hasOwnProperty(integrationOption)) {
+      return possibleUser.integration_settings[integrationOption].username;
+    }
+  }
+  return '';
+};
+
+// export const getNPM = async (req: NextApiRequest): Promise<string> => {
+//   const { user } = await auth0.getSession(req);
+//   const { sub } = user;
+//   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+//   const possibleUser = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+//   client.close();
+//   if (Object(possibleUser).hasOwnProperty('integration_settings')) {
+//     if (Object(possibleUser.integration_settings).hasOwnProperty('npm')) {
+//       return possibleUser.integration_settings.npm.username;
+//     }
+//   }
+//   return '';
+// };
+
+// export const getTwitter = async (req: NextApiRequest): Promise<string> => {
+//   const { user } = await auth0.getSession(req);
+//   const { sub } = user;
+//   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+//   const possibleUser = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+//   client.close();
+//   if (Object(possibleUser).hasOwnProperty('integration_settings')) {
+//     if (Object(possibleUser.integration_settings).hasOwnProperty('twitter')) {
+//       return possibleUser.integration_settings.twitter.username;
+//     }
+//   }
+//   return '';
+// };

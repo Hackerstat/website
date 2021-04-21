@@ -8,21 +8,32 @@ import {
   Heading,
   Button,
   Stack,
-  Text,
   FormErrorMessage,
-  Box,
-  Grid,
   useToast,
+  Box,
+  Text,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
+import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 
+interface MediumPostType {
+  title: string;
+  date: string;
+  link: string;
+}
+
 const AddMediumIntegrationPage: FunctionComponent = () => {
-  const [username, setUsername] = useState<string>();
+  useEffect(() => {
+    Axios.get('/api/Medium/getUsername').then((res) => setUsername(res.data?.username));
+  });
+
+  const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
+  const [mediumPosts, setMediumPosts] = useState<Array<MediumPostType>>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
@@ -35,10 +46,11 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchError('Required');
         return;
       }
-      const x = await Axios.get('/api/Medium/fetchArticles', {
+      const mediumArticles = await Axios.get('/api/Medium/fetchArticles', {
         params: { user: username },
       });
-      console.log(x);
+
+      setMediumPosts(mediumArticles?.data?.articles.slice());
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +85,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Medium Username</FormLabel>
-          <Input placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
+          <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
         <Button
@@ -92,6 +104,13 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
           Get Posts
         </Button>
 
+        {mediumPosts
+          ? mediumPosts.map((post) => (
+              <Box key={post.title}>
+                <MediumArticle {...post} />
+              </Box>
+            ))
+          : ''}
         <Button
           isDisabled={fetchingHackerFile}
           onClick={() => {

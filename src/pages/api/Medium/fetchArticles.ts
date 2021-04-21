@@ -15,6 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       }),
     });
   } catch (err) {
+    console.error(err);
     res.status(400).json({ error: 'Was not a valid user name.' });
   }
 };
