@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getIntegrationInfo } from '../../../utils/mongo';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
@@ -15,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
     const npmInfo = await client.db('HackerStat').collection('userProfiles').findOne({ username: username });
 
-    console.log(npmInfo);
+    getIntegrationInfo('npm', username);
     // perform actions on the collection object
     client.close();
     res.status(200).json(JSON.stringify(npmInfo));

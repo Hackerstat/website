@@ -15,8 +15,10 @@ export default auth0.requireAuthentication(
         // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
         const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
         const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        const workExperience = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+        const userData = await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
         client.close();
+
+        const workExperience = userData.workExperience;
 
         res.status(200).json({ workExperience: workExperience });
       } catch (e) {
@@ -33,6 +35,7 @@ export default auth0.requireAuthentication(
 
         const client = await MongoClient.connect(uri, { useNewUrlParser: true });
         await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+        console.log('sadasddsa');
 
         await client
           .db('HackerStat')

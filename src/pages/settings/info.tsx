@@ -35,7 +35,7 @@ const ProfileInfo = () => {
   const toast = useToast();
 
   return (
-    <Flex flexDirection={'column'}>
+    <Flex flexDirection={'column'} minW="95%">
       <Formik
         initialValues={{}}
         onSubmit={async (values, actions) => {

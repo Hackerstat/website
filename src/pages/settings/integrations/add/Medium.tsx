@@ -16,15 +16,13 @@ import {
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
-import { faNpm, faTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
+import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 
 const AddMediumIntegrationPage: FunctionComponent = () => {
   const [username, setUsername] = useState<string>();
   const [fetchError, setFetchError] = useState<string>();
-
-  const [twitterName, setTwitterName] = useState<string>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
@@ -37,8 +35,10 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchError('Required');
         return;
       }
-
-      setTwitterName(username);
+      const x = await Axios.get('/api/Medium/fetchArticles', {
+        params: { user: username },
+      });
+      console.log(x);
     } catch (err) {
       console.log(err);
     }

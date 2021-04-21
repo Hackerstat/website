@@ -22,8 +22,10 @@ import Axios from 'axios';
 
 function ExperienceSettings() {
   useEffect(() => {
-    Axios.get('/api/settings/workexperience').then((res) => console.log(res));
-    console.log('asdsadsad');
+    Axios.get('/api/settings/workexperience').then((res) => {
+      console.log('asd');
+      setExperiences(res.data.workExperience);
+    });
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,6 +49,7 @@ function ExperienceSettings() {
 
   const onAddExperience = async (experience: ExperienceFormFields) => {
     setCurrentIndex(null);
+    console.log('sdaasddas12323');
     setExperiences([...experiences, experience]);
     await Axios.post('/api/settings/workexperience', experience);
     onClose();

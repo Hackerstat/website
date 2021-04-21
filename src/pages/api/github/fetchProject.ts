@@ -1,6 +1,7 @@
 import YAML from 'yaml';
 import Axios from 'axios';
 import { verifyType, stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { HackerFile } from '../../../types/hackerfile';
 
 // https://raw.githubusercontent.com/LouisIV/next-starter/master/.hacker.yml
@@ -33,7 +34,7 @@ const downloadFile = async (fileURL: string) => {
   }
 };
 
-export default async (req, res): Promise<void> => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const { repoURL } = req.query;
 
   const { url: rawFileURL, repo, user } = getRepoFromURL(repoURL);

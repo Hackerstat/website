@@ -25,10 +25,8 @@ interface ExperienceProps {
 const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose }) => {
   useEffect(() => {
     const abortController = new AbortController();
-    console.log('weqwqe');
     return () => {
       abortController.abort();
-      console.log('adsads');
     };
   }, []);
 
