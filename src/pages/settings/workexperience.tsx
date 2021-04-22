@@ -32,7 +32,7 @@ function ExperienceSettings() {
   useEffect(() => {
     Axios.get('/api/settings/workexperience')
       .then((res) => {
-        setExperiences(res.data.workExperience);
+        setExperiences(res.data.workExperience || []);
       })
       .catch((e) => console.error(e));
   }, []);
@@ -58,16 +58,22 @@ function ExperienceSettings() {
 
   const onAddExperience = async (experience: ExperienceFormFields) => {
     setCurrentIndex(null);
-    console.log('sdaasddas12323');
-    setExperiences([...experiences, experience]);
-    await Axios.post('/api/settings/workexperience', experience);
+    const newExperiences = experiences.slice();
+    setExperiences([...newExperiences, experience]);
     onClose();
+  };
+  console.log(experiences);
+  console.log(currentIndex);
+
+  const openWorkExperienceModal = () => {
+    setCurrentIndex(null);
+    onOpen();
   };
 
   return (
-    <AuthLayer user={user}>
+    <AuthLayer>
       <Flex flexDirection={'column'} width={'100%'}>
-        <Button onClick={onOpen} leftIcon="add" alignSelf={'flex-end'}>
+        <Button onClick={openWorkExperienceModal} leftIcon="add" alignSelf={'flex-end'}>
           Add Experience
         </Button>
         <Stack shouldWrapChildren spacing={3} mt={3}>
@@ -75,7 +81,7 @@ function ExperienceSettings() {
             experiences.map((experience, index) => {
               return (
                 <Experience
-                  key={`${experience.companyName}_${experience.position}`}
+                  key={index}
                   {...experience}
                   onEdit={() => {
                     onStartEditExperience(experience, index);
@@ -102,9 +108,6 @@ function ExperienceSettings() {
       </Flex>
     </AuthLayer>
   );
-  // ) : (
-  //   <></>
-  // );
 }
 
 const WorkExperiencePage: NextPage = () => {

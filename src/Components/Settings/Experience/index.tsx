@@ -70,14 +70,13 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
       endDate: initialValues?.endDate || undefined,
     },
     onSubmit: async (values) => {
-      // console.log(values);
-      // try {
-      // await Axios.post('/api/settings/workexperience', values);
-      // } catch (e) {
-      //   console.error(e);
-      // }
-      onClose(values as ExperienceFormFields);
+      try {
+        await Axios.post('/api/settings/workexperience', values);
+      } catch (e) {
+        console.error(e);
+      }
       formik.setSubmitting(false);
+      onClose(values as ExperienceFormFields);
     },
     validate: validateForm,
     validateOnChange: true,
