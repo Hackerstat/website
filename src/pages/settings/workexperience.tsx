@@ -62,13 +62,13 @@ function ExperienceSettings() {
     setExperiences([...newExperiences, experience]);
     onClose();
   };
-  console.log(experiences);
-  console.log(currentIndex);
 
   const openWorkExperienceModal = () => {
     setCurrentIndex(null);
     onOpen();
   };
+
+  console.log(currentIndex);
 
   return (
     <AuthLayer>
@@ -93,10 +93,11 @@ function ExperienceSettings() {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent borderRadius={'md'}>
-            <ModalHeader>Add Experience</ModalHeader>
+            <ModalHeader>{typeof currentIndex === 'number' ? 'Edit' : 'Add'} Experience</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <WorkExperienceForm
+                index={currentIndex}
                 onClose={currentIndex !== null ? onFinishEditExperience : onAddExperience}
                 initialValues={startingValues}
               />

@@ -2,15 +2,17 @@ import { MongoClient } from 'mongodb';
 import { IUserProfileData, RetrievedIUserProfileData } from './utils';
 import { NextApiRequest } from 'next';
 import auth0 from './auth';
+import workexperience from '../pages/api/settings/workexperience';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
+
+// TODO: Limit projected values from mongoDB queries.
 
 const URI = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
 
 export const addIntegration = async ({ username, setObject, closeOnCompletion = true }) => {
   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
-  const npmInfo = await client.db('HackerStat').collection('userProfiles').findOne({ username: username });
 
   client
     .db('HackerStat')
@@ -179,4 +181,29 @@ export const getInfo = async (req: NextApiRequest): Promise<RetrievedIUserProfil
     return userInfo.info as RetrievedIUserProfileData;
   }
   return {};
+};
+
+export const updateExperience = async (req: NextApiRequest): Promise<void> => {
+  const { user } = await auth0.getSession(req);
+  const { sub } = user;
+
+  const requestBody = req.body;
+  const { i, ...workExperienceData } = requestBody;
+  const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
+
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
+
+  const setString = `workExperience.${i}`;
+
+  const workExperienceObj = {};
+
+  workExperienceObj[setString] = workExperienceData;
+
+  await client
+    .db('HackerStat')
+    .collection('userProfiles')
+    .updateOne({ authID: sub }, { $set: workExperienceObj }, { useUnifiedTopology: true });
+
+  client.close();
 };

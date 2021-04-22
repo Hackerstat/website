@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { updateExperience } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 
 const USERNAME = process.env.DB_USERNAME;
@@ -48,6 +49,14 @@ export default auth0.requireAuthentication(
         client.close();
 
         res.status(200).send('OK');
+      } catch (e) {
+        console.error(e);
+        res.status(500).send('Server Error');
+      }
+    } else if (req.method === 'PATCH') {
+      try {
+        await updateExperience(req);
+        res.status(204).send('UPDATED');
       } catch (e) {
         console.error(e);
         res.status(500).send('Server Error');
