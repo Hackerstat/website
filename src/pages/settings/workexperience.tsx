@@ -30,6 +30,7 @@ function ExperienceSettings() {
   }
 
   useEffect(() => {
+    console.log('sda');
     Axios.get('/api/settings/workexperience')
       .then((res) => {
         setExperiences(res.data.workExperience || []);
@@ -50,6 +51,11 @@ function ExperienceSettings() {
   };
 
   const onFinishEditExperience = (experience: ExperienceFormFields) => {
+    // Check if index is deleted. Experience will be an empty object.
+    if (Object.keys(experience).length === 0) {
+      deletedWorkExperience();
+      return;
+    }
     setExperiences([...experiences.slice(0, currentIndex), experience, ...experiences.slice(currentIndex + 1)]);
 
     setCurrentIndex(null);
@@ -68,8 +74,15 @@ function ExperienceSettings() {
     onOpen();
   };
 
-  console.log(currentIndex);
+  const deletedWorkExperience = () => {
+    const newExperiences = experiences.slice();
+    newExperiences.splice(currentIndex, 1);
+    setExperiences(newExperiences);
+    setCurrentIndex(null);
+    onClose();
+  };
 
+  console.log('dsadsads' + experiences);
   return (
     <AuthLayer>
       <Flex flexDirection={'column'} width={'100%'}>

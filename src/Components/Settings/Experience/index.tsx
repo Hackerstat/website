@@ -91,7 +91,12 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
       try {
         console.log(values);
         if (typeof index === 'number') {
-          await Axios.patch('/api/settings/workexperience', { ...values, i: index });
+          if (!toBeDeleted) {
+            await Axios.patch('/api/settings/workexperience', { ...values, i: index });
+          } else {
+            await Axios.delete('/api/settings/workexperience', { params: { ...values, i: index } });
+            values = {};
+          }
         } else {
           await Axios.post('/api/settings/workexperience', values);
         }

@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { updateExperience } from '../../../utils/mongo';
+import { updateExperience, deleteExperience } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 
 const USERNAME = process.env.DB_USERNAME;
@@ -57,6 +57,14 @@ export default auth0.requireAuthentication(
       try {
         await updateExperience(req);
         res.status(204).send('UPDATED');
+      } catch (e) {
+        console.error(e);
+        res.status(500).send('Server Error');
+      }
+    } else if (req.method === 'DELETE') {
+      try {
+        await deleteExperience(req);
+        res.status(204).send('DELETED');
       } catch (e) {
         console.error(e);
         res.status(500).send('Server Error');

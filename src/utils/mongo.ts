@@ -1,8 +1,7 @@
 import { MongoClient } from 'mongodb';
-import { IUserProfileData, RetrievedIUserProfileData } from './utils';
+import { IUserProfileData, RetrievedIUserProfileData, UserProfileType, DeleteExperienceParams } from './utils';
 import { NextApiRequest } from 'next';
 import auth0 from './auth';
-import workexperience from '../pages/api/settings/workexperience';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
@@ -11,8 +10,12 @@ const PASSWORD = process.env.DB_PASSWORD;
 
 const URI = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
 
+const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const userProfileRef = (client: MongoClient) => client.db('HackerStat').collection('userProfiles');
+
 export const addIntegration = async ({ username, setObject, closeOnCompletion = true }) => {
-  const client = await MongoClient.connect(URI, { useNewUrlParser: true });
+  const client = await connectToClient();
 
   client
     .db('HackerStat')
@@ -23,7 +26,7 @@ export const addIntegration = async ({ username, setObject, closeOnCompletion = 
         $setOnInsert: { username: username },
         $set: { setObject },
       },
-      { useUnifiedTopology: true, upsert: true },
+      { upsert: true },
     );
 
   if (closeOnCompletion) {
@@ -189,9 +192,8 @@ export const updateExperience = async (req: NextApiRequest): Promise<void> => {
 
   const requestBody = req.body;
   const { i, ...workExperienceData } = requestBody;
-  const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
 
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  const client = await MongoClient.connect(URI, { useNewUrlParser: true });
   await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub });
 
   const setString = `workExperience.${i}`;
@@ -206,4 +208,45 @@ export const updateExperience = async (req: NextApiRequest): Promise<void> => {
     .updateOne({ authID: sub }, { $set: workExperienceObj }, { useUnifiedTopology: true });
 
   client.close();
+};
+
+export const deleteExperience = async (req: NextApiRequest): Promise<void> => {
+  const { user } = await auth0.getSession(req);
+  const { sub } = user;
+
+  const requestQuery = <DeleteExperienceParams>req.query;
+  const { i, ...workExperienceData } = requestQuery;
+
+  const index = parseInt(i);
+
+  const client = await connectToClient();
+
+  const session = client.startSession();
+
+  const setString = `workExperience.${i}`;
+
+  const workExperienceObj = {};
+
+  workExperienceObj[setString] = workExperienceData;
+
+  try {
+    // Making sure that removing a workExperience item is automic.
+    await session.withTransaction(async () => {
+      const userProfile = <UserProfileType>(
+        await client.db('HackerStat').collection('userProfiles').findOne({ authID: sub })
+      );
+
+      userProfile.workExperience.splice(index, 1);
+
+      await client
+        .db('HackerStat')
+        .collection('userProfiles')
+        .updateOne({ authID: sub }, { $set: { workExperience: userProfile.workExperience } });
+    });
+  } catch (err) {
+    throw new Error(err);
+  } finally {
+    session.endSession();
+    client.close();
+  }
 };
