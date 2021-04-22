@@ -14,18 +14,27 @@ import {
   useDisclosure,
   Stack,
 } from '../../../node_modules/@chakra-ui/core';
+import Router from 'next/router';
 import Loader from '../../Components/Loader';
 import WorkExperienceForm, { ExperienceFormFields } from '../../Components/Settings/Experience';
+import AuthLayer from '../../Components/AuthLayer';
 import Experience from '../../Components/Experience';
 import { useFetchUser } from '../../utils/user';
 import Axios from 'axios';
 
 function ExperienceSettings() {
+  const { user, loading } = useFetchUser();
+
+  if (!user && !loading) {
+    Router.replace('/');
+  }
+
   useEffect(() => {
-    Axios.get('/api/settings/workexperience').then((res) => {
-      console.log('asd');
-      setExperiences(res.data.workExperience);
-    });
+    Axios.get('/api/settings/workexperience')
+      .then((res) => {
+        setExperiences(res.data.workExperience);
+      })
+      .catch((e) => console.error(e));
   }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,41 +65,46 @@ function ExperienceSettings() {
   };
 
   return (
-    <Flex flexDirection={'column'} width={'100%'}>
-      <Button onClick={onOpen} leftIcon="add" alignSelf={'flex-end'}>
-        Add Experience
-      </Button>
-      <Stack shouldWrapChildren spacing={3} mt={3}>
-        {!!experiences &&
-          experiences.map((experience, index) => {
-            return (
-              <Experience
-                key={`${experience.companyName}_${experience.position}`}
-                {...experience}
-                onEdit={() => {
-                  onStartEditExperience(experience, index);
-                }}
+    <AuthLayer user={user}>
+      <Flex flexDirection={'column'} width={'100%'}>
+        <Button onClick={onOpen} leftIcon="add" alignSelf={'flex-end'}>
+          Add Experience
+        </Button>
+        <Stack shouldWrapChildren spacing={3} mt={3}>
+          {!!experiences &&
+            experiences.map((experience, index) => {
+              return (
+                <Experience
+                  key={`${experience.companyName}_${experience.position}`}
+                  {...experience}
+                  onEdit={() => {
+                    onStartEditExperience(experience, index);
+                  }}
+                />
+              );
+            })}
+        </Stack>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent borderRadius={'md'}>
+            <ModalHeader>Add Experience</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <WorkExperienceForm
+                onClose={currentIndex !== null ? onFinishEditExperience : onAddExperience}
+                initialValues={startingValues}
               />
-            );
-          })}
-      </Stack>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent borderRadius={'md'}>
-          <ModalHeader>Add Experience</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <WorkExperienceForm
-              onClose={currentIndex !== null ? onFinishEditExperience : onAddExperience}
-              initialValues={startingValues}
-            />
-          </ModalBody>
+            </ModalBody>
 
-          <ModalFooter></ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Flex>
+            <ModalFooter></ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Flex>
+    </AuthLayer>
   );
+  // ) : (
+  //   <></>
+  // );
 }
 
 const WorkExperiencePage: NextPage = () => {

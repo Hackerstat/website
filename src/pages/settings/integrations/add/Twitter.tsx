@@ -6,11 +6,14 @@ import Loader from '../../../../Components/Loader';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
+import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
 const AddTwitterIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/twitter/getUsername').then((res) => setUsername(res.data?.username));
+    Axios.get('/api/twitter/getUsername')
+      .then((res) => setUsername(res.data?.username))
+      .catch((e) => console.error(e));
   }, []);
 
   const [username, setUsername] = useState<string>('');
@@ -88,7 +91,10 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <>
-      <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+      <AuthLayer>
+        <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+      </AuthLayer>
+      ;
     </>
   );
 };

@@ -19,6 +19,7 @@ import {
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import IntegrationTile from '../../../Components/IntegrationTile';
 import Loader from '../../../Components/Loader';
+import AuthLayer from '../../../Components/AuthLayer';
 import SettingsPage from '../../../Components/SettingsPage';
 
 interface Integration {
@@ -118,7 +119,11 @@ const IntegrationsPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage>{mounted ? <Integrations integrations={integrations} /> : <Loader />}</SettingsPage>;
+  return (
+    <SettingsPage>
+      <AuthLayer>{mounted ? <Integrations integrations={integrations} /> : <Loader />}</AuthLayer>
+    </SettingsPage>
+  );
 };
 
 export default IntegrationsPage;

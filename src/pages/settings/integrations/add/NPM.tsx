@@ -10,7 +10,6 @@ import {
   Stack,
   Text,
   FormErrorMessage,
-  Box,
   Grid,
   useToast,
 } from '@chakra-ui/core';
@@ -19,11 +18,12 @@ import Loader from '../../../../Components/Loader';
 import { faNpm } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
-import { HackerFile } from '../../../../types/hackerfile';
-import ExternalLink from '../../../../Components/ExternalLink';
+// import { HackerFile } from '../../../../types/hackerfile';
+// import ExternalLink from '../../../../Components/ExternalLink';
 
-import { Chart } from 'react-charts';
+// import { Chart } from 'react-charts';
 import NPMPackage from '../../../../Components/NPMPackage';
+import AuthLayer from '../../../../Components/AuthLayer';
 
 export interface Package {
   name: string;
@@ -59,7 +59,9 @@ export interface Package {
 
 const AddNPMIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/npm/getUserName').then((val) => setUsername(val.data?.username));
+    Axios.get('/api/npm/getUserName')
+      .then((val) => setUsername(val.data?.username))
+      .catch((e) => console.error(e));
   }, []);
 
   const [username, setUsername] = useState<string>('');
@@ -179,7 +181,11 @@ const IntegrationsPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage>{mounted ? <AddNPMIntegrationPage /> : <Loader />}</SettingsPage>;
+  return (
+    <AuthLayer>
+      <SettingsPage>{mounted ? <AddNPMIntegrationPage /> : <Loader />}</SettingsPage>
+    </AuthLayer>
+  );
 };
 
 export default IntegrationsPage;

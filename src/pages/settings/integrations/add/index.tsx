@@ -18,6 +18,7 @@ import {
   faMedium,
   faBehance,
 } from '@fortawesome/free-brands-svg-icons';
+import AuthLayer from '../../../../Components/AuthLayer';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import IntegrationTile from '../../../../Components/IntegrationTile';
 
@@ -117,7 +118,11 @@ const IntegrationsPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage>{mounted ? <Integrations integrations={integrations} /> : <Loader />}</SettingsPage>;
+  return (
+    <AuthLayer>
+      <SettingsPage>{mounted ? <Integrations integrations={integrations} /> : <Loader />}</SettingsPage>
+    </AuthLayer>
+  );
 };
 
 export default IntegrationsPage;

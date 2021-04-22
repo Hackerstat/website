@@ -11,13 +11,13 @@ import {
   FormErrorMessage,
   useToast,
   Box,
-  Text,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
 interface MediumPostType {
@@ -28,7 +28,9 @@ interface MediumPostType {
 
 const AddMediumIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/Medium/getUsername').then((res) => setUsername(res.data?.username));
+    Axios.get('/api/Medium/getUsername')
+      .then((res) => setUsername(res.data?.username))
+      .catch((e) => console.error(e));
   });
 
   const [username, setUsername] = useState<string>('');
@@ -133,7 +135,10 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <>
-      <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
+      <AuthLayer>
+        <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
+      </AuthLayer>
+      ;
     </>
   );
 };
