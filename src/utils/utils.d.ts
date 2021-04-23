@@ -60,3 +60,44 @@ export interface DeleteExperienceParams {
   i: string;
   [key: string]: string | Array<string>;
 }
+
+export interface HackerFile {
+  /**
+   * Name of the project
+   */
+  name: string;
+  /**
+   * Type of project
+   */
+  type: HackerFileType;
+
+  /**
+   * Description of the project
+   */
+  description?: string;
+
+  /**
+   * Link to an external resource
+   */
+  externalURL?: string;
+
+  /**
+   * Description of the external resource
+   */
+  externalURLDescription?: string;
+
+  images?: Array<ProjectImage>;
+}
+
+export interface FetchGithubYMLRes {
+  result: any;
+  repo: string;
+  user: string;
+  repoURL: string;
+}
+
+export interface FetchMediumArticlesRes {
+  title: string;
+  link: string;
+  date: string;
+}
