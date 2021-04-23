@@ -20,31 +20,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       } else {
         res.status(200).json({ result: false });
       }
-
-      // const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-      // const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-
-      // const possibleUser = await client.db('Atlas').collection('userProfiles').findOne({ username: newUsername });
-
-      // if (!possibleUser) {
-      //   await client
-      //     .db('Atlas')
-      //     .collection('userProfiles')
-      //     .updateOne(
-      //       { authID: sub },
-      //       {
-      //         $setOnInsert: { authID: sub },
-      //         $set: {
-      //           username: newUsername,
-      //         },
-      //       },
-      //       { useUnifiedTopology: true, upsert: true },
-      //     );
-      //   res.status(200).json({ result: true });
-      // } else {
-      //   res.status(200).json({ result: false });
-      // }
-      // client.close();
     } catch (e) {
       console.error(e);
       res.status(500).send('FAIL');

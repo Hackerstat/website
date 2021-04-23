@@ -37,22 +37,23 @@ interface IntegrationSettingsType {
   [key in integrationTypes]: any;
 }
 
-interface workExperience {
-  companyName: string;
-  position: string;
-  startingDate: string;
-  endDate: string;
-  details: string;
+export interface WorkExperienceType {
+  companyName?: string;
+  position?: string;
+  startingDate?: string;
+  endDate?: string;
+  details?: string;
 }
 
 export interface UserProfileType {
   _id: string;
   authID: string;
   integration_settings?: IntegrationSettingsType;
+  integration_cache?: any;
   username: string;
   integrations?: Array<string>;
   info?: RetrievedIUserProfileData;
-  workExperience?: Array<workExperience>;
+  workExperience?: Array<WorkExperienceType>;
 }
 
 export interface DeleteExperienceParams {

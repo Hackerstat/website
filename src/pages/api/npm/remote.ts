@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserSettings } from '../../../utils/getUserSettings';
+import { getRemoteNPM } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 
 const MAX_COUNT = 10;
@@ -65,24 +66,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       returnResults.pop();
 
       if (!passedUsername) {
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        await client
-          .db('Atlas')
-          .collection('userProfiles')
-          .updateOne(
-            { authID: sub },
-            {
-              $setOnInsert: { authID: sub, username: name },
-              $set: {
-                'integration_settings.npm.username': username,
-                'integration_cache.npm.packages': packageNames,
-              },
-            },
-            { useUnifiedTopology: true, upsert: true },
-          );
-        // perform actions on the collection object
-        client.close();
+        await getRemoteNPM(req, username, packageNames);
       }
 
       res.status(200).json(returnResults);
