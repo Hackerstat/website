@@ -68,7 +68,9 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
         >
           Get Tweets
         </Button>
-        {twitterName && <TwitterCard screenName={username} />}
+        <Flex w="100%" justifyContent="center">
+          {twitterName && <TwitterCard screenName={username} />}
+        </Flex>
         <Button
           isDisabled={fetchingHackerFile || !username}
           onClick={() => {
@@ -94,7 +96,6 @@ const IntegrationsPage: NextPage = () => {
       <AuthLayer>
         <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
       </AuthLayer>
-      ;
     </>
   );
 };

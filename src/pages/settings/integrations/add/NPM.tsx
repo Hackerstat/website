@@ -18,10 +18,6 @@ import Loader from '../../../../Components/Loader';
 import { faNpm } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
-// import { HackerFile } from '../../../../types/hackerfile';
-// import ExternalLink from '../../../../Components/ExternalLink';
-
-// import { Chart } from 'react-charts';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
 

@@ -28,7 +28,7 @@ const TwitterCard = ({ screenName }) => {
   }, []);
 
   return (
-    <Card mt={2} maxH={'lg'} height={'100%'} maxW={'md'}>
+    <Card mt={2} maxH={'lg'} height={'100%'} maxW={'lg'}>
       <TwitterTimelineEmbed
         sourceType="profile"
         screenName={screenName}

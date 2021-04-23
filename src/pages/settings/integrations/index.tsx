@@ -73,7 +73,7 @@ const integrations: Array<Integration> = [
   {
     name: 'Stack OverFlow',
     icon: faStackOverflow,
-    disabled: true,
+    link: 'StackOverflow',
   },
   {
     name: 'DockerHub',
