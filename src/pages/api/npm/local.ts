@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { getLocalNPM } from '../../../utils/mongo';
+import { HTTPCode } from '../../../utils/constants';
 
 export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
@@ -10,10 +11,10 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       // } = req;
 
       const npmLocalRes = await getLocalNPM(req);
-      res.status(200).json(npmLocalRes);
+      res.status(HTTPCode.OK).json(npmLocalRes);
     } catch (e) {
       console.error(e);
-      res.status(500).send('Server Error');
+      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
     }
   }
 });

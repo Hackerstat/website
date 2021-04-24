@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserSettings } from '../../../utils/getUserSettings';
 import { getRemoteNPM } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
+import { HTTPCode } from '../../../utils/constants';
 
 const MAX_COUNT = 10;
 
@@ -69,10 +70,10 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         await getRemoteNPM(req, username, packageNames);
       }
 
-      res.status(200).json(returnResults);
+      res.status(HTTPCode.OK).json(returnResults);
     } catch (e) {
       console.log(e);
-      res.status(400).send('FAIL');
+      res.status(HTTPCode.BAD_REQUEST).send('FAIL');
     }
   }
 });

@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../utils/auth';
+import { HTTPCode } from '../../utils/constants';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
@@ -21,6 +22,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     }
   } catch (e) {
     console.error(e);
-    res.status(500).send('FAIL');
+    res.status(HTTPCode.SERVER_ERROR).send('FAIL');
   }
 });

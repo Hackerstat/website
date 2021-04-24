@@ -1,3 +1,4 @@
+import { HTTPCode } from '../../utils/constants';
 import auth0 from '../../utils/auth';
 
 export default auth0.requireAuthentication(async function me(req, res) {
@@ -5,9 +6,9 @@ export default auth0.requireAuthentication(async function me(req, res) {
     console.log(req);
     const { user } = await auth0.getSession(req);
     console.log(user);
-    res.status(200).json(user);
+    res.status(HTTPCode.OK).json(user);
   } catch (error) {
     console.error(error);
-    res.status(error.status || 500).end(error.message);
+    res.status(error.status || HTTPCode.SERVER_ERROR).end(error.message);
   }
 });

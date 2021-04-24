@@ -1,12 +1,10 @@
-import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { remoteGithub } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 import { getUserSettings } from '../../../utils/getUserSettings';
+import { HTTPCode } from '../../../utils/constants';
 
 const API_KEY = process.env.GITHUB_API_KEY;
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
 
 const createQuery = (username) => {
   return `query {
@@ -68,9 +66,9 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
 
     await remoteGithub(req, username, response);
 
-    res.status(200).json(response);
+    res.status(HTTPCode.OK).json(response);
   } catch (e) {
     console.error(e);
-    res.status(500).send('Server Error');
+    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
   }
 });

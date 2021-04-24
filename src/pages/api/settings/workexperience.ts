@@ -1,39 +1,47 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
+import { HTTPCode } from '../../../utils/constants';
 
 export default auth0.requireAuthentication(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (req.method === 'GET') {
       try {
         const workExperience = await retrieveWorkExperience(req);
-        res.status(200).json({ workExperience: workExperience });
+        res.status(HTTPCode.OK).json({ workExperience: workExperience });
       } catch (e) {
-        res.status(500).send('Server Error');
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
     } else if (req.method === 'POST') {
       try {
         await addWorkExperience(req);
-        res.status(200).send('OK');
+        res.status(HTTPCode.OK).send('OK');
+        return;
       } catch (e) {
         console.error(e);
-        res.status(500).send('Server Error');
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
     } else if (req.method === 'PATCH') {
       try {
         await updateExperience(req);
-        res.status(204).send('UPDATED');
+        res.status(HTTPCode.OK).send('UPDATED');
+        return;
       } catch (e) {
         console.error(e);
-        res.status(500).send('Server Error');
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
     } else if (req.method === 'DELETE') {
       try {
         await deleteExperience(req);
-        res.status(204).send('DELETED');
+        res.status(HTTPCode.DELETED).send('DELETED');
+        return;
       } catch (e) {
         console.error(e);
-        res.status(500).send('Server Error');
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
     }
   },
