@@ -1,7 +1,6 @@
-import { MongoClient } from 'mongodb';
-import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserSettings } from '../../../utils/getUserSettings';
+import { checkStackOverflowUsernameValidator } from '../../../utils/validation';
+import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs/fetchStackOverflow';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -10,9 +9,11 @@ import auth0 from '../../../utils/auth';
  * }
  */
 export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     try {
-      res.status(200).send('CREATED');
+      await checkStackOverflowUsernameValidator(req.query);
+      const stackOverflowData = await fetchStackOverflowInfo(req);
+      res.status(200).json(stackOverflowData);
     } catch (e) {
       console.error(e);
       res.status(400).send('FAIL');

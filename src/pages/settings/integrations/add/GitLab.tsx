@@ -18,6 +18,7 @@ import AuthLayer from '../../../../Components/AuthLayer';
 import { faGitlab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
+import { goodToast, badToast } from '../../../../utils/constants';
 import { HackerFile } from '../../../../types/hackerfile';
 import ExternalLink from '../../../../Components/ExternalLink';
 
@@ -70,17 +71,9 @@ const AddGitHubIntegrationPage: FunctionComponent = () => {
         integrationType: 'gitlab',
         settings: { [`${repo.user}+${repo.repo}`]: repoURL },
       });
-      toast({
-        title: 'Added Integration',
-        status: 'success',
-        description: 'We added this integration to your account',
-      });
+      toast(goodToast as unknown);
     } catch (err) {
-      toast({
-        title: 'Something Went Wrong',
-        status: 'error',
-        description: 'Could not add integration to your account. Please try again later.',
-      });
+      toast(badToast as unknown);
     }
   };
 

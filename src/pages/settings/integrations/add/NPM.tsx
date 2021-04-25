@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
+import { goodToast, badToast } from '../../../../utils/constants';
 
 export interface Package {
   name: string;
@@ -105,17 +106,9 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         integrationType: 'npm',
         settings: { username: username },
       });
-      toast({
-        title: 'Added Integration',
-        status: 'success',
-        description: 'We added this integration to your account',
-      });
+      toast(goodToast as unknown);
     } catch (err) {
-      toast({
-        title: 'Something Went Wrong',
-        status: 'error',
-        description: 'Could not add integration to your account. Please try again later.',
-      });
+      toast(badToast as unknown);
     }
   };
 

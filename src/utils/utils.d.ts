@@ -101,3 +101,21 @@ export interface FetchMediumArticlesRes {
   link: string;
   date: string;
 }
+
+interface Badges {
+  gold: number;
+  silver: number;
+  bronze: number;
+}
+
+interface Tag {
+  name: string;
+  answerScore: number;
+  questionScore: number;
+}
+
+export interface fetchStackOverflowInfoRes {
+  reputation: number;
+  badges: Badges;
+  topTags: Array<Tag>;
+}

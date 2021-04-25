@@ -4,3 +4,21 @@ export const HTTPCode = {
   BAD_REQUEST: 400,
   SERVER_ERROR: 500,
 };
+
+export const STACKOVERFLOW_URL_USER = (userID: string): string =>
+  `https://api.stackexchange.com/2.2/users/${userID}?order=desc&sort=reputation&site=stackoverflow`;
+
+export const STACKOVERFLOW_URL_TAGS = (userID: string): string =>
+  `https://api.stackexchange.com/2.2/users/${userID}/top-tags?page=1&pagesize=5&site=stackoverflow`;
+
+export const badToast = {
+  title: 'Something Went Wrong',
+  status: 'error',
+  description: 'Could not add integration to your account. Please try again later.',
+};
+
+export const goodToast = {
+  title: 'Added Integration',
+  status: 'success',
+  description: 'We added this integration to your account',
+};

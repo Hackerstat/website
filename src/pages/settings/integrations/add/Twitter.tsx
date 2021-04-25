@@ -1,12 +1,23 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Input, FormLabel, FormControl, Heading, Button, Stack, FormErrorMessage } from '@chakra-ui/core';
+import {
+  Flex,
+  Input,
+  FormLabel,
+  FormControl,
+  Heading,
+  Button,
+  Stack,
+  FormErrorMessage,
+  useToast,
+} from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
 import AuthLayer from '../../../../Components/AuthLayer';
+import { goodToast, badToast } from '../../../../utils/constants';
 import Axios from 'axios';
 
 const AddTwitterIntegrationPage: FunctionComponent = () => {
@@ -20,6 +31,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
   const [fetchError, setFetchError] = useState<string>();
   const [twitterName, setTwitterName] = useState<string>('');
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
+  const toast = useToast();
 
   const setTwitterUsername = async (username: string) => {
     try {
@@ -35,10 +47,15 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
   };
 
   const addTwitterToAccount = async (username: string) => {
-    await Axios.post('/api/integration', {
-      integrationType: 'twitter',
-      settings: { username: username },
-    });
+    try {
+      await Axios.post('/api/integration', {
+        integrationType: 'twitter',
+        settings: { username: username },
+      });
+      toast(goodToast as unknown);
+    } catch (e) {
+      toast(badToast as unknown);
+    }
   };
 
   return (

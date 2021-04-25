@@ -17,6 +17,7 @@ import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { goodToast, badToast } from '../../../../utils/constants';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
@@ -64,17 +65,9 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         integrationType: 'medium',
         settings: { username: username },
       });
-      toast({
-        title: 'Added Integration',
-        status: 'success',
-        description: 'We added this integration to your account',
-      });
+      toast(goodToast as unknown);
     } catch (err) {
-      toast({
-        title: 'Something Went Wrong',
-        status: 'error',
-        description: 'Could not add integration to your account. Please try again later.',
-      });
+      toast(badToast as unknown);
     }
   };
 
