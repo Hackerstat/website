@@ -1,3 +1,4 @@
+import { HTTPCode } from '../../utils/constants';
 import faker from 'faker';
 
 export default async (req, res) => {
@@ -20,7 +21,7 @@ export default async (req, res) => {
     });
   }
 
-  res.status(200).json({
+  res.status(HTTPCode.OK).json({
     users: r,
   });
 };

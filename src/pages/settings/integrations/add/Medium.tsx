@@ -8,36 +8,51 @@ import {
   Heading,
   Button,
   Stack,
-  Text,
   FormErrorMessage,
-  Box,
-  Grid,
   useToast,
+  Box,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
+import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
-import { faNpm, faTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
+import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
-const AddMediumIntegrationPage: FunctionComponent = () => {
-  const [username, setUsername] = useState<string>();
-  const [fetchError, setFetchError] = useState<string>();
+interface MediumPostType {
+  title: string;
+  date: string;
+  link: string;
+}
 
-  const [twitterName, setTwitterName] = useState();
+const AddMediumIntegrationPage: FunctionComponent = () => {
+  useEffect(() => {
+    Axios.get('/api/Medium/getUsername')
+      .then((res) => setUsername(res.data?.username))
+      .catch((e) => console.error(e));
+  });
+
+  const [username, setUsername] = useState<string>('');
+  const [fetchError, setFetchError] = useState<string>();
+  const [mediumPosts, setMediumPosts] = useState<Array<MediumPostType>>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
   const toast = useToast();
 
-  const CheckForHackerStatFile = async (username) => {
+  // TODO: Retrieve Medium Posts.
+  const CheckForHackerStatFile = async (username: string) => {
     try {
       if (!username) {
         setFetchError('Required');
         return;
       }
+      const mediumArticles = await Axios.get('/api/Medium/fetchArticles', {
+        params: { user: username },
+      });
 
-      setTwitterName(username);
+      setMediumPosts(mediumArticles?.data?.articles.slice());
     } catch (err) {
       console.log(err);
     }
@@ -72,7 +87,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Medium Username</FormLabel>
-          <Input placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
+          <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
         <Button
@@ -91,6 +106,13 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
           Get Posts
         </Button>
 
+        {mediumPosts
+          ? mediumPosts.map((post) => (
+              <Box key={post.title}>
+                <MediumArticle {...post} />
+              </Box>
+            ))
+          : ''}
         <Button
           isDisabled={fetchingHackerFile}
           onClick={() => {
@@ -113,7 +135,10 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <>
-      <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
+      <AuthLayer>
+        <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
+      </AuthLayer>
+      ;
     </>
   );
 };

@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
+import AuthLayer from '../../../../Components/AuthLayer';
 import { faGitlab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
@@ -158,7 +159,11 @@ const IntegrationsPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage>{mounted ? <AddGitHubIntegrationPage /> : <Loader />}</SettingsPage>;
+  return (
+    <AuthLayer>
+      <SettingsPage>{mounted ? <AddGitHubIntegrationPage /> : <Loader />}</SettingsPage>
+    </AuthLayer>
+  );
 };
 
 export default IntegrationsPage;

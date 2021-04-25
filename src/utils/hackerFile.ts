@@ -1,6 +1,6 @@
-const validTypes = ['project'];
+const validTypes = ['project', 'website'];
 const verifyType = (typeField: string): boolean => {
-  return validTypes.includes(typeField);
+  return validTypes.includes(typeField.toLowerCase());
 };
 
 const stripQueryParameters = (url: string): string => {

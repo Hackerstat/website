@@ -1,6 +1,17 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { FormControl, FormLabel, Input, FormErrorMessage, Checkbox, Stack, Button, Textarea } from '@chakra-ui/core';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Checkbox,
+  Stack,
+  Button,
+  Textarea,
+  Flex,
+} from '@chakra-ui/core';
+import Axios from 'axios';
 
 export interface ExperienceFormFields {
   companyName: string;
@@ -14,15 +25,28 @@ type validationErrors = {
   [P in keyof ExperienceFormFields]?: string;
 };
 
+type IndexType = number | null | undefined;
+
 const FormWidth = ['min(800px, 90vw)', 'sm', 'xs'];
 
 interface ExperienceProps {
   initialValues?: Partial<ExperienceFormFields>;
   onClose?: (experience: ExperienceFormFields) => void;
+  index: number | null | undefined;
 }
 
-const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose }) => {
+const checkIndex = (index: IndexType) => typeof index === 'number';
+
+const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose, index }) => {
+  useEffect(() => {
+    const abortController = new AbortController();
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
   const [isCurrentPosition, setIsCurrentPosition] = useState(false);
+  const [toBeDeleted, setToBeDeleted] = useState(false);
 
   const validateForm = (values: Partial<ExperienceFormFields>) => {
     const errors: validationErrors = {};
@@ -53,22 +77,40 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
 
     return errors;
   };
+  console.log(initialValues);
 
   const formik = useFormik({
     initialValues: {
-      companyName: initialValues?.companyName || '',
-      position: initialValues?.position || '',
-      startingDate: initialValues?.startingDate || undefined,
-      endDate: initialValues?.endDate || undefined,
+      companyName: checkIndex(index) ? initialValues?.companyName : '',
+      position: checkIndex(index) ? initialValues?.position : '',
+      startingDate: checkIndex(index) ? initialValues?.startingDate : undefined,
+      endDate: checkIndex(index) ? initialValues?.endDate : undefined,
+      details: checkIndex(index) ? initialValues?.details : '',
     },
-    onSubmit: (values) => {
-      onClose(values as ExperienceFormFields);
+    onSubmit: async (values) => {
+      try {
+        console.log(values);
+        if (typeof index === 'number') {
+          if (!toBeDeleted) {
+            await Axios.patch('/api/settings/workexperience', { ...values, i: index });
+          } else {
+            await Axios.delete('/api/settings/workexperience', { params: { ...values, i: index } });
+            values = {};
+          }
+        } else {
+          await Axios.post('/api/settings/workexperience', values);
+        }
+      } catch (e) {
+        console.error(e);
+      }
       formik.setSubmitting(false);
+      onClose(values as ExperienceFormFields);
     },
     validate: validateForm,
     validateOnChange: true,
   });
 
+  // TODO: Add starting value for dates when edits experience and add editing for experience.
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -149,9 +191,22 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
           <FormErrorMessage>{formik.errors.details}</FormErrorMessage>
         </FormControl>
       </Stack>
-      <Button textAlign={'right'} mt={'2em'} variantColor="teal" isLoading={formik.isSubmitting} type="submit">
-        Done
-      </Button>
+      <Flex justifyContent="space-between">
+        <Button textAlign={'right'} mt={'2em'} variantColor="teal" isLoading={formik.isSubmitting} type="submit">
+          Done
+        </Button>
+        <Button
+          _hover={{ backgroundColor: 'red.700' }}
+          textAlign={'right'}
+          mt={'2em'}
+          backgroundColor="red.600"
+          isLoading={formik.isSubmitting}
+          type="submit"
+          onClick={() => setToBeDeleted(true)}
+        >
+          Delete
+        </Button>
+      </Flex>
     </form>
   );
 };

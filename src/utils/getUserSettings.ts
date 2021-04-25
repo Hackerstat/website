@@ -12,10 +12,11 @@ export const getUserSettings = async (
   const { user } = await auth0.getSession(req);
   const { sub } = user;
 
-  const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
+  const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
+
   const client = await MongoClient.connect(uri, { useNewUrlParser: true });
   const integrationUsername = await client
-    .db('Atlas')
+    .db('HackerStat')
     .collection('userProfiles')
     .findOne({ authID: sub }, { [`integration_settings.${integrationType}`]: 1 });
 

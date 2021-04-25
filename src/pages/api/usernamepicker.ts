@@ -1,33 +1,35 @@
-import { MongoClient } from 'mongodb';
+import { HTTPCode } from '../../utils/constants';
+import { usernameCheckerAPI } from './../../utils/mongo';
+import { userNameCheckerQueryValidator } from '../../utils/validation';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
-
-export default async function usernameChecker(req: NextApiRequest, res: NextApiResponse) {
+export default async function usernameChecker(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {
-      const { newUsername } = req.query;
-
-      if (!newUsername) {
-        res.status(400).send('You need to provide a username');
-        return;
+      await userNameCheckerQueryValidator(req.query);
+    } catch ({ message }) {
+      res.status(HTTPCode.BAD_REQUEST).send(message);
+      return;
+    }
+    try {
+      const possibleUser = await usernameCheckerAPI(req);
+      switch (possibleUser.m) {
+        case 'true':
+          res.status(HTTPCode.OK).json({ result: true });
+          break;
+        case 'false':
+          res.status(HTTPCode.OK).json({ result: false });
+          break;
+        case 'You need to provide a username':
+          res.status(HTTPCode.BAD_REQUEST).send(possibleUser.m);
+          break;
+        default:
+          console.error('Should not be possible to be here');
+          break;
       }
-
-      const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-      const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-
-      const possibleUser = await client.db('Atlas').collection('userProfiles').findOne({ username: newUsername });
-
-      if (!possibleUser) {
-        res.status(200).json({ result: true });
-      } else {
-        res.status(200).json({ result: false });
-      }
-      client.close();
     } catch (e) {
       console.error(e);
-      res.status(500).send('FAIL');
+      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
     }
   }
 }

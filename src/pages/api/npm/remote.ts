@@ -3,7 +3,9 @@ import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUserSettings } from '../../../utils/getUserSettings';
+import { getRemoteNPM } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
+import { HTTPCode } from '../../../utils/constants';
 
 const MAX_COUNT = 10;
 
@@ -31,7 +33,8 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       const { username: passedUsername } = req.query;
 
       const { username } = await getUserSettings(req, 'npm');
-      const packages = await retrievePackagesFromUser(passedUsername || username);
+      console.log(username);
+      const packages = await retrievePackagesFromUser(passedUsername);
       const packageInfo = [];
       const returnResults = [];
 
@@ -64,30 +67,13 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       returnResults.pop();
 
       if (!passedUsername) {
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        await client
-          .db('Atlas')
-          .collection('userProfiles')
-          .updateOne(
-            { authID: sub },
-            {
-              $setOnInsert: { authID: sub, username: name },
-              $set: {
-                'integration_settings.npm.username': username,
-                'integration_cache.npm.packages': packageNames,
-              },
-            },
-            { useUnifiedTopology: true, upsert: true },
-          );
-        // perform actions on the collection object
-        client.close();
+        await getRemoteNPM(req, username, packageNames);
       }
 
-      res.status(200).json(returnResults);
+      res.status(HTTPCode.OK).json(returnResults);
     } catch (e) {
       console.log(e);
-      res.status(400).send('FAIL');
+      res.status(HTTPCode.BAD_REQUEST).send('FAIL');
     }
   }
 });

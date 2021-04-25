@@ -16,6 +16,7 @@ import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 import { HackerFile } from '../../../../types/hackerfile';
 import ExternalLink from '../../../../Components/ExternalLink';
@@ -84,70 +85,72 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faGithub} size={'3x'} />
-        <Heading ml={3}>GitHub</Heading>
-      </Flex>
-      <Stack spacing={3}>
-        <Text>
-          {
-            "You'll need to create a .hacker.yml in the root of your repo with the information you'd like to display about this project"
-          }
-        </Text>
-        <FormControl isInvalid={!!fetchError}>
-          <FormLabel>Git Repo URL</FormLabel>
-          <Input placeholder={'URL'} onChange={(e) => setRepoURL(e.target.value)} />
-          <FormErrorMessage>{fetchError}</FormErrorMessage>
-        </FormControl>
-        <Button
-          isLoading={fetchingHackerFile}
-          onClick={() => {
-            setFetchingHackerFile(true);
-            try {
-              CheckForHackerStatFile(repoURL);
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setFetchingHackerFile(false);
-            }
-          }}
-        >
-          Check Repo
-        </Button>
-        <Flex alignItems={'center'}>
-          <FontAwesomeIcon icon={faGithub} size={'1x'} />
-          <ExternalLink
-            ml={2}
-            href={repoInfo?.repoURL || undefined}
-            isDisabled={!repoInfo?.repoURL}
-            fontWeight={'bold'}
-          >
-            {repoInfo?.repo || '_______'}
-          </ExternalLink>
+    <AuthLayer>
+      <Flex width={'100%'} flexDirection={'column'}>
+        <Flex mb={4}>
+          <FontAwesomeIcon icon={faGithub} size={'3x'} />
+          <Heading ml={3}>GitHub</Heading>
         </Flex>
-        <Text
-          backgroundColor={'gray.900'}
-          padding={3}
-          borderRadius={'lg'}
-          color={'white'}
-          fontWeight={'bold'}
-          fontFamily={'mono'}
-          width={'100%'}
-          whiteSpace={'pre'}
-        >
-          {JSON.stringify(repoInfo?.result || {}, null, '\t')}
-        </Text>
-        <Button
-          isDisabled={!repoInfo || fetchingHackerFile}
-          onClick={() => {
-            addProjectToAccount(repoInfo);
-          }}
-        >
-          Add Repo
-        </Button>
-      </Stack>
-    </Flex>
+        <Stack spacing={3}>
+          <Text>
+            {
+              "You'll need to create a .hacker.yml in the root of your repo with the information you'd like to display about this project"
+            }
+          </Text>
+          <FormControl isInvalid={!!fetchError}>
+            <FormLabel>Git Repo URL</FormLabel>
+            <Input placeholder={'URL'} onChange={(e) => setRepoURL(e.target.value)} />
+            <FormErrorMessage>{fetchError}</FormErrorMessage>
+          </FormControl>
+          <Button
+            isLoading={fetchingHackerFile}
+            onClick={() => {
+              setFetchingHackerFile(true);
+              try {
+                CheckForHackerStatFile(repoURL);
+              } catch (err) {
+                console.log(err);
+              } finally {
+                setFetchingHackerFile(false);
+              }
+            }}
+          >
+            Check Repo
+          </Button>
+          <Flex alignItems={'center'}>
+            <FontAwesomeIcon icon={faGithub} size={'1x'} />
+            <ExternalLink
+              ml={2}
+              href={repoInfo?.repoURL || undefined}
+              isDisabled={!repoInfo?.repoURL}
+              fontWeight={'bold'}
+            >
+              {repoInfo?.repo || '_______'}
+            </ExternalLink>
+          </Flex>
+          <Text
+            backgroundColor={'gray.900'}
+            padding={3}
+            borderRadius={'lg'}
+            color={'white'}
+            fontWeight={'bold'}
+            fontFamily={'mono'}
+            width={'100%'}
+            whiteSpace={'pre'}
+          >
+            {JSON.stringify(repoInfo?.result || {}, null, '\t')}
+          </Text>
+          <Button
+            isDisabled={!repoInfo || fetchingHackerFile}
+            onClick={() => {
+              addProjectToAccount(repoInfo);
+            }}
+          >
+            Add Repo
+          </Button>
+        </Stack>
+      </Flex>
+    </AuthLayer>
   );
 };
 

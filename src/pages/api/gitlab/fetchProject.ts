@@ -2,6 +2,7 @@ import YAML from 'yaml';
 import Axios from 'axios';
 import { verifyType, stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
 import { HackerFile } from '../../../types/hackerfile';
+import { HTTPCode } from '../../../utils/constants';
 
 // https://raw.githubusercontent.com/LouisIV/next-starter/master/.hacker.yml
 // https://github.com/LouisIV/next-starter/blob/master/.hacker.yml
@@ -68,10 +69,12 @@ export default async (req, res) => {
       }
     }
 
-    res.status(200).json({ result: file, repo: repo, user: user, repoURL: `https://gitlab.com/${user}/${repo}` });
+    res
+      .status(HTTPCode.OK)
+      .json({ result: file, repo: repo, user: user, repoURL: `https://gitlab.com/${user}/${repo}` });
   } catch (err) {
     if (err.name === 'YAMLSyntaxError') {
-      res.status(400).json({ error: 'Was not a valid YAML file' });
+      res.status(HTTPCode.SERVER_ERROR).json({ error: 'Was not a valid YAML file' });
     }
   }
 };

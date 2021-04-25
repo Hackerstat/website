@@ -1,3 +1,4 @@
+import { HTTPCode } from '../../utils/constants';
 import auth0 from '../../utils/auth';
 
 export default async function logout(req, res) {
@@ -5,6 +6,6 @@ export default async function logout(req, res) {
     await auth0.handleLogout(req, res);
   } catch (error) {
     console.error(error);
-    res.status(error.status || 500).end(error.message);
+    res.status(error.status || HTTPCode.SERVER_ERROR).end(error.message);
   }
 }

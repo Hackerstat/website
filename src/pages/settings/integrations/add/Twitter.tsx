@@ -6,15 +6,22 @@ import Loader from '../../../../Components/Loader';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
+import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
 const AddTwitterIntegrationPage: FunctionComponent = () => {
-  const [username, setUsername] = useState<string>();
+  useEffect(() => {
+    Axios.get('/api/twitter/getUsername')
+      .then((res) => setUsername(res.data?.username))
+      .catch((e) => console.error(e));
+  }, []);
+
+  const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
-  const [twitterName, setTwitterName] = useState();
+  const [twitterName, setTwitterName] = useState<string>('');
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
 
-  const setTwitterUsername = async (username) => {
+  const setTwitterUsername = async (username: string) => {
     try {
       if (!username) {
         setFetchError('Required');
@@ -27,7 +34,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
     }
   };
 
-  const addTwitterToAccount = async (username) => {
+  const addTwitterToAccount = async (username: string) => {
     await Axios.post('/api/integration', {
       integrationType: 'twitter',
       settings: { username: username },
@@ -43,7 +50,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Twitter Username</FormLabel>
-          <Input placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
+          <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
         <Button
@@ -84,7 +91,10 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <>
-      <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+      <AuthLayer>
+        <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+      </AuthLayer>
+      ;
     </>
   );
 };

@@ -13,13 +13,11 @@ import {
   Button,
 } from '@chakra-ui/core';
 import { NextPage } from 'next';
+import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
-import { useFetchUser } from '../../utils/user';
 
 const UsernameSettingsPage = () => {
-  const { user } = useFetchUser();
-
   const [currentUsername, setCurrentUsername] = useState<string>();
   const [username, setUsername] = useState<string>();
 
@@ -35,10 +33,12 @@ const UsernameSettingsPage = () => {
 
   // Get the current username
   useEffect(() => {
-    getCurrentUsername().then((fetchedUsername) => {
-      setCurrentUsername(fetchedUsername);
-      setUsername(fetchedUsername);
-    });
+    getCurrentUsername()
+      .then((fetchedUsername) => {
+        setCurrentUsername(fetchedUsername);
+        setUsername(fetchedUsername);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   const toast = useToast();
@@ -70,7 +70,6 @@ const UsernameSettingsPage = () => {
       return false;
     } finally {
       setSettingUsername(false);
-      await Axios.post('/api/settings/picture', { newPicture: user.picture });
     }
   };
 
@@ -114,39 +113,45 @@ const UsernameSettingsPage = () => {
   );
 
   return (
-    <Flex flexDirection={'column'} width={'100%'}>
-      <InputGroup>
-        <Input placeholder={'username'} defaultValue={currentUsername} onChange={(e) => setUsername(e.target.value)} />
-        <InputRightElement>
-          {checkingUsername ? (
-            <Spinner />
-          ) : username !== currentUsername ? (
-            usernameAvailable ? (
-              <Icon name="check" color="green.500" />
-            ) : (
-              <Icon name="close" color="red.500" />
-            )
-          ) : null}
-        </InputRightElement>
-      </InputGroup>
-      <FormHelperText>
-        {checkingUsername || username === currentUsername
-          ? null
-          : usernameAvailable
-          ? `${username} is available!`
-          : "It looks like that username isn't available"}
-      </FormHelperText>
-      <Button
-        mt={3}
-        isDisabled={checkingUsername || !usernameAvailable}
-        isLoading={checkingUsername || settingUsername}
-        onClick={() => {
-          updateUsername(username);
-        }}
-      >
-        Change Username
-      </Button>
-    </Flex>
+    <AuthLayer>
+      <Flex flexDirection={'column'} width={'100%'}>
+        <InputGroup>
+          <Input
+            placeholder={'username'}
+            defaultValue={currentUsername}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <InputRightElement>
+            {checkingUsername ? (
+              <Spinner />
+            ) : username !== currentUsername ? (
+              usernameAvailable ? (
+                <Icon name="check" color="green.500" />
+              ) : (
+                <Icon name="close" color="red.500" />
+              )
+            ) : null}
+          </InputRightElement>
+        </InputGroup>
+        <FormHelperText>
+          {checkingUsername || username === currentUsername
+            ? null
+            : usernameAvailable
+            ? `${username} is available!`
+            : "It looks like that username isn't available"}
+        </FormHelperText>
+        <Button
+          mt={3}
+          isDisabled={checkingUsername || !usernameAvailable}
+          isLoading={checkingUsername || settingUsername}
+          onClick={() => {
+            updateUsername(username);
+          }}
+        >
+          Change Username
+        </Button>
+      </Flex>
+    </AuthLayer>
   );
 };
 

@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { Flex, Grid } from '@chakra-ui/core';
 import SettingsPage from '../../../Components/SettingsPage';
 import Loader from '../../../Components/Loader';
+import AuthLayer from '../../../Components/AuthLayer';
 
 import { faGitlab, faGithub, faNpm } from '@fortawesome/free-brands-svg-icons';
 import IntegrationTile from '../../../Components/IntegrationTile';
@@ -27,7 +28,11 @@ const IntegrationsPage: NextPage = () => {
     setMounted(true);
   }, []);
 
-  return <SettingsPage>{mounted ? <Integrations /> : <Loader />}</SettingsPage>;
+  return (
+    <AuthLayer>
+      <SettingsPage>{mounted ? <Integrations /> : <Loader />}</SettingsPage>
+    </AuthLayer>
+  );
 };
 
 export default IntegrationsPage;

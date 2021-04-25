@@ -1,50 +1,51 @@
-import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
+import { addWorkExperienceValidator, updateWorkExperienceValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
-
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
+import { HTTPCode } from '../../../utils/constants';
 
 export default auth0.requireAuthentication(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     if (req.method === 'GET') {
       try {
-        const { user } = await auth0.getSession(req);
-        const { sub } = user;
-
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        const workExperience = await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
-        client.close();
-
-        res.status(200).json({ workExperience: workExperience });
+        const workExperience = await retrieveWorkExperience(req);
+        res.status(HTTPCode.OK).json({ workExperience: workExperience });
       } catch (e) {
-        res.status(500).send('Server Error');
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
-    } else if (req.method == 'POST') {
+    } else if (req.method === 'POST') {
       try {
-        const { user } = await auth0.getSession(req);
-        const { sub } = user;
-
-        const workExperienceData = req.body;
-        const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;
-
-        const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-        await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
-        client.close();
-
-        await client
-          .db('Atlas')
-          .collection('userProfiles')
-          .updateOne(
-            { authID: sub },
-            { $setOnInsert: { authID: sub }, $set: { workExperience: workExperienceData } },
-            { useUnifiedTopology: true, upsert: true },
-          );
-
-        res.status(200).send('OK');
+        await addWorkExperienceValidator(req.body);
+        await addWorkExperience(req);
+        res.status(HTTPCode.OK).send('OK');
+        return;
       } catch (e) {
-        res.status(500).send('Server Error');
+        console.error(e);
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
+      }
+    } else if (req.method === 'PATCH') {
+      try {
+        await updateWorkExperienceValidator(req.body);
+        await updateExperience(req);
+        res.status(HTTPCode.OK).send('UPDATED');
+        return;
+      } catch (e) {
+        console.error(e);
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
+      }
+    } else if (req.method === 'DELETE') {
+      try {
+        await updateWorkExperienceValidator(req.query);
+        await deleteExperience(req);
+        res.status(HTTPCode.DELETED).send('DELETED');
+        return;
+      } catch (e) {
+        console.error(e);
+        res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+        return;
       }
     }
   },
