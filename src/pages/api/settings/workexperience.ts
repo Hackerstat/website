@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
+import { addWorkExperienceValidator, updateWorkExperienceValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
 import { HTTPCode } from '../../../utils/constants';
 
@@ -15,6 +16,7 @@ export default auth0.requireAuthentication(
       }
     } else if (req.method === 'POST') {
       try {
+        await addWorkExperienceValidator(req.body);
         await addWorkExperience(req);
         res.status(HTTPCode.OK).send('OK');
         return;
@@ -25,6 +27,7 @@ export default auth0.requireAuthentication(
       }
     } else if (req.method === 'PATCH') {
       try {
+        await updateWorkExperienceValidator(req.body);
         await updateExperience(req);
         res.status(HTTPCode.OK).send('UPDATED');
         return;
@@ -35,6 +38,7 @@ export default auth0.requireAuthentication(
       }
     } else if (req.method === 'DELETE') {
       try {
+        await updateWorkExperienceValidator(req.query);
         await deleteExperience(req);
         res.status(HTTPCode.DELETED).send('DELETED');
         return;
