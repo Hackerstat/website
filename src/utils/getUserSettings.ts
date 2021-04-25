@@ -20,5 +20,8 @@ export const getUserSettings = async (
     .collection('userProfiles')
     .findOne({ authID: sub }, { [`integration_settings.${integrationType}`]: 1 });
 
+  if (!Object(integrationUsername).hasOwnProperty('integration_settings')) {
+    return { username: '' };
+  }
   return integrationUsername.integration_settings[integrationType];
 };
