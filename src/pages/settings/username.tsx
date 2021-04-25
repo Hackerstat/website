@@ -70,7 +70,6 @@ const UsernameSettingsPage = () => {
       return false;
     } finally {
       setSettingUsername(false);
-      await Axios.post('/api/settings/picture', { newPicture: user.picture });
     }
   };
 

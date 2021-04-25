@@ -11,7 +11,6 @@ export const getUserSettings = async (
 ): Promise<{ [key: string]: string }> => {
   const { user } = await auth0.getSession(req);
   const { sub } = user;
-  console.log(sub);
 
   const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
 

@@ -30,7 +30,6 @@ function ExperienceSettings() {
   }
 
   useEffect(() => {
-    console.log('sda');
     Axios.get('/api/settings/workexperience')
       .then((res) => {
         setExperiences(res.data.workExperience || []);
