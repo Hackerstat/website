@@ -1,0 +1,31 @@
+/* Figure out Animation later. */
+
+/* #container {
+  /* height: 0px; */
+ /* overflow: hidden;
+  transition: height .5s; */
+  /* color: red; */
+/*}; */
+
+#container {
+  transition: height .4s;
+}
+
+
+.isOpen {
+  overflow: hidden;
+  height: 225px;
+  margin: 0px;
+}
+
+
+.isClosed {
+  overflow: hidden;
+
+  height: 0;
+};
+
+
+
+
+

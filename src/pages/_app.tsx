@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AppProps } from 'next/app';
 import { ThemeProvider, ColorModeProvider, CSSReset } from '@chakra-ui/core';
+import '../Components/WakaTime/component.css';
 import defaultTheme from '../themes/default';
 import Layout from '../Components/Layout';
 

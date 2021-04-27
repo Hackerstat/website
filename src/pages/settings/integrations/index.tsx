@@ -64,6 +64,7 @@ const integrations: Array<Integration> = [
   },
   {
     name: 'WakaTime',
+    link: 'WakaTime',
   },
   {
     name: 'Twitter',
