@@ -1,14 +1,8 @@
 import React, { FunctionComponent, useState, createRef } from 'react';
-// import './component.css';
-import {
-  Box,
-  // Input,
-  // FormLabel,
-  // FormControl,
-  Heading,
-  Link,
-  Stack,
-} from '@chakra-ui/core';
+import deepmerge from 'deepmerge';
+import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/core';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const CollapseableInstruction = (): any => {
   const containerRef = createRef();
@@ -17,15 +11,25 @@ export const CollapseableInstruction = (): any => {
   const openBoxClass = 'isOpen';
 
   const toggleCollapsableBox = () => {
-    console.log(isOpen);
     setIsOpen(!isOpen);
   };
 
+  const normalStyles = {
+    transition: 'all .3s linear',
+  };
+
+  const turnedStyles = deepmerge({ transform: 'rotate(90deg)' }, normalStyles);
+
   return (
     <Box mb={2}>
-      <Heading onClick={() => toggleCollapsableBox()} cursor="pointer" fontSize={'2xl'} mb={5}>
-        Instructions For Adding WakaTime!
-      </Heading>
+      <Flex cursor="pointer" onClick={() => toggleCollapsableBox()} alignItems="flex-start">
+        <Heading fontSize={'2xl'} mb={5}>
+          Instructions For Adding WakaTime!
+        </Heading>
+        <Box ml={2} mt={1} style={isOpen ? turnedStyles : normalStyles}>
+          <FontAwesomeIcon icon={faChevronRight} size={'1x'} />
+        </Box>
+      </Flex>
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
         id="container"
@@ -55,7 +59,7 @@ export const CollapseableInstruction = (): any => {
           </Heading>
           <Heading style={{ listStylePosition: 'inside' }} fontSize={'lg'}>
             <li>
-              For Date Range, select <code>Last 30 Days</code>
+              For Date Range, select <code>any date range</code>
             </li>
           </Heading>
           <Heading style={{ listStylePosition: 'inside' }} fontSize={'lg'}>

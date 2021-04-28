@@ -8,7 +8,8 @@
 /*}; */
 
 #container {
-  transition: height .4s;
+  overflow: hidden;
+  transition: height .6s;
 }
 
 
@@ -21,11 +22,20 @@
 
 .isClosed {
   overflow: hidden;
-
   height: 0;
 };
 
 
+#arrow {
+  -moz-transition: all .5s linear;
+  -webkit-transition: all .5s linear;
+  transition: all .5s linear;
+};
 
-
+.turnedArrow  {
+  -moz-transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+  transform:rotate(90deg);
+  background-color: blue;
+};
 

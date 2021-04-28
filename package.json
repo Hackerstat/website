@@ -22,6 +22,7 @@
     "@emotion/styled": "^10.0.27",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@louisiv/react-contribution-graph": "^0.1.0",
     "axios": "^0.19.2",

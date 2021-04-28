@@ -15,25 +15,32 @@ import { CollapseableInstruction } from '../../../../Components/WakaTime/Collaps
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast } from '../../../../utils/constants';
+import { goodToast, badGetWakaTimeToast } from '../../../../utils/constants';
 import Axios from 'axios';
+import { WakaTimeDayDataType } from '../../../../utils/utils';
 
-const AddTwitterIntegrationPage: FunctionComponent = () => {
+const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
+
+const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   const [fetchError, setFetchError] = useState<string>();
   const [wakaTimeURL, setWakaTimeURL] = useState<string>('');
+  const [retrievedData, setRetrievedData] = useState<Array<WakaTimeDayDataType>>([]);
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
 
-  const setTwitterUsername = async (username: string) => {
+  const getWakaTimeData = async (url: string) => {
     try {
-      if (!username) {
+      if (!url) {
         setFetchError('Required');
         return;
       }
 
-      // setTwitterName(username);
+      const res = await Axios.get(fetchWakaTimeDataURL, { params: { url } });
+
+      console.log(res.data);
     } catch (err) {
       console.log(err);
+      toast(badGetWakaTimeToast as unknown);
     }
   };
 
@@ -66,7 +73,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
           onClick={() => {
             setFetchingHackerFile(true);
             try {
-              // setTwitterUsername(username);
+              getWakaTimeData(wakaTimeURL);
             } catch (err) {
               console.log(err);
             } finally {
@@ -92,7 +99,7 @@ const IntegrationsPage: NextPage = () => {
   return (
     <>
       <AuthLayer>
-        <SettingsPage>{mounted ? <AddTwitterIntegrationPage /> : <Loader />}</SettingsPage>
+        <SettingsPage>{mounted ? <AddWakaTimeIntegrationPage /> : <Loader />}</SettingsPage>
       </AuthLayer>
     </>
   );

@@ -119,3 +119,28 @@ export interface fetchStackOverflowInfoRes {
   badges: Badges;
   topTags: Array<Tag>;
 }
+
+export interface WakaTimeDayDataType {
+  date: string;
+  hours: number;
+  minutes: number;
+  title: string;
+}
+
+export interface GrandTotalType {
+  hours: number;
+  minutes: number;
+  text: string;
+}
+
+export interface RangeType {
+  date: string;
+  text: string;
+}
+
+export interface WakaTimeDataResType {
+  data: Array<{
+    grand_total: GrandTotalType;
+    range: RangeType;
+  }>;
+}
