@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useState, createRef } from 'react';
+import React, { FunctionComponent, useState, createRef, useMemo } from 'react';
 import deepmerge from 'deepmerge';
 import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const CollapseableInstruction = (): any => {
+const CollapseableInstruction = ({ typeOfChartIsActivity }: { typeOfChartIsActivity: boolean }): any => {
   const containerRef = createRef();
   const [isOpen, setIsOpen] = useState(false);
   const collapsedBoxClass = 'isClosed';
@@ -19,12 +19,13 @@ export const CollapseableInstruction = (): any => {
   };
 
   const turnedStyles = deepmerge({ transform: 'rotate(90deg)' }, normalStyles);
-
+  console.log('das');
   return (
     <Box mb={2}>
       <Flex cursor="pointer" onClick={() => toggleCollapsableBox()} alignItems="flex-start">
         <Heading fontSize={'2xl'} mb={5}>
-          Instructions For Adding WakaTime!
+          Instructions For{' '}
+          {typeOfChartIsActivity ? 'Adding Your WakaTime Coding Activity!' : 'Adding Your WakaTime Languages!'}
         </Heading>
         <Box ml={2} mt={1} style={isOpen ? turnedStyles : normalStyles}>
           <FontAwesomeIcon icon={faChevronRight} size={'1x'} />
@@ -54,7 +55,7 @@ export const CollapseableInstruction = (): any => {
           </Heading>
           <Heading style={{ listStylePosition: 'inside' }} fontSize={'lg'}>
             <li>
-              For Chart Type, select <code>Coding Activity</code>
+              For Chart Type, select <code>{typeOfChartIsActivity ? 'Coding Activity' : 'Languages'}</code>
             </li>
           </Heading>
           <Heading style={{ listStylePosition: 'inside' }} fontSize={'lg'}>
@@ -72,3 +73,5 @@ export const CollapseableInstruction = (): any => {
     </Box>
   );
 };
+
+export const CollapseableInstructionWrapper = React.memo(CollapseableInstruction);

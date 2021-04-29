@@ -12,6 +12,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       const { url } = await fetchWakaTimeValidator(req.query);
 
       const { data } = <WakaTimeDataResType>(await Axios.get(url)).data;
+      console.log(data);
 
       const validatedData = data.map(({ grand_total, range }) => ({
         hours: grand_total.hours,
