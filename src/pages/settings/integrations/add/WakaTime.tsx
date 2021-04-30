@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useState, useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import deepmerge from 'deepmerge';
 import {
   Flex,
   Input,
@@ -9,7 +8,6 @@ import {
   Heading,
   Button,
   Stack,
-  Box,
   FormErrorMessage,
   useToast,
 } from '@chakra-ui/core';
@@ -18,40 +16,16 @@ import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaT
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badGetWakaTimeToast } from '../../../../utils/constants';
+import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils/constants';
 import Axios from 'axios';
-import { WakaTimeDayDataType } from '../../../../utils/utils';
-import { Bar } from 'react-chartjs-2';
-
-const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      type: '',
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+import {
+  WakaTimeGraphDataPropsType,
+  WakaTimePieGraphDataResType,
+  WakaTimeLanguageDataType,
+} from '../../../../utils/utils';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
+const addWakaTimeIntegrationURL = '/api/wakatime/addIntegration';
 
 const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   const [fetchError, setFetchError] = useState<string>();
@@ -59,7 +33,8 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   const [languagesWakaTimeURL, setLanguagesWakaTimeURL] = useState<string>('');
   const [drawerCodingActivity, setDrawerCodingActivity] = useState(false);
   const [drawerLanguage, setDrawerLanguage] = useState(false);
-  const [retrievedData, setRetrievedData] = useState<Array<WakaTimeDayDataType>>([]);
+  const [retrievedBarData, setRetrievedBarData] = useState<WakaTimeGraphDataPropsType>();
+  const [retrievedPieData, setRetrievedPieData] = useState<WakaTimeGraphDataPropsType>();
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
 
@@ -74,10 +49,38 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         return;
       }
 
-      const res = await Axios.get(fetchWakaTimeDataURL, { params: { url } });
+      const barDataPoints: WakaTimeGraphDataPropsType = {
+        labels: [],
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Coding Daily Activity',
+            data: [],
+            backgroundColor: [],
+            borderColor: [],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const dataType = 'bar';
+
+      const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
+      console.log(res.data);
+
+      res.data.dataPoints.forEach((dataPoint: WakaTimePieGraphDataResType) => {
+        barDataPoints.labels.push(dataPoint.dateText);
+        const dataPointsRef = barDataPoints.datasets[0];
+        dataPointsRef.backgroundColor.push('rgba(0, 0, 255, 0.2)');
+        dataPointsRef.borderColor.push('blue');
+        dataPointsRef.data.push(dataPoint.hours + dataPoint.minutes / 60);
+      });
+
+      setRetrievedBarData(barDataPoints);
+
       setDrawerCodingActivity(true);
 
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
       console.log(err);
       toast(badGetWakaTimeToast as unknown);
@@ -91,7 +94,34 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         return;
       }
 
-      // const res = await Axios.get(fetchWakaTimeDataURL, { params: { url } });
+      const dataType = 'pie';
+
+      const pieDataPoints: WakaTimeGraphDataPropsType = {
+        labels: [],
+        datasets: [
+          {
+            type: 'pie',
+            label: 'Languages Used',
+            data: [],
+            backgroundColor: [],
+            borderColor: [],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
+      console.log(res.data);
+
+      res.data.dataPoints.forEach((dataPoint: WakaTimeLanguageDataType) => {
+        pieDataPoints.labels.push(dataPoint.name);
+        const dataPointsRef = pieDataPoints.datasets[0];
+        dataPointsRef.data.push(dataPoint.percent);
+        dataPointsRef.backgroundColor.push(dataPoint.color);
+        dataPointsRef.borderColor.push(dataPoint.color);
+      });
+
+      setRetrievedPieData(pieDataPoints);
       setDrawerLanguage(true);
 
       // console.log(res.data);
@@ -101,17 +131,18 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
     }
   };
 
-  // const addTwitterToAccount = async (username: string) => {
-  //   try {
-  //     await Axios.post('/api/integration', {
-  //       integrationType: 'twitter',
-  //       settings: { username: username },
-  //     });
-  //     toast(goodToast as unknown);
-  //   } catch (e) {
-  //     toast(badToast as unknown);
-  //   }
-  // };
+  const addIntegrationsForWakaTime = async () => {
+    try {
+      await Axios.post(addWakaTimeIntegrationURL, {
+        wakaTimeCodingActivityURL: activityWakaTimeURL,
+        wakaTimeLanguageURL: languagesWakaTimeURL,
+      });
+      toast(goodToast as unknown);
+    } catch (e) {
+      console.error(e);
+      toast(badToast as unknown);
+    }
+  };
 
   return (
     <Flex width={'100%'} flexDirection={'column'}>
@@ -144,16 +175,14 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         >
           Get Daily Data
         </Button>
-        <Flex pb={-25} border="1px red solid" justifyContent="center" alignItems="center">
+        <Flex pb={-25} justifyContent="center" alignItems="center">
           <Flex
-            w={{ base: drawerCodingActivity ? 500 : 0 }} // TODO: Set breakpoints for graph
-            h={{ base: drawerCodingActivity ? 250 : 0 }} // TODO: Set breakpoints for graph
+            w={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
+            h={{ base: drawerCodingActivity ? 250 : 0, xs: drawerCodingActivity ? 225 : 0 }} // TODO: Set breakpoints for graph
             alignItems="center"
-            border="1px red solid"
-            backgroundColor="red"
             style={animationStyle}
           >
-            <TimeBarWrapper data={data} />
+            <TimeBarWrapper data={retrievedBarData} />
           </Flex>
         </Flex>
         {/* Add Another Input/Graph for languages used pie chart */}
@@ -183,19 +212,20 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         >
           Get Languages Used
         </Button>
-        <Flex pb={-25} border="1px red solid" justifyContent="center" alignItems="center">
+        <Flex pb={-25} justifyContent="center" alignItems="center">
           <Flex
             w={{ base: drawerLanguage ? 300 : 0 }} // TODO: Set breakpoints for graph
             h={{ base: drawerLanguage ? 300 : 0 }} // TODO: Set breakpoints for graph
             alignItems="center"
-            border="1px red solid"
-            backgroundColor="red"
             style={animationStyle}
           >
-            <LanguagePieWrapper data={data} />
+            <LanguagePieWrapper data={retrievedPieData} />
           </Flex>
         </Flex>
-        <Button isDisabled={fetchingHackerFile || !activityWakaTimeURL || !languagesWakaTimeURL}>
+        <Button
+          onClick={() => addIntegrationsForWakaTime()}
+          isDisabled={fetchingHackerFile || !activityWakaTimeURL || !languagesWakaTimeURL}
+        >
           Set WakaTimeURL
         </Button>
       </Stack>

@@ -18,3 +18,4 @@ export * from './getRemoteNPM';
 export * from './getLocalNPM';
 export * from './removeIntegration';
 export * from './remoteGithub';
+export * from './addWakaTimeIntegration';
