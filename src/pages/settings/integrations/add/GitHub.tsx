@@ -11,6 +11,7 @@ import {
   Text,
   FormErrorMessage,
   useToast,
+  Link,
 } from '@chakra-ui/core';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
@@ -27,6 +28,8 @@ interface RepoInfo {
   result: Partial<HackerFile>;
   user: string;
 }
+
+const VERIFICATION_LINK = 'https://github.com/login/oauth/authorize?client_id=Iv1.fc62112d5b65b083';
 
 const AddGithubIntegrationPage: FunctionComponent = () => {
   const [repoURL, setRepoURL] = useState<string>();
@@ -91,6 +94,9 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
           <FontAwesomeIcon icon={faGithub} size={'3x'} />
           <Heading ml={3}>GitHub</Heading>
         </Flex>
+        <Link href={VERIFICATION_LINK}>
+          <Text>Verify Account</Text>
+        </Link>
         <Stack spacing={3}>
           <Text>
             {
