@@ -224,16 +224,6 @@ export interface GitHubRepoDisplayDataType {
   url: string;
   watchers: number;
 }
-
-/**
- *   const [gitHubUserImg, setgitHubUserImg] = useState('https://avatars.githubusercontent.com/u/22761143?v=4');
-  const [gitHubUserName, setgitHubUserName] = useState('Cgunter1');
-  const [gitHubUserFullName, setgitHubUserFullName] = useState('Christopher Gunter');
-  const [gitHubUserLocation, setgitHubUserLocation] = useState('Santa Cruz, CA');
-  const [gitHubUserFollowers, setgitHubUserFollowers] = useState(1);
-  const [gitHubUserFollowing, setgitHubUserFollowing] = useState(3);
- */
-
 export interface GitHubUserAccountType {
   avatar_url: string;
   user: string;
@@ -242,3 +232,5 @@ export interface GitHubUserAccountType {
   followers: number;
   following: number;
 }
+
+export type SetGitHubRepoDisplayDataType = Dispatch<SetStateAction<GitHubRepoDisplayDataType[]>>;

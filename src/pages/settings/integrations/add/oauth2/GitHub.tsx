@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import {
-  Box,
-  Flex,
-  Input,
-  FormLabel,
-  FormControl,
-  Heading,
-  Button,
-  Stack,
-  Text,
-  FormErrorMessage,
-  useToast,
-  Image,
-} from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Button } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
@@ -27,6 +14,13 @@ const GithubAuthenticator = ({ router: router }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [gitHubAccountData, setGitHubAccountData] = useState<GitHubUserAccountType>();
   const [gitHubUserRepos, setgitHubUserRepos] = useState<Array<GitHubRepoDisplayDataType>>([]);
+
+  const addGitHubData = async () => {
+    Axios.post('/api/github/addRepos', {
+      ...gitHubAccountData,
+      repos: gitHubUserRepos,
+    });
+  };
 
   useEffect(() => {
     Axios.get('/api/github/addVerification', { params: { code: router.query?.code } })
@@ -44,37 +38,16 @@ const GithubAuthenticator = ({ router: router }) => {
   return (
     <>
       {isLoaded && !isFailed ? (
-        <Box w="100%">
+        <Box ml={5} w="100%">
           <Heading>Verification</Heading>
           <GitHubUserData userData={gitHubAccountData} />
-          {/* <Flex mt={2} alignItems="flex-start">
-            <Image src={gitHubAccountData.avatar_url} w={75} h={75} />
-            <Box>
-              <Text fontSize={18} fontFamily={'monospace'} ml={2}>
-                {gitHubAccountData.user}
-              </Text>
-              <Flex>
-                <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-                  Name: {gitHubAccountData.name},
-                </Text>
-                <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-                  Location: {gitHubAccountData.location}
-                </Text>
-              </Flex>
-              <Flex>
-                <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-                  Followers: {gitHubAccountData.followers},
-                </Text>
-                <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-                  Following: {gitHubAccountData.following}
-                </Text>
-              </Flex>
-            </Box>
-          </Flex> */}
-          <Box mt={5} w="100%">
-            <Heading ml={3}>GitHub Repos</Heading>
-            <GitHubRepoDataRow repos={gitHubUserRepos} />
-          </Box>
+          <Flex alignItems="center" flexDirection="column" mt={5} w="90%">
+            <Flex w="100%" justifyContent="space-between">
+              <Heading>GitHub Repos</Heading>
+              <Button onClick={async () => await addGitHubData()}>Save</Button>
+            </Flex>
+            <GitHubRepoDataRow repos={gitHubUserRepos} changeRepos={setgitHubUserRepos} />
+          </Flex>
         </Box>
       ) : !isFailed ? (
         <Box w="100%" textAlign="center">
