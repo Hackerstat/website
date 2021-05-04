@@ -1,4 +1,3 @@
-import url from 'url';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
 import { HTTPCode } from '../../../utils/constants';

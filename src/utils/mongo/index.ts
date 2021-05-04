@@ -19,3 +19,5 @@ export * from './getLocalNPM';
 export * from './removeIntegration';
 export * from './remoteGithub';
 export * from './addWakaTimeIntegration';
+export * from './addGitHubData';
+export * from './fetchGithubRepos';

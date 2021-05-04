@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Box, Heading, Text, Flex, Button } from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
@@ -12,14 +12,17 @@ import Axios from 'axios';
 const GithubAuthenticator = ({ router: router }) => {
   const [isFailed, setFailed] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [gitHubAccountData, setGitHubAccountData] = useState<GitHubUserAccountType>();
   const [gitHubUserRepos, setgitHubUserRepos] = useState<Array<GitHubRepoDisplayDataType>>([]);
 
   const addGitHubData = async () => {
-    Axios.post('/api/github/addRepos', {
+    setIsSaving(true);
+    await Axios.post('/api/github/addRepos', {
       ...gitHubAccountData,
       repos: gitHubUserRepos,
     });
+    router.push('/settings/integrations/add/GitHub');
   };
 
   useEffect(() => {
@@ -33,6 +36,7 @@ const GithubAuthenticator = ({ router: router }) => {
       .catch((err) => {
         console.error(err);
         setFailed(true);
+        router.push('/settings/integrations/add/GitHub');
       });
   }, []);
   return (
@@ -44,7 +48,9 @@ const GithubAuthenticator = ({ router: router }) => {
           <Flex alignItems="center" flexDirection="column" mt={5} w="90%">
             <Flex w="100%" justifyContent="space-between">
               <Heading>GitHub Repos</Heading>
-              <Button onClick={async () => await addGitHubData()}>Save</Button>
+              <Button isLoading={isSaving} loadingText="Saving" onClick={async () => await addGitHubData()}>
+                Save
+              </Button>
             </Flex>
             <GitHubRepoDataRow repos={gitHubUserRepos} changeRepos={setgitHubUserRepos} />
           </Flex>
@@ -54,7 +60,7 @@ const GithubAuthenticator = ({ router: router }) => {
           <Loader />
         </Box>
       ) : (
-        <Text>Could not retrieve Data</Text>
+        <Text>Could not retrieve Data. Try Again.</Text>
       )}
     </>
   );

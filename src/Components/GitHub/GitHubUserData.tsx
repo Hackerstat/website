@@ -11,7 +11,7 @@ export const GitHubUserData = ({ userData }: { userData: GitHubUserAccountType }
         <Text fontSize={18} fontFamily={'monospace'} ml={2}>
           {user}
         </Text>
-        <Flex>
+        <Flex flexWrap="wrap">
           <Text fontSize={15} fontFamily={'monospace'} ml={2}>
             Name: {name},
           </Text>
@@ -19,7 +19,7 @@ export const GitHubUserData = ({ userData }: { userData: GitHubUserAccountType }
             Location: {location}
           </Text>
         </Flex>
-        <Flex>
+        <Flex flexWrap="wrap">
           <Text fontSize={15} fontFamily={'monospace'} ml={2}>
             Followers: {followers},
           </Text>
