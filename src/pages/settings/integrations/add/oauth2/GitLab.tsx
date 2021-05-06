@@ -4,18 +4,18 @@ import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
-// import { GitHubRepoDataRow, GitHubUserData } from '../../../../../Components/GitHub';
+import { GitHubUserData, GitHubRepoDataRow } from '../../../../../Components/GitHub';
 // import { NextApiRequest, NextApiResponse } from 'next';
 import AuthLayer from '../../../../../Components/AuthLayer';
-// import { GitHubRepoDisplayDataType, GitHubUserAccountType } from '../../../../../utils/utils';
+import { GitLabRepoDetails, GitLabUserAccount } from '../../../../../utils/utils';
 import Axios from 'axios';
 
 const GitLabAuthenticator = ({ router: router }) => {
   const [isFailed, setFailed] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  // const [gitHubAccountData, setGitHubAccountData] = useState<GitHubUserAccountType>();
-  // const [gitHubUserRepos, setgitHubUserRepos] = useState<Array<GitHubRepoDisplayDataType>>([]);
+  const [gitLabAccountData, setGitLabAccountData] = useState<GitLabUserAccount>();
+  const [gitLabUserRepos, setGitLabUserRepos] = useState<Array<GitLabRepoDetails>>([]);
 
   const addGitHubData = async () => {
     // setIsSaving(true);
@@ -25,6 +25,8 @@ const GitLabAuthenticator = ({ router: router }) => {
     // });
     // router.push('/settings/integrations/add/GitHub');
   };
+
+  console.log(gitLabAccountData, gitLabUserRepos);
 
   useEffect(() => {
     // Axios.get('/api/gitlab/addVerification', { params: { code: router.query?.code, state: router.query?.state } })
@@ -42,24 +44,61 @@ const GitLabAuthenticator = ({ router: router }) => {
     //   });
     // console.log(localStorage.getItem('code_verifier'));
     const code_verifier = localStorage.getItem('code_verifier');
-    const URL = `https://gitlab.com/oauth/token`;
-    Axios.post(URL, {
-      client_id: 'a79cf3786413327d873e83d47d7308b9b618fa6e8393ce3c1967b18281a0f377',
-      client_secret: 'NOT_YET',
+    const AUTH_URL = `https://gitlab.com/oauth/token`;
+    Axios.post(AUTH_URL, {
+      client_id: 'bd68a5365d5be0784ff0f75d26b8e3a9c8213df18a78a68df4c95c41797d7289',
+      client_secret: ':)',
       code: router.query?.code,
       grant_type: 'authorization_code',
       redirect_uri: 'http://localhost:3000/settings/integrations/add/oauth2/GitLab',
-      code_verifier: code_verifier,
+      // code_verifier: code_verifier,
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err.message));
+      .then((res) => {
+        const USERPROFILE_URL = 'https://gitlab.com/api/v4/user';
+        const {
+          data: { access_token },
+        } = res;
+        Axios.get(USERPROFILE_URL, {
+          params: { access_token },
+        })
+          .then((res) => {
+            const { avatar_url, email, username, name, id, followers, following, location } = res.data;
+            console.log(res.data);
+            setGitLabAccountData({ avatar_url, email, user: username, name, id, followers, following, location });
+            const REPO_URL = `https://gitlab.com/api/v4/users/${id}/projects`;
+            Axios.get(REPO_URL)
+              .then((res) => {
+                const repos = res.data.map((repo) => ({
+                  name: repo.name,
+                  stars: repo.star_count,
+                  forks: repo.forks_count,
+                  des: repo.description,
+                  id: repo.id,
+                }));
+                setGitLabUserRepos(repos);
+                setLoaded(true);
+              })
+              .catch((e) => {
+                console.error(e);
+                setFailed(true);
+              });
+          })
+          .catch((e) => {
+            console.error(e);
+            setFailed(true);
+          });
+      })
+      .catch((e) => {
+        console.error(e);
+        setFailed(true);
+      });
   }, []);
   return (
     <>
       {isLoaded && !isFailed ? (
         <Box ml={5} w="100%">
           <Heading>Verification</Heading>
-          {/* <GitHubUserData userData={gitHubAccountData} /> */}
+          <GitHubUserData userData={gitLabAccountData} />
           <Flex alignItems="center" flexDirection="column" mt={5} w="90%">
             <Flex w="100%" justifyContent="space-between">
               <Heading>GitHub Repos</Heading>
@@ -67,7 +106,7 @@ const GitLabAuthenticator = ({ router: router }) => {
                 Save
               </Button>
             </Flex>
-            {/* <GitHubRepoDataRow repos={gitHubUserRepos} changeRepos={setgitHubUserRepos} /> */}
+            <GitHubRepoDataRow repos={gitHubUserRepos} changeRepos={setgitHubUserRepos} />
           </Flex>
         </Box>
       ) : !isFailed ? (

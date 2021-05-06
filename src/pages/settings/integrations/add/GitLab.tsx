@@ -19,8 +19,8 @@ const AddGitHubIntegrationPage: FunctionComponent<{ props: GitLabServerSideProps
   const [isVerifying, setIsVerifying] = useState(false);
   const router = useRouter();
 
-  const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}&code_challenge=${sha256OfState}&code_challenge_method=S256`;
-  // const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}`;
+  // const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}&code_challenge=${sha256OfState}&code_challenge_method=S256`;
+  const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}`;
   useEffect(() => {
     console.log(sha256OfState, code_verifier);
     localStorage.setItem('code_verifier', code_verifier);
@@ -73,13 +73,13 @@ const IntegrationsPage: NextPage<GitLabServerSideProps> = (props: GitLabServerSi
 export function getServerSideProps(): { props: GitLabServerSideProps } {
   // TODO:
   // Add CSRF Properties to state so API can identify user.
-  const state = ':)';
+  const state = randomstring.generate();
   const code = `${randomstring.generate(65)}-_.~`;
   const props = {
     state: state,
     code_verifier: code,
     sha256OfState: crypto.createHash('sha256').update(code).digest('base64'),
-    client_id: 'a79cf3786413327d873e83d47d7308b9b618fa6e8393ce3c1967b18281a0f377',
+    client_id: 'bd68a5365d5be0784ff0f75d26b8e3a9c8213df18a78a68df4c95c41797d7289',
     redirect_uri: 'http://localhost:3000/settings/integrations/add/oauth2/GitLab',
     scope: 'read_user+profile+read_repository+read_api',
   };

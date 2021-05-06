@@ -243,3 +243,27 @@ export interface GitLabServerSideProps {
   scope: string;
   code_verifier: string;
 }
+
+/**
+ *             const { avatar_url, email, username, name, id } = res.data;
+
+ */
+
+export interface GitLabUserAccount {
+  avatar_url: string;
+  email: string;
+  user: string;
+  name: string;
+  id: number;
+  followers: number;
+  following: number;
+  location: string;
+}
+
+export interface GitLabRepoDetails {
+  name: string;
+  star: number;
+  forks: number;
+  des: string;
+  id: number;
+}
