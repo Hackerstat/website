@@ -1,151 +1,62 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import {
-  Flex,
-  Input,
-  FormLabel,
-  FormControl,
-  Heading,
-  Button,
-  Stack,
-  Text,
-  FormErrorMessage,
-  useToast,
-} from '@chakra-ui/core';
+import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/core';
+import { faGitlab } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import randomstring from 'randomstring';
+import crypto from 'crypto';
+import { useRouter } from 'next/router';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { faGitlab } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Axios from 'axios';
-import { goodToast, badToast } from '../../../../utils/constants';
-import { HackerFile } from '../../../../types/hackerfile';
-import ExternalLink from '../../../../Components/ExternalLink';
+import { GitLabServerSideProps } from '../../../../utils/utils';
 
-interface RepoInfo {
-  repo: string;
-  repoURL: string;
-  result: Partial<HackerFile>;
-  user: string;
-}
+const AddGitHubIntegrationPage: FunctionComponent<{ props: GitLabServerSideProps }> = ({
+  props: { state, code_verifier, sha256OfState, client_id, redirect_uri, scope },
+}: {
+  props: GitLabServerSideProps;
+}) => {
+  const [isVerifying, setIsVerifying] = useState(false);
+  const router = useRouter();
 
-const AddGitHubIntegrationPage: FunctionComponent = () => {
-  const [repoURL, setRepoURL] = useState<string>();
-  const [fetchError, setFetchError] = useState<string>();
-  const [repoInfo, setRepoInfo] = useState<RepoInfo>();
-
-  const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
-
-  const toast = useToast();
-
-  const CheckForHackerStatFile = async (repoURL) => {
-    try {
-      if (!repoURL) {
-        setFetchError('Required');
-        return;
-      }
-
-      const result = await Axios.get('/api/gitlab/fetchProject', {
-        params: {
-          repoURL: repoURL,
-        },
-      });
-
-      if (result?.data?.error) {
-        setFetchError(result?.data?.error);
-        throw new Error(result?.data?.error);
-      }
-
-      setFetchError(null);
-      setRepoInfo(result?.data);
-
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const addProjectToAccount = async (repo: RepoInfo) => {
-    try {
-      await Axios.post('/api/integration', {
-        integrationType: 'gitlab',
-        settings: { [`${repo.user}+${repo.repo}`]: repoURL },
-      });
-      toast(goodToast as unknown);
-    } catch (err) {
-      toast(badToast as unknown);
-    }
-  };
+  const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}&code_challenge=${sha256OfState}&code_challenge_method=S256`;
+  // const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}`;
+  useEffect(() => {
+    console.log(sha256OfState, code_verifier);
+    localStorage.setItem('code_verifier', code_verifier);
+    console.log('LOADED!');
+  }, []);
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faGitlab} size={'3x'} />
-        <Heading ml={3}>GitLab</Heading>
-      </Flex>
-      <Stack spacing={3}>
-        <Text>
-          {
-            "You'll need to create a .hacker.yml in the root of your repo with the information you'd like to display about this project"
-          }
-        </Text>
-        <FormControl isInvalid={!!fetchError}>
-          <FormLabel>Git Repo URL</FormLabel>
-          <Input placeholder={'URL'} onChange={(e) => setRepoURL(e.target.value)} />
-          <FormErrorMessage>{fetchError}</FormErrorMessage>
-        </FormControl>
-        <Button
-          isLoading={fetchingHackerFile}
-          onClick={() => {
-            setFetchingHackerFile(true);
-            try {
-              CheckForHackerStatFile(repoURL);
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setFetchingHackerFile(false);
-            }
-          }}
-        >
-          Check Repo
-        </Button>
-        <Flex alignItems={'center'}>
-          <FontAwesomeIcon icon={faGitlab} size={'1x'} />
-          <ExternalLink
-            ml={2}
-            href={repoInfo?.repoURL || undefined}
-            isDisabled={!repoInfo?.repoURL}
-            fontWeight={'bold'}
-          >
-            {repoInfo?.repo || '_______'}
-          </ExternalLink>
+    <AuthLayer>
+      <Flex ml={4} width={'100%'} flexDirection={'column'}>
+        <Flex mb={4}>
+          <FontAwesomeIcon icon={faGitlab} size={'3x'} />
+          <Heading ml={3}>GitLab</Heading>
         </Flex>
-        <Text
-          backgroundColor={'gray.900'}
-          padding={3}
-          borderRadius={'lg'}
-          color={'white'}
-          fontWeight={'bold'}
-          fontFamily={'mono'}
-          width={'100%'}
-          whiteSpace={'pre'}
-        >
-          {JSON.stringify(repoInfo?.result || {}, null, '\t')}
-        </Text>
-        <Button
-          isDisabled={!repoInfo || fetchingHackerFile}
-          onClick={() => {
-            addProjectToAccount(repoInfo);
-          }}
-        >
-          Add Repo
-        </Button>
-      </Stack>
-    </Flex>
+        <Stack spacing={10}>
+          <Text>
+            {
+              'In order to add the GitHub integration to your file you need to verify your account via Logging into your GitHub Account. Then you can select which GitHub Repos you want to show then save it to your account.'
+            }
+          </Text>
+          <Button
+            isLoading={isVerifying}
+            loadingText="Verifying Account"
+            onClick={() => {
+              setIsVerifying(true);
+              router.push(VERIFICATION_LINK);
+            }}
+          >
+            Verify Account
+          </Button>
+        </Stack>
+      </Flex>
+    </AuthLayer>
   );
 };
 
-const IntegrationsPage: NextPage = () => {
+const IntegrationsPage: NextPage<GitLabServerSideProps> = (props: GitLabServerSideProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -154,9 +65,25 @@ const IntegrationsPage: NextPage = () => {
 
   return (
     <AuthLayer>
-      <SettingsPage>{mounted ? <AddGitHubIntegrationPage /> : <Loader />}</SettingsPage>
+      <SettingsPage>{mounted ? <AddGitHubIntegrationPage props={props} /> : <Loader />}</SettingsPage>
     </AuthLayer>
   );
 };
+
+export function getServerSideProps(): { props: GitLabServerSideProps } {
+  // TODO:
+  // Add CSRF Properties to state so API can identify user.
+  const state = ':)';
+  const code = `${randomstring.generate(65)}-_.~`;
+  const props = {
+    state: state,
+    code_verifier: code,
+    sha256OfState: crypto.createHash('sha256').update(code).digest('base64'),
+    client_id: 'a79cf3786413327d873e83d47d7308b9b618fa6e8393ce3c1967b18281a0f377',
+    redirect_uri: 'http://localhost:3000/settings/integrations/add/oauth2/GitLab',
+    scope: 'read_user+profile+read_repository+read_api',
+  };
+  return { props: props };
+}
 
 export default IntegrationsPage;

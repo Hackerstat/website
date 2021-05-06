@@ -234,3 +234,12 @@ export interface GitHubUserAccountType {
 }
 
 export type SetGitHubRepoDisplayDataType = Dispatch<SetStateAction<GitHubRepoDisplayDataType[]>>;
+
+export interface GitLabServerSideProps {
+  state: string;
+  sha256OfState: string;
+  client_id: string;
+  redirect_uri: string;
+  scope: string;
+  code_verifier: string;
+}
