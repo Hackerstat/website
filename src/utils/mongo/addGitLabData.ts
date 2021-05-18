@@ -1,17 +1,17 @@
 import { MongoClient } from 'mongodb';
 
-import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA, GITHUB } from './constants';
-import { AddGitHubDataType } from '../validation/schemas';
+import { URI, HACKERSTAT, USERPROFILES, GITLABDATA, GITLAB } from './constants';
+import { AddGitLabDataSchemaType } from '../validation/schemas';
 import { UserProfileType } from '../utils';
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-export const addGitHubData = async ({
+export const addGitLabData = async ({
   sub,
-  gitHubData,
+  gitLabData,
 }: {
   sub: any;
-  gitHubData: AddGitHubDataType;
+  gitLabData: AddGitLabDataSchemaType;
 }): Promise<void> => {
   const client = await connectToClient();
 
@@ -23,16 +23,16 @@ export const addGitHubData = async ({
         await client.db(HACKERSTAT).collection(USERPROFILES).findOne({ authID: sub })
       );
 
-      const integrationType = GITHUB;
+      const integrationType = GITLAB;
 
       const id = userProfile._id;
 
-      const gitHubProfile = await client
+      const gitLabProfile = await client
         .db(HACKERSTAT)
-        .collection(GITHUBDATA)
-        .updateOne({ userID: id }, { $set: { userID: id, ...gitHubData } }, { upsert: true });
+        .collection(GITLABDATA)
+        .updateOne({ userID: id }, { $set: { userID: id, ...gitLabData } }, { upsert: true });
 
-      if (gitHubProfile.upsertedCount) {
+      if (gitLabProfile.upsertedCount) {
         await client
           .db(HACKERSTAT)
           .collection(USERPROFILES)
@@ -40,13 +40,14 @@ export const addGitHubData = async ({
             { authID: sub },
             {
               $addToSet: { integrations: integrationType },
-              $set: { [`integration_settings.${integrationType}`]: { id: gitHubProfile.upsertedId._id } },
+              $set: { [`integration_settings.${integrationType}`]: { id: gitLabProfile.upsertedId._id } },
             },
             { upsert: true },
           );
       }
     });
   } catch (e) {
+    session.endSession();
     client.close();
     throw new Error(e);
   } finally {

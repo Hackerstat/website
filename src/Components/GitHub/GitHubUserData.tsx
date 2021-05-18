@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/core';
-import { GitHubUserAccountType } from '../../utils/utils';
+import { GitHubUserAccountType, GitLabUserAccount } from '../../utils/utils';
 
-export const GitHubUserData = ({ userData }: { userData: GitHubUserAccountType }): JSX.Element => {
+export const GitHubUserData = ({ userData }: { userData: GitHubUserAccountType | GitLabUserAccount }): JSX.Element => {
   const { avatar_url, user, name, location, followers, following } = userData;
   return (
     <Flex mt={2} alignItems="flex-start">

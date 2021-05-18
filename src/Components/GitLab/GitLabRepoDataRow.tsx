@@ -17,7 +17,7 @@ import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType } from '../../utils/utils';
 
-export const GitHubRepoDataRow = ({
+export const GitLabRepoDataRow = ({
   repos,
   changeRepos,
 }: {
@@ -29,7 +29,7 @@ export const GitHubRepoDataRow = ({
     changeRepos(newRepos);
   };
   return (
-    <Stack direction="column" mt={2} spacing="24px" w="100%">
+    <Stack direction="column" mt={2} spacing="24px">
       {repos.map((repo) => (
         <Box m="0 auto" borderRadius={10} p={3} border="1px solid white" w="100%" key={`${repo.url}`}>
           <Flex pr={3} w="100%" justifyContent="space-between" alignItems="center">
@@ -38,22 +38,14 @@ export const GitHubRepoDataRow = ({
               <FontAwesomeIcon size="lg" icon={faTrash} />
             </Button>
           </Flex>
-          <Stack
-            flexWrap="wrap"
-            maxW="100%"
-            ml={1}
-            fontSize="lg"
-            direction="row"
-            spacing="12px"
-            shouldWrapChildren={true}
-          >
-            {Object.entries(repo.languages).length === 0 ? (
-              <>N/A</>
-            ) : (
-              <Flex>
-                <Text>{Object.entries(repo.languages).sort((a, b) => b[1] - a[1])[0][0]}</Text>
-              </Flex>
-            )}
+          <Stack flexWrap="wrap" w="100%" ml={1} fontSize="lg" direction="row" spacing="12px" shouldWrapChildren={true}>
+            <Text>
+              {Object.entries(repo.languages).length === 0 ? (
+                <></>
+              ) : (
+                Object.entries(repo.languages).sort((a, b) => b[1] - a[1])[0][0]
+              )}
+            </Text>
             <Text>&middot;</Text>
             <Flex alignItems="center">
               <FontAwesomeIcon icon={faCodeBranch} />
@@ -64,7 +56,7 @@ export const GitHubRepoDataRow = ({
             <Text>&middot;</Text>
             <Flex alignItems="center">
               <FontAwesomeIcon icon={faEye} />
-              <Text ml={1}>{repo.watchers || 0}</Text>
+              <Text ml={1}>{repo.watchers}</Text>
             </Flex>
           </Stack>
           <Text fontSize={'sm'}>{repo.des}</Text>

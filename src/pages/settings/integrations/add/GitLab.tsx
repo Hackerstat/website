@@ -19,7 +19,6 @@ const AddGitHubIntegrationPage: FunctionComponent<{ props: GitLabServerSideProps
   const [isVerifying, setIsVerifying] = useState(false);
   const router = useRouter();
 
-  // const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}&code_challenge=${sha256OfState}&code_challenge_method=S256`;
   const VERIFICATION_LINK = `https://gitlab.com/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&state=${state}&scope=${scope}`;
   useEffect(() => {
     console.log(sha256OfState, code_verifier);

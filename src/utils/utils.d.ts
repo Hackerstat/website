@@ -244,11 +244,6 @@ export interface GitLabServerSideProps {
   code_verifier: string;
 }
 
-/**
- *             const { avatar_url, email, username, name, id } = res.data;
-
- */
-
 export interface GitLabUserAccount {
   avatar_url: string;
   email: string;
@@ -266,4 +261,19 @@ export interface GitLabRepoDetails {
   forks: number;
   des: string;
   id: number;
+}
+
+export interface GitLabRepoDisplayDataType {
+  contributors: string;
+  des: string;
+  forks: number;
+  languages: GitHubRepoLanguagesType;
+  lastUpdated: string;
+  owner: string;
+  private: boolean;
+  repoName: string;
+  stars: number;
+  sz: number;
+  url: string;
+  watchers: number;
 }

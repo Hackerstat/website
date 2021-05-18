@@ -51,7 +51,7 @@ const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = f
             borderLeftColor: colors.highlighColor,
           }
         }
-        transition="all 0.15s ease"
+        transition="all 0.1s ease"
       >
         <PseudoBox
           ml={1}
