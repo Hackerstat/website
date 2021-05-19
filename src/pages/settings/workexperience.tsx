@@ -81,13 +81,14 @@ function ExperienceSettings() {
     onClose();
   };
 
-  console.log('dsadsads' + experiences);
   return (
     <AuthLayer>
       <Flex flexDirection={'column'} width={'100%'}>
-        <Button onClick={openWorkExperienceModal} leftIcon="add" alignSelf={'flex-end'}>
-          Add Experience
-        </Button>
+        <Flex maxWidth="100%" justifyContent="space-between">
+          <Button onClick={openWorkExperienceModal} leftIcon="add" alignSelf={'flex-end'}>
+            Add Experience
+          </Button>
+        </Flex>
         <Stack shouldWrapChildren spacing={3} mt={3}>
           {!!experiences &&
             experiences.map((experience, index) => {
