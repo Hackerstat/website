@@ -24,16 +24,10 @@ const retrievePackagesFromUser = async (userName: string | string[]) => {
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {
-      const { user } = await auth0.getSession(req);
-      const { sub, name } = user;
-
       const { username: passedUsername } = req.query;
-
-      const { username } = await getUserSettings(req, 'npm');
-      console.log(username);
       const packages = await retrievePackagesFromUser(passedUsername);
       const packageInfo = [];
       const returnResults = [];
@@ -53,7 +47,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         }
 
         packageInfo.push(packages[i]);
-        console.log(name);
         packageNames.push(packages[i].name);
         packagePromises.push(retrieveNPMInfo(packages[i].name));
       }
@@ -67,7 +60,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       returnResults.pop();
 
       if (!passedUsername) {
-        await getRemoteNPM(req, username, packageNames);
+        // await getRemoteNPM(req, username, packageNames);
       }
 
       res.status(HTTPCode.OK).json(returnResults);
@@ -76,4 +69,4 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       res.status(HTTPCode.BAD_REQUEST).send('FAIL');
     }
   }
-});
+}

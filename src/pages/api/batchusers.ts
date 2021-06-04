@@ -6,7 +6,8 @@ import { HTTPCode } from '../../utils/constants';
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
+// export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
+export default async function batchusers(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'GET') {
       const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;
@@ -24,4 +25,4 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     console.error(e);
     res.status(HTTPCode.SERVER_ERROR).send('FAIL');
   }
-});
+}
