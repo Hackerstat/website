@@ -4,7 +4,6 @@ import PageBase from '../Components/Page';
 import { Heading, Flex, Avatar, Stack, PseudoBox, Spinner, Image, Text } from '@chakra-ui/core';
 import { useRouter } from 'next/dist/client/router';
 
-import ContributionGraph from '@louisiv/react-contribution-graph';
 import Card from '../Components/Card';
 import dynamic from 'next/dynamic';
 import Axios from 'axios';
@@ -84,9 +83,6 @@ const UserProfilePage: NextPage = () => {
               size={'xl'}
             />
           </Flex>
-        </Card> */}
-        {/* <Card padding={3} mt={3} color={'white'}>
-          <ContributionGraph gitHubUsername={user as string} gitlabUsername={gitLabUsername as string} />
         </Card> */}
         {/* Add GitHub Repos */}
         {/* Add GitLab Repos */}
