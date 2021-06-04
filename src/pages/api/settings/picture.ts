@@ -32,7 +32,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
               picture: newPicture,
             },
           },
-          { useUnifiedTopology: true, upsert: true },
+          { upsert: true },
         );
       client.close();
     } catch (e) {
