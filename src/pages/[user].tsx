@@ -85,9 +85,13 @@ const UserProfilePage: NextPage = () => {
             />
           </Flex>
         </Card> */}
-        <Card padding={3} mt={3} color={'white'}>
+        {/* <Card padding={3} mt={3} color={'white'}>
           <ContributionGraph gitHubUsername={user as string} gitlabUsername={gitLabUsername as string} />
-        </Card>
+        </Card> */}
+        {/* Add GitHub Repos */}
+        {/* Add GitLab Repos */}
+        {/* Add StackOverflow */}
+        {/* Add Work Experience */}
         {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

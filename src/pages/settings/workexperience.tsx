@@ -84,7 +84,7 @@ function ExperienceSettings() {
   return (
     <AuthLayer>
       <Flex flexDirection={'column'} width={'100%'}>
-        <Flex maxWidth="100%" justifyContent="space-between">
+        <Flex maxWidth="100%" justifyContent="flex-end">
           <Button onClick={openWorkExperienceModal} leftIcon="add" alignSelf={'flex-end'}>
             Add Experience
           </Button>
