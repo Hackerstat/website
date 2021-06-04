@@ -15,7 +15,7 @@ const retrieveNPMInfo = async (packageName: string) => {
 };
 
 const retrievePackagesFromUser = async (userName: string | string[]) => {
-  const res = await npmUserPackages(userName);
+  const res = await npmUserPackages(userName as string);
   return res;
 };
 
