@@ -29,9 +29,5 @@ jobs:
       with:
         # Vercel token
         vercel-token: ${{ secrets.VERCEL_API }}
-        # Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)
-        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-        # Vercel CLI 17+, ❗️  The `name` property in vercel.json is deprecated (https://zeit.ink/5F)
-        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
         vercel-project-name: ${{ secrets.VERCEL_PROJECT_NAME }}
         vercel-args: '--prod '
