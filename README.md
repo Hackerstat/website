@@ -16,3 +16,5 @@ First install dependencies with `npm`
 ```
 npm i
 ```
+
+[build]
