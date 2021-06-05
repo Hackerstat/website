@@ -30,7 +30,7 @@ const ErrorPage: NextPage = () => (
             It looks like you`&apos;`re a little lost
           </Text>
           <NextLink href={'/'} passHref>
-            <Button variant={'solid'} variantColor="yellow">
+            <Button variant={'solid'} colorScheme="yellow">
               Back to Safety
             </Button>
           </NextLink>

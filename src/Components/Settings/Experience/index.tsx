@@ -192,7 +192,7 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
         </FormControl>
       </Stack>
       <Flex justifyContent="space-between">
-        <Button textAlign={'right'} mt={'2em'} variantColor="teal" isLoading={formik.isSubmitting} type="submit">
+        <Button textAlign={'right'} mt={'2em'} colorScheme="teal" isLoading={formik.isSubmitting} type="submit">
           Done
         </Button>
         <Button

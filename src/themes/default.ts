@@ -1,7 +1,27 @@
-import { theme } from '@chakra-ui/react';
-import merge from 'deepmerge';
+import { extendTheme } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 
-const defaultTheme = {
+const defaultTheme = extendTheme({
+  styles: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    global: (props) => ({
+      body: {
+        maxWidth: '100vw',
+        overflowHorizontal: 'hidden',
+        font: 'body',
+        color: mode('gray.700', 'whiteAlpha.900')(props),
+        bg: mode('white', 'gray.700')(props),
+      },
+      '*::placeholder': {
+        color: mode('gray.400', 'whiteAlpha.400')(props),
+      },
+      '*, *::before, &::after': {
+        borderColor: mode('gray.200', 'whiteAlpha.300')(props),
+        wordWrap: 'break-word',
+      },
+    }),
+  },
   colors: {
     brand: {
       50: '#f2f2f2',
@@ -37,6 +57,6 @@ const defaultTheme = {
     lg: '0.25rem',
     full: '9999px',
   },
-};
+});
 
-export default merge(theme, defaultTheme);
+export default defaultTheme;

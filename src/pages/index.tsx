@@ -43,7 +43,7 @@ const IndexPage: NextPage = () => (
           <IntegrationTile icon={faBehance} disabled />
         </Grid>
         <Link href={'/integrations'}>
-          <Button mt={4} variant={'solid'} variantColor={'green'} alignSelf={'center'}>
+          <Button mt={4} variant={'solid'} colorScheme={'green'} alignSelf={'center'}>
             See Integrations
           </Button>
         </Link>
@@ -64,7 +64,7 @@ const IndexPage: NextPage = () => (
           </Stack>
         </Box>
         <Link href={'/dashboard'} passHref>
-          <Button mt={3} variant={'solid'} variantColor={'green'}>
+          <Button mt={3} variant={'solid'} colorScheme={'green'}>
             Explore HackerStat
           </Button>
         </Link>

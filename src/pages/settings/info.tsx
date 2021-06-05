@@ -181,7 +181,7 @@ const ProfileInfo = () => {
                   <Button
                     textAlign={'right'}
                     mt={'2em'}
-                    variantColor="teal"
+                    colorScheme="teal"
                     isLoading={props.isSubmitting}
                     type="submit"
                   >

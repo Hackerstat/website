@@ -16,10 +16,10 @@ const Header: FunctionComponent = () => {
         </Flex>
         <NextLink href="/auth" passHref>
           <ButtonGroup>
-            <Button variant={'ghost'} variantColor={'brand'} marginX={1}>
+            <Button variant={'ghost'} colorScheme={'brand'} marginX={1}>
               Log In
             </Button>
-            <Button variant={'solid'} variantColor={'brand'} marginX={1}>
+            <Button variant={'solid'} colorScheme={'brand'} marginX={1}>
               Sign Up
             </Button>
           </ButtonGroup>
