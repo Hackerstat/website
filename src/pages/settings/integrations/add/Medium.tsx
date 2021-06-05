@@ -11,7 +11,7 @@ import {
   FormErrorMessage,
   useToast,
   Box,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';

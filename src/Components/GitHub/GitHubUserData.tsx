@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Image } from '@chakra-ui/core';
+import { Box, Flex, Text, Image } from '@chakra-ui/react';
 import { GitHubUserAccountType, GitLabUserAccount } from '../../utils/utils';
 
 export const GitHubUserData = ({ userData }: { userData: GitHubUserAccountType | GitLabUserAccount }): JSX.Element => {

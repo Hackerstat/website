@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FunctionComponent } from 'react';
-import { Text, PseudoBox, Stack, useColorMode, Flex, Heading, Box } from '@chakra-ui/core';
+import { Text, Box, Stack, useColorMode, Flex, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 
 type SidebarMenuItemColors = {
@@ -32,7 +32,7 @@ interface SidebarMenuItemProps {
 const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = false, href, name, colors }) => {
   return (
     <Link href={href} passHref>
-      <PseudoBox
+      <Box
         role={'group'}
         as={'a'}
         cursor="pointer"
@@ -53,7 +53,7 @@ const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = f
         }
         transition="all 0.1s ease"
       >
-        <PseudoBox
+        <Box
           ml={1}
           py={1}
           transform={selected ? 'translate(10px)' : undefined}
@@ -72,8 +72,8 @@ const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = f
           >
             {name}
           </Text>
-        </PseudoBox>
-      </PseudoBox>
+        </Box>
+      </Box>
     </Link>
   );
 };

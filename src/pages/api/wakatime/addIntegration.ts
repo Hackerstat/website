@@ -5,10 +5,10 @@ import auth0 from '../../../utils/auth';
 
 import { HTTPCode } from '../../../utils/constants';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     if (req.method === 'POST') {
-      const { user } = await auth0.getSession(req);
+      const { user } = await auth0.getSession(req, res);
       const { sub } = user;
 
       const { wakaTimeCodingActivityURL, wakaTimeLanguageURL } = await addWakaTimeIntegrationValidator(req.body);

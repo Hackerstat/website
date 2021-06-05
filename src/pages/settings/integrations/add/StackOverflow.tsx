@@ -11,7 +11,7 @@ import {
   Text,
   FormErrorMessage,
   useToast,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { goodToast, badToast } from '../../../../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';

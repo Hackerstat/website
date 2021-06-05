@@ -51,9 +51,9 @@ const createQuery = (username) => {
         }`;
 };
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    const { username } = await getUserSettings(req, 'github');
+    const { username } = await getUserSettings(req, res, 'github');
     const resu = await fetch('https://api.github.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `bearer ${API_KEY}` },

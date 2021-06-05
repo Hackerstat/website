@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, createRef, useMemo } from 'react';
 import deepmerge from 'deepmerge';
-import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/core';
+import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/react';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
 import Card from '../../Card';
-import { Grid, useColorMode, Flex } from '@chakra-ui/core';
+import { Grid, useColorMode, Flex } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
@@ -76,7 +76,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
           color={color}
           ml={2}
           href={`https://www.npmjs.com/${username}` || undefined}
-          isDisabled={!username}
+          // isDisabled={!username}
           fontWeight={'bold'}
         >
           {username || '_______'}

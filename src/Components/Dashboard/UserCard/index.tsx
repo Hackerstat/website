@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps } from '@chakra-ui/core';
+import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
 import Card from '../../Card';
 import UserBadge from '../../UserBadge';
 

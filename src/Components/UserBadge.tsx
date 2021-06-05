@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, useColorMode } from '@chakra-ui/core';
+import { Box, Text, useColorMode } from '@chakra-ui/react';
 
 const UserBadge = ({ children }) => {
   const { colorMode } = useColorMode();

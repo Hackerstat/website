@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Flex, Avatar, Stack, PseudoBox, Spinner, Image, Text } from '@chakra-ui/core';
+import { Heading, Flex, Avatar, Stack, Box, Spinner, Image, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
 
 import Card from '../Components/Card';

@@ -10,7 +10,7 @@ import {
   Stack,
   FormErrorMessage,
   useToast,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { CollapseableInstructionWrapper } from '../../../../Components/WakaTime/CollapseInstructionBox';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaTime/Graphs';
 import SettingsPage from '../../../../Components/SettingsPage';

@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Text, Button, Stack } from '@chakra-ui/core';
+import { Box, Text, Button, Stack } from '@chakra-ui/react';
 import { getMonthYear } from '../../utils/time';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 interface ExperienceProps {
   companyName: string;
@@ -26,7 +28,7 @@ const Experience: FunctionComponent<ExperienceProps> = ({
     <Text>{position}</Text>
     <Stack isInline>
       <Text fontSize={'sm'} color={'gray.300'}>
-        {getMonthYear((startingDate as unknown) as string)}
+        {getMonthYear(startingDate as unknown as string)}
       </Text>
       <Text fontSize={'sm'} color={'gray.300'}>
         {'-'}
@@ -37,7 +39,7 @@ const Experience: FunctionComponent<ExperienceProps> = ({
     </Stack>
     <Text fontSize={'md'}>{details}</Text>
     {!!onEdit && (
-      <Button mt={2} onClick={onEdit} leftIcon="edit">
+      <Button mt={2} onClick={onEdit} leftIcon={<FontAwesomeIcon icon={faEdit} />}>
         Edit Experience
       </Button>
     )}

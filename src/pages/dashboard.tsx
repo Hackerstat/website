@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Flex, Heading, Grid } from '@chakra-ui/core';
+import { Flex, Heading, Grid } from '@chakra-ui/react';
 import UserCard from '../Components/Dashboard/UserCard';
 
 import axios from 'axios';

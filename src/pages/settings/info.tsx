@@ -11,7 +11,7 @@ import {
   Button,
   Textarea,
   useToast,
-} from '../../../node_modules/@chakra-ui/core';
+} from '../../../node_modules/@chakra-ui/react';
 import { Formik, Field } from '../../../node_modules/formik';
 import { useEffect, useState } from 'react';
 import AuthLayer from '../../Components/AuthLayer';

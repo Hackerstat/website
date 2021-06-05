@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Flex, SimpleGrid, Heading } from '@chakra-ui/core';
+import { Flex, SimpleGrid, Heading } from '@chakra-ui/react';
 import Link from '../Link';
 import { FooterSection } from './FooterSection';
 import { BottomBar } from './BottomBar';

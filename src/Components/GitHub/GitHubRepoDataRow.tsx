@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
   useToast,
   Image,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType } from '../../utils/utils';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Skeleton, Icon, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/core';
+import { Avatar, Skeleton, Icon, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
 import { useFetchUser } from '../utils/user';
 import Link from 'next/link';
 

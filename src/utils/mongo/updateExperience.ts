@@ -1,10 +1,10 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../auth';
 
-export const updateExperience = async (req: NextApiRequest): Promise<void> => {
-  const { user } = await auth0.getSession(req);
+export const updateExperience = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+  const { user } = await auth0.getSession(req, res);
   const { sub } = user;
 
   const requestBody = req.body;

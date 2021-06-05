@@ -11,7 +11,7 @@ import {
   Spinner,
   FormHelperText,
   Button,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';

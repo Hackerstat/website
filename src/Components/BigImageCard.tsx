@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, BoxProps } from '@chakra-ui/core';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { FunctionComponent } from 'react';
 
 interface BigImageCardProps extends BoxProps {

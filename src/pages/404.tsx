@@ -1,6 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
-import { Flex, Heading, Text, Button, Stack } from '@chakra-ui/core';
+import { Flex, Heading, Text, Button, Stack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import BigImageCard from '../Components/BigImageCard';
 import PageBase from '../Components/Page';

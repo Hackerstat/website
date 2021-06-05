@@ -6,7 +6,8 @@ const LanguagePie = ({ data }: { data: WakaTimeGraphDataPropsType }): any => {
   console.log('sda');
   console.log(data);
   console.log('dassda');
-  return <Pie data={data} type="pie" options={{ responsive: true }} />;
+  // return <Pie data={data} type="pie" options={{ responsive: true }} />;
+  return null;
 };
 
 export const LanguagePieWrapper = React.memo(LanguagePie);

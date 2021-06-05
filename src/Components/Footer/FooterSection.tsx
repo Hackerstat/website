@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Text, Stack } from '@chakra-ui/core';
+import { Text, Stack } from '@chakra-ui/react';
 
 interface FooterSectionProps {
   title: string;

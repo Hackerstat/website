@@ -10,7 +10,7 @@ import {
   Button,
   Textarea,
   Flex,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import Axios from 'axios';
 
 export interface ExperienceFormFields {

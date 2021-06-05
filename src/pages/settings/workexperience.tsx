@@ -13,7 +13,7 @@ import {
   ModalFooter,
   useDisclosure,
   Stack,
-} from '../../../node_modules/@chakra-ui/core';
+} from '../../../node_modules/@chakra-ui/react';
 import Router from 'next/router';
 import Loader from '../../Components/Loader';
 import WorkExperienceForm, { ExperienceFormFields } from '../../Components/Settings/Experience';
@@ -21,6 +21,8 @@ import AuthLayer from '../../Components/AuthLayer';
 import Experience from '../../Components/Experience';
 import { useFetchUser } from '../../utils/user';
 import Axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function ExperienceSettings() {
   const { user, loading } = useFetchUser();
@@ -85,7 +87,7 @@ function ExperienceSettings() {
     <AuthLayer>
       <Flex flexDirection={'column'} width={'100%'}>
         <Flex maxWidth="100%" justifyContent="flex-end">
-          <Button onClick={openWorkExperienceModal} leftIcon="add" alignSelf={'flex-end'}>
+          <Button onClick={openWorkExperienceModal} leftIcon={<FontAwesomeIcon icon={faPlus} />} alignSelf={'flex-end'}>
             Add Experience
           </Button>
         </Flex>

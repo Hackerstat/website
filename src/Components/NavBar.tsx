@@ -14,7 +14,7 @@ import {
   DrawerHeader,
   DrawerBody,
   useDisclosure,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { useFetchUser } from '../utils/user';
 import Link from './Link';
 import Logo from './Logo';

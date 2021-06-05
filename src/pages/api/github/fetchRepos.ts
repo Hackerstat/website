@@ -5,7 +5,7 @@ import auth0 from '../../../utils/auth';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
-    const { user } = await auth0.getSession(req);
+    const { user } = await auth0.getSession(req, res);
     const { sub } = user;
 
     const gitHubAccountData = await fetchGithubRepos({ sub });

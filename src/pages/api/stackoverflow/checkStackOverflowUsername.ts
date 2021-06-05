@@ -8,7 +8,7 @@ import auth0 from '../../../utils/auth';
  *  soID: 214saa23
  * }
  */
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {
       await checkStackOverflowUsernameValidator(req.query);

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { useColorMode, Select, Flex } from '@chakra-ui/core';
+import { useColorMode, Select, Flex } from '@chakra-ui/react';
 
 const ColorModePicker: FunctionComponent = () => {
   const { colorMode, toggleColorMode } = useColorMode();

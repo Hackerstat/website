@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { useColorMode, PseudoBox, BoxProps } from '@chakra-ui/core';
+import { useColorMode, BoxProps, Box } from '@chakra-ui/react';
 
 type CardProps = BoxProps;
 
@@ -25,7 +25,7 @@ const Card: FunctionComponent<CardProps> = ({ children, onClick, ...rest }) => {
   }, [colorMode]);
 
   return (
-    <PseudoBox
+    <Box
       flex="1"
       bg={colors.bg}
       color={colors.color}
@@ -49,7 +49,7 @@ const Card: FunctionComponent<CardProps> = ({ children, onClick, ...rest }) => {
       {...rest}
     >
       {children}
-    </PseudoBox>
+    </Box>
   );
 };
 

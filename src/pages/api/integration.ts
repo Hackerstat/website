@@ -4,7 +4,7 @@ import { addIntegrationInSettingsValidator } from '../../utils/validation';
 import { addIntegrationInSettings } from '../../utils/mongo';
 import auth0 from '../../utils/auth';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
       try {
@@ -13,7 +13,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         res.status(HTTPCode.BAD_REQUEST).send(message);
         return;
       }
-      await addIntegrationInSettings(req);
+      await addIntegrationInSettings(req, res);
       res.status(HTTPCode.OK).send('Added Account');
     } catch (e) {
       console.error(e);

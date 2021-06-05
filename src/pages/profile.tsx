@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFetchUser } from '../utils/user';
-import { Button, Text } from './../../node_modules/@chakra-ui/core';
+import { Button, Text } from './../../node_modules/@chakra-ui/react';
 import AuthLayer from '../Components/AuthLayer';
 
 export default function Profile(): JSX.Element {

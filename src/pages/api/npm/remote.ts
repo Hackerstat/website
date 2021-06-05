@@ -1,10 +1,6 @@
 const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
-import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserSettings } from '../../../utils/getUserSettings';
-import { getRemoteNPM } from '../../../utils/mongo';
-import auth0 from '../../../utils/auth';
 import { HTTPCode } from '../../../utils/constants';
 
 const MAX_COUNT = 10;

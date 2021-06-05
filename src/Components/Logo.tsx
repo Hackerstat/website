@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Box, BoxProps, useColorMode } from '@chakra-ui/core';
+import { Box, BoxProps, useColorMode } from '@chakra-ui/react';
 
 interface LogoVariantProps extends BoxProps {
   main: string;

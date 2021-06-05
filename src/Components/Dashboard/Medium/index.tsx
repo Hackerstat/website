@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heading, Box, Text, Stack, Flex, useColorMode, PseudoBox } from '@chakra-ui/core';
+import { Heading, Box, Text, Stack, Flex, useColorMode } from '@chakra-ui/react';
 import Card from '../../Card';
 import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +9,7 @@ import ExternalLink from '../../ExternalLink';
 function Feature({ color, title, date, link, ...rest }) {
   return (
     <ExternalLink href={link}>
-      <PseudoBox
+      <Box
         _hover={{
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -26,7 +26,7 @@ function Feature({ color, title, date, link, ...rest }) {
         <Text color={color} fontSize={'xs'} opacity={0.5} mt={2}>
           {date}
         </Text>
-      </PseudoBox>
+      </Box>
     </ExternalLink>
   );
 }
@@ -68,7 +68,7 @@ const MediumCard = ({ user, ...rest }) => {
           color={color}
           ml={2}
           href={`https://www.medium.com/${user}` || undefined}
-          isDisabled={!user}
+          // isDisabled={!user}
           fontWeight={'bold'}
         >
           {user || '_______'}

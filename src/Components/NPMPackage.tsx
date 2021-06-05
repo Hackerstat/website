@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Flex } from '@chakra-ui/core';
+import { Box, Flex } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExternalLink from './ExternalLink';
 import { Chart } from 'react-charts';
@@ -47,7 +47,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
           color={'white'}
           ml={2}
           href={packageInfo?.links?.npm || undefined}
-          isDisabled={!packageInfo?.links?.npm}
+          // isDisabled={!packageInfo?.links?.npm}
           fontWeight={'bold'}
         >
           {packageInfo?.name || '_______'}

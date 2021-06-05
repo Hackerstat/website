@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/core';
+import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';

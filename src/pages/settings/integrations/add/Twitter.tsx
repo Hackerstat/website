@@ -10,7 +10,7 @@ import {
   Stack,
   FormErrorMessage,
   useToast,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';

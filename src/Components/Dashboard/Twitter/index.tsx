@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Avatar, Text, Flex, Skeleton, useColorMode } from '@chakra-ui/core';
+import { Box, Avatar, Text, Flex, Skeleton, useColorMode } from '@chakra-ui/react';
 import Card from '../../Card';
 import UserBadge from '../../UserBadge';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';

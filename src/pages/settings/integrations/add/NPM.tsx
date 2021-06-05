@@ -12,7 +12,7 @@ import {
   FormErrorMessage,
   Grid,
   useToast,
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faNpm } from '@fortawesome/free-brands-svg-icons';

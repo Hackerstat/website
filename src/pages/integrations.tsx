@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Grid, Heading } from '@chakra-ui/core';
+import { Flex, Grid, Heading } from '@chakra-ui/react';
 import {
   faGitlab,
   faGithub,

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/core';
+import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/core';
+import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import { faGitlab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import randomstring from 'randomstring';

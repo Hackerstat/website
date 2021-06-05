@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Flex, Button, Heading, ButtonGroup, useColorMode } from '@chakra-ui/core';
+import { Box, Flex, Button, Heading, ButtonGroup, useColorMode } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import Link from '../Link';
 

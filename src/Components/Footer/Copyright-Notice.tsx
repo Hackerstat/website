@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Text, BoxProps } from '@chakra-ui/core';
+import { Text, BoxProps } from '@chakra-ui/react';
 
 const currentYear = new Date().getFullYear();
 

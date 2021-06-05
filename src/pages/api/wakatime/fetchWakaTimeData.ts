@@ -6,7 +6,7 @@ import { WakaTimeDataResType, WakaTimeDataPieType } from '../../../utils/utils';
 
 import { HTTPCode } from '../../../utils/constants';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     if (req.method === 'GET') {
       const { url, dataType } = await fetchWakaTimeValidator(req.query);

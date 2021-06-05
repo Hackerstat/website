@@ -1,11 +1,11 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 import { IUserProfileData } from '../utils';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../auth';
 
-export const updateInfo = async (req: NextApiRequest): Promise<void> => {
-  const { user } = await auth0.getSession(req);
+export const updateInfo = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+  const { user } = await auth0.getSession(req, res);
   const { sub } = user;
 
   const { firstName, lastName, website, email, bio, school, location } = req.body;
