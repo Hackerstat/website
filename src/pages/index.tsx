@@ -59,9 +59,9 @@ const IndexPage: NextPage = () => (
           <Heading display={'flex'} fontSize={'3xl'} textAlign={'center'} mb={4}>
             1,233,524 Hackers and Growing!
           </Heading>
-          <Stack spacing={3} shouldWrapChildren isInline flexWrap={'wrap'}>
-            <Image src={'https://temppr.com/images/User-Bubbles.svg'} />
-          </Stack>
+          <Flex alignItems="center" w="100%">
+            <Image src={'https://temppr.com/images/User-Bubbles.svg'} boxSize="100%" />
+          </Flex>
         </Box>
         <Link href={'/dashboard'} passHref>
           <Button mt={3} variant={'solid'} colorScheme={'green'}>

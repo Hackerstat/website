@@ -35,11 +35,11 @@ const downloadFile = async (fileURL: string) => {
 };
 
 export default async (req, res) => {
-  const { url: rawFileURL, repo, user } = getRepoFromURL(
-    'https://gitlab.com/louislombardoiv/advers/-/blob/master/',
-    'master',
-    'PlayerX.py',
-  );
+  const {
+    url: rawFileURL,
+    repo,
+    user,
+  } = getRepoFromURL('https://gitlab.com/louislombardoiv/advers/-/blob/master/', 'master', 'PlayerX.py');
   const result = await downloadFile(rawFileURL);
 
   try {
