@@ -13,11 +13,14 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerBody,
+  DrawerFooter,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useFetchUser } from '../utils/user';
 import Link from './Link';
 import Logo from './Logo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserBubble from './UserBubble';
 
 const MenuItems = ({ children, href }) => (
@@ -37,11 +40,26 @@ const Navbar: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, loading } = useFetchUser();
   const [show, setShow] = React.useState(false);
+  const dashboardID = 'dashboard';
+  const integrationID = 'integration';
 
   const { colorMode } = useColorMode();
 
   const [backgroundColor, setBackgroundColor] = useState<string>(backgroundColors['dark']);
   const [textColor, setTextColor] = useState(textColors['dark']);
+
+  const isLoggedIn = (): JSX.Element =>
+    !user && !loading ? (
+      <Link href="/api/login">
+        <Button>
+          <Text color={textColor}>Login</Text>
+        </Button>
+      </Link>
+    ) : (
+      <Box>
+        <UserBubble />
+      </Box>
+    );
 
   useEffect(() => {
     setBackgroundColor(backgroundColors[colorMode]);
@@ -50,7 +68,7 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <Flex
-      // as="nav"
+      as="nav"
       align="center"
       bg={'gray.900'}
       justify={'space-between'}
@@ -67,7 +85,7 @@ const Navbar: FunctionComponent = () => {
       <Box display={['block', 'block', 'none']} onClick={onOpen}>
         <svg
           fill={colorMode === 'dark' ? 'white' : 'gray.700'}
-          width="12px"
+          width="22px"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -101,44 +119,42 @@ const Navbar: FunctionComponent = () => {
         fontWeight={'bold'}
         letterSpacing={'wide'}
       >
-        <MenuItems key={'integrations'} href="/integrations">
+        <MenuItems key={integrationID} href="/integrations">
           Integrations
         </MenuItems>
-        <MenuItems key={'dashboard'} href="/dashboard">
+        <MenuItems key={dashboardID} href="/dashboard">
           Dashboard
         </MenuItems>
       </Flex>
 
       <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
-        {!user && !loading ? (
-          <Link href="/api/login">
-            <Button>
-              <Text color={textColor}>Login</Text>
-            </Button>
-          </Link>
-        ) : (
-          <Box>
-            <UserBubble />
-          </Box>
-        )}
+        {isLoggedIn()}
       </Box>
 
       <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px" textAlign={'center'} justifyContent={'center'} alignItems={'center'}>
-            <Flex justifyContent={'center'} alignItems={'center'}>
+            <Flex justifyContent={'space-between'} alignItems={'center'}>
               <Logo height={LogoSizes.map((size) => `${+size}px`)} />
+              {isLoggedIn()}
             </Flex>
           </DrawerHeader>
           <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
-            <MenuItems key={'integrations'} href="/integrations">
+            <MenuItems key={integrationID} href="/integrations">
               Integrations
             </MenuItems>
-            <MenuItems key={'dashboard'} href="/dashboard">
+            <MenuItems key={dashboardID} href="/dashboard">
               Dashboard
             </MenuItems>
           </DrawerBody>
+          <DrawerFooter>
+            <Flex w="100%" justifyContent="flex-end">
+              {/* <Button onClick={() => onClose()}> */}
+              <FontAwesomeIcon cursor="pointer" onClick={() => onClose()} icon={faTimes} size="2x" />
+              {/* </Button> */}
+            </Flex>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </Flex>
