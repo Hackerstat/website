@@ -91,7 +91,7 @@ const ProfileInfo = () => {
           >
             {(props) => (
               <form onSubmit={props.handleSubmit} style={{ width: '100%' }}>
-                <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'}>
+                <Stack isInline shouldWrapChildren spacing={{ base: 0, sm: 2 }} flexWrap={'wrap'}>
                   <Field name="firstName">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.firstName}>
@@ -111,7 +111,14 @@ const ProfileInfo = () => {
                     )}
                   </Field>
                 </Stack>
-                <Stack mt={2} isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
+                <Stack
+                  mt={2}
+                  isInline
+                  shouldWrapChildren
+                  spacing={{ base: 0, sm: 2 }}
+                  flexWrap={'wrap'}
+                  justifyContent={'flex-start'}
+                >
                   <Field name="website">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.website}>
@@ -132,7 +139,13 @@ const ProfileInfo = () => {
                     )}
                   </Field>
                 </Stack>
-                <Stack mt={2} spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'} width={'100%'}>
+                <Stack
+                  mt={2}
+                  spacing={{ base: 0, sm: 2 }}
+                  flexWrap={'wrap'}
+                  justifyContent={'flex-start'}
+                  width={'100%'}
+                >
                   <Field name="bio">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.bio}>
@@ -147,7 +160,7 @@ const ProfileInfo = () => {
                   mt={4}
                   isInline
                   shouldWrapChildren
-                  spacing={2}
+                  spacing={{ base: 0, sm: 2 }}
                   flexWrap={'wrap'}
                   width={'100%'}
                   justifyContent={'flex-start'}

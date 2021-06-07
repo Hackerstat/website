@@ -119,7 +119,7 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
       }}
     >
       <Stack shouldWrapChildren spacing={2} width={'100%'}>
-        <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} width={'100%'} justifyContent={'flex-start'}>
+        <Stack flexWrap={'wrap'} width={'100%'} justifyContent={'flex-start'}>
           <FormControl isInvalid={!!formik.errors.companyName}>
             <FormLabel htmlFor="companyName">Company Name</FormLabel>
             <Input
@@ -152,7 +152,7 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
           I currently work here
         </Checkbox>
 
-        <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} width={'100%'} justifyContent={'flex-start'}>
+        <Stack width={'100%'} justifyContent={'flex-start'}>
           <FormControl isInvalid={!!formik.errors.startingDate}>
             <FormLabel htmlFor="startingDate">Date of Position Held From</FormLabel>
             <Input
@@ -195,17 +195,21 @@ const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose
         <Button textAlign={'right'} mt={'2em'} colorScheme="teal" isLoading={formik.isSubmitting} type="submit">
           Done
         </Button>
-        <Button
-          _hover={{ backgroundColor: 'red.700' }}
-          textAlign={'right'}
-          mt={'2em'}
-          backgroundColor="red.600"
-          isLoading={formik.isSubmitting}
-          type="submit"
-          onClick={() => setToBeDeleted(true)}
-        >
-          Delete
-        </Button>
+        {initialValues ? (
+          <Button
+            _hover={{ backgroundColor: 'red.700' }}
+            textAlign={'right'}
+            mt={'2em'}
+            backgroundColor="red.600"
+            isLoading={formik.isSubmitting}
+            type="submit"
+            onClick={() => setToBeDeleted(true)}
+          >
+            Delete
+          </Button>
+        ) : (
+          <></>
+        )}
       </Flex>
     </form>
   );
