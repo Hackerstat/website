@@ -15,7 +15,7 @@ const CollapseableInstruction = ({ typeOfChartIsActivity }: { typeOfChartIsActiv
   };
 
   const normalStyles = {
-    transition: 'all .3s linear',
+    transition: 'all .2s linear',
   };
 
   const turnedStyles = deepmerge({ transform: 'rotate(90deg)' }, normalStyles);
@@ -31,9 +31,9 @@ const CollapseableInstruction = ({ typeOfChartIsActivity }: { typeOfChartIsActiv
           <FontAwesomeIcon icon={faChevronRight} size={'1x'} />
         </Box>
       </Flex>
+      {/* TODO: Redo Animation Later. */}
       <div
         ref={containerRef as React.RefObject<HTMLDivElement>}
-        id="container"
         className={`${isOpen ? openBoxClass : collapsedBoxClass}`}
       >
         <Stack mt={2} fontSize="lg" spacing={4} as="ol">

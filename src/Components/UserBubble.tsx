@@ -1,5 +1,6 @@
 import React from 'react';
-import { Avatar, Skeleton, Icon, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
+import { Avatar, Skeleton, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
+import { TriangleDownIcon } from '@chakra-ui/icons';
 import { useFetchUser } from '../utils/user';
 import Link from 'next/link';
 
@@ -14,7 +15,7 @@ const UserBubble = () => {
         <Skeleton isLoaded={!loading}>
           <Flex flexDirection={'row'} alignItems={'center'}>
             <Avatar size={'sm'} src={user?.picture} />
-            <Icon ml={1} fontSize={'xs'} name="triangle-down" color="gray.500" />
+            <TriangleDownIcon ml={1} fontSize={'xs'} color="gray.500" />
           </Flex>
         </Skeleton>
       </MenuButton>

@@ -9,20 +9,20 @@
 
 #container {
   overflow: hidden;
-  transition: height .6s;
+  transition: max-height .1s;
 }
 
 
 .isOpen {
   overflow: hidden;
-  height: 225px;
+  max-height: 100%;
   margin: 0px;
 }
 
 
 .isClosed {
   overflow: hidden;
-  height: 0;
+  max-height: 0;
 };
 
 

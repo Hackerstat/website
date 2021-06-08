@@ -66,7 +66,6 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       const dataType = 'bar';
 
       const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
-      console.log(res.data);
 
       res.data.dataPoints.forEach((dataPoint: WakaTimePieGraphDataResType) => {
         barDataPoints.labels.push(dataPoint.dateText);
