@@ -157,12 +157,6 @@ export interface WakaTimeDataPieType {
   data: Array<WakaTimeLanguageDataType>;
 }
 
-/**
- *   sub,
-  wakaTimeCodingActivityURL,
-  wakaTimeLanguageURL,
- */
-
 export interface AddWakaTimeIntegrationProps {
   sub: any;
   wakaTimeCodingActivityURL: string;

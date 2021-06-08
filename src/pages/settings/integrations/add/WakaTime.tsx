@@ -11,6 +11,7 @@ import {
   Stack,
   FormErrorMessage,
   useToast,
+  LightMode,
 } from '@chakra-ui/react';
 import { CollapseableInstructionWrapper } from '../../../../Components/WakaTime/CollapseInstructionBox';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaTime/Graphs';
@@ -79,8 +80,6 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       setRetrievedBarData(barDataPoints);
 
       setDrawerCodingActivity(true);
-
-      // console.log(res.data);
     } catch (err) {
       console.log(err);
       toast(badGetWakaTimeToast as unknown);
@@ -175,27 +174,20 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         >
           Get Daily Data
         </Button>
-        <Box
-          w="100%"
-          // minH={{ base: drawerCodingActivity ? 250 : 0, xs: drawerCodingActivity ? 225 : 0 }} // TODO: Set breakpoints for graph
-          // minW={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
-          // pb={-25}
-          // justifyContent="center"
-          // alignItems="center"
-        >
+        <Box w="100%">
           <Box
-            // w={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
-            maxW={700}
-            minW={200}
+            maxW={drawerCodingActivity ? 700 : 0}
+            minW={drawerCodingActivity ? 200 : 0}
             margin="0 auto"
             style={animationStyle}
           >
-            <TimeBarWrapper data={retrievedBarData} />
+            <LightMode>
+              <TimeBarWrapper data={retrievedBarData} />
+            </LightMode>
           </Box>
         </Box>
-        {/* Add Another Input/Graph for languages used pie chart */}
+        {/* TODO: Add Another Input/Graph for languages used pie chart */}
         <CollapseableInstructionWrapper typeOfChartIsActivity={false} />
-        {/* {useMemo(() => CollapseableInstruction({ typeOfChartIsActivity: true }), [{ typeOfChartIsActivity: true }])} */}
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Languages WakaTimeURL</FormLabel>
           <Input

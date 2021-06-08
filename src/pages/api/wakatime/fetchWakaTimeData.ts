@@ -1,8 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
-import { fetchWakaTimeValidator } from '../../../utils/validation';
+import {
+  fetchWakaTimeValidator,
+  wakaTimeActivityBarDataValidator,
+  wakaTimeLanguagePieDataValidator,
+} from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
-import { WakaTimeDataResType, WakaTimeDataPieType } from '../../../utils/utils';
+import { WakaTimeDataResType } from '../../../utils/utils';
 
 import { HTTPCode } from '../../../utils/constants';
 
@@ -12,10 +16,10 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { url, dataType } = await fetchWakaTimeValidator(req.query);
 
       if (dataType === 'bar') {
-        const { data } = <WakaTimeDataResType>(await Axios.get(url)).data;
-        console.log(data);
+        const wakaTimeActivityBarData = <WakaTimeDataResType>(await Axios.get(url)).data;
+        await wakaTimeActivityBarDataValidator(wakaTimeActivityBarData);
 
-        const validatedData = data.map(({ grand_total, range }) => ({
+        const validatedData = wakaTimeActivityBarData.data.map(({ grand_total, range }) => ({
           hours: grand_total.hours,
           minutes: grand_total.minutes,
           hoursMinutesText: grand_total.text,
@@ -24,7 +28,9 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
         }));
         res.status(HTTPCode.OK).json({ dataPoints: validatedData });
       } else {
-        const { data } = <WakaTimeDataPieType>(await Axios.get(url)).data;
+        const wakaTimeLanguagePieData = (await Axios.get(url)).data;
+        await wakaTimeLanguagePieDataValidator(wakaTimeLanguagePieData);
+        const { data } = wakaTimeLanguagePieData;
         res.status(HTTPCode.OK).json({ dataPoints: data });
       }
     }
