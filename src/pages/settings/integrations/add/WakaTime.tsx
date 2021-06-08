@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import {
   Flex,
+  Box,
   Input,
   FormLabel,
   FormControl,
@@ -174,16 +175,24 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         >
           Get Daily Data
         </Button>
-        <Flex pb={-25} justifyContent="center" alignItems="center">
-          <Flex
-            w={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
-            h={{ base: drawerCodingActivity ? 250 : 0, xs: drawerCodingActivity ? 225 : 0 }} // TODO: Set breakpoints for graph
-            alignItems="center"
+        <Box
+          w="100%"
+          // minH={{ base: drawerCodingActivity ? 250 : 0, xs: drawerCodingActivity ? 225 : 0 }} // TODO: Set breakpoints for graph
+          // minW={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
+          // pb={-25}
+          // justifyContent="center"
+          // alignItems="center"
+        >
+          <Box
+            // w={{ base: drawerCodingActivity ? 500 : 0, xs: drawerCodingActivity ? 450 : 0 }} // TODO: Set breakpoints for graph
+            maxW={700}
+            minW={200}
+            margin="0 auto"
             style={animationStyle}
           >
             <TimeBarWrapper data={retrievedBarData} />
-          </Flex>
-        </Flex>
+          </Box>
+        </Box>
         {/* Add Another Input/Graph for languages used pie chart */}
         <CollapseableInstructionWrapper typeOfChartIsActivity={false} />
         {/* {useMemo(() => CollapseableInstruction({ typeOfChartIsActivity: true }), [{ typeOfChartIsActivity: true }])} */}
