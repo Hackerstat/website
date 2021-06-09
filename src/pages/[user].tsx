@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Stack, Spinner } from '@chakra-ui/react';
+import { Stack, Spinner, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
 
 import dynamic from 'next/dynamic';
@@ -55,6 +55,10 @@ const UserProfilePage: NextPage = () => {
       setIntegrationSettings(integrationData.data.settings);
       setInfo(integrationData.data.info);
     });
+
+    Axios.get(`api/wakatime/remote`, { params: { username: user } }).then((wakaTimeData) =>
+      console.log(wakaTimeData.data),
+    );
   }, [user]);
 
   return (

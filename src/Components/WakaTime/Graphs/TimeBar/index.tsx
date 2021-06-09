@@ -1,8 +1,8 @@
 import React from 'react';
-import { WakaTimeGraphDataPropsType } from '../../../../utils/utils';
+import { WakaTimeActivityGraphDataPropsType } from '../../../../utils/utils';
 import { Bar } from 'react-chartjs-2';
 
-const TimeBar = ({ data }: { data: WakaTimeGraphDataPropsType }): any => {
+const TimeBar = ({ data }: { data: WakaTimeActivityGraphDataPropsType }): any => {
   return <Bar data={data} type="bar" options={{ responsive: true }} />;
 };
 

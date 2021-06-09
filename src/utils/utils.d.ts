@@ -162,7 +162,7 @@ export interface AddWakaTimeIntegrationProps {
   wakaTimeCodingActivityURL: string;
   wakaTimeLanguageURL: string;
 }
-interface WakaTimeDataSetType {
+export interface WakaTimeDataSetType {
   type: string;
   label: string;
   data: Array<number>;
@@ -170,12 +170,12 @@ interface WakaTimeDataSetType {
   borderColor: Array<string>;
   borderWidth: number;
 }
-export interface WakaTimeGraphDataPropsType {
+export interface WakaTimeActivityGraphDataPropsType {
   labels: Array<string>;
   datasets: Array<WakaTimeDataSetType>;
 }
 
-export interface WakaTimePieGraphDataResType {
+export interface WakaTimeLanguagesGraphDataPropsType {
   dateText: string;
   hours: number;
   hoursMinutesText: string;
@@ -270,4 +270,14 @@ export interface GitLabRepoDisplayDataType {
   sz: number;
   url: string;
   watchers: number;
+}
+
+export interface GetRemoteWakaTimeDataRes {
+  integrations: Array<string>;
+  integration_settings: {
+    wakatime: {
+      wakaTimeCodingActivityURL?: string;
+      wakaTimeLanguageURL?: string;
+    };
+  };
 }

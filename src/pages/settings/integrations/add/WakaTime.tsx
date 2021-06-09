@@ -21,9 +21,12 @@ import AuthLayer from '../../../../Components/AuthLayer';
 import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils/constants';
 import Axios from 'axios';
 import {
-  WakaTimeGraphDataPropsType,
-  WakaTimePieGraphDataResType,
+  WakaTimeLanguagesGraphDataPropsType,
+  // WakaTimeLanguagesGraphDataPropsType,
+  WakaTimeActivityGraphDataPropsType,
+  // WakaTimePieGraphDataResType,
   WakaTimeLanguageDataType,
+  WakaTimeDataSetType,
 } from '../../../../utils/utils';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
@@ -35,8 +38,8 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   const [languagesWakaTimeURL, setLanguagesWakaTimeURL] = useState<string>('');
   const [drawerCodingActivity, setDrawerCodingActivity] = useState(false);
   const [drawerLanguage, setDrawerLanguage] = useState(false);
-  const [retrievedBarData, setRetrievedBarData] = useState<WakaTimeGraphDataPropsType>();
-  const [retrievedPieData, setRetrievedPieData] = useState<WakaTimeGraphDataPropsType>();
+  const [retrievedBarData, setRetrievedBarData] = useState<WakaTimeActivityGraphDataPropsType>();
+  const [retrievedPieData, setRetrievedPieData] = useState<WakaTimeActivityGraphDataPropsType>();
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
 
@@ -51,7 +54,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         return;
       }
 
-      const barDataPoints: WakaTimeGraphDataPropsType = {
+      const barDataPoints: WakaTimeActivityGraphDataPropsType = {
         labels: [],
         datasets: [
           {
@@ -69,7 +72,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
 
       const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
 
-      res.data.dataPoints.forEach((dataPoint: WakaTimePieGraphDataResType) => {
+      res.data.dataPoints.forEach((dataPoint: WakaTimeLanguagesGraphDataPropsType) => {
         barDataPoints.labels.push(dataPoint.dateText);
         const dataPointsRef = barDataPoints.datasets[0];
         dataPointsRef.backgroundColor.push('rgba(0, 0, 255, 0.2)');
@@ -95,7 +98,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
 
       const dataType = 'pie';
 
-      const pieDataPoints: WakaTimeGraphDataPropsType = {
+      const pieDataPoints: WakaTimeActivityGraphDataPropsType = {
         labels: [],
         datasets: [
           {

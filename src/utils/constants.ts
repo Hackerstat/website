@@ -37,3 +37,9 @@ export const goodToast = {
   status: 'success',
   description: 'We added this integration to your account',
 };
+
+export const WAKATIME = 'wakatime';
+export const WAKATIME_ACTIVITY_URL = 'wakaTimeCodingActivityURL';
+export const WAKATIME_LANGUAGE_URL = 'wakaTimeLanguageURL';
+export const INTEGRATIONS = 'integrations';
+export const INTEGRATION_SETTINGS = 'integration_settings';

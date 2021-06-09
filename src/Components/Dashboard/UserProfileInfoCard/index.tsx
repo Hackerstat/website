@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { faSchool, faEnvelope, faMapMarkerAlt, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Text, Flex, Skeleton, Box, BoxProps, Stack, Divider } from '@chakra-ui/react';
@@ -67,10 +67,23 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [color, setColor] = useState(colors['dark']);
+  const [isHidden, setIsHidden] = useState(false);
 
   const onLoad = () => {
     setLoaded(true);
   };
+
+  const onError = () => {
+    console.log('Something went wrong');
+    setIsHidden(true);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onError();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Skeleton isLoaded={loaded}>
