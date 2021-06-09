@@ -22,7 +22,9 @@ function Feature({ color, title, date, link, ...rest }) {
         borderRadius={'lg'}
         {...rest}
       >
-        <Text color={color}>{title}</Text>
+        <Text color={color} fontSize={['sm', 'md', 'lg']}>
+          {title}
+        </Text>
         <Text color={color} fontSize={'xs'} opacity={0.5} mt={2}>
           {date}
         </Text>
@@ -61,7 +63,7 @@ const MediumCard = ({ user, ...rest }) => {
   }, [user]);
 
   return (
-    <Card mt={3} borderRadius={'lg'} padding={2} maxW={'lg'} minW={['sm', 'md', 'lg']} {...rest}>
+    <Card mt={3} borderRadius={'lg'} padding={2} maxW={['sm', 'md', 'lg']} minW={['sm', 'md', 'lg']} {...rest}>
       <Flex alignItems={'center'} opacity={0.8}>
         <FontAwesomeIcon icon={faMedium} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
         <ExternalLink

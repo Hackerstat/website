@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Flex, Avatar, Stack, Box, Spinner, Image, Text } from '@chakra-ui/react';
+import { Stack, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
 
-import Card from '../Components/Card';
 import dynamic from 'next/dynamic';
 import Axios from 'axios';
-import UserCard from '../Components/Dashboard/UserCard';
-import FocusCard from '../Components/FocusCard';
+import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 import BioCard from '../Components/BioCard';
 
 const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
@@ -62,15 +60,14 @@ const UserProfilePage: NextPage = () => {
   return (
     <PageBase>
       <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'}>
-        <UserCard
-          maxW={'lg'}
-          minW={'md'}
-          width={'100%'}
+        <UserProfileInfoCard
+          maxW={['sm', 'md', 'lg']}
+          minW={['sm', 'md', 'lg']}
           photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
           name={`${info?.firstName || ''} ${info?.lastName || ''}`}
           username={user as string}
+          {...info}
         />
-        <BioCard {...info} />
       </Stack>
       <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'}>
         {/* <Card minWidth={['xs', 'lg']} width={'100%'} minHeight={'200px'} borderWidth={3} borderColor={'white'}>

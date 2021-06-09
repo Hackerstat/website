@@ -9,8 +9,9 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
     try {
       try {
         await userInfoQueryValidator(req.body);
-      } catch ({ message }) {
-        res.status(HTTPCode.BAD_REQUEST).send(message);
+      } catch (error) {
+        console.error(error);
+        res.status(HTTPCode.BAD_REQUEST).send(error.message);
         return;
       }
       await updateInfo(req, res);

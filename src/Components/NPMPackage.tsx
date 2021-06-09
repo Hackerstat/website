@@ -53,7 +53,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
           {packageInfo?.name || '_______'}
         </ExternalLink>
       </Flex>
-      <Box height={'200px'} width={'100%'} color={'white'}>
+      <Box height={'200px'} maxW={['sm', 'md', 'lg']} color={'white'}>
         <Chart
           dark
           data={[

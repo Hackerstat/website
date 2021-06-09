@@ -69,7 +69,15 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   }, [colorMode]);
 
   return (
-    <Card borderRadius={'lg'} padding={2} minW={['sm', 'md']} maxW={'lg'} width={'100%'} mt={3} color={color}>
+    <Card
+      borderRadius={'lg'}
+      overflow="scroll"
+      padding={2}
+      maxW={['sm', 'md', 'lg']}
+      width={'100%'}
+      mt={3}
+      color={color}
+    >
       <Flex alignItems={'center'} opacity={0.8}>
         <FontAwesomeIcon icon={faNpm} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
         <ExternalLink

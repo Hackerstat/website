@@ -41,7 +41,7 @@ const ProfileInfo = () => {
     website: '',
     email: '',
     bio: '',
-    Location: '',
+    location: '',
   });
 
   useEffect(() => {
@@ -174,18 +174,18 @@ const ProfileInfo = () => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="Location">
+                  <Field name="location">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.location}>
-                        <FormLabel htmlFor="Location">Location</FormLabel>
+                        <FormLabel htmlFor="location">location</FormLabel>
                         <Input
                           {...field}
-                          id="Location"
+                          id="location"
                           placeholder="Santa Cruz, California"
                           type="text"
                           minW={FormWidth}
                         />
-                        <FormErrorMessage>{form.errors.Location}</FormErrorMessage>
+                        <FormErrorMessage>{form.errors.location}</FormErrorMessage>
                       </FormControl>
                     )}
                   </Field>
