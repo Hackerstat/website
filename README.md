@@ -23,7 +23,7 @@ HackerStat enforces verification by OAuth or other means to these integrations:
 
 ### Tools
 
-HackerStat uses:
+**HackerStat uses:**
 
 - [Prettier](https://prettier.io/)
 - [ESLint](https://eslint.org/)
@@ -31,6 +31,7 @@ HackerStat uses:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Next.js](https://nextjs.org/)
 - [Chakra UI](https://chakra-ui.com/)
+- [Chart.js](https://www.chartjs.org/docs/latest/)
 
 ### Getting Started
 

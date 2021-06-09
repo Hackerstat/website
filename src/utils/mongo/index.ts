@@ -26,3 +26,4 @@ export * from './getRemoteWakaTimeData';
 export * from './getGithubReposRemote';
 export * from './getRemoteStackOverflowUsername';
 export * from './addStackOverflowRemoteData';
+export * from './getWorkExperienceData';

@@ -55,10 +55,6 @@ const UserProfilePage: NextPage = () => {
       setIntegrationSettings(integrationData.data.settings);
       setInfo(integrationData.data.info);
     });
-
-    Axios.get(`api/wakatime/remote`, { params: { username: user } }).then((wakaTimeData) =>
-      console.log(wakaTimeData.data),
-    );
   }, [user]);
 
   return (
@@ -74,17 +70,6 @@ const UserProfilePage: NextPage = () => {
         />
       </Stack>
       <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'}>
-        {/* <Card minWidth={['xs', 'lg']} width={'100%'} minHeight={'200px'} borderWidth={3} borderColor={'white'}>
-          <Flex flexDirection={'column'} alignItems={'flex-start'}>
-            <Avatar
-              mt={2}
-              ml={2}
-              name={user as string}
-              src={`https://api.adorable.io/avatars/285/${user}.png`}
-              size={'xl'}
-            />
-          </Flex>
-        </Card> */}
         {/* Add GitHub Repos */}
         {/* Add GitLab Repos */}
         {/* Add StackOverflow */}
