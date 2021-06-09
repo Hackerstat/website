@@ -23,3 +23,4 @@ export * from './addGitHubData';
 export * from './fetchGithubRepos';
 export * from './addGitLabData';
 export * from './getRemoteWakaTimeData';
+export * from './getGithubReposRemote';

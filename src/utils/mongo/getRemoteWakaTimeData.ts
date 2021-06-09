@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest } from 'next';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 import { GetRemoteWakaTimeDataRes } from '../utils';
 
