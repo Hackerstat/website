@@ -1,12 +1,10 @@
-import { NextApiRequest } from 'next';
 import Axios from 'axios';
 import { fetchStackOverflowInfoRes } from '../utils';
 import { STACKOVERFLOW_URL_TAGS, STACKOVERFLOW_URL_USER } from '../constants';
 
-export const fetchStackOverflowInfo = async (req: NextApiRequest): Promise<fetchStackOverflowInfoRes> => {
-  const { username } = req.query;
-  const tagRetrieval = Axios.get(STACKOVERFLOW_URL_TAGS(username as string));
-  const userRetrieval = Axios.get(STACKOVERFLOW_URL_USER(username as string));
+export const fetchStackOverflowInfo = async (username: string): Promise<fetchStackOverflowInfoRes> => {
+  const tagRetrieval = Axios.get(STACKOVERFLOW_URL_TAGS(username));
+  const userRetrieval = Axios.get(STACKOVERFLOW_URL_USER(username));
   const res = await Promise.all([tagRetrieval, userRetrieval]);
 
   console.log(res[1].data);

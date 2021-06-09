@@ -24,3 +24,5 @@ export * from './fetchGithubRepos';
 export * from './addGitLabData';
 export * from './getRemoteWakaTimeData';
 export * from './getGithubReposRemote';
+export * from './getRemoteStackOverflowUsername';
+export * from './addStackOverflowRemoteData';

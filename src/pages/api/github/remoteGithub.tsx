@@ -1,12 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGithubReposRemote } from '../../../utils/mongo';
-import auth0 from '../../../utils/auth';
-import { getUserSettings } from '../../../utils/getUserSettings';
 import { HTTPCode } from '../../../utils/constants';
 
 const API_KEY = process.env.GITHUB_API_KEY;
 
-const createQuery = (username) => {
+const createQuery = (username: string) => {
   return `query {
           user(login: "${username}") {
             contributionsCollection {

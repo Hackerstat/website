@@ -1,5 +1,7 @@
-import { checkStackOverflowUsernameSchema } from '../../schemas';
+import { checkStackOverflowUsernameSchema, CheckStackOverflowUsernameSchemaType } from '../../schemas';
 
-export const checkStackOverflowUsernameValidator = async (query: unknown): Promise<void> => {
-  await checkStackOverflowUsernameSchema.validate(query);
+export const checkStackOverflowUsernameValidator = async (
+  query: unknown,
+): Promise<CheckStackOverflowUsernameSchemaType> => {
+  return await checkStackOverflowUsernameSchema.validate(query);
 };

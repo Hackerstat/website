@@ -8,3 +8,5 @@ export const checkStackOverflowUsernameSchema = yup.object().shape({
     .test('length', 'name must be less than 51 chars', (name: string) => name.length <= 50)
     .required(),
 });
+
+export type CheckStackOverflowUsernameSchemaType = yup.InferType<typeof checkStackOverflowUsernameSchema>;

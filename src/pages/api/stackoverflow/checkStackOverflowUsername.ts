@@ -11,8 +11,8 @@ import auth0 from '../../../utils/auth';
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {
-      await checkStackOverflowUsernameValidator(req.query);
-      const stackOverflowData = await fetchStackOverflowInfo(req);
+      const { username } = await checkStackOverflowUsernameValidator(req.query);
+      const stackOverflowData = await fetchStackOverflowInfo(username);
       res.status(200).json(stackOverflowData);
     } catch (e) {
       console.error(e);

@@ -39,6 +39,7 @@ export const goodToast = {
 };
 
 export const WAKATIME = 'wakatime';
+export const STACKOVERFLOW = 'stackoverflow';
 export const WAKATIME_ACTIVITY_URL = 'wakaTimeCodingActivityURL';
 export const WAKATIME_LANGUAGE_URL = 'wakaTimeLanguageURL';
 export const INTEGRATIONS = 'integrations';

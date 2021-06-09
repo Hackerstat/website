@@ -1,18 +1,30 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import auth0 from '../../../utils/auth';
+import { HTTPCode } from '../../../utils/constants';
+import { usernameRemoteQueryValidator } from '../../../utils/validation';
+import { getRemoteStackOverflowUsername, addStackOverflowRemoteData } from '../../../utils/mongo';
+import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 
 /**
  * body: {
  *  soID: 214saa23
  * }
  */
-export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default async function remoteStackOverflow(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'POST') {
     try {
-      res.status(200).send('CREATED');
+      console.log(req.query);
+      const { username } = await usernameRemoteQueryValidator(req.query);
+      const stackoverflowUsername = await getRemoteStackOverflowUsername(username);
+      const stackOverFlowData = await fetchStackOverflowInfo(stackoverflowUsername);
+
+      await addStackOverflowRemoteData(username, stackOverFlowData);
+
+      res.status(HTTPCode.OK).json(stackOverFlowData);
     } catch (e) {
       console.error(e);
-      res.status(400).send('FAIL');
+      res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
     }
+  } else {
+    res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
   }
-});
+}
