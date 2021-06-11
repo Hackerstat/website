@@ -5,9 +5,11 @@ import { getRemoteStackOverflowUsername, addStackOverflowRemoteData } from '../.
 import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 
 /**
- * body: {
- *  soID: 214saa23
- * }
+ * @name remoteStackOverflow
+ * @description It is the function that will retrieve the HackerStat User's StackOverflow information w/out authentication of that user.
+ * @author @Cgunter1
+ * @argument {string} username It is the HackerStat user's username that the function will retrieve the StackOverflow Info on behalf of.
+ * @returns {void}
  */
 export default async function remoteStackOverflow(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'POST') {

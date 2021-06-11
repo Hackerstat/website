@@ -3,6 +3,9 @@ import { getIntegrationInfo } from '../../../utils/mongo';
 import { mediumUserNameQueryValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 
+/**
+ * @REMOVE
+ */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     try {

@@ -3,6 +3,13 @@ import Axios from 'axios';
 import { HTTPCode } from '../../../utils/constants';
 import { GitHubRepoDataType } from '../../../utils/utils';
 
+/**
+ * @name queryParser
+ * @author @Cgunter1
+ * @description Utility function to splice the query retrieved from the GitHub OAuth response.
+ * @param {string} query The url query to be spliced.
+ * @returns {Object} Object key and values of the parsed query.
+ */
 const queryParser = (query: string) => {
   const queryParts = query.split('&');
   const queryObject = {};
@@ -13,6 +20,13 @@ const queryParser = (query: string) => {
   return queryObject;
 };
 
+/**
+ * @name addVerification
+ * @author @Cgunter1
+ * @description This function completes the GitHub OAuth process by using the retrieved code, GitHub OAuth keys, and access token to retrive the user's gitHub info (i.e. repos, followers).
+ * @argument {string} code The code to retrieve the access code to retrieve info of a user's GitHub Profile.
+ * @returns {void}
+ */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     if (!Object(req.query).hasOwnProperty('code')) {

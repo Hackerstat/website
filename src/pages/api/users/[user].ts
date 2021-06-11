@@ -3,6 +3,13 @@ import { userQueryValidator } from '../../../utils/validation';
 import { getUser } from '../../../utils/mongo';
 import { HTTPCode } from '../../../utils/constants';
 
+/**
+ * @name [user]
+ * @description This function retrieves a hackerStat User's profile info (i.e. integrations, personal info).
+ * @author @Cgunter1 @LouisIV
+ * @argument {string} user It is the HackerStat username that the info is being retrieved for.
+ * @returns {void}
+ */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
     try {

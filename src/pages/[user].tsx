@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Stack, Spinner, Button } from '@chakra-ui/react';
+import { Stack, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
 
 import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
-import BioCard from '../Components/BioCard';
 
 const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
   // eslint-disable-next-line react/display-name

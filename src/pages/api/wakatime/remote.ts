@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import auth0 from '../../../utils/auth';
 import { getRemoteWakaTimeData } from '../../../utils/mongo';
 import { WakaTimeActivityGraphDataPropsType, WakaTimeLanguagesGraphDataPropsType } from '../../../utils/utils';
 import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
@@ -18,6 +17,13 @@ type wakaTimeRes = {
   wakaTimeActivityData: WakaTimeLanguagesGraphDataPropsType | null;
 };
 
+/**
+ * @name remoteWakaTimeRetrieval
+ * @description It is the function that a hackerStat user's wakaTime info for both Activity and Language graphs w/out authentication.
+ * @author @Cgunter1
+ * @argument {string} dataType It is the dataType that indicates whether the url is an Activity Bar or Language Pie.
+ * @returns {void}
+ */
 export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const wakaTimeRes: wakaTimeRes = {
     wakaTimeActivityData: null,

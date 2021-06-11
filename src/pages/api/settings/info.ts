@@ -4,6 +4,12 @@ import auth0 from '../../../utils/auth';
 import { userInfoQueryValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 
+/**
+ * @name info
+ * @description This function posts userinfo to the MongoDB and retrieves the userinfo.
+ * @authentication user: auth0 token
+ * @param {userInfoSchema} info It is the user info (i.e. name, emaul) that is being to the HackerStat user's profile.
+ * @returns {void} */
 export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'POST') {
     try {

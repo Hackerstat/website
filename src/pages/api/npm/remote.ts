@@ -17,9 +17,11 @@ const retrievePackagesFromUser = async (userName: string | string[]) => {
 
 // Do server side rendering for the first request.
 
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
-
+/**
+ * @name remoteNPMRetrieval
+ * @description This function retrieves an user's NPM contributions w/out being authenticated.
+ * @author @LouisIV
+ */
 export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {

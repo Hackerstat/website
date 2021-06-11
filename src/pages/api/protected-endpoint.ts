@@ -1,6 +1,9 @@
 import { HTTPCode } from '../../utils/constants';
 import auth0 from '../../utils/auth';
 
+/**
+ * @REMOVE
+ */
 export default auth0.withApiAuthRequired(async function me(req, res) {
   try {
     console.log('asdsad');

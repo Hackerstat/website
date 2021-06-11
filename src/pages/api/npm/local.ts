@@ -3,6 +3,9 @@ import auth0 from '../../../utils/auth';
 import { getLocalNPM } from '../../../utils/mongo';
 import { HTTPCode } from '../../../utils/constants';
 
+/**
+ * @REMOVE
+ */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {

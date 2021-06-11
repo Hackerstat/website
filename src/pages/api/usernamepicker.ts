@@ -3,6 +3,13 @@ import { usernameCheckerAPI } from './../../utils/mongo';
 import { userNameCheckerQueryValidator } from '../../utils/validation';
 import { NextApiRequest, NextApiResponse } from 'next';
 
+/**
+ * @name usernameChecker
+ * @description It is a function that checks if a username given already exists by another HackerStat user.
+ * @author @LouisIV @Cgunter1
+ * @argument {string} newUsername It is a new username that is checked if another HackerStat user has than username.
+ * @returns {void}
+ */
 export default async function usernameChecker(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {

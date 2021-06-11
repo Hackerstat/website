@@ -40,6 +40,9 @@ export const goodToast = {
 
 export const WAKATIME = 'wakatime';
 export const STACKOVERFLOW = 'stackoverflow';
+export const TWITTER = 'twitter';
+export const NPM = 'npm';
+export const MEDIUM = 'medium';
 export const WAKATIME_ACTIVITY_URL = 'wakaTimeCodingActivityURL';
 export const WAKATIME_LANGUAGE_URL = 'wakaTimeLanguageURL';
 export const INTEGRATIONS = 'integrations';

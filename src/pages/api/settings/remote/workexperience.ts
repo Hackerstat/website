@@ -3,7 +3,13 @@ import { usernameRemoteQueryValidator } from '../../../../utils/validation';
 import { HTTPCode } from '../../../../utils/constants';
 import { getWorkExperienceData } from '../../../../utils/mongo';
 
-export default async function RemoteRetrieveWorkExperience(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+/**
+ * @name remoteRetrieveWorkExperience
+ * @description This function retrieves any HackerStat user's list of work experiences.
+ * @author @Cgunter1
+ * @argument {string} username The HackerStat username to retrieve its work experience.
+ * @returns {void} */
+export default async function remoteRetrieveWorkExperience(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     if (req.method === 'GET') {
       const { username } = await usernameRemoteQueryValidator(req.query);

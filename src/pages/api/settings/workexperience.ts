@@ -4,6 +4,14 @@ import { addWorkExperienceValidator, updateWorkExperienceValidator } from '../..
 import auth0 from '../../../utils/auth';
 import { HTTPCode } from '../../../utils/constants';
 
+/**
+ * @name workexperience
+ * @description This functions is CRUD for a HackerStat user's work experience.
+ * @author @Cgunter1
+ * @authentication user: auth0 token
+ * @argument {addWorkExperienceSchema} addedWorkExperience It is the workExperience object being added to the HackerStat User's profile.
+ * @argument {updateWorkExperienceSchema} updatedWorkExperience It is the workExperience object being updated or deleted on the HackerStat User's profile. The object should have an id to identify the specific work experience instance.
+ * @returns {void} */
 export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
     try {

@@ -25,7 +25,13 @@ import { HTTPCode } from '../../../utils/constants';
                 setLoaded(true);
               })
  */
-
+/**
+ * @name addVerification
+ * @author @Cgunter1
+ * @status NOT_FINISHED
+ * @description This function completes the GitLab OAuth process by using the retrieved code, GitLab OAuth keys, and access token to retrive the user's GitLab info (i.e. repos, followers).
+ * @returns {void}
+ */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
     try {

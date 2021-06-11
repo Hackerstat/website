@@ -5,6 +5,13 @@ import { usernameQueryValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 import auth0 from '../../../utils/auth';
 
+/**
+ * @name username
+ * @description This function both adds and/or retrieves a user's HackerStat username.
+ * @author @Cgunter1
+ * @authentication user: auth0 token
+ * @argument {string} newUsername The new HackerStat username that the user wants for their profile.
+ * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {

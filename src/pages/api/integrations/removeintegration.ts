@@ -4,7 +4,9 @@ import { removeIntegration } from '../../../utils/mongo';
 import { removeIntegrationInSettingsValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 
-// Requires integration to be removed in the body under integrationType.
+/**
+ * @REMOVE
+ */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     try {
