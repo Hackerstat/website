@@ -14,6 +14,12 @@ import {
 import Link from 'next/link';
 // import WakaTime from '../Components/Dashboard/WakaTime/index';
 
+/**
+ * @name Dashboard
+ * @description This component is the Main Home Page.
+ * @author @LouisIV
+ * @returns {NextPage}
+ */
 const IndexPage: NextPage = () => (
   <PageBase>
     <Stack shouldWrapChildren alignItems={'center'} spacing={32}>

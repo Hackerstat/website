@@ -24,6 +24,12 @@ import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * @name ExperienceSettings
+ * @description It is a component that allows users to CRUD their work experience instances.
+ * @author @Cgunter1 @LouisIV
+ * @returns {FunctionComponent}
+ */
 function ExperienceSettings() {
   const { user, loading } = useFetchUser();
 
@@ -45,12 +51,27 @@ function ExperienceSettings() {
   const [experiences, setExperiences] = useState<Array<ExperienceFormFields>>([]);
   const [currentIndex, setCurrentIndex] = useState<number>();
 
+  /**
+   * @name onStartEditExperience
+   * @description It is the function that sets up all needed variables for the pop up window to edit the specific work experience.
+   * @author @LouisIV
+   * @param {ExperienceFormFields} experience It is the set values for the specific work experience instance to be editted.
+   * @param {number} index It is the index of the specific work experience instance that will be edited when the pop-up window is saved.
+   * @returns {void}
+   */
   const onStartEditExperience = (experience: ExperienceFormFields, index: number) => {
     setStartingValues(experience);
     setCurrentIndex(index);
     onOpen();
   };
 
+  /**
+   * @name onFinishEditExperience
+   * @description It is the function that either updates the current work experience instance on the work experience UI or deletes it entirely.
+   * @author @LouisIV @Cgunter1
+   * @param {ExperienceFormFields} experience It is the edited/deleted specific work experience instance to be added to the component's UI.
+   * @returns {void}
+   */
   const onFinishEditExperience = (experience: ExperienceFormFields) => {
     // Check if index is deleted. Experience will be an empty object.
     if (Object.keys(experience).length === 0) {
@@ -62,7 +83,13 @@ function ExperienceSettings() {
     setCurrentIndex(null);
     onClose();
   };
-
+  /**
+   * @name onAddExperience
+   * @description It is the function that adds the new work experience instance to the list of work experiences.
+   * @author @LouisIV @Cgunter1
+   * @param {ExperienceFormFields} experience It is the newly created specific work experience instance to be added to the component's UI.
+   * @returns {void}
+   */
   const onAddExperience = async (experience: ExperienceFormFields) => {
     setCurrentIndex(null);
     const newExperiences = experiences.slice();
@@ -70,11 +97,23 @@ function ExperienceSettings() {
     onClose();
   };
 
+  /**
+   * @name openWorkExperienceModal
+   * @description It is the function that puts up the workExperienceModal.
+   * @author @LouisIV @Cgunter1
+   * @returns {void}
+   */
   const openWorkExperienceModal = () => {
     setCurrentIndex(null);
     onOpen();
   };
 
+  /**
+   * @name deletedWorkExperience
+   * @description It is the function that removes the work experience instance from the Work Experience UI List.
+   * @author @Cgunter1
+   * @returns {void}
+   */
   const deletedWorkExperience = () => {
     const newExperiences = experiences.slice();
     newExperiences.splice(currentIndex, 1);

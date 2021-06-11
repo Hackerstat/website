@@ -27,6 +27,12 @@ interface MediumPostType {
   link: string;
 }
 
+/**
+ * @name AddMediumIntegrationPage
+ * @description It is the component that allows HackerStat users to add their Medium username, display those Medium profile's posts, and add the Medium integration to the HackerStat user's profile.
+ * @author @LouisIV @Cgunter
+ * @returns {FunctionComponent}
+ */
 const AddMediumIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
     Axios.get('/api/Medium/getUsername')
@@ -42,7 +48,12 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
 
   const toast = useToast();
 
-  // TODO: Retrieve Medium Posts.
+  /**
+   * @name CheckForHackerStatFile
+   * @description It is the function that retrieves the Medium articles from the API to display.
+   * @param {string} username It is the Medium username to retrieve Medium articles for.
+   * @returns
+   */
   const CheckForHackerStatFile = async (username: string) => {
     try {
       if (!username) {
@@ -59,7 +70,13 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
     }
   };
 
-  const addMediumAccount = async (username) => {
+  /**
+   * @name addMediumAccount
+   * @description It is the function that adds the Medium username to the user's HackerStat Profile.
+   * @param {string} username It is the Medium username to add to the user's HackerStat Profile.
+   * @returns
+   */
+  const addMediumAccount = async (username: string) => {
     try {
       await Axios.post('/api/integration', {
         integrationType: 'medium',

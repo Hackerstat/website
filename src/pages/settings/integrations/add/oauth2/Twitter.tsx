@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
+import { NextRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import AuthLayer from '../../../../../Components/AuthLayer';
 import Loader from '../../../../../Components/Loader';
 import { useRouter } from 'next/router';
 
-const TwitterAuthenticator = ({ router: router }) => {
+interface TwitterAuthenticatorPropsType {
+  router: NextRouter;
+}
+/**
+ * @TODO:
+ */
+const TwitterAuthenticator = ({ router: router }: TwitterAuthenticatorPropsType) => {
+  router;
   return <></>;
 };
 

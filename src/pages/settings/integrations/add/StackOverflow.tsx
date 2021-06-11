@@ -20,6 +20,12 @@ import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
+/**
+ * @name AddStackOverflowIntegrationPage
+ * @description It is the component that displays a user's StackOverFlow integration (i.e. medals, tags) and adds a user's StackOverflow integration to their HackerStat Profile.
+ * @author @Cgunter
+ * @returns {FunctionComponent}
+ */
 const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
     Axios.get('/api/stackoverflow/getUsername')
@@ -33,6 +39,12 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   const [stackOverflowInfo, setStackOverflowInfo] = useState({});
   const toast = useToast();
 
+  /**
+   * @name retrieveStackOverflowInfo
+   * @description It is the function that retrieves the StackOverFlow info from the HackerStat user's StackOverFlow username.
+   * @author @Cgunter1
+   * @returns {void}
+   */
   const retrieveStackOverflowInfo = async () => {
     setLoading(true);
     const URL = '/api/stackoverflow/checkStackOverflowUsername';
@@ -41,6 +53,13 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
     setStackOverflowInfo(res.data);
   };
 
+  /**
+   * @name addStackOverflowToAccount
+   * @description It is the function that adds the StackOverflow username to the user's HackerStat Profile.
+   * @author @Cgunter1
+   * @param {string} username It is the HackerStat user's given StackOverFlow username.
+   * @returns {void}
+   */
   const addStackOverflowToAccount = async (username: string) => {
     try {
       await Axios.post('/api/integration', {

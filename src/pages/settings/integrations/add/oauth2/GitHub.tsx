@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { Box, Heading, Text, Flex, Button } from '@chakra-ui/react';
+import { NextRouter, useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
 import { GitHubRepoDataRow, GitHubUserData } from '../../../../../Components/GitHub';
@@ -9,19 +9,40 @@ import AuthLayer from '../../../../../Components/AuthLayer';
 import { GitHubRepoDisplayDataType, GitHubUserAccountType } from '../../../../../utils/utils';
 import Axios from 'axios';
 
-const GithubAuthenticator = ({ router: router }) => {
+interface GithubAuthenticatorPropsType {
+  router: NextRouter;
+}
+
+/**
+ * @name GithubAuthenticator
+ * @description It is the component that shows the GitHub Repos that are retrieved from the authenticated user's GitHub API.
+ * @author @Cgunter1
+ * @param {NextRouter} router It is the handle on the next router to initiate webpage changes.
+ * @returns {FunctionComponent<GithubAuthenticatorPropsType>}
+ */
+const GithubAuthenticator = ({ router: router }: GithubAuthenticatorPropsType) => {
   const [isFailed, setFailed] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [gitHubAccountData, setGitHubAccountData] = useState<GitHubUserAccountType>();
   const [gitHubUserRepos, setgitHubUserRepos] = useState<Array<GitHubRepoDisplayDataType>>([]);
 
+  /**
+   * @name addGitHubData
+   * @description It is the function that adds the verified GitHub Repos to the user's HackerStat Profile. After it finishes, it goes back to the adding GitHub Integration.
+   * @author @Cgunter1
+   * @returns {void}
+   */
   const addGitHubData = async () => {
     setIsSaving(true);
-    await Axios.post('/api/github/addRepos', {
-      ...gitHubAccountData,
-      repos: gitHubUserRepos,
-    });
+    try {
+      await Axios.post('/api/github/addRepos', {
+        ...gitHubAccountData,
+        repos: gitHubUserRepos,
+      });
+    } catch (err) {
+      console.error(err);
+    }
     router.push('/settings/integrations/add/GitHub');
   };
 

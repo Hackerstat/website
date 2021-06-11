@@ -34,6 +34,12 @@ interface UserInfo {
   bio?: string;
 }
 
+/**
+ * @name UserProfilePage
+ * @description This component display a HackerStat user's info and integrations (i.e. NPM, GitHub, StackOverflow).
+ * @author @Cgunter1 @LouisIV
+ * @returns {NextPage}
+ */
 const UserProfilePage: NextPage = () => {
   const router = useRouter();
   const { user, gitLabUsername = undefined } = router.query;

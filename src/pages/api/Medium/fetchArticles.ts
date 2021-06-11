@@ -7,9 +7,10 @@ import { HTTPCode } from '../../../utils/constants';
 /**
  * @name fetchArticles
  * @description This function fetches Medium articles via the RSS feed.
- * @author @Cgunter1 && LouisIV
+ * @author @Cgunter1 @LouisIV
  * @argument {string} user The user's Medium username.
- * @returns {void} */
+ * @returns {void}
+ */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     const parser = new Parser();

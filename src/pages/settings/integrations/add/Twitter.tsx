@@ -20,6 +20,12 @@ import AuthLayer from '../../../../Components/AuthLayer';
 import { goodToast, badToast } from '../../../../utils/constants';
 import Axios from 'axios';
 
+/**
+ * @name AddTwitterIntegrationPage
+ * @description It is the component that displays a user's Twitter integration and adds a user's Twitter integration to their HackerStat Profile.
+ * @author @LouisIV @Cgunter
+ * @returns {FunctionComponent}
+ */
 const AddTwitterIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
     Axios.get('/api/twitter/getUsername')
@@ -33,6 +39,13 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
 
+  /**
+   * @name setTwitterUsername
+   * @description It is the function that checks if the Twitter username input is empty or not.
+   * @author @Cgunter1
+   * @param {string} username It is the HackerStat user's given Twitter username.
+   * @returns {void}
+   */
   const setTwitterUsername = async (username: string) => {
     try {
       if (!username) {
@@ -46,6 +59,13 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
     }
   };
 
+  /**
+   * @name addTwitterToAccount
+   * @description It is the function that sets the Twitter username to the user's HackerStat account.
+   * @author @Cgunter1
+   * @param {string} username It is the HackerStat user's given Twitter username.
+   * @returns {void}
+   */
   const addTwitterToAccount = async (username: string) => {
     try {
       await Axios.post('/api/integration', {

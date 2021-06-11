@@ -3,6 +3,13 @@ import { useFetchUser } from '../utils/user';
 import { Button, Text } from './../../node_modules/@chakra-ui/react';
 import AuthLayer from '../Components/AuthLayer';
 
+/**
+ * @REDO
+ * @name Profile
+ * @description This is the component that shows the current user's profile.
+ * @author @Cgunter1
+ * @returns {FunctionComponent}
+ */
 export default function Profile(): JSX.Element {
   const { user } = useFetchUser();
 

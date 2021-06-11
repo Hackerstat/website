@@ -32,6 +32,12 @@ const InfoSchema = Yup.object().shape({
 const FormWidth = ['min(800px, 90vw)', 'sm', 'xs', 'md'];
 const DoubleFormWidth = ['100%'];
 
+/**
+ * @name ProfileInfo
+ * @description This component displays a form for HackerStat users to see and update their info (i.e. email, school, bio) on HackerStat.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const ProfileInfo = () => {
   const toast = useToast();
   const [fields, setFields] = useState({

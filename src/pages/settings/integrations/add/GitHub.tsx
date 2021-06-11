@@ -2,23 +2,20 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
+import { GITHUB_VERIFICATION_LINK } from '../../../../utils/constants';
 import Loader from '../../../../Components/Loader';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
-import { HackerFile } from '../../../../types/hackerfile';
 import { useRouter } from 'next/router';
 
-interface RepoInfo {
-  repo: string;
-  repoURL: string;
-  result: Partial<HackerFile>;
-  user: string;
-}
-
-const VERIFICATION_LINK = 'https://github.com/login/oauth/authorize?client_id=Iv1.fc62112d5b65b083';
-
+/**
+ * @name AddGithubIntegrationPage
+ * @description It is the component that is the landing page that shows GitHub Repos display on the HackerStat user's profile. The component also allows users to add GitHub integration through OAuth2.
+ * @author @Cgunter1
+ * @returns {FunctionComponent}
+ */
 const AddGithubIntegrationPage: FunctionComponent = () => {
   const [isVerifying, setIsVerifying] = useState(false);
 
@@ -48,7 +45,7 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
             loadingText="Verifying Account"
             onClick={() => {
               setIsVerifying(true);
-              router.push(VERIFICATION_LINK);
+              router.push(GITHUB_VERIFICATION_LINK);
             }}
           >
             Verify Account

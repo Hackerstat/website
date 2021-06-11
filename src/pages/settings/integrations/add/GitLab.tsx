@@ -11,6 +11,9 @@ import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
 import { GitLabServerSideProps } from '../../../../utils/utils';
 
+/**
+ * @REDO
+ */
 const AddGitHubIntegrationPage: FunctionComponent<{ props: GitLabServerSideProps }> = ({
   props: { state, code_verifier, sha256OfState, client_id, redirect_uri, scope },
 }: {

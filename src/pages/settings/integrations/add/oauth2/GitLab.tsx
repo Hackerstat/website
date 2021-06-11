@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Box, Heading, Text, Flex, Button, Skeleton } from '@chakra-ui/react';
+import { Box, Heading, Text, Flex, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
@@ -10,6 +10,9 @@ import AuthLayer from '../../../../../Components/AuthLayer';
 import { GitLabRepoDisplayDataType, GitLabUserAccount } from '../../../../../utils/utils';
 import Axios from 'axios';
 
+/**
+ * @REDO
+ */
 const GitLabAuthenticator = ({ router: router }) => {
   const [isFailed, setFailed] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
@@ -29,7 +32,7 @@ const GitLabAuthenticator = ({ router: router }) => {
   console.log(gitLabAccountData, gitLabUserRepos);
 
   useEffect(() => {
-    const code_verifier = localStorage.getItem('code_verifier');
+    // const code_verifier = localStorage.getItem('code_verifier');
     const AUTH_URL = `https://gitlab.com/oauth/token`;
     Axios.post(AUTH_URL, {
       client_id: 'bd68a5365d5be0784ff0f75d26b8e3a9c8213df18a78a68df4c95c41797d7289',
@@ -39,7 +42,7 @@ const GitLabAuthenticator = ({ router: router }) => {
       redirect_uri: 'http://localhost:3000/settings/integrations/add/oauth2/GitLab',
       // code_verifier: code_verifier,
     }).then((res) => {
-      const USERPROFILE_URL = 'https://gitlab.com/api/v4/user';
+      // const USERPROFILE_URL = 'https://gitlab.com/api/v4/user';
       const {
         data: { access_token },
       } = res;

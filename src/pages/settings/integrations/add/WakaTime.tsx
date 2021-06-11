@@ -22,16 +22,19 @@ import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils/cons
 import Axios from 'axios';
 import {
   WakaTimeLanguagesGraphDataPropsType,
-  // WakaTimeLanguagesGraphDataPropsType,
   WakaTimeActivityGraphDataPropsType,
-  // WakaTimePieGraphDataResType,
   WakaTimeLanguageDataType,
-  WakaTimeDataSetType,
 } from '../../../../utils/utils';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
 const addWakaTimeIntegrationURL = '/api/wakatime/addIntegration';
 
+/**
+ * @name AddWakaTimeIntegrationPage
+ * @description It is the component that displays a user's WakaTime integration (i.e. Language Pie, Activity Bar) and adds a user's WakaTime integration to their HackerStat Profile.
+ * @author @Cgunter
+ * @returns {FunctionComponent}
+ */
 const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   const [fetchError, setFetchError] = useState<string>();
   const [activityWakaTimeURL, setActivityWakaTimeURL] = useState<string>('');
@@ -47,6 +50,13 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
     transition: 'height .3s',
   };
 
+  /**
+   * @name getWakaTimeData
+   * @description This function retrieves the Coding Activity Data from the user's WakaTime via their URL and sets it to the barDataPoints variable. If it fails, it shows a failure toast.
+   * @author @Cgunter1
+   * @param {string} url It is the user's WakaTime Coding Activity URL.
+   * @returns
+   */
   const getWakaTimeData = async (url: string) => {
     try {
       if (!url) {
@@ -89,6 +99,13 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
     }
   };
 
+  /**
+   * @name getWakaTimeLanguagesData
+   * @description This function retrieves the Languages Share from the user's WakaTime via their URL and sets it to the pieDataPoints variable. If it fails, it shows a failure toast.
+   * @author @Cgunter1
+   * @param {string} url It is the user's WakaTime Languages Share URL.
+   * @returns
+   */
   const getWakaTimeLanguagesData = async (url: string) => {
     try {
       if (!url) {
@@ -132,7 +149,12 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       toast(badGetWakaTimeToast as unknown);
     }
   };
-
+  /**
+   * @name addIntegrationsForWakaTime
+   * @description This function adds the WakaTime integation to the user's HackerStat. If it fails, then it sends a bad Toast.
+   * @author @Cgunter1
+   * @returns
+   */
   const addIntegrationsForWakaTime = async () => {
     try {
       await Axios.post(addWakaTimeIntegrationURL, {

@@ -12,6 +12,12 @@ const getUsers = async () => {
   return res.data;
 };
 
+/**
+ * @name Dashboard
+ * @description This component is the page that shows all HackerStat users.
+ * @author @LouisIV
+ * @returns {NextPage}
+ */
 const Dashboard: NextPage = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);

@@ -54,6 +54,12 @@ export interface Package {
   version: string;
 }
 
+/**
+ * @name AddNPMIntegrationPage
+ * @description It is the component that displays a user's NPM integration and adds a user's NPM integration.
+ * @author @LouisIV @Cgunter
+ * @returns {FunctionComponent}
+ */
 const AddNPMIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
     Axios.get('/api/npm/getUserName')
@@ -68,7 +74,13 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
 
-  const GetNPMPackages = async (username) => {
+  /**
+   * @name GetNPMPackages
+   * @description It is the function that retrieves the NPM packages and their daily downloads from a user's NPM username.
+   * @param {string} username It is the HackerStat user's NPM username used retrieve the NPM info.
+   * @returns {void}
+   */
+  const GetNPMPackages = async (username: string) => {
     try {
       if (!username) {
         setFetchError('Required');
@@ -100,6 +112,12 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
     }
   };
 
+  /**
+   * @name addNPMToAccount
+   * @description It is the function adds the NPM username to the user's HackerStat Profile.
+   * @param {string} username It is the HackerStat user's NPM username used retrieve the NPM info.
+   * @returns {void}
+   */
   const addNPMToAccount = async (username) => {
     try {
       await Axios.post('/api/integration', {

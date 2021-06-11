@@ -30,6 +30,13 @@ interface IntegrationsProps {
   integrations: Array<Integration>;
 }
 
+/**
+ * @name integrations
+ * @description It is a component that shows all the HackerStat integrations available or TBA. These are represented as small tiles that users can click on to add the integration.
+ * @author @Cgunter1
+ * @param {Array<Integration>} Integrations
+ * @returns {FunctionComponent<IntegrationsProps>}
+ */
 const Integrations: FunctionComponent<IntegrationsProps> = ({ integrations }) => {
   return (
     <Flex

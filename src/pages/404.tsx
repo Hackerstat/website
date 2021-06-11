@@ -5,6 +5,12 @@ import NextLink from 'next/link';
 import BigImageCard from '../Components/BigImageCard';
 import PageBase from '../Components/Page';
 
+/**
+ * @name ErrorPage
+ * @description This component is the generic 404 Error Page.
+ * @author @LouisIV
+ * @returns {NextPage}
+ */
 const ErrorPage: NextPage = () => (
   <PageBase>
     <Flex justifyContent={'center'} alignItems={'center'} flexDirection={'column'} flex={1}>

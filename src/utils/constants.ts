@@ -19,6 +19,8 @@ export const LANGUAGE_URL_GITLAB = (id: string): string => `https://gitlab.com/a
 
 export const REPO_SPECIFIC_URL_GITLAB = (id: string): string => `https://gitlab.com/api/v4/projects/${id}`;
 
+export const GITHUB_VERIFICATION_LINK = 'https://github.com/login/oauth/authorize?client_id=Iv1.fc62112d5b65b083';
+
 export const badGetWakaTimeToast = {
   title: 'Something Went Wrong',
   status: 'error',

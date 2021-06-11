@@ -17,6 +17,12 @@ import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
 
+/**
+ * @name username
+ * @description This is a component that displays a user's username and gives the ability to edit the user's username.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const UsernameSettingsPage = () => {
   const [currentUsername, setCurrentUsername] = useState<string>();
   const [username, setUsername] = useState<string>();
@@ -26,6 +32,12 @@ const UsernameSettingsPage = () => {
   const [checkingUsername, setCheckingUsername] = useState<boolean>(false);
   const [settingUsername, setSettingUsername] = useState<boolean>(false);
 
+  /**
+   * @name getCurrentUsername
+   * @description It is a function that retrieves a HackerStat user's username.
+   * @author @LouisIV
+   * @returns {string}
+   */
   const getCurrentUsername = async (): Promise<string> => {
     const result = await Axios.get('/api/settings/username');
     return result.data?.username;
@@ -43,6 +55,13 @@ const UsernameSettingsPage = () => {
 
   const toast = useToast();
 
+  /**
+   * @name updateUsername
+   * @description It is a function that sets a username for a user's HackerStat Profile.
+   * @author @LouisIV
+   * @param {string} newUsername It is a username given by the HackerStat user to update their username.
+   * @returns {boolean}
+   */
   const updateUsername = async (newUsername: string): Promise<boolean> => {
     if (!newUsername) {
       return false;
@@ -73,6 +92,13 @@ const UsernameSettingsPage = () => {
     }
   };
 
+  /**
+   * @name checkUsername
+   * @description It is a function that checks if a username is already taken by another HackerStat user.
+   * @author @LouisIV
+   * @param {string} newUsername It is a username given by the HackerStat user to check the availability of their username.
+   * @returns {boolean}
+   */
   const checkUsername = async (newUsername: string): Promise<boolean> => {
     if (!newUsername) {
       return false;
