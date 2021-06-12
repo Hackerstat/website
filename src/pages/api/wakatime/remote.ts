@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getRemoteWakaTimeData } from '../../../utils/mongo';
-import { WakaTimeActivityGraphDataPropsType, WakaTimeLanguagesGraphDataPropsType } from '../../../utils/utils';
+import {
+  WakaTimeActivityGraphDataPropsType,
+  WakaTimeLanguagesGraphDataPropsType,
+  GetRemoteWakaTimeDataRes,
+} from '../../../utils/utils';
 import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
 
 import {
@@ -13,9 +17,15 @@ import {
 } from '../../../utils/constants';
 
 type wakaTimeRes = {
-  wakaTimeLanguagesData: WakaTimeActivityGraphDataPropsType | null;
-  wakaTimeActivityData: WakaTimeLanguagesGraphDataPropsType | null;
+  wakaTimeLanguagesData: WakaTimeLanguagesGraphDataPropsType | null;
+  wakaTimeActivityData: WakaTimeActivityGraphDataPropsType | null;
 };
+
+const checkWakaTimeInfoObject = (wakaTimeInfo: GetRemoteWakaTimeDataRes): boolean =>
+  !Object(wakaTimeInfo).hasOwnProperty(INTEGRATIONS) &&
+  !Object(wakaTimeInfo).hasOwnProperty(INTEGRATION_SETTINGS) &&
+  !Object(wakaTimeInfo.integration_settings).hasOwnProperty(WAKATIME) &&
+  !wakaTimeInfo.integrations.includes(WAKATIME);
 
 /**
  * @name remoteWakaTimeRetrieval
@@ -32,12 +42,13 @@ export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: 
   try {
     if (req.method === 'GET') {
       const wakaTimeInfo = await getRemoteWakaTimeData(req);
-      if (
-        Object(wakaTimeInfo).hasOwnProperty(INTEGRATIONS) &&
-        Object(wakaTimeInfo).hasOwnProperty(INTEGRATION_SETTINGS) &&
-        Object(wakaTimeInfo.integration_settings).hasOwnProperty(WAKATIME) &&
-        !wakaTimeInfo.integrations.includes(WAKATIME)
-      ) {
+      // if (
+      //   !Object(wakaTimeInfo).hasOwnProperty(INTEGRATIONS) &&
+      //   !Object(wakaTimeInfo).hasOwnProperty(INTEGRATION_SETTINGS) &&
+      //   !Object(wakaTimeInfo.integration_settings).hasOwnProperty(WAKATIME) &&
+      //   !wakaTimeInfo.integrations.includes(WAKATIME)
+      // ) {
+      if (checkWakaTimeInfoObject(wakaTimeInfo)) {
         res.status(HTTPCode.OK).json({});
         return;
       }

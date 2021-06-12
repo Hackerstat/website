@@ -275,9 +275,9 @@ export interface GitLabRepoDisplayDataType {
 }
 
 export interface GetRemoteWakaTimeDataRes {
-  integrations: Array<string>;
-  integration_settings: {
-    wakatime: {
+  integrations?: Array<string>;
+  integration_settings?: {
+    wakatime?: {
       wakaTimeCodingActivityURL?: string;
       wakaTimeLanguageURL?: string;
     };

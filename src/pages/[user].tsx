@@ -8,6 +8,13 @@ import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 
+const WakaTime = dynamic(() => import('../Components/Dashboard/WakaTime'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
+WakaTime.displayName = 'WakaTime';
+
 const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
   // eslint-disable-next-line react/display-name
   loading: () => <Spinner aria-busy="true" />,
@@ -87,6 +94,19 @@ const UserProfilePage: NextPage = () => {
             // @ts-ignore
             <Medium user={`@${integrationSettings?.medium?.username}`} />
           )
+        }
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings &&
+            !!integrations &&
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            integrations.includes('wakatime') && (
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              <WakaTime username={user as string} />
+            )
         }
         {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
