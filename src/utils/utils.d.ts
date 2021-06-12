@@ -220,6 +220,8 @@ export interface GitHubRepoDisplayDataType {
 }
 export interface GitHubUserAccountType {
   avatar_url: string;
+  email?: string;
+  id?: number;
   user: string;
   name: string;
   location: string;

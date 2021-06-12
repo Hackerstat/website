@@ -3,6 +3,9 @@ import { ReactNode } from 'react';
 import Navbar from '../NavBar';
 import { UserProvider, useFetchUser } from '../../utils/user';
 
+/**
+ * @DELETE
+ */
 export const MainLayout: FunctionComponent = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useFetchUser();
   return (

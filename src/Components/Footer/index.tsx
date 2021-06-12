@@ -4,6 +4,12 @@ import Link from '../Link';
 import { FooterSection } from './FooterSection';
 import { BottomBar } from './BottomBar';
 
+/**
+ * @name Footer
+ * @description This component is the main footer component.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const Footer: FunctionComponent = () => (
   <Flex height={'300px'} width={'100%'} justifyContent={'center'}>
     <Flex

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Stack, Box, Text, Flex, Avatar, Button, Grid, Image } from '@chakra-ui/react';
+import { Heading, Stack, Box, Text, Flex, Button, Grid, Image } from '@chakra-ui/react';
 import IntegrationTile from '../Components/IntegrationTile';
 import {
   faGithub,
@@ -15,7 +15,7 @@ import Link from 'next/link';
 // import WakaTime from '../Components/Dashboard/WakaTime/index';
 
 /**
- * @name Dashboard
+ * @name IndexPage
  * @description This component is the Main Home Page.
  * @author @LouisIV
  * @returns {NextPage}

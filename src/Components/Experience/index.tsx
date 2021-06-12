@@ -13,6 +13,19 @@ interface ExperienceProps {
   onEdit?: () => void;
 }
 
+/**
+ * @name Experience
+ * @description This component displays a HackerStat user's work experience item including the Company Name, Position Name, starting date, and etc..
+ * @author @LouisIV
+ * @param {ExperienceProps} props This is the props for the component.
+ * @param {string} props.companyName This is the company name of the work experience item.
+ * @param {string} props.position This is the position name (i.e. engineer, developer).
+ * @param {string} props.startingDate This is the starting date of the work experience.
+ * @param {string} props.endDate This is the end date of the work experience.
+ * @param {string} props.details This is extra details of the work experience.
+ * @param {() => void} props.onEdit This is the function that runs when the edit button is pressed.
+ * @returns {FunctionComponent<ExperienceProps>}
+ */
 const Experience: FunctionComponent<ExperienceProps> = ({
   companyName,
   position,

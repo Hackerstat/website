@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 import auth0 from '../auth';
 

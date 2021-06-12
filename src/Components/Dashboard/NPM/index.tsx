@@ -15,9 +15,16 @@ interface NPMCardProps {
 const colors = { light: 'gray.800', dark: 'white' };
 const backgroundColors = { light: 'white', dark: 'gray.800' };
 
+/**
+ * @name NPMCard
+ * @description It is a component that displays on a user's profile to show their NPM packages and daily downloads.
+ * @author @LouisIV
+ * @param {MediumCardProps} props It is the prop object of the component.
+ * @param {string} props.username It is the NPM username of the HackerStat user.
+ * @returns {FunctionComponent<NPMCardProps>}
+ */
 const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   const { colorMode } = useColorMode();
-  const [articles, setArticles] = useState([]);
   const [packages, setPackages] = useState<Array<Package>>();
   const [fetchError, setFetchError] = useState<string>();
 

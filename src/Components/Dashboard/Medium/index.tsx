@@ -1,12 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Text, Stack, Flex, useColorMode } from '@chakra-ui/react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
+import { Box, Text, Stack, Flex, useColorMode, BoxProps } from '@chakra-ui/react';
 import Card from '../../Card';
 import Axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import ExternalLink from '../../ExternalLink';
 
-function Feature({ color, title, date, link, ...rest }) {
+interface MediumCardProps extends BoxProps {
+  user: string;
+}
+interface FeatureProps extends BoxProps {
+  color: string;
+  title: string;
+  date: string;
+  link: string;
+}
+
+/**
+ * @name Feature
+ * @description It is a component that displays the title and date of a Medium Article that is wrapped in a link to the article.
+ * @author @Cgunter1
+ * @param {FeatureProps} props It is the prop object of the component.
+ * @param {string} props.color It is the font color of the Medium Article.
+ * @param {string} props.title It is the title of the Medium Article.
+ * @param {string} props.date It is the published date of the Medium Article.
+ * @param {string} props.link It is the URL link to the Medium Article.
+ * @param {string} props.rest It is the rest of the BoxProps props to include for the outermost Box attributes (i.e. width, height, etc).
+ * @returns {FunctionComponent<FeatureProps>}
+ */
+const Feature: FunctionComponent<FeatureProps> = ({ color, title, date, link, ...rest }) => {
   return (
     <ExternalLink href={link}>
       <Box
@@ -31,12 +53,21 @@ function Feature({ color, title, date, link, ...rest }) {
       </Box>
     </ExternalLink>
   );
-}
+};
 
 const colors = { light: 'gray.800', dark: 'white' };
 const backgroundColors = { light: 'white', dark: 'gray.800' };
 
-const MediumCard = ({ user, ...rest }) => {
+/**
+ * @name MediumCard
+ * @description It is a component that displays on a user's profile to show their Medium articles.
+ * @author @LouisIV @compile10
+ * @param {MediumCardProps} props It is the prop object of the component.
+ * @param {string} props.user It is the Medium username of the HackerStat user.
+ * @param {string} props.rest It is the rest of the BoxProps props to include for the outermost Box attributes (i.e. width, height, etc).
+ * @returns {FunctionComponent<MediumCardProps>}
+ */
+const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
   const { colorMode } = useColorMode();
   const [articles, setArticles] = useState([]);
 

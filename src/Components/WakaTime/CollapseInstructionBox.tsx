@@ -1,10 +1,22 @@
-import React, { FunctionComponent, useState, createRef, useMemo } from 'react';
+import React, { FunctionComponent, useState, createRef } from 'react';
 import deepmerge from 'deepmerge';
 import { Box, Flex, Heading, Link, Stack } from '@chakra-ui/react';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const CollapseableInstruction = ({ typeOfChartIsActivity }: { typeOfChartIsActivity: boolean }): any => {
+interface CollapseableInstructionProps {
+  typeOfChartIsActivity: boolean;
+}
+
+/**
+ * @name CollapseableInstruction
+ * @description This component displays the instructions to retrieve the WakaTime URLs for integration.
+ * @author @Cgunter1
+ * @param {CollapseableInstructionProps} props It is the prop object of the component.
+ * @param {boolean} props.typeOfChartIsActivity It is the boolean determines what instruction info to use. Either activity code chart or languages used chart.
+ * @returns {FunctionComponent<CollapseableInstructionProps>}
+ */
+const CollapseableInstruction: FunctionComponent<CollapseableInstructionProps> = ({ typeOfChartIsActivity }) => {
   const containerRef = createRef();
   const [isOpen, setIsOpen] = useState(false);
   const collapsedBoxClass = 'isClosed';
@@ -19,7 +31,6 @@ const CollapseableInstruction = ({ typeOfChartIsActivity }: { typeOfChartIsActiv
   };
 
   const turnedStyles = deepmerge({ transform: 'rotate(90deg)' }, normalStyles);
-  console.log('das');
   return (
     <Box mb={2}>
       <Flex cursor="pointer" onClick={() => toggleCollapsableBox()} alignItems="flex-start">

@@ -32,11 +32,21 @@ const FormWidth = ['min(800px, 90vw)', 'sm', 'xs'];
 interface ExperienceProps {
   initialValues?: Partial<ExperienceFormFields>;
   onClose?: (experience: ExperienceFormFields) => void;
-  index: number | null | undefined;
+  index: IndexType;
 }
 
 const checkIndex = (index: IndexType) => typeof index === 'number';
 
+/**
+ * @name Experience
+ * @description This component is the form for users to input their experience info.
+ * @author @LouisIV
+ * @param {ExperienceProps} props It is the prop object of the component.
+ * @param {Partial<ExperienceFormFields>} props.initalValues This object contains all the inital values to fill in for the work experience form.
+ * @param {(experience: ExperienceFormFields) => void} props.onClose This function when executed closes the pop-up component it exists in and saves the work experience.
+ * @param {IndexType} props.index This is the index that keeps track if the form is editing an existing work experience instance or creating a new one.
+ * @returns {FunctionComponent<ExperienceProps>}
+ */
 const Experience: FunctionComponent<ExperienceProps> = ({ initialValues, onClose, index }) => {
   useEffect(() => {
     const abortController = new AbortController();

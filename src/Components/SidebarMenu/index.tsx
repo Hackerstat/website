@@ -29,6 +29,17 @@ interface SidebarMenuItemProps {
   colors: SidebarMenuItemColors;
 }
 
+/**
+ * @name SidebarMenuItem
+ * @description This component is the sidebar items for the settings menu.
+ * @author @LouisIV
+ * @param {SidebarMenuItemProps} props It is the prop object of the component.
+ * @param {boolean} props.selected This determines if the current sidebar item is selected or not.
+ * @param {string} props.href This is the URL that the sidebar menu item directs to when clicked on.
+ * @param {boolean} props.name This is the title of the sidebar menu item.
+ * @param {SidebarMenuItemColors} props.colors This an object of colors that vary between activeLink, inActiveLink, and highlightedLink.
+ * @returns {FunctionComponent<SidebarMenuItemProps>}
+ */
 const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = false, href, name, colors }) => {
   return (
     <Link href={href} passHref>

@@ -1,6 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { useColorMode, Select, Flex } from '@chakra-ui/react';
 
+/**
+ * @name ColorModePicker
+ * @description This component is the Dark Mode Color Picker, which allows a user to change the color theme (i.e. dark, light).
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const ColorModePicker: FunctionComponent = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 

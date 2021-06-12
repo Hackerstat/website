@@ -54,6 +54,22 @@ const colors = { light: 'gray.800', dark: 'white' };
       )}
  */
 
+/**
+ * @name UserProfileInfoCard
+ * @description This component displays a HackerStat user's personal info.
+ * @author @Cgunter1
+ * @param {Partial<UserProfileInfoCardProps>} props This is the props for the component.
+ * @param {string} props.name This is a HackerStat user's fullname.
+ * @param {string} props.username This is a HackerStat user's username.
+ * @param {string} props.photo This is a HackerStat user's Avatar Image URL.
+ * @param {string} props.bio This is a HackerStat user's bio.
+ * @param {string} props.website This is a HackerStat user's website URL.
+ * @param {string} props.email This is a HackerStat user's current status.
+ * @param {string} props.school This is a HackerStat user's current status.
+ * @param {string} props.location This is a HackerStat user's current status.
+ * @param {() => void} props.rest.onClick This is a function that is initiated when the component is clicked.
+ * @returns {FunctionComponent<Partial<UserProfileInfoCardProps>>}
+ */
 const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> = ({
   name,
   username,
@@ -181,9 +197,11 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
                   <Box w={7}>
                     <FontAwesomeIcon icon={faInfoCircle} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
                   </Box>
-                  <Text noOfLines={1} color={color}>
-                    {website}
-                  </Text>
+                  <ExternalLink href={website} target="_blank">
+                    <Text noOfLines={1} color={color}>
+                      {website}
+                    </Text>
+                  </ExternalLink>
                 </Stack>
               </Flex>
               <Divider />

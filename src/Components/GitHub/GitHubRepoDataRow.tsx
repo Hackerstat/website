@@ -1,29 +1,29 @@
-import React from 'react';
-import {
-  Box,
-  Flex,
-  Input,
-  FormLabel,
-  FormControl,
-  Heading,
-  Button,
-  Stack,
-  Text,
-  FormErrorMessage,
-  useToast,
-  Image,
-} from '@chakra-ui/react';
+import React, { FunctionComponent } from 'react';
+import { Box, Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType } from '../../utils/utils';
 
-export const GitHubRepoDataRow = ({
-  repos,
-  changeRepos,
-}: {
+interface GitHubRepoDataRowProps {
   repos: Array<GitHubRepoDisplayDataType>;
   changeRepos: SetGitHubRepoDisplayDataType;
-}): JSX.Element => {
+}
+
+/**
+ * @name GitHubRepoDataRow
+ * @description This component displays a list of individual GitHub Repo data w/ details of the repo's top language, size, watchers, and description. It also allows the removal of repos.
+ * @author @Cgunter1
+ * @param {GitHubRepoDataRowProps} props This is the props for the component.
+ * @param {Array<GitHubRepoDisplayDataType>} props.repos This is a list of the user's GitHub Repos including forks, description, stars, size, and etc..
+ * @param {SetGitHubRepoDisplayDataType} props.changeRepos This is the setState function that changes the props.repos variable and re-renders the component.
+ * @returns {FunctionComponent<GitHubRepoDataRowProps>}
+ */
+export const GitHubRepoDataRow: FunctionComponent<GitHubRepoDataRowProps> = ({ repos, changeRepos }) => {
+  /**
+   * @name filterRepos
+   * @description This function filters out any repos from the variable repo and re-renders the component without the removed repo.
+   * @param {GitHubRepoDisplayDataType} repo The repo object to be removed from the list of repos.
+   */
   const filterRepos = (repo: GitHubRepoDisplayDataType) => {
     const newRepos = repos.filter(({ url, des }) => repo.url !== url && repo.des !== des);
     changeRepos(newRepos);

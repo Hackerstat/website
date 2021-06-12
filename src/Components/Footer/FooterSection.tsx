@@ -5,6 +5,12 @@ interface FooterSectionProps {
   title: string;
 }
 
+/**
+ * @name FooterSection
+ * @description This component is the wrapper of the footer.
+ * @author @LouisIV
+ * @returns {FunctionComponent<FooterSectionProps>}
+ */
 const FooterSection: FunctionComponent<FooterSectionProps> = ({ title, children }) => (
   <Stack>
     <Text fontWeight={'bold'} letterSpacing={'wide'} textTransform={'uppercase'}>
