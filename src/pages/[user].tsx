@@ -22,6 +22,13 @@ const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
 
 NPM.displayName = 'NPM';
 
+const StackOverFlow = dynamic(() => import('../Components/Dashboard/StackOverFlow'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
+StackOverFlow.displayName = 'StackOverFlow';
+
 const Medium = dynamic(() => import('../Components/Dashboard/Medium'), {
   // eslint-disable-next-line react/display-name
   loading: () => <p>Loading...</p>,
@@ -73,15 +80,14 @@ const UserProfilePage: NextPage = () => {
     <PageBase>
       <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'}>
         <UserProfileInfoCard
-          maxW={['sm', 'md', 'lg']}
-          minW={['sm', 'md', 'lg']}
+          maxW={'100%'}
           photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
           name={`${info?.firstName || ''} ${info?.lastName || ''}`}
           username={user as string}
           {...info}
         />
       </Stack>
-      <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'}>
+      <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'} maxW="100%">
         {/* Add GitHub Repos */}
         {/* Add GitLab Repos */}
         {/* Add StackOverflow */}
@@ -124,6 +130,18 @@ const UserProfilePage: NextPage = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             <Twitter screenName={integrationSettings?.twitter?.username} />
+          )
+        }
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings && integrationSettings?.stackoverflow?.username && (
+            <StackOverFlow
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
+              username={user as string}
+            />
           )
         }
       </Stack>

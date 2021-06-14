@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES, STACKOVERFLOWDATA } from './constants';
-import { fetchStackOverflowInfoRes } from '../utils';
+import { FetchStackOverflowInfoRes } from '../utils';
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -13,7 +13,7 @@ const userProfileOptions = {
 
 export const addStackOverflowRemoteData = async (
   username: string,
-  stackOverflowData: fetchStackOverflowInfoRes,
+  stackOverflowData: FetchStackOverflowInfoRes,
 ): Promise<void> => {
   const client = await connectToClient();
 

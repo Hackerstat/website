@@ -8,6 +8,7 @@ import {
   WakaTimeActivityGraphDataPropsType,
 } from '../../../utils/utils';
 import Card from '../../Card';
+import { IntegrationWrapperCard } from '../IntegrationWrapperCard';
 
 interface WakaTimeProps extends BoxProps {
   username: string;
@@ -109,8 +110,8 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
   return (
     <>
       {!errorStatus ? (
-        <Card
-          {...rest}
+        <IntegrationWrapperCard
+          icon={''}
           minH="100%"
           borderRadius={'lg'}
           overflow="scroll"
@@ -133,7 +134,7 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
             {barLoaded && <TimeBarWrapper data={barData} />}
             {pieLoaded && <LanguagePieWrapper data={pieData} />}
           </Grid>
-        </Card>
+        </IntegrationWrapperCard>
       ) : (
         <></>
       )}

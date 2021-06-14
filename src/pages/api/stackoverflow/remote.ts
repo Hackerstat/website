@@ -14,8 +14,10 @@ import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 export default async function remoteStackOverflow(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'POST') {
     try {
-      console.log(req.query);
-      const { username } = await usernameRemoteQueryValidator(req.query);
+      console.log('--------');
+      console.log(req.body);
+      console.log('--------');
+      const { username } = await usernameRemoteQueryValidator(req.body);
       const stackoverflowUsername = await getRemoteStackOverflowUsername(username);
       const stackOverFlowData = await fetchStackOverflowInfo(stackoverflowUsername);
 
@@ -27,6 +29,7 @@ export default async function remoteStackOverflow(req: NextApiRequest, res: Next
       res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
     }
   } else {
+    console.error('Wrong Header');
     res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
   }
 }

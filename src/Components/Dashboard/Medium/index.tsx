@@ -94,7 +94,7 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
   }, [user]);
 
   return (
-    <Card mt={3} borderRadius={'lg'} padding={2} maxW={['sm', 'md', 'lg']} minW={['sm', 'md', 'lg']} {...rest}>
+    <Card mt={3} borderRadius={'lg'} padding={2} maxW={['xs', 'sm', 'md']} {...rest}>
       <Flex alignItems={'center'} opacity={0.8}>
         <FontAwesomeIcon icon={faMedium} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
         <ExternalLink

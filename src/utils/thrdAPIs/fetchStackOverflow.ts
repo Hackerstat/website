@@ -1,8 +1,8 @@
 import Axios from 'axios';
-import { fetchStackOverflowInfoRes } from '../utils';
+import { FetchStackOverflowInfoRes } from '../utils';
 import { STACKOVERFLOW_URL_TAGS, STACKOVERFLOW_URL_USER } from '../constants';
 
-export const fetchStackOverflowInfo = async (username: string): Promise<fetchStackOverflowInfoRes> => {
+export const fetchStackOverflowInfo = async (username: string): Promise<FetchStackOverflowInfoRes> => {
   const tagRetrieval = Axios.get(STACKOVERFLOW_URL_TAGS(username));
   const userRetrieval = Axios.get(STACKOVERFLOW_URL_USER(username));
   const res = await Promise.all([tagRetrieval, userRetrieval]);
@@ -12,6 +12,8 @@ export const fetchStackOverflowInfo = async (username: string): Promise<fetchSta
   const {
     badge_counts: { bronze, silver, gold },
     reputation,
+    profile_image,
+    display_name,
   } = res[1].data.items[0];
 
   const topTags = [];
@@ -24,5 +26,11 @@ export const fetchStackOverflowInfo = async (username: string): Promise<fetchSta
       });
     });
   }
-  return { badges: { bronze, silver, gold }, reputation, topTags };
+  return {
+    badges: { bronze, silver, gold },
+    reputation,
+    topTags,
+    profileImage: profile_image,
+    displayName: display_name,
+  };
 };

@@ -102,20 +102,25 @@ export interface FetchMediumArticlesRes {
   date: string;
 }
 
-interface Badges {
+export interface Badges {
   gold: number;
   silver: number;
   bronze: number;
 }
 
-interface Tag {
+export interface StackOverflowUserInfoType {
+  reputation: number;
+  displayName: string;
+  profileImage: string;
+}
+
+export interface Tag {
   name: string;
   answerScore: number;
   questionScore: number;
 }
 
-export interface fetchStackOverflowInfoRes {
-  reputation: number;
+export interface FetchStackOverflowInfoRes extends StackOverflowUserInfoType {
   badges: Badges;
   topTags: Array<Tag>;
 }
