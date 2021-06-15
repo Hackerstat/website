@@ -38,7 +38,7 @@ const IntegrationWrapperCard: FunctionComponent<IntegrationWrapperCardProps> = (
   useEffect(() => setColor(colors[colorMode]), [colorMode]);
 
   return (
-    <Card {...rest}>
+    <Card borderRadius={'lg'} overflow="scroll" padding={2} maxW={['xs', 'sm', 'md']} mt={3} color={color} {...rest}>
       <Flex alignItems={'center'} opacity={0.8}>
         <FontAwesomeIcon icon={Integrations[icon].icon} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
         <ExternalLink color={color} ml={2} href={link || undefined} fontWeight={'bold'}>

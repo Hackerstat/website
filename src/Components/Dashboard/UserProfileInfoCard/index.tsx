@@ -73,13 +73,14 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
 
   return (
     <Skeleton isLoaded={loaded}>
-      <Card height="100%" p={1} px={4} {...rest} borderRadius={5} maxW={['xs', 'sm', 'md']}>
-        <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'flex-start'}>
+      <Card minH="sm" p={2} px={7} {...rest} borderRadius={5} maxW={['xs', 'sm', 'md']}>
+        <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'center'}>
           <Avatar mt={4} name={name} size={'2xl'} src={photo} onLoad={onLoad} mr={2} />
           <Box>
             <Text
               overflow={'hidden'}
               mt={2}
+              noOfLines={1}
               textTransform={'uppercase'}
               fontWeight={'bold'}
               letterSpacing={'wide'}
@@ -104,15 +105,6 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
           </Box>
         </Flex>
         <Box mt={2}>
-          {/* <Text
-            textTransform={'uppercase'}
-            fontWeight={'bold'}
-            letterSpacing={'wide'}
-            color={color}
-            fontSize={['sm', 'md', 'lg']}
-          >
-            {name}
-          </Text> */}
           {!!email && (
             <>
               <Flex my={2}>

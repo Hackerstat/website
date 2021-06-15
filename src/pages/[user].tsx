@@ -85,7 +85,7 @@ const UserProfilePage: NextPage = () => {
 
   return (
     <PageBase>
-      <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'} margin="0 auto">
+      <Stack direction={['column', 'row']} justifyContent="flex-start" spacing={3} flexWrap={'wrap'} margin="0 auto">
         <UserProfileInfoCard
           maxW={'100%'}
           photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
@@ -98,7 +98,6 @@ const UserProfilePage: NextPage = () => {
       <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'} maxW="100%">
         {/* Add GitHub Repos */}
         {/* Add GitLab Repos */}
-        {/* Add StackOverflow */}
         {/* Add Work Experience */}
         {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment

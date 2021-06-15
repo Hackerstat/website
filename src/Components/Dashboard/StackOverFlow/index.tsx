@@ -1,10 +1,6 @@
 import React, { useEffect, FunctionComponent, useState } from 'react';
 import Axios from 'axios';
-import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Stack, useColorMode, Flex } from '@chakra-ui/react';
-import Card from '../../Card';
-import ExternalLink from '../../ExternalLink';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
@@ -14,8 +10,22 @@ const colors = { light: 'gray.800', dark: 'white' };
 
 const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 
-type StackOverflowCardType = FunctionComponent<{ username: string; stackOverFlowUsername: string }>;
+interface StackOverflowCardPropsType {
+  username: string;
+  stackOverFlowUsername: string;
+}
 
+type StackOverflowCardType = FunctionComponent<StackOverflowCardPropsType>;
+
+/**
+ * @name StackOverflowCard
+ * @description It is a component that displays a user's stackoverflow account info such as badges, tags, and etc..
+ * @author @Cgunter1
+ * @param {StackOverflowCardPropsType} props It is the prop object of the component.
+ * @param {string} props.username It is the HackerStat username.
+ * @param {string} props.stackOverFlowUsername It is the HackerStat user's StackOverflow username.
+ * @returns {StackOverflowCardType}
+ */
 const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsername }) => {
   const { colorMode } = useColorMode();
   const [color, setColor] = useState(colors['dark']);
@@ -65,35 +75,14 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
     <>
       {/* {loaded && !error && !!stackOverflowInfo && ( */}
       <>
-        {/* <Card borderRadius={'lg'} overflow="scroll" padding={2} maxW={['xs', 'sm', 'md']} mt={3} color={color}>
-          <Flex alignItems={'center'} opacity={0.8}>
-            <FontAwesomeIcon icon={faStackOverflow} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-            <ExternalLink
-              color={color}
-              ml={2}
-              href={`https://stackoverflow.com/users/${stackOverFlowUsername}` || undefined}
-              fontWeight={'bold'}
-            >
-              StackOverFlow
-            </ExternalLink> */}
-        {/* </Flex> */}
-        <IntegrationWrapperCard
-          icon={STACKOVERFLOW}
-          link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
-          borderRadius={'lg'}
-          overflow="scroll"
-          padding={2}
-          maxW={['xs', 'sm', 'md']}
-          mt={3}
-          color={color}
-        >
+        <IntegrationWrapperCard icon={STACKOVERFLOW} link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}>
           <UserInfo
             mt={2}
             color={colors[color]}
             displayName={displayName}
             profileImage={profileImage}
             badges={badges}
-            maxW={['xs', 'sm', 'md']}
+            minW={['xs', 'sm', 'md']}
             reputation={reputation}
           />
           <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
@@ -104,7 +93,6 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
             ))}
           </Stack>
         </IntegrationWrapperCard>
-        {/* </Card> */}
       </>
       {/* )} */}
     </>

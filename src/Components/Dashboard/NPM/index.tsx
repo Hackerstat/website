@@ -74,39 +74,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   }, [colorMode]);
 
   return (
-    // <Card
-    // borderRadius={'lg'}
-    // overflow="scroll"
-    // padding={2}
-    // maxW={['sm', 'md', 'lg']}
-    // width={'100%'}
-    // mt={3}
-    // color={color}
-    // >
-    //   <Flex alignItems={'center'} opacity={0.8}>
-    //     <FontAwesomeIcon icon={faNpm} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-    //     <ExternalLink
-    //       color={color}
-    //       ml={2}
-    //       href={`https://www.npmjs.com/${username}` || undefined}
-    //       // isDisabled={!username}
-    //       fontWeight={'bold'}
-    //     >
-    //       {username || '_______'}
-    //     </ExternalLink>
-    //   </Flex>
-    <IntegrationWrapperCard
-      borderRadius={'lg'}
-      overflow="scroll"
-      padding={2}
-      maxW={['xs', 'sm', 'md']}
-      width={'100%'}
-      mt={3}
-      color={color}
-      icon={NPM}
-      username={username}
-      link={`https://www.npmjs.com/${username}`}
-    >
+    <IntegrationWrapperCard icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
       <Grid
         mt={2}
         gap={2}
@@ -122,7 +90,6 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
           })}
       </Grid>
     </IntegrationWrapperCard>
-    // </Card>
   );
 };
 

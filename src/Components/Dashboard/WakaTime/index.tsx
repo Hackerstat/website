@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Axios from 'axios';
-import { BoxProps, Grid, Flex, useColorMode } from '@chakra-ui/react';
+import { BoxProps, Grid, useColorMode } from '@chakra-ui/react';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../WakaTime/Graphs';
 import {
   WakaTimeLanguagesGraphDataPropsType,
   WakaTimeLanguageDataType,
   WakaTimeActivityGraphDataPropsType,
 } from '../../../utils/utils';
-import Card from '../../Card';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface WakaTimeProps extends BoxProps {
@@ -83,6 +82,15 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
   }, [colorMode]);
 
   const setUpGraphData = (graphData: Partial<SetUpGraphDataProps>) => {
+    pieData.labels = [].slice();
+    barData.labels = [].slice();
+    pieData.datasets[0].data = [].slice();
+    barData.datasets[0].data = [].slice();
+    pieData.datasets[0].backgroundColor = [].slice();
+    barData.datasets[0].backgroundColor = [].slice();
+    pieData.datasets[0].borderColor = [].slice();
+    barData.datasets[0].borderColor = [].slice();
+
     if (graphData.wakaTimeActivityData) {
       graphData.wakaTimeActivityData.forEach((barDataPoint) => {
         barData.labels.push(barDataPoint.dateText);
@@ -110,25 +118,8 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
   return (
     <>
       {!errorStatus ? (
-        <IntegrationWrapperCard
-          icon={'wakatime'}
-          // minH="100%"
-          borderRadius={'lg'}
-          overflow="scroll"
-          padding={2}
-          maxW={['xs', 'sm', 'md']}
-          // width={'100%'}
-          mt={3}
-          color={color}
-        >
-          <Grid
-            mt={2}
-            gap={2}
-            gridTemplateColumns={'repeat(auto-fit, 400px)'}
-            minW={'xs'}
-            // maxW={'lg'}
-            borderRadius={'lg'}
-          >
+        <IntegrationWrapperCard icon={'wakatime'}>
+          <Grid mt={2} gap={2} gridTemplateColumns={'repeat(auto-fit, 400px)'} minW={'xs'} borderRadius={'lg'}>
             {barLoaded && <TimeBarWrapper data={barData} />}
             {pieLoaded && <LanguagePieWrapper data={pieData} />}
           </Grid>

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Card from '../Card';
-import { BoxProps, Flex, Box, HStack } from '@chakra-ui/react';
+import { BoxProps, Flex, Box, HStack, Text } from '@chakra-ui/react';
 import { formatNums } from '../../utils/formatNums';
 import { Badges } from '../../utils/utils';
 
@@ -41,13 +41,15 @@ const MedalCount: FunctionComponent<MedalDataProps> = ({ badgeNumber, medalColor
     <Box mr={2}>
       <Medal medalColor={medalColor} />
     </Box>
-    {formatNums(badgeNumber)}
+    <Text color="black" fontWeight="bold" as="h5" fontSize="xs">
+      {formatNums(badgeNumber)}
+    </Text>
   </Flex>
 );
 
 export const MedalsInfo: FunctionComponent<MedalsInfoProps> = ({ badges, ...rest }) => (
   <Card minW="100%" {...rest}>
-    <HStack color="black" minW="100%" justifyContent="flex-start" spacing={5}>
+    <HStack minW="100%" justifyContent="flex-start" spacing={5}>
       {badges && badges.gold > 0 && (
         <MedalCount badgeNumber={badges.gold} medalColor={Medals.gold} medalBackground={Medals.backgroundGold} />
       )}

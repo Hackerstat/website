@@ -96,29 +96,7 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
   }, [user]);
 
   return (
-    // <Card mt={3} borderRadius={'lg'} padding={2} maxW={['xs', 'sm', 'md']} {...rest}>
-    //   <Flex alignItems={'center'} opacity={0.8}>
-    //     <FontAwesomeIcon icon={faMedium} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-    //     <ExternalLink
-    //       color={color}
-    //       ml={2}
-    //       href={`https://www.medium.com/${user}` || undefined}
-    //       // isDisabled={!user}
-    //       fontWeight={'bold'}
-    //     >
-    //       {user || '_______'}
-    //     </ExternalLink>
-    //   </Flex>
-    <IntegrationWrapperCard
-      mt={3}
-      borderRadius={'lg'}
-      padding={2}
-      maxW={['xs', 'sm', 'md']}
-      {...rest}
-      icon={MEDIUM}
-      link={`https://www.medium.com/${user}`}
-      username={user}
-    >
+    <IntegrationWrapperCard {...rest} icon={MEDIUM} link={`https://www.medium.com/${user}`} username={user}>
       <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
         {!!articles &&
           articles.map((item, index) => (
@@ -133,7 +111,6 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
           ))}
       </Stack>
     </IntegrationWrapperCard>
-    // </Card>
   );
 };
 

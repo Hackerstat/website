@@ -5,6 +5,8 @@ export const HTTPCode = {
   SERVER_ERROR: 500,
 };
 
+export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
 export const STACKOVERFLOW_URL_USER = (userID: string): string =>
   `https://api.stackexchange.com/2.2/users/${userID}?order=desc&sort=reputation&site=stackoverflow`;
 
