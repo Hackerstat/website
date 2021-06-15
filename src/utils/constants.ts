@@ -45,6 +45,9 @@ export const STACKOVERFLOW = 'stackoverflow';
 export const TWITTER = 'twitter';
 export const NPM = 'npm';
 export const MEDIUM = 'medium';
+export const GITHUB = 'github';
+export const GITLAB = 'gitlab';
+
 export const WAKATIME_ACTIVITY_URL = 'wakaTimeCodingActivityURL';
 export const WAKATIME_LANGUAGE_URL = 'wakaTimeLanguageURL';
 export const INTEGRATIONS = 'integrations';

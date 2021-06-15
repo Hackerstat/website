@@ -35,7 +35,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
   return (
     <Box
       key={packageInfo?.name}
-      maxW={'lg'}
+      maxW={['xs', 'sm', 'md']}
       borderRadius={'lg'}
       backgroundColor={'gray.800'}
       padding={3}
@@ -53,7 +53,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
           {packageInfo?.name || '_______'}
         </ExternalLink>
       </Flex>
-      <Box height={'200px'} maxW={['sm', 'md', 'lg']} color={'white'}>
+      <Box height={'200px'} maxW={['xs', 'sm', 'md']} color={'white'}>
         <Chart
           dark
           data={[

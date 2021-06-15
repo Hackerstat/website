@@ -7,6 +7,8 @@ import { useRouter } from 'next/dist/client/router';
 import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
+import WorkExperienceCard from '../Components/Dashboard/WorkExperience';
+import { WorkExperienceType } from '../utils/utils';
 
 const WakaTime = dynamic(() => import('../Components/Dashboard/WakaTime'), {
   // eslint-disable-next-line react/display-name
@@ -48,6 +50,8 @@ interface UserInfo {
   bio?: string;
 }
 
+type WorkExperienceInstancesType = Array<WorkExperienceType>;
+
 /**
  * @name UserProfilePage
  * @description This component display a HackerStat user's info and integrations (i.e. NPM, GitHub, StackOverflow).
@@ -64,6 +68,8 @@ const UserProfilePage: NextPage = () => {
 
   const [integrationSettings, setIntegrationSettings] = useState();
 
+  const [workExperienceInstances, setWorkExperienceInstances] = useState<WorkExperienceInstancesType>([]);
+
   useEffect(() => {
     if (!user) {
       return;
@@ -73,12 +79,13 @@ const UserProfilePage: NextPage = () => {
       setIntegrations(integrationData.data.integrations);
       setIntegrationSettings(integrationData.data.settings);
       setInfo(integrationData.data.info);
+      setWorkExperienceInstances(integrationData.data.workExperience);
     });
   }, [user]);
 
   return (
     <PageBase>
-      <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'}>
+      <Stack isInline shouldWrapChildren spacing={3} flexWrap={'wrap'} margin="0 auto">
         <UserProfileInfoCard
           maxW={'100%'}
           photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
@@ -86,6 +93,7 @@ const UserProfilePage: NextPage = () => {
           username={user as string}
           {...info}
         />
+        <WorkExperienceCard listOfWorkExperiences={workExperienceInstances} />
       </Stack>
       <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'} maxW="100%">
         {/* Add GitHub Repos */}

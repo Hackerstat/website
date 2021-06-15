@@ -1,12 +1,10 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import Card from '../../Card';
-import { Grid, useColorMode, Flex } from '@chakra-ui/react';
+import { Grid, useColorMode } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ExternalLink from '../../ExternalLink';
-import { faNpm } from '@fortawesome/free-brands-svg-icons';
+import { NPM } from '../../../utils/constants';
+import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface NPMCardProps {
   username: string;
@@ -76,34 +74,45 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   }, [colorMode]);
 
   return (
-    <Card
+    // <Card
+    // borderRadius={'lg'}
+    // overflow="scroll"
+    // padding={2}
+    // maxW={['sm', 'md', 'lg']}
+    // width={'100%'}
+    // mt={3}
+    // color={color}
+    // >
+    //   <Flex alignItems={'center'} opacity={0.8}>
+    //     <FontAwesomeIcon icon={faNpm} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
+    //     <ExternalLink
+    //       color={color}
+    //       ml={2}
+    //       href={`https://www.npmjs.com/${username}` || undefined}
+    //       // isDisabled={!username}
+    //       fontWeight={'bold'}
+    //     >
+    //       {username || '_______'}
+    //     </ExternalLink>
+    //   </Flex>
+    <IntegrationWrapperCard
       borderRadius={'lg'}
       overflow="scroll"
       padding={2}
-      maxW={['sm', 'md', 'lg']}
+      maxW={['xs', 'sm', 'md']}
       width={'100%'}
       mt={3}
       color={color}
+      icon={NPM}
+      username={username}
+      link={`https://www.npmjs.com/${username}`}
     >
-      <Flex alignItems={'center'} opacity={0.8}>
-        <FontAwesomeIcon icon={faNpm} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-        <ExternalLink
-          color={color}
-          ml={2}
-          href={`https://www.npmjs.com/${username}` || undefined}
-          // isDisabled={!username}
-          fontWeight={'bold'}
-        >
-          {username || '_______'}
-        </ExternalLink>
-      </Flex>
       <Grid
         mt={2}
         gap={2}
         gridTemplateColumns={'repeat(auto-fit, 400px)'}
         maxH={'lg'}
-        minW={'sm'}
-        maxW={'lg'}
+        maxW={['xs', 'sm', 'md']}
         overflowY={'scroll'}
         borderRadius={'lg'}
       >
@@ -112,7 +121,8 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
             return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
           })}
       </Grid>
-    </Card>
+    </IntegrationWrapperCard>
+    // </Card>
   );
 };
 

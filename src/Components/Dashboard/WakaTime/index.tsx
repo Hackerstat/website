@@ -8,7 +8,7 @@ import {
   WakaTimeActivityGraphDataPropsType,
 } from '../../../utils/utils';
 import Card from '../../Card';
-import { IntegrationWrapperCard } from '../IntegrationWrapperCard';
+import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface WakaTimeProps extends BoxProps {
   username: string;
@@ -111,24 +111,22 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
     <>
       {!errorStatus ? (
         <IntegrationWrapperCard
-          icon={''}
-          minH="100%"
+          icon={'wakatime'}
+          // minH="100%"
           borderRadius={'lg'}
           overflow="scroll"
           padding={2}
-          width={'100%'}
+          maxW={['xs', 'sm', 'md']}
+          // width={'100%'}
           mt={3}
           color={color}
         >
-          <Flex alignItems={'center'} color={color} fontWeight={'bold'}>
-            WakaTime
-          </Flex>
           <Grid
             mt={2}
             gap={2}
             gridTemplateColumns={'repeat(auto-fit, 400px)'}
-            minW={'sm'}
-            maxW={'lg'}
+            minW={'xs'}
+            // maxW={'lg'}
             borderRadius={'lg'}
           >
             {barLoaded && <TimeBarWrapper data={barData} />}

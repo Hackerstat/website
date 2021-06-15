@@ -2,7 +2,7 @@ import { WorkExperienceType } from '../utils';
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 
-type GetWorkExperienceDataResponseType = Promise<Array<WorkExperienceType>>;
+type GetWorkExperienceDataResponseType = Array<WorkExperienceType>;
 
 const userProfileProjection = {
   projection: {
@@ -11,7 +11,7 @@ const userProfileProjection = {
 };
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-export const getWorkExperienceData = async (username: string): GetWorkExperienceDataResponseType => {
+export const getWorkExperienceData = async (username: string): Promise<GetWorkExperienceDataResponseType> => {
   const client = await connectToClient();
 
   const { workExperience } = await client

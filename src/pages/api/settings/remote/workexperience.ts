@@ -8,7 +8,8 @@ import { getWorkExperienceData } from '../../../../utils/mongo';
  * @description This function retrieves any HackerStat user's list of work experiences.
  * @author @Cgunter1
  * @argument {string} username The HackerStat username to retrieve its work experience.
- * @returns {void} */
+ * @returns {void}
+ */
 export default async function remoteRetrieveWorkExperience(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     if (req.method === 'GET') {

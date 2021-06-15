@@ -73,7 +73,7 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
 
   return (
     <Skeleton isLoaded={loaded}>
-      <Card height="100%" p={1} px={4} {...rest} borderRadius={5} maxW={['sm', 'md', 'lg']}>
+      <Card height="100%" p={1} px={4} {...rest} borderRadius={5} maxW={['xs', 'sm', 'md']}>
         <Flex alignItems={'center'} flexDirection={'row'} justifyContent={'flex-start'}>
           <Avatar mt={4} name={name} size={'2xl'} src={photo} onLoad={onLoad} mr={2} />
           <Box>

@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Stack, useColorMode, Flex } from '@chakra-ui/react';
 import Card from '../../Card';
 import ExternalLink from '../../ExternalLink';
+import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
+import { STACKOVERFLOW } from '../../../utils/constants';
 
 const colors = { light: 'gray.800', dark: 'white' };
 
@@ -63,7 +65,7 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
     <>
       {/* {loaded && !error && !!stackOverflowInfo && ( */}
       <>
-        <Card borderRadius={'lg'} overflow="scroll" padding={2} maxW={['xs', 'sm', 'md']} mt={3} color={color}>
+        {/* <Card borderRadius={'lg'} overflow="scroll" padding={2} maxW={['xs', 'sm', 'md']} mt={3} color={color}>
           <Flex alignItems={'center'} opacity={0.8}>
             <FontAwesomeIcon icon={faStackOverflow} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
             <ExternalLink
@@ -73,24 +75,36 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
               fontWeight={'bold'}
             >
               StackOverFlow
-            </ExternalLink>
-          </Flex>
+            </ExternalLink> */}
+        {/* </Flex> */}
+        <IntegrationWrapperCard
+          icon={STACKOVERFLOW}
+          link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
+          borderRadius={'lg'}
+          overflow="scroll"
+          padding={2}
+          maxW={['xs', 'sm', 'md']}
+          mt={3}
+          color={color}
+        >
           <UserInfo
             mt={2}
             color={colors[color]}
             displayName={displayName}
             profileImage={profileImage}
             badges={badges}
+            maxW={['xs', 'sm', 'md']}
             reputation={reputation}
           />
-          <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
+          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
             {stackOverflowInfo.topTags.map((tag) => (
               <React.Fragment key={`${tag.name}${tag.questionScore}`}>
                 <TagRow tag={tag} />
               </React.Fragment>
             ))}
           </Stack>
-        </Card>
+        </IntegrationWrapperCard>
+        {/* </Card> */}
       </>
       {/* )} */}
     </>
