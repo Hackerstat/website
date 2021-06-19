@@ -3,10 +3,6 @@ import { useColorMode, Box, Text, Flex, Stack, HStack } from '@chakra-ui/react';
 import { WorkExperienceType } from '../../../utils/utils';
 // import { MONTHS } from '../../../utils/constants';
 import Card from '../../Card';
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-
-const colors = { light: 'gray.800', dark: 'white' };
 interface WorkExperienceCardProps {
   listOfWorkExperiences: Array<WorkExperienceType>;
 }
@@ -22,6 +18,11 @@ const formatDate = (date: string) => {
   return '';
 };
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+const colors = { light: 'gray.800', dark: 'white' };
+const backgroundColors = { light: 'white', dark: 'gray.800' };
+
 /**
  * @name WorkExperienceItem
  * @description This component displays an individual HackerStat user's work experience.
@@ -30,28 +31,32 @@ const formatDate = (date: string) => {
  * @param {Array<WorkExperienceType>} props.workExperience This is a workExperience item's data object.
  * @returns {FunctionComponent<WorkExperienceCardProps>}
  */
-const WorkExperienceItem: FunctionComponent<WorkExperienceItemProps> = ({ workExperience }) => (
-  <Box w="100%" borderWidth="1px" borderRadius={'lg'} p={2}>
-    <Flex justifyContent="space-between">
-      <Text fontWeight="bold" fontSize={['sm', 'md', 'lg']}>
-        {workExperience.companyName}
-      </Text>
-      <HStack spacing={0.5} alignItems={'center'} fontSize={'xs'}>
-        <Text>{`${formatDate(workExperience.startingDate)}`}</Text>
-        <Text>-</Text>
-        <Text>{`${formatDate(workExperience.endDate)}`}</Text>
-      </HStack>
-    </Flex>
-    <Box p={1} fontSize={['xs', 'sm', 'sm']}>
-      <Text fontWeight="semibold" noOfLines={1}>
-        {workExperience.position}
-      </Text>
-      <Text fontWeight="light" noOfLines={4}>
-        {workExperience.details}
-      </Text>
+const WorkExperienceItem: FunctionComponent<WorkExperienceItemProps> = ({ workExperience }) => {
+  const { colorMode } = useColorMode();
+
+  return (
+    <Box w="100%" borderWidth="1px" borderRadius={'lg'} p={2} backgroundColor={backgroundColors[colorMode]}>
+      <Flex justifyContent="space-between">
+        <Text fontWeight="bold" fontSize={['sm', 'md', 'lg']}>
+          {workExperience.companyName}
+        </Text>
+        <HStack spacing={0.5} alignItems={'center'} fontSize={'xs'}>
+          <Text>{`${formatDate(workExperience.startingDate)}`}</Text>
+          <Text>-</Text>
+          <Text>{`${formatDate(workExperience.endDate)}`}</Text>
+        </HStack>
+      </Flex>
+      <Box p={1} fontSize={['xs', 'sm', 'sm']}>
+        <Text fontWeight="semibold" noOfLines={1}>
+          {workExperience.position}
+        </Text>
+        <Text fontWeight="light" noOfLines={4}>
+          {workExperience.details}
+        </Text>
+      </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 /**
  * @name WorkExperienceCard

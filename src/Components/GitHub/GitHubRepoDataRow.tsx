@@ -2,11 +2,11 @@ import React, { FunctionComponent } from 'react';
 import { Box, Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType } from '../../utils/utils';
+import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType, formatNums } from '../../utils';
 
 interface GitHubRepoDataRowProps {
-  repos: Array<GitHubRepoDisplayDataType>;
-  changeRepos: SetGitHubRepoDisplayDataType;
+  repos?: Array<GitHubRepoDisplayDataType>;
+  changeRepos?: SetGitHubRepoDisplayDataType;
 }
 
 /**
@@ -14,8 +14,8 @@ interface GitHubRepoDataRowProps {
  * @description This component displays a list of individual GitHub Repo data w/ details of the repo's top language, size, watchers, and description. It also allows the removal of repos.
  * @author @Cgunter1
  * @param {GitHubRepoDataRowProps} props This is the props for the component.
- * @param {Array<GitHubRepoDisplayDataType>} props.repos This is a list of the user's GitHub Repos including forks, description, stars, size, and etc..
- * @param {SetGitHubRepoDisplayDataType} props.changeRepos This is the setState function that changes the props.repos variable and re-renders the component.
+ * @param {Array<GitHubRepoDisplayDataType>?} props.repos This is a list of the user's GitHub Repos including forks, description, stars, size, and etc..
+ * @param {SetGitHubRepoDisplayDataType?} props.changeRepos This is the setState function that changes the props.repos variable and re-renders the component.
  * @returns {FunctionComponent<GitHubRepoDataRowProps>}
  */
 export const GitHubRepoDataRow: FunctionComponent<GitHubRepoDataRowProps> = ({ repos, changeRepos }) => {
@@ -29,47 +29,53 @@ export const GitHubRepoDataRow: FunctionComponent<GitHubRepoDataRowProps> = ({ r
     changeRepos(newRepos);
   };
   return (
-    <Stack direction="column" mt={2} spacing="24px" w="100%">
-      {repos.map((repo) => (
-        <Box m="0 auto" borderRadius={10} p={3} border="1px solid white" w="100%" key={`${repo.url}`}>
-          <Flex pr={3} w="100%" justifyContent="space-between" alignItems="center">
-            <Heading fontSize={'2xl'}>{repo.repoName}</Heading>
-            <Button onClick={() => filterRepos(repo)}>
-              <FontAwesomeIcon size="lg" icon={faTrash} />
-            </Button>
-          </Flex>
-          <Stack
-            flexWrap="wrap"
-            maxW="100%"
-            ml={1}
-            fontSize="lg"
-            direction="row"
-            spacing="12px"
-            shouldWrapChildren={true}
-          >
-            {Object.entries(repo.languages).length === 0 ? (
-              <>N/A</>
-            ) : (
-              <Flex>
-                <Text>{Object.entries(repo.languages).sort((a, b) => b[1] - a[1])[0][0]}</Text>
+    <Stack direction="column" mt={2} spacing={2} w="100%">
+      {repos &&
+        repos.map((repo) => (
+          <Box m="0 auto" borderRadius={10} p={3} border="1px solid white" w="100%" key={`${repo.url}`}>
+            <Flex pr={3} w="100%" justifyContent="space-between" alignItems="center">
+              <Heading fontSize={['lg']}>{repo.repoName}</Heading>
+              {changeRepos && (
+                <Button onClick={() => filterRepos(repo)}>
+                  <FontAwesomeIcon size="lg" icon={faTrash} />
+                </Button>
+              )}
+            </Flex>
+            <Stack
+              flexWrap="wrap"
+              maxW="100%"
+              ml={1}
+              fontSize="sm"
+              opacity={0.8}
+              direction="row"
+              spacing="5px"
+              shouldWrapChildren={true}
+            >
+              {Object.entries(repo.languages).length === 0 ? (
+                <>N/A</>
+              ) : (
+                <Flex>
+                  <Text>{Object.entries(repo.languages).sort((a, b) => b[1] - a[1])[0][0]}</Text>
+                </Flex>
+              )}
+              <Text>&middot;</Text>
+              <Flex alignItems="center">
+                <FontAwesomeIcon icon={faCodeBranch} />
+                <Text ml={1}>{formatNums(repo.forks)}</Text>
               </Flex>
-            )}
-            <Text>&middot;</Text>
-            <Flex alignItems="center">
-              <FontAwesomeIcon icon={faCodeBranch} />
-              <Text ml={1}>{repo.forks}</Text>
-            </Flex>
-            <Text>&middot;</Text>
-            <Text>{repo.sz}B</Text>
-            <Text>&middot;</Text>
-            <Flex alignItems="center">
-              <FontAwesomeIcon icon={faEye} />
-              <Text ml={1}>{repo.watchers || 0}</Text>
-            </Flex>
-          </Stack>
-          <Text fontSize={'sm'}>{repo.des}</Text>
-        </Box>
-      ))}
+              <Text>&middot;</Text>
+              <Text>{formatNums(repo.sz)}B</Text>
+              <Text>&middot;</Text>
+              <Flex alignItems="center">
+                <FontAwesomeIcon icon={faEye} />
+                <Text ml={1}>{formatNums(repo.watchers || 0)}</Text>
+              </Flex>
+            </Stack>
+            <Text noOfLines={3} fontSize={'sm'}>
+              {repo.des}
+            </Text>
+          </Box>
+        ))}
     </Stack>
   );
 };

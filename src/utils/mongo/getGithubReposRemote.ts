@@ -10,7 +10,7 @@ const userProfileOptions = {
 };
 
 const gitHubOptions = {
-  projection: { followers: 1, following: 1, repos: 1, user: 1 },
+  projection: { followers: 1, following: 1, repos: 1, user: 1, avatar_url: 1 },
 };
 
 export const getGithubReposRemote = async (username: string): Promise<null | AddGitHubDataType> => {
@@ -25,7 +25,6 @@ export const getGithubReposRemote = async (username: string): Promise<null | Add
           github: { id: gitHubID },
         },
       } = await client.db(HACKERSTAT).collection(USERPROFILES).findOne({ username: username }, userProfileOptions);
-      console.log;
       // Returns null if userProfile does not have github integration.
       if (!gitHubID) {
         return;

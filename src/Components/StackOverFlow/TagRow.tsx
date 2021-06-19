@@ -5,6 +5,7 @@ import { Tag } from '../../utils/utils';
 
 interface TagRowProps {
   tag: Tag;
+  backgroundColor: string;
 }
 
 // const formatNums = (num: number): string => {
@@ -17,8 +18,8 @@ interface TagRowProps {
 //   return `${stringNum.slice(0, thousandsIndex + 1)}.${stringNum[hundredsIndex]}k`;
 // };
 
-export const TagRow: FunctionComponent<TagRowProps> = ({ tag }) => (
-  <Box p={1} borderWidth="1px" borderRadius={'lg'}>
+export const TagRow: FunctionComponent<TagRowProps> = ({ tag, backgroundColor }) => (
+  <Box p={1} borderWidth="1px" borderRadius={'lg'} backgroundColor={backgroundColor}>
     <Text as="h3" fontSize={['sm', 'md', 'lg']}>
       {tag.name}
     </Text>

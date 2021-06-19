@@ -279,6 +279,44 @@ export interface GitLabRepoDisplayDataType {
   watchers: number;
 }
 
+interface ContributionDayType {
+  color: string;
+  contributionCount: number;
+  date: string;
+}
+
+export interface ContributionWeekType {
+  contributionDays: Array<ContributionDayType>;
+  month?: string;
+}
+
+export interface ContributionsCalendarType {
+  totalContributions: number;
+  weeks: Array<ContributionWeekType>;
+}
+
+interface ContributionsCollectionType {
+  startedAt: string;
+  endedAt: string;
+  hasAnyContributions: boolean;
+  hasActivityInThePast: boolean;
+  contributionCalendar: ContributionsCalendarType;
+}
+
+export interface GitHubRemoteAPIReturnDataType {
+  data?: {
+    user?: {
+      contributionsCollection?: ContributionsCollectionType;
+    };
+  };
+  _id: string;
+  followers: number;
+  following: number;
+  avatar_url: string;
+  repos: Array<GitHubRepoDisplayDataType>;
+  user: string;
+}
+
 export interface GetRemoteWakaTimeDataRes {
   integrations?: Array<string>;
   integration_settings?: {

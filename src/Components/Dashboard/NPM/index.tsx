@@ -26,7 +26,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   const [packages, setPackages] = useState<Array<Package>>();
   const [fetchError, setFetchError] = useState<string>();
 
-  const [color, setColor] = useState(colors['dark']);
+  const [color, setColor] = useState(colors[colorMode]);
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[colorMode]);
 
   const GetNPMPackages = async (username) => {

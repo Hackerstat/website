@@ -43,6 +43,11 @@ const Twitter = dynamic(() => import('../Components/Dashboard/Twitter'), {
 });
 Twitter.displayName = 'Twitter';
 
+const GitHub = dynamic(() => import('../Components/Dashboard/GitHub'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
 interface UserInfo {
   firstName: string;
   lastName: string;
@@ -99,6 +104,17 @@ const UserProfilePage: NextPage = () => {
         {/* Add GitHub Repos */}
         {/* Add GitLab Repos */}
         {/* Add Work Experience */}
+        {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          !!integrationSettings && integrationSettings?.github?.id && (
+            <GitHub
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              username={user as string}
+            />
+          )
+        }
         {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

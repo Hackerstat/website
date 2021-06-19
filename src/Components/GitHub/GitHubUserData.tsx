@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
-import { GitHubUserAccountType } from '../../utils/utils';
+import { GitHubUserAccountType, formatNums } from '../../utils';
+import ExternalLink from '../../Components/ExternalLink';
 
 interface GitHubUserDataProps {
   userData: Partial<GitHubUserAccountType>;
+  isLinked?: boolean;
 }
 
 /**
@@ -22,28 +24,41 @@ interface GitHubUserDataProps {
  */
 export const GitHubUserData: FunctionComponent<GitHubUserDataProps> = ({
   userData: { avatar_url, user, name, location, followers, following },
+  isLinked,
 }) => {
   return (
     <Flex mt={2} alignItems="flex-start">
       <Image src={avatar_url} w={75} h={75} />
       <Box>
-        <Text fontSize={18} fontFamily={'monospace'} ml={2}>
-          {user}
-        </Text>
+        {isLinked ? (
+          <ExternalLink href={`https://github.com/${user}`}>
+            <Text fontSize={18} fontFamily={'monospace'} ml={2}>
+              {user}
+            </Text>
+          </ExternalLink>
+        ) : (
+          <Text fontSize={18} fontFamily={'monospace'} ml={2}>
+            {user}
+          </Text>
+        )}
         <Flex flexWrap="wrap">
-          <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-            Name: {name},
-          </Text>
-          <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-            Location: {location}
-          </Text>
+          {name && (
+            <Text fontSize={15} fontFamily={'monospace'} ml={2}>
+              Name: {name},
+            </Text>
+          )}
+          {location && (
+            <Text fontSize={15} fontFamily={'monospace'} ml={2}>
+              Location: {location}
+            </Text>
+          )}
         </Flex>
         <Flex flexWrap="wrap">
           <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-            Followers: {followers},
+            Followers: {formatNums(followers)},
           </Text>
           <Text fontSize={15} fontFamily={'monospace'} ml={2}>
-            Following: {following}
+            Following: {formatNums(following)}
           </Text>
         </Flex>
       </Box>

@@ -6,8 +6,6 @@ import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
 import { STACKOVERFLOW } from '../../../utils/constants';
 
-const colors = { light: 'gray.800', dark: 'white' };
-
 const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 
 interface StackOverflowCardPropsType {
@@ -16,6 +14,9 @@ interface StackOverflowCardPropsType {
 }
 
 type StackOverflowCardType = FunctionComponent<StackOverflowCardPropsType>;
+
+const colors = { light: 'gray.800', dark: 'white' };
+const backgroundColors = { light: 'white', dark: 'gray.800' };
 
 /**
  * @name StackOverflowCard
@@ -88,7 +89,7 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
           <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
             {stackOverflowInfo.topTags.map((tag) => (
               <React.Fragment key={`${tag.name}${tag.questionScore}`}>
-                <TagRow tag={tag} />
+                <TagRow tag={tag} backgroundColor={backgroundColors[colorMode]} />
               </React.Fragment>
             ))}
           </Stack>
