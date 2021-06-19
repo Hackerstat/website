@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent, useState } from 'react';
 import Axios from 'axios';
-import { Stack, useColorMode, Flex } from '@chakra-ui/react';
+import { Stack, useColorMode } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
@@ -86,7 +86,7 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
             minW={['xs', 'sm', 'md']}
             reputation={reputation}
           />
-          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
+          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
             {stackOverflowInfo.topTags.map((tag) => (
               <React.Fragment key={`${tag.name}${tag.questionScore}`}>
                 <TagRow tag={tag} backgroundColor={backgroundColors[colorMode]} />

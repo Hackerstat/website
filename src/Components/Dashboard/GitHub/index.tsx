@@ -32,11 +32,10 @@ const GitHubCard: FunctionComponent<GitHubCardProps> = ({ username, ...props }) 
         setError(true);
       });
   }, []);
-  console.log('Loading:' + loading);
   return (
     <>
       {!error && (
-        <IntegrationWrapperCard icon={GITHUB} {...props}>
+        <IntegrationWrapperCard icon={GITHUB} {...props} verified>
           <Skeleton maxH={'md'} isLoaded={loading}>
             <GitHubUserData
               isLinked={true}
@@ -51,8 +50,8 @@ const GitHubCard: FunctionComponent<GitHubCardProps> = ({ username, ...props }) 
           <GitHubCalendar
             gitHubCalendarEvents={gitHubRepoData.data?.user?.contributionsCollection?.contributionCalendar}
           />
-          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
-            <GitHubRepoDataRow repos={gitHubRepoData.repos} />
+          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
+            <GitHubRepoDataRow repos={gitHubRepoData.repos} username={gitHubRepoData.user} />
           </Stack>
         </IntegrationWrapperCard>
       )}

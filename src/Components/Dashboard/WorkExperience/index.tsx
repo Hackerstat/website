@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useColorMode, Box, Text, Flex, Stack, HStack } from '@chakra-ui/react';
 import { WorkExperienceType } from '../../../utils/utils';
-// import { MONTHS } from '../../../utils/constants';
+import { MONTHS } from '../../../utils';
 import Card from '../../Card';
 interface WorkExperienceCardProps {
   listOfWorkExperiences: Array<WorkExperienceType>;
@@ -17,8 +17,6 @@ const formatDate = (date: string) => {
   return `${MONTHS[parseInt(month) - 1]}, ${year}`;
   return '';
 };
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 const colors = { light: 'gray.800', dark: 'white' };
 const backgroundColors = { light: 'white', dark: 'gray.800' };

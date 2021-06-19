@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Grid, useColorMode } from '@chakra-ui/react';
+import { Grid, Skeleton, useColorMode } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
@@ -24,15 +24,16 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
 const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   const { colorMode } = useColorMode();
   const [packages, setPackages] = useState<Array<Package>>();
-  const [fetchError, setFetchError] = useState<string>();
+  const [error, setError] = useState<string>('');
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [color, setColor] = useState(colors[colorMode]);
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[colorMode]);
 
-  const GetNPMPackages = async (username) => {
+  const GetNPMPackages = async (username: string) => {
     try {
       if (!username) {
-        setFetchError('Required');
+        setError('Required');
         return;
       }
 
@@ -43,11 +44,11 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
       });
 
       if (result?.data?.error) {
-        setFetchError(result?.data?.error);
+        setError(result?.data?.error);
         throw new Error(result?.data?.error);
       }
 
-      setFetchError(null);
+      setError(null);
 
       if (result?.data?.length === 0) {
         setPackages([]);
@@ -56,8 +57,10 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
 
         setPackages(result?.data);
       }
+      setIsLoaded(true);
     } catch (err) {
       console.log(err);
+      setError(err);
     }
   };
 
@@ -74,22 +77,30 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   }, [colorMode]);
 
   return (
-    <IntegrationWrapperCard icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
-      <Grid
-        mt={2}
-        gap={2}
-        gridTemplateColumns={'repeat(auto-fit, 400px)'}
-        maxH={'lg'}
-        maxW={['xs', 'sm', 'md']}
-        overflowY={'scroll'}
-        borderRadius={'lg'}
-      >
-        {!!packages &&
-          packages.map((packageInfo) => {
-            return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
-          })}
-      </Grid>
-    </IntegrationWrapperCard>
+    <>
+      {!error ? (
+        <IntegrationWrapperCard icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
+          <Skeleton isLoaded={isLoaded}>
+            <Grid
+              mt={2}
+              gap={2}
+              gridTemplateColumns={'repeat(auto-fit, 400px)'}
+              maxH={'lg'}
+              maxW={['xs', 'sm', 'md']}
+              overflowY={'scroll'}
+              borderRadius={'lg'}
+            >
+              {!!packages &&
+                packages.map((packageInfo) => {
+                  return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
+                })}
+            </Grid>
+          </Skeleton>
+        </IntegrationWrapperCard>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

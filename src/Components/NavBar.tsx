@@ -127,7 +127,7 @@ const Navbar: FunctionComponent = () => {
         </MenuItems>
       </Flex>
 
-      <Box display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
+      <Box maxW="100%" display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
         {isLoggedIn()}
       </Box>
 

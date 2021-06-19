@@ -2,9 +2,10 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { faStackOverflow, faNpm, faTwitter, faGithub, faGitlab, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExternalLink from '../../ExternalLink';
-import { BoxProps, Flex, useColorMode } from '@chakra-ui/react';
+import { BoxProps, Flex, useColorMode, Box } from '@chakra-ui/react';
 import Card from '../../Card';
 import { STACKOVERFLOW, WAKATIME, NPM, MEDIUM, GITHUB, GITLAB, TWITTER } from '../../../utils/constants';
+import { VerifiedButton } from '../../VerifiedButton';
 
 const Integrations = {
   stackoverflow: { icon: faStackOverflow, name: STACKOVERFLOW },
@@ -21,6 +22,7 @@ interface IntegrationWrapperCardProps extends BoxProps {
   icon: string;
   username?: string;
   link?: string;
+  verified?: boolean;
 }
 
 const colors = { light: 'gray.800', dark: 'white' };
@@ -30,6 +32,7 @@ const IntegrationWrapperCard: FunctionComponent<IntegrationWrapperCardProps> = (
   username,
   icon,
   link,
+  verified,
   ...rest
 }) => {
   const { colorMode } = useColorMode();
@@ -44,8 +47,11 @@ const IntegrationWrapperCard: FunctionComponent<IntegrationWrapperCardProps> = (
         <ExternalLink color={color} ml={2} href={link || undefined} fontWeight={'bold'}>
           {username || Integrations[icon].name}
         </ExternalLink>
+        {verified && <VerifiedButton />}
       </Flex>
-      {children}
+      <Box maxH="lg" overflow="scroll">
+        {children}
+      </Box>
     </Card>
   );
 };

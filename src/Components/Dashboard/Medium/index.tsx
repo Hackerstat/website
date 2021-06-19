@@ -1,9 +1,6 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Box, Text, Stack, Flex, useColorMode, BoxProps } from '@chakra-ui/react';
-import Card from '../../Card';
+import { Box, Text, Stack, useColorMode, BoxProps, Skeleton } from '@chakra-ui/react';
 import Axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import ExternalLink from '../../ExternalLink';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { MEDIUM } from '../../../utils/constants';
@@ -32,7 +29,7 @@ interface FeatureProps extends BoxProps {
  */
 const Feature: FunctionComponent<FeatureProps> = ({ color, title, date, link, ...rest }) => {
   return (
-    <ExternalLink href={link}>
+    <a href={link} target="_blank" rel="noreferrer">
       <Box
         _hover={{
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -53,7 +50,7 @@ const Feature: FunctionComponent<FeatureProps> = ({ color, title, date, link, ..
           {date}
         </Text>
       </Box>
-    </ExternalLink>
+    </a>
   );
 };
 
@@ -71,6 +68,8 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  */
 const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
   const { colorMode } = useColorMode();
+  const [isLoaded, setisLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const [articles, setArticles] = useState([]);
 
   const [color, setColor] = useState(colors['dark']);
@@ -90,27 +89,41 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
       params: {
         user: user,
       },
-    }).then(function (response) {
-      setArticles(response.data.articles);
-    });
+    })
+      .then(function (response) {
+        setArticles(response.data.articles);
+        setisLoaded(true);
+      })
+      .catch(function (error) {
+        console.error(error);
+        setError(true);
+      });
   }, [user]);
 
   return (
-    <IntegrationWrapperCard {...rest} icon={MEDIUM} link={`https://www.medium.com/${user}`} username={user}>
-      <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
-        {!!articles &&
-          articles.map((item, index) => (
-            <Feature
-              backgroundColor={backgroundColor}
-              color={color}
-              title={item.title}
-              date={item.date}
-              link={item.link}
-              key={index}
-            />
-          ))}
-      </Stack>
-    </IntegrationWrapperCard>
+    <>
+      {!error ? (
+        <IntegrationWrapperCard {...rest} icon={MEDIUM} link={`https://www.medium.com/${user}`} username={user}>
+          <Skeleton isLoaded={isLoaded}>
+            <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
+              {!!articles &&
+                articles.map((item, index) => (
+                  <Feature
+                    backgroundColor={backgroundColor}
+                    color={color}
+                    title={item.title}
+                    date={item.date}
+                    link={item.link}
+                    key={index}
+                  />
+                ))}
+            </Stack>
+          </Skeleton>
+        </IntegrationWrapperCard>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

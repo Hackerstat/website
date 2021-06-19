@@ -13,6 +13,7 @@ interface CalendarEventBoxProps {
 }
 
 const emptyEventColor = { light: 'gray.200', dark: 'gray.700' };
+const backgroundColors = { light: 'white', dark: 'gray.800' };
 const whiteColor = '#ebedf0';
 
 const dateFilter = (date: string): number => {
@@ -70,19 +71,18 @@ const CalendarWeekColumn: FunctionComponent<ContributionWeekType> = ({ contribut
 );
 
 export const GitHubCalendar: FunctionComponent<GitHubCalendarProps> = ({ gitHubCalendarEvents }) => {
-  console.log(gitHubCalendarEvents);
+  if (!gitHubCalendarEvents?.weeks) {
+    return <></>;
+  }
   const events = gitHubCalendarEvents.weeks.map((event) => {
     const returnMonths = event.contributionDays
       .map(({ date }) => dateFilter(date))
       .filter((month) => month !== undefined);
-    console.log(returnMonths);
     if (!returnMonths.length) {
       return { ...event, month: null };
     }
-    console.log('asdasddsa');
     return { ...event, month: MONTHS[returnMonths[0] ? returnMonths[0] - 1 : 11] };
   });
-  console.log(events);
 
   return gitHubCalendarEvents ? (
     <Stack overflowX={'scroll'} overflowY={'visible'}>
