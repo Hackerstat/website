@@ -38,7 +38,8 @@ const Dashboard: NextPage = () => {
       <Flex flexDirection={'row'} flexWrap={'wrap'}>
         <Grid
           flex={1}
-          gridTemplateColumns={['repeat(auto-fit, 50%)', 'repeat(auto-fit, 220px)']}
+          gridGap={2}
+          gridTemplateColumns={['repeat(1, 220px)', 'repeat(2, 220px)', 'repeat(5, 220px)']}
           justifyItems={'stretch'}
         >
           {!!users &&

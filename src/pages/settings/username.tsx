@@ -16,6 +16,18 @@ import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
+// import { getCurrentUsername } from '../../utils';
+
+/**
+ * @name getCurrentUsername
+ * @description It is a function that retrieves a HackerStat user's username.
+ * @author @LouisIV
+ * @returns {string}
+ */
+export const getCurrentUsername = async (): Promise<string> => {
+  const result = await Axios.get('/api/settings/username');
+  return result.data?.username;
+};
 
 /**
  * @name username
@@ -31,17 +43,6 @@ const UsernameSettingsPage = () => {
 
   const [checkingUsername, setCheckingUsername] = useState<boolean>(false);
   const [settingUsername, setSettingUsername] = useState<boolean>(false);
-
-  /**
-   * @name getCurrentUsername
-   * @description It is a function that retrieves a HackerStat user's username.
-   * @author @LouisIV
-   * @returns {string}
-   */
-  const getCurrentUsername = async (): Promise<string> => {
-    const result = await Axios.get('/api/settings/username');
-    return result.data?.username;
-  };
 
   // Get the current username
   useEffect(() => {

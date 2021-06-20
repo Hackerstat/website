@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Avatar, Box, Skeleton, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
 import { TriangleDownIcon } from '@chakra-ui/icons';
-import { useFetchUser } from '../utils/user';
+import Axios from 'axios';
+import { useFetchUser, getCurrentUsername } from '../utils';
 import Link from 'next/link';
 
-const UserBubble = () => {
+const UserBubble: FunctionComponent = () => {
   const { user, loading } = useFetchUser();
+  const [hackerStatUsername, setHackerStatUsername] = useState('');
 
-  console.log(user);
+  useEffect(() => {
+    getCurrentUsername()
+      .then((username) => setHackerStatUsername(username))
+      .catch((err) => console.error(err));
+  });
 
   return (
     <Box maxW="100%" overflow={'hidden'}>
@@ -21,9 +27,11 @@ const UserBubble = () => {
           </Skeleton>
         </MenuButton>
         <MenuList>
-          <Link href="/profile">
-            <MenuItem>Profile</MenuItem>
-          </Link>
+          {!!hackerStatUsername && (
+            <Link href={`/${hackerStatUsername}`}>
+              <MenuItem>Profile</MenuItem>
+            </Link>
+          )}
           <Link href="/dashboard">
             <MenuItem>Dashboard</MenuItem>
           </Link>

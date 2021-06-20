@@ -50,7 +50,7 @@ const GitHubCard: FunctionComponent<GitHubCardProps> = ({ username, ...props }) 
           <GitHubCalendar
             gitHubCalendarEvents={gitHubRepoData.data?.user?.contributionsCollection?.contributionCalendar}
           />
-          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
+          <Stack overflow="scroll" maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
             <GitHubRepoDataRow repos={gitHubRepoData.repos} username={gitHubRepoData.user} />
           </Stack>
         </IntegrationWrapperCard>

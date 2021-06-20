@@ -44,7 +44,7 @@ const Card: FunctionComponent<CardProps> = ({ children, onClick, ...rest }) => {
         onClick && {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          filter: 'brightness(150%)',
+          filter: 'brightness(120%)',
           borderBottomWidth: 5,
           borderBottomColor: colors.accent,
         }

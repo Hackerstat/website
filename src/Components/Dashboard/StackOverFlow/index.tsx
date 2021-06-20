@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent, useState } from 'react';
 import Axios from 'axios';
-import { Stack, useColorMode } from '@chakra-ui/react';
+import { Stack, useColorMode, BoxProps } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
@@ -8,7 +8,7 @@ import { STACKOVERFLOW } from '../../../utils/constants';
 
 const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 
-interface StackOverflowCardPropsType {
+interface StackOverflowCardPropsType extends BoxProps {
   username: string;
   stackOverFlowUsername: string;
 }
@@ -27,7 +27,7 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  * @param {string} props.stackOverFlowUsername It is the HackerStat user's StackOverflow username.
  * @returns {StackOverflowCardType}
  */
-const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsername }) => {
+const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsername, ...rest }) => {
   const { colorMode } = useColorMode();
   const [color, setColor] = useState(colors['dark']);
   const [loaded, setLoaded] = useState(false);
@@ -76,7 +76,11 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
     <>
       {/* {loaded && !error && !!stackOverflowInfo && ( */}
       <>
-        <IntegrationWrapperCard icon={STACKOVERFLOW} link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}>
+        <IntegrationWrapperCard
+          icon={STACKOVERFLOW}
+          link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
+          {...rest}
+        >
           <UserInfo
             mt={2}
             color={colors[color]}
@@ -85,8 +89,9 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
             badges={badges}
             minW={['xs', 'sm', 'md']}
             reputation={reputation}
+            overflowX="hidden"
           />
-          <Stack maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
+          <Stack overflow="scroll" maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
             {stackOverflowInfo.topTags.map((tag) => (
               <React.Fragment key={`${tag.name}${tag.questionScore}`}>
                 <TagRow tag={tag} backgroundColor={backgroundColors[colorMode]} />

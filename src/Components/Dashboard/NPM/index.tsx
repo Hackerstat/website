@@ -79,7 +79,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   return (
     <>
       {!error ? (
-        <IntegrationWrapperCard icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
+        <IntegrationWrapperCard pr={-3} icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
           <Skeleton isLoaded={isLoaded}>
             <Grid
               mt={2}
@@ -88,6 +88,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
               maxH={'lg'}
               maxW={['xs', 'sm', 'md']}
               overflowY={'scroll'}
+              overflowX={'hidden'}
               borderRadius={'lg'}
             >
               {!!packages &&

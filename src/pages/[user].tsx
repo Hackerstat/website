@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Stack, Spinner } from '@chakra-ui/react';
+import { Stack, Box, Spinner, Flex } from '@chakra-ui/react';
+import Masonry from 'react-masonry-css';
 import { useRouter } from 'next/dist/client/router';
 
 import dynamic from 'next/dynamic';
@@ -75,6 +76,25 @@ const UserProfilePage: NextPage = () => {
 
   const [workExperienceInstances, setWorkExperienceInstances] = useState<WorkExperienceInstancesType>([]);
 
+  // const integrationComponents = [
+  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   // @ts-ignore
+  //   !!integrationSettings && integrationSettings?.github?.id && (
+  //     <GitHub
+  //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //       // @ts-ignore
+  //       username={user as string}
+  //     />
+  //   ),
+  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   // @ts-ignore
+  //   !!integrationSettings && integrationSettings?.medium?.username && (
+  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //     // @ts-ignore
+  //     <Medium user={`@${integrationSettings?.medium?.username}`} />
+  //   ),
+  // ];
+
   useEffect(() => {
     if (!user) {
       return;
@@ -100,74 +120,73 @@ const UserProfilePage: NextPage = () => {
         />
         <WorkExperienceCard listOfWorkExperiences={workExperienceInstances} />
       </Stack>
-      <Stack isInline shouldWrapChildren spacing={3} bg={'primary-bg'} flexWrap={'wrap'} maxW="100%">
-        {/* Add GitHub Repos */}
-        {/* Add GitLab Repos */}
-        {/* Add Work Experience */}
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings && integrationSettings?.github?.id && (
-            <GitHub
+      <Flex w="100%" justifyContent="center">
+        <Masonry
+          style={{
+            display: 'flex',
+            marginLeft: '-30px' /* gutter size offset */,
+            width: 'auto',
+          }}
+          className="IntegrationGrid"
+          breakpointCols={{ default: 3, 800: 1 }}
+        >
+          {[
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            !!integrationSettings && integrationSettings?.github?.id && (
+              <GitHub
+                mx={2}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                username={user as string}
+              />
+            ),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            !!integrationSettings && integrationSettings?.medium?.username && (
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              username={user as string}
-            />
-          )
-        }
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings && integrationSettings?.medium?.username && (
+              <Medium mx={2} user={`@${integrationSettings?.medium?.username}`} />
+            ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <Medium user={`@${integrationSettings?.medium?.username}`} />
-          )
-        }
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings &&
-            !!integrations &&
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            integrations.includes('wakatime') && (
+            !!integrationSettings &&
+              !!integrations &&
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              <WakaTime username={user as string} />
-            )
-        }
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings && integrationSettings?.npm?.username && (
+              integrations.includes('wakatime') && (
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                <WakaTime mx={2} username={user as string} />
+              ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            <NPM username={integrationSettings?.npm?.username} />
-          )
-        }
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings && integrationSettings?.twitter?.username && (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            <Twitter screenName={integrationSettings?.twitter?.username} />
-          )
-        }
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          !!integrationSettings && integrationSettings?.stackoverflow?.username && (
-            <StackOverFlow
+            !!integrationSettings && integrationSettings?.npm?.username && (
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
-              username={user as string}
-            />
-          )
-        }
-      </Stack>
+              <NPM mx={2} username={integrationSettings?.npm?.username} />
+            ),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            // !!integrationSettings && integrationSettings?.twitter?.username && (
+            //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //   // @ts-ignore
+            //   <Twitter screenName={integrationSettings?.twitter?.username} />
+            // ),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            !!integrationSettings && integrationSettings?.stackoverflow?.username && (
+              <StackOverFlow
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
+                username={user as string}
+                mx={2}
+              />
+            ),
+          ]}
+        </Masonry>
+      </Flex>
     </PageBase>
   );
 };

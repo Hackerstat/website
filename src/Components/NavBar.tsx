@@ -1,12 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  Stack,
   Text,
   Flex,
-  Heading,
   Box,
   Button,
-  Image,
   useColorMode,
   Drawer,
   DrawerOverlay,

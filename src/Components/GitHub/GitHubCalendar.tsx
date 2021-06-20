@@ -24,6 +24,11 @@ const dateFilter = (date: string): number => {
   }
 };
 
+const dateFormat = (date: string): string => {
+  const [year, month, day] = date.split('-');
+  return `${MONTHS[parseInt(month) - 1]} ${day}, ${year}`;
+};
+
 const CalendarEventBox: FunctionComponent<CalendarEventBoxProps> = ({ color, contributionCount, date }) => {
   const { colorMode } = useColorMode();
   const [popUpShown, setPopUpShown] = useState(false);
@@ -41,7 +46,7 @@ const CalendarEventBox: FunctionComponent<CalendarEventBoxProps> = ({ color, con
           zIndex={1}
         >
           <Text fontSize="xs">{`Contributions:${contributionCount}`}</Text>
-          <Text fontSize="xs">{`${date}`}</Text>
+          <Text fontSize="xs">{`${dateFormat(date)}`}</Text>
         </Box>
       </Box>
       <Box

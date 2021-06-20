@@ -48,8 +48,8 @@ const MedalCount: FunctionComponent<MedalDataProps> = ({ badgeNumber, medalColor
 );
 
 export const MedalsInfo: FunctionComponent<MedalsInfoProps> = ({ badges, ...rest }) => (
-  <Card minW="100%" {...rest}>
-    <HStack minW="100%" justifyContent="flex-start" spacing={5}>
+  <Card w="90%" {...rest}>
+    <HStack overflow="hidden" justifyContent="flex-start" spacing={5}>
       {badges && badges.gold > 0 && (
         <MedalCount badgeNumber={badges.gold} medalColor={Medals.gold} medalBackground={Medals.backgroundGold} />
       )}

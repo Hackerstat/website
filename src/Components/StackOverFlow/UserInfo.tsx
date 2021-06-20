@@ -23,7 +23,7 @@ export const UserInfo: FunctionComponent<UserInfoProps> = ({
         <Box as="h3" fontWeight="bold">
           {displayName}
         </Box>
-        <Box fontWeight="semibold" fontSize="sm" as="h3" opacity={0.8}>
+        <Box overflowX="hidden" fontWeight="semibold" fontSize="sm" as="h3" opacity={0.8}>
           Reputation {formatNums(reputation)}
         </Box>
       </Box>
