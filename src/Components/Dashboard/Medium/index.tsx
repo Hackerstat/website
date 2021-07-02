@@ -1,12 +1,12 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
 import { Box, Text, Stack, useColorMode, BoxProps, Skeleton } from '@chakra-ui/react';
 import Axios from 'axios';
-import ExternalLink from '../../ExternalLink';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { MEDIUM } from '../../../utils/constants';
 
 interface MediumCardProps extends BoxProps {
   user: string;
+  verified: boolean;
 }
 interface FeatureProps extends BoxProps {
   color: string;
@@ -63,10 +63,11 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  * @author @LouisIV @compile10
  * @param {MediumCardProps} props It is the prop object of the component.
  * @param {string} props.user It is the Medium username of the HackerStat user.
+ * @param {boolean} props.verified It is the boolean value that determines if the Medium Account is verified to belong to the HackerStat user.
  * @param {string} props.rest It is the rest of the BoxProps props to include for the outermost Box attributes (i.e. width, height, etc).
  * @returns {FunctionComponent<MediumCardProps>}
  */
-const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
+const MediumCard: FunctionComponent<MediumCardProps> = ({ user, verified, ...rest }) => {
   const { colorMode } = useColorMode();
   const [isLoaded, setisLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -103,7 +104,13 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, ...rest }) => {
   return (
     <>
       {!error ? (
-        <IntegrationWrapperCard {...rest} icon={MEDIUM} link={`https://www.medium.com/${user}`} username={user}>
+        <IntegrationWrapperCard
+          {...rest}
+          icon={MEDIUM}
+          link={`https://www.medium.com/${user}`}
+          username={user}
+          verified={verified}
+        >
           <Skeleton isLoaded={isLoaded}>
             <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
               {!!articles &&

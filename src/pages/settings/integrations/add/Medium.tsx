@@ -11,13 +11,14 @@ import {
   FormErrorMessage,
   useToast,
   Box,
+  UseToastOptions,
 } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { goodToast, badToast } from '../../../../utils/constants';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
@@ -38,13 +39,14 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
     Axios.get('/api/Medium/getUsername')
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
-  });
+  }, []);
 
   const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
   const [mediumPosts, setMediumPosts] = useState<Array<MediumPostType>>();
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const toast = useToast();
 
@@ -71,6 +73,30 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   };
 
   /**
+   * @name verifyMediumAccount
+   * @description It is the function that verfies if the Medium Account username is exists to the HackerStat user.
+   * @param {string} username It is the Medium Account username being verified.
+   * @returns {Promise<boolean>}
+   */
+  const verifyMediumAccount = async (username: string): Promise<boolean> => {
+    try {
+      if (!username) {
+        setFetchError('Required');
+        return false;
+      }
+      const res = await Axios.get('/api/Medium/validateMediumAccount', { params: { username } });
+      if (res.data?.validated) {
+        toast(verifiedToast as UseToastOptions);
+      } else {
+        toast(notVerifiedToast as UseToastOptions);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    return false;
+  };
+
+  /**
    * @name addMediumAccount
    * @description It is the function that adds the Medium username to the user's HackerStat Profile.
    * @param {string} username It is the Medium username to add to the user's HackerStat Profile.
@@ -82,9 +108,9 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         integrationType: 'medium',
         settings: { username: username },
       });
-      toast(goodToast as unknown);
+      toast(goodToast as UseToastOptions);
     } catch (err) {
-      toast(badToast as unknown);
+      toast(badToast as UseToastOptions);
     }
   };
 
@@ -100,6 +126,22 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
           <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
+        <Button
+          isLoading={isVerifying}
+          disabled={!username}
+          onClick={() => {
+            setIsVerifying(true);
+            try {
+              verifyMediumAccount(username);
+            } catch (err) {
+              console.log(err);
+            } finally {
+              setIsVerifying(false);
+            }
+          }}
+        >
+          Verify Medium Account
+        </Button>
         <Button
           isLoading={fetchingHackerFile}
           onClick={() => {
@@ -148,7 +190,6 @@ const IntegrationsPage: NextPage = () => {
       <AuthLayer>
         <SettingsPage>{mounted ? <AddMediumIntegrationPage /> : <Loader />}</SettingsPage>
       </AuthLayer>
-      ;
     </>
   );
 };

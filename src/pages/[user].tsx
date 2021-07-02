@@ -144,9 +144,15 @@ const UserProfilePage: NextPage = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.medium?.username && (
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <Medium mx={2} user={`@${integrationSettings?.medium?.username}`} />
+              <Medium
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                verified={integrationSettings?.medium?.isValidated}
+                mx={2}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                user={`@${integrationSettings?.medium?.username}`}
+              />
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore

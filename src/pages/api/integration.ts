@@ -14,7 +14,8 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
   if (req.method === 'POST') {
     try {
       try {
-        await addIntegrationInSettingsValidator(req.body);
+        const { integrationType, settings } = await addIntegrationInSettingsValidator(req.body);
+        console.log(integrationType, settings);
       } catch ({ message }) {
         res.status(HTTPCode.BAD_REQUEST).send(message);
         return;

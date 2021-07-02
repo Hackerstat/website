@@ -16,7 +16,6 @@ import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
-// import { getCurrentUsername } from '../../utils';
 
 /**
  * @name getCurrentUsername

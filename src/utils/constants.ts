@@ -42,6 +42,18 @@ export const goodToast = {
   description: 'We added this integration to your account',
 };
 
+export const notVerifiedToast = {
+  title: 'Not Verified',
+  status: 'error',
+  description: 'Could not verify your account. Please try again later.',
+};
+
+export const verifiedToast = {
+  title: 'Verified Account',
+  status: 'success',
+  description: 'We verified that this is your account. Click the "Add" button to submit your integration.',
+};
+
 export const WAKATIME = 'wakatime';
 export const STACKOVERFLOW = 'stackoverflow';
 export const TWITTER = 'twitter';

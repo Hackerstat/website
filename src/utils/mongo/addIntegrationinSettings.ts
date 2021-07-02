@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES, NO_INTEGRATION_TYPE_ERROR, NO_SETTINGS_OBJECT } from './constants';
+import { integrationValidator } from '../integrationValidator';
 import auth0 from '../auth';
 
 export const addIntegrationInSettings = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
@@ -17,6 +18,8 @@ export const addIntegrationInSettings = async (req: NextApiRequest, res: NextApi
   if (!settings) {
     throw new Error(NO_SETTINGS_OBJECT);
   }
+
+  settings.isValidated = await integrationValidator(req, res);
 
   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
   await client

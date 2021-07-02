@@ -1,5 +1,5 @@
-import { addIntegrationInSettingsSchema } from '../../schemas';
+import { addIntegrationInSettingsSchema, AddIntegrationInSettingsSchemaType } from '../../schemas';
 
-export const addIntegrationInSettingsValidator = async (body: unknown): Promise<void> => {
-  await addIntegrationInSettingsSchema.validate(body);
+export const addIntegrationInSettingsValidator = async (body: unknown): Promise<AddIntegrationInSettingsSchemaType> => {
+  return await addIntegrationInSettingsSchema.validate(body);
 };

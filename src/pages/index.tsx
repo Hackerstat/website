@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading, Stack, Box, Text, Flex, Button, Grid, Image } from '@chakra-ui/react';
+import { Heading, Stack, Box, Text, Flex, Button, Grid, Img } from '@chakra-ui/react';
 import IntegrationTile from '../Components/IntegrationTile';
 import {
   faGithub,
@@ -22,7 +22,7 @@ import Link from 'next/link';
  */
 const IndexPage: NextPage = () => (
   <PageBase>
-    <Stack shouldWrapChildren alignItems={'center'} spacing={32}>
+    <Stack alignItems={'center'} spacing={32}>
       {/* INTEGRATIONS */}
       <Flex flexWrap={'wrap'} flexDirection={'row'}>
         <Box width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'center'} justifySelf={'center'} mr={3}>
@@ -54,27 +54,33 @@ const IndexPage: NextPage = () => (
           </Button>
         </Link>
       </Flex>
-      <Flex flexWrap={'wrap'} flexDirection={'row'} maxW={'lg'} justifyContent={'center'} alignItems={'center'}>
-        <Box flexGrow={3} width={'100%'} minW={'xs'} maxW={'lg'} alignSelf={'flex-start'} justifySelf={'flex-start'}>
-          <Heading display={'flex'} fontSize={'5xl'} justifySelf={'flex-start'} mb={2}>
-            Find Your Community
-          </Heading>
-        </Box>
-
-        <Box height={'100%'} padding={4} flexGrow={1}>
-          <Heading display={'flex'} fontSize={'3xl'} textAlign={'center'} mb={4}>
-            1,233,524 Hackers and Growing!
-          </Heading>
-          <Flex alignItems="center" w="100%">
-            <Image src={'https://temppr.com/images/User-Bubbles.svg'} boxSize="100%" />
+      <Box minW={'100%'} maxW={'lg'}>
+        <Flex
+          justifyContent="flex-start"
+          flexDirection={['column-reverse', 'row-reverse']}
+          minW={'100%'}
+          maxW={'lg'}
+          height="100%"
+        >
+          <Flex justifyContent="center" flexDirection="column" maxW={'100%'} maxHeight="sm">
+            <Heading display={'flex'} fontSize={['3xl', '5xl']} justifySelf={'flex-start'} mb={2}>
+              Find Your Community
+            </Heading>
+            <Heading display={'flex'} fontSize={['md', 'xl']} textAlign={'left'} mb={4}>
+              1,233,524 Hackers and Growing!
+            </Heading>
           </Flex>
-        </Box>
+
+          <Box maxWidth="100%" height={'100%'} flexGrow={1}>
+            <Img align="left top" src={'https://temppr.com/images/User-Bubbles.svg'} boxSize="100%" />
+          </Box>
+        </Flex>
         <Link href={'/dashboard'} passHref>
           <Button mt={3} variant={'solid'} colorScheme={'green'}>
             Explore HackerStat
           </Button>
         </Link>
-      </Flex>
+      </Box>
     </Stack>
   </PageBase>
 );

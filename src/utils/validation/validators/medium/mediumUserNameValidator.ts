@@ -1,5 +1,5 @@
-import { mediumUserNameQuerySchema } from '../../schemas';
+import { mediumUserNameQuerySchema, MediumUsernameQuerySchemaType } from '../../schemas';
 
-export const mediumUserNameQueryValidator = async (query: unknown): Promise<void> => {
-  await mediumUserNameQuerySchema.validate(query);
+export const mediumUserNameQueryValidator = async (query: unknown): Promise<MediumUsernameQuerySchemaType> => {
+  return await mediumUserNameQuerySchema.validate(query);
 };
