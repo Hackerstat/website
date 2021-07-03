@@ -47,6 +47,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const toast = useToast();
 
@@ -57,9 +58,11 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns
    */
   const CheckForHackerStatFile = async (username: string) => {
+    setFetchingHackerFile(true);
     try {
       if (!username) {
         setFetchError('Required');
+        setFetchingHackerFile(false);
         return;
       }
       const mediumArticles = await Axios.get('/api/Medium/fetchArticles', {
@@ -70,6 +73,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       console.log(err);
     }
+    setFetchingHackerFile(false);
   };
 
   /**
@@ -78,11 +82,12 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @param {string} username It is the Medium Account username being verified.
    * @returns {Promise<boolean>}
    */
-  const verifyMediumAccount = async (username: string): Promise<boolean> => {
+  const verifyMediumAccount = async (username: string): Promise<void> => {
+    setIsVerifying(true);
     try {
       if (!username) {
         setFetchError('Required');
-        return false;
+        setIsVerifying(false);
       }
       const res = await Axios.get('/api/Medium/validateMediumAccount', { params: { username } });
       if (res.data?.validated) {
@@ -93,7 +98,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       console.error(err);
     }
-    return false;
+    setIsVerifying(false);
   };
 
   /**
@@ -103,6 +108,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns
    */
   const addMediumAccount = async (username: string) => {
+    setSubmitLoading(true);
     try {
       await Axios.post('/api/integration', {
         integrationType: 'medium',
@@ -112,6 +118,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       toast(badToast as UseToastOptions);
     }
+    setSubmitLoading(false);
   };
 
   return (
@@ -126,38 +133,12 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
           <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
-        <Button
-          isLoading={isVerifying}
-          disabled={!username}
-          onClick={() => {
-            setIsVerifying(true);
-            try {
-              verifyMediumAccount(username);
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setIsVerifying(false);
-            }
-          }}
-        >
+        <Button isLoading={isVerifying} disabled={!username} onClick={() => verifyMediumAccount(username)}>
           Verify Medium Account
         </Button>
-        <Button
-          isLoading={fetchingHackerFile}
-          onClick={() => {
-            setFetchingHackerFile(true);
-            try {
-              CheckForHackerStatFile(username);
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setFetchingHackerFile(false);
-            }
-          }}
-        >
+        <Button isLoading={fetchingHackerFile} onClick={() => CheckForHackerStatFile(username)}>
           Get Posts
         </Button>
-
         {mediumPosts
           ? mediumPosts.map((post) => (
               <Box key={post.title}>
@@ -166,6 +147,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
             ))
           : ''}
         <Button
+          isLoading={submitLoading}
           isDisabled={fetchingHackerFile}
           onClick={() => {
             addMediumAccount(username);

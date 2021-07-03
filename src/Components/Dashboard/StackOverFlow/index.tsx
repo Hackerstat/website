@@ -11,6 +11,7 @@ const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 interface StackOverflowCardPropsType extends BoxProps {
   username: string;
   stackOverFlowUsername: string;
+  verified: boolean;
 }
 
 type StackOverflowCardType = FunctionComponent<StackOverflowCardPropsType>;
@@ -27,7 +28,7 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  * @param {string} props.stackOverFlowUsername It is the HackerStat user's StackOverflow username.
  * @returns {StackOverflowCardType}
  */
-const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsername, ...rest }) => {
+const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsername, verified, ...rest }) => {
   const { colorMode } = useColorMode();
   const [color, setColor] = useState(colors['dark']);
   const [loaded, setLoaded] = useState(false);
@@ -60,47 +61,47 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
   }, [colorMode]);
 
   const { badges, displayName, profileImage, reputation } = stackOverflowInfo;
-  // useEffect(() => {
-  //   Axios.post(stackOverFlowRetrievalURL, { username })
-  //     .then((data) => {
-  //       console.log(data);
-  //       setStackOverflowInfo(data?.data);
-  //       setLoaded(true);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setError(true);
-  //     });
-  // }, []);
+  useEffect(() => {
+    Axios.post(stackOverFlowRetrievalURL, { username })
+      .then((data) => {
+        setStackOverflowInfo(data?.data);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      });
+  }, []);
   return (
     <>
-      {/* {loaded && !error && !!stackOverflowInfo && ( */}
-      <>
-        <IntegrationWrapperCard
-          icon={STACKOVERFLOW}
-          link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
-          {...rest}
-        >
-          <UserInfo
-            mt={2}
-            color={colors[color]}
-            displayName={displayName}
-            profileImage={profileImage}
-            badges={badges}
-            minW={['xs', 'sm', 'md']}
-            reputation={reputation}
-            overflowX="hidden"
-          />
-          <Stack overflow="scroll" maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
-            {stackOverflowInfo.topTags.map((tag) => (
-              <React.Fragment key={`${tag.name}${tag.questionScore}`}>
-                <TagRow tag={tag} backgroundColor={backgroundColors[colorMode]} />
-              </React.Fragment>
-            ))}
-          </Stack>
-        </IntegrationWrapperCard>
-      </>
-      {/* )} */}
+      {loaded && !error && !!stackOverflowInfo && (
+        <>
+          <IntegrationWrapperCard
+            verified={verified}
+            icon={STACKOVERFLOW}
+            link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
+            {...rest}
+          >
+            <UserInfo
+              mt={2}
+              color={colors[color]}
+              displayName={displayName}
+              profileImage={profileImage}
+              badges={badges}
+              minW={['xs', 'sm', 'md']}
+              reputation={reputation}
+              overflowX="hidden"
+            />
+            <Stack overflow="scroll" maxW={['xs', 'sm', 'md']} spacing={2} mt={2} maxH={'lg'} borderRadius={'lg'}>
+              {stackOverflowInfo.topTags.map((tag) => (
+                <React.Fragment key={`${tag.name}${tag.questionScore}`}>
+                  <TagRow tag={tag} backgroundColor={backgroundColors[colorMode]} />
+                </React.Fragment>
+              ))}
+            </Stack>
+          </IntegrationWrapperCard>
+        </>
+      )}
     </>
   );
 };

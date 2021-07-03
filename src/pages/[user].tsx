@@ -185,6 +185,9 @@ const UserProfilePage: NextPage = () => {
               <StackOverFlow
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
+                verified={integrationSettings?.stackoverflow?.isValidated}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
                 username={user as string}
                 mx={2}

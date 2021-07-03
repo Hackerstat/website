@@ -11,8 +11,9 @@ import {
   Text,
   FormErrorMessage,
   useToast,
+  UseToastOptions,
 } from '@chakra-ui/react';
-import { goodToast, badToast } from '../../../../utils/constants';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
 import SettingsPage from '../../../../Components/SettingsPage';
@@ -36,6 +37,8 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
   const [loading, setLoading] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [addIntegrationLoading, setAddIntegrationLoading] = useState(false);
   const [stackOverflowInfo, setStackOverflowInfo] = useState({});
   const toast = useToast();
 
@@ -54,6 +57,28 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   };
 
   /**
+   * @name verifyStackOverflowAccount
+   * @description It is the function that verifies a StackOverflow Account is the current HackerStat user's account.
+   * @author @Cgunter1
+   * @returns {void}
+   */
+  const verifyStackOverflowAccount = async () => {
+    setVerifyLoading(true);
+    try {
+      const URL = '/api/stackoverflow/validateStackOverflowAccount';
+      const res = await Axios.get(URL, { params: { username: username } });
+      if (res.data?.validated) {
+        toast(verifiedToast as UseToastOptions);
+      } else {
+        toast(notVerifiedToast as UseToastOptions);
+      }
+    } catch (err) {
+      toast(notVerifiedToast as UseToastOptions);
+    }
+    setVerifyLoading(false);
+  };
+
+  /**
    * @name addStackOverflowToAccount
    * @description It is the function that adds the StackOverflow username to the user's HackerStat Profile.
    * @author @Cgunter1
@@ -61,6 +86,7 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const addStackOverflowToAccount = async (username: string) => {
+    setAddIntegrationLoading(true);
     try {
       await Axios.post('/api/integration', {
         integrationType: 'stackoverflow',
@@ -70,6 +96,7 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
     } catch (e) {
       toast(badToast as unknown);
     }
+    setAddIntegrationLoading(false);
   };
 
   return (
@@ -84,6 +111,9 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
           <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
+        <Button isLoading={verifyLoading} onClick={async () => await verifyStackOverflowAccount()}>
+          Verify StackOverflow Account
+        </Button>
         <Button isLoading={loading} onClick={async () => await retrieveStackOverflowInfo()}>
           Get StackOverflow Info
         </Button>
@@ -94,7 +124,8 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
           color={'white'}
           fontWeight={'bold'}
           fontFamily={'mono'}
-          width={'100%'}
+          maxWidth={'100%'}
+          overflowX={'scroll'}
           whiteSpace={'pre'}
         >
           {JSON.stringify(stackOverflowInfo || {}, null, '\t')
@@ -102,6 +133,7 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
             .join('  ')}
         </Text>
         <Button
+          isLoading={addIntegrationLoading}
           isDisabled={!username}
           onClick={() => {
             addStackOverflowToAccount(username);
