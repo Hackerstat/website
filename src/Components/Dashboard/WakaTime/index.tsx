@@ -118,7 +118,7 @@ const WakaTimeCard: FunctionComponent<Partial<WakaTimeProps>> = ({ username, ...
   return (
     <>
       {!errorStatus ? (
-        <IntegrationWrapperCard verified={true} minH="lg" icon={'wakatime'}>
+        <IntegrationWrapperCard px={0} verified={true} minH="lg" icon={'wakatime'}>
           <Grid mt={2} gap={2} gridTemplateColumns={'repeat(auto-fit, 400px)'} minW={'xs'} borderRadius={'lg'}>
             {barLoaded && <TimeBarWrapper data={barData} />}
             {pieLoaded && <LanguagePieWrapper data={pieData} />}

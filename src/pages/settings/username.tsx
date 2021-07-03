@@ -7,11 +7,13 @@ import {
   Flex,
   InputGroup,
   InputRightElement,
-  Icon,
+  Box,
   Spinner,
-  FormHelperText,
+  Text,
   Button,
+  FormHelperText,
 } from '@chakra-ui/react';
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
@@ -29,7 +31,7 @@ export const getCurrentUsername = async (): Promise<string> => {
 };
 
 /**
- * @name username
+ * @name UsernameSettingsPage
  * @description This is a component that displays a user's username and gives the ability to edit the user's username.
  * @author @LouisIV
  * @returns {FunctionComponent}
@@ -152,20 +154,22 @@ const UsernameSettingsPage = () => {
               <Spinner />
             ) : username !== currentUsername ? (
               usernameAvailable ? (
-                <Icon name="check" color="green.500" />
+                <CheckIcon color="green.500" />
               ) : (
-                <Icon name="close" color="red.500" />
+                <CloseIcon name="close" color="red.500" />
               )
             ) : null}
           </InputRightElement>
         </InputGroup>
-        <FormHelperText>
-          {checkingUsername || username === currentUsername
-            ? null
-            : usernameAvailable
-            ? `${username} is available!`
-            : "It looks like that username isn't available"}
-        </FormHelperText>
+        <Box minH="25px" minW="500px">
+          <Text fontSize="md" opacity={0.5}>
+            {checkingUsername || username === currentUsername
+              ? null
+              : usernameAvailable
+              ? 'This username is available!'
+              : "It looks like that username isn't available"}
+          </Text>
+        </Box>
         <Button
           mt={3}
           isDisabled={checkingUsername || !usernameAvailable}

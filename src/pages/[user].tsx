@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Stack, Box, Spinner, Flex } from '@chakra-ui/react';
+import { Stack, Spinner, Flex } from '@chakra-ui/react';
 import Masonry from 'react-masonry-css';
 import { useRouter } from 'next/dist/client/router';
 
@@ -168,9 +168,15 @@ const UserProfilePage: NextPage = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.npm?.username && (
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              <NPM mx={2} username={integrationSettings?.npm?.username} />
+              <NPM
+                mx={2}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                verified={integrationSettings?.npm?.isValidated}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                username={integrationSettings?.npm?.username}
+              />
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore

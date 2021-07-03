@@ -79,7 +79,7 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
           <IntegrationWrapperCard
             verified={verified}
             icon={STACKOVERFLOW}
-            link={`https://stackoverflow.com/users/${stackOverFlowUsername}`}
+            link={`https://stackoverflow.com/users/${stackOverFlowUsername}?tab=profile`}
             {...rest}
           >
             <UserInfo

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Grid, Skeleton, useColorMode } from '@chakra-ui/react';
+import { Grid, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
 import { NPM } from '../../../utils/constants';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
-interface NPMCardProps {
+interface NPMCardProps extends BoxProps {
   username: string;
   verified: boolean;
 }
@@ -23,7 +23,7 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  * @param {boolean} props.verified It is the boolean value that shows if the NPM account displayed has already been verified to belong to the HackerStat user.
  * @returns {FunctionComponent<NPMCardProps>}
  */
-const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username }) => {
+const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username, ...props }) => {
   const { colorMode } = useColorMode();
   const [packages, setPackages] = useState<Array<Package>>();
   const [error, setError] = useState<string>('');
@@ -86,7 +86,8 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username }) => {
           pr={-3}
           icon={NPM}
           username={username}
-          link={`https://www.npmjs.com/${username}`}
+          link={`https://www.npmjs.com/~${username}`}
+          {...props}
         >
           <Skeleton isLoaded={isLoaded}>
             <Grid
