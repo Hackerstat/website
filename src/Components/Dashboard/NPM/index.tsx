@@ -8,6 +8,7 @@ import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface NPMCardProps {
   username: string;
+  verified: boolean;
 }
 
 const colors = { light: 'gray.800', dark: 'white' };
@@ -19,9 +20,10 @@ const backgroundColors = { light: 'white', dark: 'gray.800' };
  * @author @LouisIV
  * @param {MediumCardProps} props It is the prop object of the component.
  * @param {string} props.username It is the NPM username of the HackerStat user.
+ * @param {boolean} props.verified It is the boolean value that shows if the NPM account displayed has already been verified to belong to the HackerStat user.
  * @returns {FunctionComponent<NPMCardProps>}
  */
-const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
+const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username }) => {
   const { colorMode } = useColorMode();
   const [packages, setPackages] = useState<Array<Package>>();
   const [error, setError] = useState<string>('');
@@ -79,7 +81,13 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   return (
     <>
       {!error ? (
-        <IntegrationWrapperCard pr={-3} icon={NPM} username={username} link={`https://www.npmjs.com/${username}`}>
+        <IntegrationWrapperCard
+          verified={verified}
+          pr={-3}
+          icon={NPM}
+          username={username}
+          link={`https://www.npmjs.com/${username}`}
+        >
           <Skeleton isLoaded={isLoaded}>
             <Grid
               mt={2}

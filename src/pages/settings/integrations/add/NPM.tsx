@@ -12,6 +12,7 @@ import {
   FormErrorMessage,
   Grid,
   useToast,
+  UseToastOptions,
 } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
@@ -20,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast } from '../../../../utils/constants';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
 
 export interface Package {
   name: string;
@@ -70,6 +71,8 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   const [username, setUsername] = useState<string>('');
   const [fetchError, setFetchError] = useState<string>();
   const [packages, setPackages] = useState<Array<Package>>();
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
   const toast = useToast();
@@ -81,9 +84,11 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const GetNPMPackages = async (username: string) => {
+    setFetchingHackerFile(true);
     try {
       if (!username) {
         setFetchError('Required');
+        setFetchingHackerFile(false);
         return;
       }
 
@@ -110,6 +115,29 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       console.log(err);
     }
+    setFetchingHackerFile(false);
+  };
+
+  /**
+   * @name verifyNPMAccount
+   * @description It is the function that verifies a NPM Account is the current HackerStat user's account.
+   * @author @Cgunter1
+   * @returns {void}
+   */
+  const verifyNPMAccount = async () => {
+    setVerifyLoading(true);
+    try {
+      const URL = '/api/npm/validateNPMAccount';
+      const res = await Axios.get(URL, { params: { username } });
+      if (res.data?.validated) {
+        toast(verifiedToast as UseToastOptions);
+      } else {
+        toast(notVerifiedToast as UseToastOptions);
+      }
+    } catch (err) {
+      toast(notVerifiedToast as UseToastOptions);
+    }
+    setVerifyLoading(false);
   };
 
   /**
@@ -119,6 +147,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const addNPMToAccount = async (username) => {
+    setSubmitLoading(true);
     try {
       await Axios.post('/api/integration', {
         integrationType: 'npm',
@@ -128,6 +157,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
     } catch (err) {
       toast(badToast as unknown);
     }
+    setSubmitLoading(false);
   };
 
   return (
@@ -147,19 +177,10 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
           <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
-        <Button
-          isLoading={fetchingHackerFile}
-          onClick={() => {
-            setFetchingHackerFile(true);
-            try {
-              GetNPMPackages(username);
-            } catch (err) {
-              console.log(err);
-            } finally {
-              setFetchingHackerFile(false);
-            }
-          }}
-        >
+        <Button isLoading={verifyLoading} onClick={async () => await verifyNPMAccount()}>
+          Verify StackOverflow Account
+        </Button>
+        <Button isLoading={fetchingHackerFile} onClick={() => GetNPMPackages(username)}>
           Check Repo
         </Button>
         <Grid gap={2} gridTemplateColumns={'repeat(auto-fit, 400px)'}>
@@ -170,6 +191,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         </Grid>
         <Button
           isDisabled={fetchingHackerFile || !username}
+          isLoading={submitLoading}
           onClick={() => {
             addNPMToAccount(username);
           }}

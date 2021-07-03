@@ -1,12 +1,19 @@
 import { MongoClient } from 'mongodb';
-
+import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA, GITHUB } from './constants';
 import { AddGitHubDataType } from '../validation/schemas';
 import { UserProfileType } from '../utils';
+import auth0 from '../auth';
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-export const fetchGithubRepos = async ({ sub }: { sub: any }): Promise<null | AddGitHubDataType> => {
+export const fetchGithubRepos = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<null | AddGitHubDataType> => {
+  const { user } = await auth0.getSession(req, res);
+  const { sub } = user;
+
   const client = await connectToClient();
 
   const session = client.startSession();

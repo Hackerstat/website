@@ -111,6 +111,13 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
           <Input value={username} placeholder={'Username'} onChange={(e) => setUsername(e.target.value)} />
           <FormErrorMessage>{fetchError}</FormErrorMessage>
         </FormControl>
+        <Heading fontSize={'lg'} as="h2">
+          Verification Instructions:
+        </Heading>
+        <Heading fontSize={'sm'} as="h2">
+          In order to have your StackOverflow Account verified. Put https://hackerstat.io/your-hackerstat-username in
+          your StackOveflow account&rsquo;s bio.
+        </Heading>
         <Button isLoading={verifyLoading} onClick={async () => await verifyStackOverflowAccount()}>
           Verify StackOverflow Account
         </Button>

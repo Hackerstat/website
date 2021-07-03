@@ -10,6 +10,8 @@ export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', '
 export const HACKERSTAT_VERIFICATION_URL = (hackerStatUsername: string): string =>
   `https://hackerstat.io/${hackerStatUsername}`;
 
+export const GITHUB_USER_URL = (gitHubUsername: string): string => `https://github.com/${gitHubUsername}`;
+
 export const STACKOVERFLOW_URL_USER = (userID: string): string =>
   `https://api.stackexchange.com/2.2/users/${userID}?order=desc&sort=reputation&site=stackoverflow`;
 

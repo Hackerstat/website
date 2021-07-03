@@ -8,3 +8,4 @@ export * from './github';
 export * from './gitlab';
 export * from './remote';
 export * from './medium';
+export * from './npm';

@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HTTPCode } from '../../../utils/constants';
 import { fetchGithubRepos } from '../../../utils/mongo';
-import auth0 from '../../../utils/auth';
 
 /**
  * @name fetchRepos
@@ -11,10 +10,7 @@ import auth0 from '../../../utils/auth';
  * @returns {void} */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
-    const { user } = await auth0.getSession(req, res);
-    const { sub } = user;
-
-    const gitHubAccountData = await fetchGithubRepos({ sub });
+    const gitHubAccountData = await fetchGithubRepos(req, res);
 
     res.status(HTTPCode.OK).json(gitHubAccountData || {});
   } else {
