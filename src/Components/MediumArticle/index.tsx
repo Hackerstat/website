@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Text, Link } from '@chakra-ui/core';
-import { convertMonthToName } from '../../utils/time';
+import { Box, Text, Link } from '@chakra-ui/react';
 
 interface MediumArticleProps {
   title: string;
@@ -8,7 +7,16 @@ interface MediumArticleProps {
   date: string;
 }
 
-const MediumArticle = ({ title, link, date }: MediumArticleProps): JSX.Element => {
+/**
+ * @name MediumArticle
+ * @description It is a component that display the title and date of a Medium Article.
+ * @author @Cgunter1
+ * @param {string} title It is the title of the Medium Article.
+ * @param {string} link It is the URL to the Medium Article.
+ * @param {string} date It is the date of the Medium Article.
+ * @returns {FunctionComponent<MediumArticleProps>}
+ */
+const MediumArticle: FunctionComponent<MediumArticleProps> = ({ title, link, date }) => {
   const hours = new Date(date).getHours();
   const [hour, isAM] = hours + 1 < 12 ? [hours + 1, true] : [(hours + 1) % 13, false];
   const minute = new Date(date).getMinutes();

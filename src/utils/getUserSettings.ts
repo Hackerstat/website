@@ -7,9 +7,10 @@ const PASSWORD = process.env.DB_PASSWORD;
 
 export const getUserSettings = async (
   req: NextApiRequest,
+  res: NextApiResponse,
   integrationType: string,
 ): Promise<{ [key: string]: string }> => {
-  const { user } = await auth0.getSession(req);
+  const { user } = await auth0.getSession(req, res);
   const { sub } = user;
 
   const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.ehkcd.mongodb.net/HackerStat?retryWrites=true&w=majority`;

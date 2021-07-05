@@ -1,14 +1,15 @@
 import { MongoClient } from 'mongodb';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 import auth0 from '../auth';
 
 export const getRemoteNPM = async (
   req: NextApiRequest,
+  res: NextApiResponse,
   username: string,
   packageNames: Array<string>,
 ): Promise<void> => {
-  const { user } = await auth0.getSession(req);
+  const { user } = await auth0.getSession(req, res);
   const { sub } = user;
   const client = await MongoClient.connect(URI, { useNewUrlParser: true });
   await client

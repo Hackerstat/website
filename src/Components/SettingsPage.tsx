@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Flex, useColorMode } from '@chakra-ui/core';
+import { Flex, useColorMode } from '@chakra-ui/react';
 import SidebarMenu, { TSidebarMenuItem } from './SidebarMenu';
 import PageBase from './Page';
 import { useRouter } from 'next/router';

@@ -12,7 +12,6 @@ interface LayoutProps {
 const Layout: FunctionComponent<LayoutProps> = ({ children, title, description }) => (
   <>
     <Navbar />
-
     <div>
       <Head>
         {/* Primary Meta Tags */}

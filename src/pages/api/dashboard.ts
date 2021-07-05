@@ -1,6 +1,9 @@
 import { HTTPCode } from '../../utils/constants';
 import faker from 'faker';
 
+/**
+ * @REMOVE
+ */
 export default async (req, res) => {
   const r = [];
 

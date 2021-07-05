@@ -11,7 +11,7 @@ import {
   Button,
   Textarea,
   useToast,
-} from '../../../node_modules/@chakra-ui/core';
+} from '../../../node_modules/@chakra-ui/react';
 import { Formik, Field } from '../../../node_modules/formik';
 import { useEffect, useState } from 'react';
 import AuthLayer from '../../Components/AuthLayer';
@@ -32,6 +32,12 @@ const InfoSchema = Yup.object().shape({
 const FormWidth = ['min(800px, 90vw)', 'sm', 'xs', 'md'];
 const DoubleFormWidth = ['100%'];
 
+/**
+ * @name ProfileInfo
+ * @description This component displays a form for HackerStat users to see and update their info (i.e. email, school, bio) on HackerStat.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const ProfileInfo = () => {
   const toast = useToast();
   const [fields, setFields] = useState({
@@ -41,7 +47,7 @@ const ProfileInfo = () => {
     website: '',
     email: '',
     bio: '',
-    Location: '',
+    location: '',
   });
 
   useEffect(() => {
@@ -91,7 +97,7 @@ const ProfileInfo = () => {
           >
             {(props) => (
               <form onSubmit={props.handleSubmit} style={{ width: '100%' }}>
-                <Stack isInline shouldWrapChildren spacing={2} flexWrap={'wrap'}>
+                <Stack isInline shouldWrapChildren spacing={{ base: 0, sm: 2 }} flexWrap={'wrap'}>
                   <Field name="firstName">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.firstName}>
@@ -111,7 +117,14 @@ const ProfileInfo = () => {
                     )}
                   </Field>
                 </Stack>
-                <Stack mt={2} isInline shouldWrapChildren spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'}>
+                <Stack
+                  mt={2}
+                  isInline
+                  shouldWrapChildren
+                  spacing={{ base: 0, sm: 2 }}
+                  flexWrap={'wrap'}
+                  justifyContent={'flex-start'}
+                >
                   <Field name="website">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.website}>
@@ -132,7 +145,13 @@ const ProfileInfo = () => {
                     )}
                   </Field>
                 </Stack>
-                <Stack mt={2} spacing={2} flexWrap={'wrap'} justifyContent={'flex-start'} width={'100%'}>
+                <Stack
+                  mt={2}
+                  spacing={{ base: 0, sm: 2 }}
+                  flexWrap={'wrap'}
+                  justifyContent={'flex-start'}
+                  width={'100%'}
+                >
                   <Field name="bio">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.bio}>
@@ -147,7 +166,7 @@ const ProfileInfo = () => {
                   mt={4}
                   isInline
                   shouldWrapChildren
-                  spacing={2}
+                  spacing={{ base: 0, sm: 2 }}
                   flexWrap={'wrap'}
                   width={'100%'}
                   justifyContent={'flex-start'}
@@ -161,18 +180,18 @@ const ProfileInfo = () => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name="Location">
+                  <Field name="location">
                     {({ field, form }) => (
                       <FormControl isInvalid={form.errors.location}>
-                        <FormLabel htmlFor="Location">Location</FormLabel>
+                        <FormLabel htmlFor="location">location</FormLabel>
                         <Input
                           {...field}
-                          id="Location"
+                          id="location"
                           placeholder="Santa Cruz, California"
                           type="text"
                           minW={FormWidth}
                         />
-                        <FormErrorMessage>{form.errors.Location}</FormErrorMessage>
+                        <FormErrorMessage>{form.errors.location}</FormErrorMessage>
                       </FormControl>
                     )}
                   </Field>
@@ -181,7 +200,7 @@ const ProfileInfo = () => {
                   <Button
                     textAlign={'right'}
                     mt={'2em'}
-                    variantColor="teal"
+                    colorScheme="teal"
                     isLoading={props.isSubmitting}
                     type="submit"
                   >

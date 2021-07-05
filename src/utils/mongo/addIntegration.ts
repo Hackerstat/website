@@ -7,7 +7,7 @@ const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlPa
 export const addIntegration = async ({ username, setObject, closeOnCompletion = true }) => {
   const client = await connectToClient();
 
-  client
+  await client
     .db(HACKERSTAT)
     .collection(USERPROFILES)
     .updateOne(

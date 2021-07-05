@@ -4,8 +4,10 @@ import { removeIntegration } from '../../../utils/mongo';
 import { removeIntegrationInSettingsValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 
-// Requires integration to be removed in the body under integrationType.
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+/**
+ * @REMOVE
+ */
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     try {
       await removeIntegrationInSettingsValidator(req.body);
@@ -14,7 +16,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       return;
     }
 
-    removeIntegration(req);
+    removeIntegration(req, res);
     res.status(HTTPCode.OK).send('OK');
   } catch (e) {
     console.error(e);

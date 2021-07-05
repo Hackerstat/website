@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Flex, Heading, Grid } from '@chakra-ui/core';
+import { Flex, Heading, Grid } from '@chakra-ui/react';
 import UserCard from '../Components/Dashboard/UserCard';
 
 import axios from 'axios';
@@ -12,6 +12,12 @@ const getUsers = async () => {
   return res.data;
 };
 
+/**
+ * @name Dashboard
+ * @description This component is the page that shows all HackerStat users.
+ * @author @LouisIV
+ * @returns {NextPage}
+ */
 const Dashboard: NextPage = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
@@ -32,7 +38,8 @@ const Dashboard: NextPage = () => {
       <Flex flexDirection={'row'} flexWrap={'wrap'}>
         <Grid
           flex={1}
-          gridTemplateColumns={['repeat(auto-fit, 50%)', 'repeat(auto-fit, 220px)']}
+          gridGap={2}
+          gridTemplateColumns={['repeat(1, 220px)', 'repeat(2, 220px)', 'repeat(5, 220px)']}
           justifyItems={'stretch'}
         >
           {!!users &&

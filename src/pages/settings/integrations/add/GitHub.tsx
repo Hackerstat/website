@@ -1,152 +1,54 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import {
-  Flex,
-  Input,
-  FormLabel,
-  FormControl,
-  Heading,
-  Button,
-  Stack,
-  Text,
-  FormErrorMessage,
-  useToast,
-} from '@chakra-ui/core';
+import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
+import { GITHUB_VERIFICATION_LINK } from '../../../../utils/constants';
 import Loader from '../../../../Components/Loader';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
-import { HackerFile } from '../../../../types/hackerfile';
-import ExternalLink from '../../../../Components/ExternalLink';
+import { useRouter } from 'next/router';
 
-interface RepoInfo {
-  repo: string;
-  repoURL: string;
-  result: Partial<HackerFile>;
-  user: string;
-}
-
+/**
+ * @name AddGithubIntegrationPage
+ * @description It is the component that is the landing page that shows GitHub Repos display on the HackerStat user's profile. The component also allows users to add GitHub integration through OAuth2.
+ * @author @Cgunter1
+ * @returns {FunctionComponent}
+ */
 const AddGithubIntegrationPage: FunctionComponent = () => {
-  const [repoURL, setRepoURL] = useState<string>();
-  const [fetchError, setFetchError] = useState<string>();
-  const [repoInfo, setRepoInfo] = useState<RepoInfo>();
+  const [isVerifying, setIsVerifying] = useState(false);
 
-  const [fetchingHackerFile, setFetchingHackerFile] = useState(false);
+  const router = useRouter();
 
-  const toast = useToast();
-
-  const CheckForHackerStatFile = async (repoURL) => {
-    try {
-      if (!repoURL) {
-        setFetchError('Required');
-        return;
-      }
-
-      const result = await Axios.get('/api/github/fetchProject', {
-        params: {
-          repoURL: repoURL,
-        },
-      });
-
-      if (result?.data?.error) {
-        setFetchError(result?.data?.error);
-        throw new Error(result?.data?.error);
-      }
-
-      setFetchError(null);
-      setRepoInfo(result?.data);
-
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const addProjectToAccount = async (repo: RepoInfo) => {
-    try {
-      await Axios.post('/api/integration', {
-        integrationType: 'github',
-        settings: { [`${repo.user}+${repo.repo}`]: repoURL },
-      });
-      toast({
-        title: 'Added Integration',
-        status: 'success',
-        description: 'We added this integration to your account',
-      });
-    } catch (err) {
-      toast({
-        title: 'Something Went Wrong',
-        status: 'error',
-        description: 'Could not add integration to your account. Please try again later.',
-      });
-    }
-  };
+  useEffect(() => {
+    Axios.get('/api/github/fetchRepos')
+      .then((res) => console.log(res.data))
+      .catch((e) => console.error(e));
+  }, []);
 
   return (
     <AuthLayer>
-      <Flex width={'100%'} flexDirection={'column'}>
+      <Flex ml={4} width={'100%'} flexDirection={'column'}>
         <Flex mb={4}>
           <FontAwesomeIcon icon={faGithub} size={'3x'} />
           <Heading ml={3}>GitHub</Heading>
         </Flex>
-        <Stack spacing={3}>
+        <Stack spacing={10}>
           <Text>
             {
-              "You'll need to create a .hacker.yml in the root of your repo with the information you'd like to display about this project"
+              'In order to add the GitHub integration to your file you need to verify your account via Logging into your GitHub Account. Then you can select which GitHub Repos you want to show then save it to your account.'
             }
           </Text>
-          <FormControl isInvalid={!!fetchError}>
-            <FormLabel>Git Repo URL</FormLabel>
-            <Input placeholder={'URL'} onChange={(e) => setRepoURL(e.target.value)} />
-            <FormErrorMessage>{fetchError}</FormErrorMessage>
-          </FormControl>
           <Button
-            isLoading={fetchingHackerFile}
+            isLoading={isVerifying}
+            loadingText="Verifying Account"
             onClick={() => {
-              setFetchingHackerFile(true);
-              try {
-                CheckForHackerStatFile(repoURL);
-              } catch (err) {
-                console.log(err);
-              } finally {
-                setFetchingHackerFile(false);
-              }
+              setIsVerifying(true);
+              router.push(GITHUB_VERIFICATION_LINK);
             }}
           >
-            Check Repo
-          </Button>
-          <Flex alignItems={'center'}>
-            <FontAwesomeIcon icon={faGithub} size={'1x'} />
-            <ExternalLink
-              ml={2}
-              href={repoInfo?.repoURL || undefined}
-              isDisabled={!repoInfo?.repoURL}
-              fontWeight={'bold'}
-            >
-              {repoInfo?.repo || '_______'}
-            </ExternalLink>
-          </Flex>
-          <Text
-            backgroundColor={'gray.900'}
-            padding={3}
-            borderRadius={'lg'}
-            color={'white'}
-            fontWeight={'bold'}
-            fontFamily={'mono'}
-            width={'100%'}
-            whiteSpace={'pre'}
-          >
-            {JSON.stringify(repoInfo?.result || {}, null, '\t')}
-          </Text>
-          <Button
-            isDisabled={!repoInfo || fetchingHackerFile}
-            onClick={() => {
-              addProjectToAccount(repoInfo);
-            }}
-          >
-            Add Repo
+            Verify Account
           </Button>
         </Stack>
       </Flex>

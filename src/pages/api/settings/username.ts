@@ -5,10 +5,17 @@ import { usernameQueryValidator } from '../../../utils/validation';
 import { HTTPCode } from '../../../utils/constants';
 import auth0 from '../../../utils/auth';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
+/**
+ * @name username
+ * @description This function both adds and/or retrieves a user's HackerStat username.
+ * @author @Cgunter1
+ * @authentication user: auth0 token
+ * @argument {string} newUsername The new HackerStat username that the user wants for their profile.
+ * @returns {void} */
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { user } = await auth0.getSession(req);
+      const { user } = await auth0.getSession(req, res);
       const { sub } = user;
       const { newUsername } = req.body;
 
@@ -34,7 +41,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     }
   } else if (req.method === 'GET') {
     try {
-      const currentUser = await getUsername(req);
+      const currentUser = await getUsername(req, res);
       res.status(HTTPCode.OK).json({ username: currentUser?.username || null });
     } catch (e) {
       res.status(HTTPCode.SERVER_ERROR).send('FAIL');

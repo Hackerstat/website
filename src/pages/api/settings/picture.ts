@@ -6,10 +6,10 @@ const PASSWORD = process.env.DB_PASSWORD;
 import auth0 from '../../../utils/auth';
 import { HTTPCode } from '../../../utils/constants';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse) {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { user } = await auth0.getSession(req);
+      const { user } = await auth0.getSession(req, res);
       const { sub } = user;
       const { newPicture } = req.body;
 
@@ -32,7 +32,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
               picture: newPicture,
             },
           },
-          { useUnifiedTopology: true, upsert: true },
+          { upsert: true },
         );
       client.close();
     } catch (e) {
@@ -41,7 +41,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
     }
   } else if (req.method === 'GET') {
     try {
-      const { user } = await auth0.getSession(req);
+      const { user } = await auth0.getSession(req, res);
       const { sub } = user;
 
       const uri = `mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.m2hih.gcp.mongodb.net/Atlas?retryWrites=true&w=majority`;

@@ -1,10 +1,6 @@
 const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
-import { MongoClient } from 'mongodb';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUserSettings } from '../../../utils/getUserSettings';
-import { getRemoteNPM } from '../../../utils/mongo';
-import auth0 from '../../../utils/auth';
 import { HTTPCode } from '../../../utils/constants';
 
 const MAX_COUNT = 10;
@@ -15,25 +11,21 @@ const retrieveNPMInfo = async (packageName: string) => {
 };
 
 const retrievePackagesFromUser = async (userName: string | string[]) => {
-  const res = await npmUserPackages(userName);
+  const res = await npmUserPackages(userName as string);
   return res;
 };
 
 // Do server side rendering for the first request.
 
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
-
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+/**
+ * @name remoteNPMRetrieval
+ * @description This function retrieves an user's NPM contributions w/out being authenticated.
+ * @author @LouisIV
+ */
+export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   if (req.method === 'GET') {
     try {
-      const { user } = await auth0.getSession(req);
-      const { sub, name } = user;
-
       const { username: passedUsername } = req.query;
-
-      const { username } = await getUserSettings(req, 'npm');
-      console.log(username);
       const packages = await retrievePackagesFromUser(passedUsername);
       const packageInfo = [];
       const returnResults = [];
@@ -53,7 +45,6 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
         }
 
         packageInfo.push(packages[i]);
-        console.log(name);
         packageNames.push(packages[i].name);
         packagePromises.push(retrieveNPMInfo(packages[i].name));
       }
@@ -67,7 +58,7 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       returnResults.pop();
 
       if (!passedUsername) {
-        await getRemoteNPM(req, username, packageNames);
+        // await getRemoteNPM(req, username, packageNames);
       }
 
       res.status(HTTPCode.OK).json(returnResults);
@@ -76,4 +67,4 @@ export default auth0.requireAuthentication(async function me(req: NextApiRequest
       res.status(HTTPCode.BAD_REQUEST).send('FAIL');
     }
   }
-});
+}

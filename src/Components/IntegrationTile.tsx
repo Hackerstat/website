@@ -1,9 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Flex, Text, useColorMode } from '@chakra-ui/core';
+import { Flex, Text, useColorMode } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from './Card';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const colors = { light: 'gray.800', dark: 'white' };

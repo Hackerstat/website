@@ -3,9 +3,9 @@ import auth0 from '../../../utils/auth';
 import { getIntegrationInfoViaSub } from '../../../utils/mongo';
 import { HTTPCode } from '../../../utils/constants';
 
-export default auth0.requireAuthentication(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    const gitInfo = await getIntegrationInfoViaSub(req);
+    const gitInfo = await getIntegrationInfoViaSub(req, res);
 
     if (gitInfo) {
       if (Object(gitInfo).hasOwnProperty('integration_cache')) {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Grid, Heading } from '@chakra-ui/core';
+import { Flex, Grid, Heading } from '@chakra-ui/react';
 
 import {
   faGitlab,
@@ -33,6 +33,13 @@ interface IntegrationsProps {
   integrations: Array<Integration>;
 }
 
+/**
+ * @name integrations
+ * @description It is a component that shows all the HackerStat integrations available or TBA. These are represented as small tiles that users can click on to add the integration.
+ * @author @Cgunter1
+ * @param {Array<Integration>} Integrations
+ * @returns {FunctionComponent<IntegrationsProps>}
+ */
 const Integrations: FunctionComponent<IntegrationsProps> = ({ integrations }) => {
   return (
     <Flex flexDirection={'column'} width={'100%'} ml={3} justifySelf={'flex-start'}>
@@ -64,6 +71,7 @@ const integrations: Array<Integration> = [
   },
   {
     name: 'WakaTime',
+    link: 'WakaTime',
   },
   {
     name: 'Twitter',
@@ -73,7 +81,7 @@ const integrations: Array<Integration> = [
   {
     name: 'Stack OverFlow',
     icon: faStackOverflow,
-    disabled: true,
+    link: 'StackOverflow',
   },
   {
     name: 'DockerHub',

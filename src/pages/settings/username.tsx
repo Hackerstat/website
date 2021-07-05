@@ -7,16 +7,35 @@ import {
   Flex,
   InputGroup,
   InputRightElement,
-  Icon,
+  Box,
   Spinner,
-  FormHelperText,
+  Text,
   Button,
-} from '@chakra-ui/core';
+  FormHelperText,
+} from '@chakra-ui/react';
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
 
+/**
+ * @name getCurrentUsername
+ * @description It is a function that retrieves a HackerStat user's username.
+ * @author @LouisIV
+ * @returns {string}
+ */
+export const getCurrentUsername = async (): Promise<string> => {
+  const result = await Axios.get('/api/settings/username');
+  return result.data?.username;
+};
+
+/**
+ * @name UsernameSettingsPage
+ * @description This is a component that displays a user's username and gives the ability to edit the user's username.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const UsernameSettingsPage = () => {
   const [currentUsername, setCurrentUsername] = useState<string>();
   const [username, setUsername] = useState<string>();
@@ -25,11 +44,6 @@ const UsernameSettingsPage = () => {
 
   const [checkingUsername, setCheckingUsername] = useState<boolean>(false);
   const [settingUsername, setSettingUsername] = useState<boolean>(false);
-
-  const getCurrentUsername = async (): Promise<string> => {
-    const result = await Axios.get('/api/settings/username');
-    return result.data?.username;
-  };
 
   // Get the current username
   useEffect(() => {
@@ -43,6 +57,13 @@ const UsernameSettingsPage = () => {
 
   const toast = useToast();
 
+  /**
+   * @name updateUsername
+   * @description It is a function that sets a username for a user's HackerStat Profile.
+   * @author @LouisIV
+   * @param {string} newUsername It is a username given by the HackerStat user to update their username.
+   * @returns {boolean}
+   */
   const updateUsername = async (newUsername: string): Promise<boolean> => {
     if (!newUsername) {
       return false;
@@ -73,6 +94,13 @@ const UsernameSettingsPage = () => {
     }
   };
 
+  /**
+   * @name checkUsername
+   * @description It is a function that checks if a username is already taken by another HackerStat user.
+   * @author @LouisIV
+   * @param {string} newUsername It is a username given by the HackerStat user to check the availability of their username.
+   * @returns {boolean}
+   */
   const checkUsername = async (newUsername: string): Promise<boolean> => {
     if (!newUsername) {
       return false;
@@ -126,20 +154,22 @@ const UsernameSettingsPage = () => {
               <Spinner />
             ) : username !== currentUsername ? (
               usernameAvailable ? (
-                <Icon name="check" color="green.500" />
+                <CheckIcon color="green.500" />
               ) : (
-                <Icon name="close" color="red.500" />
+                <CloseIcon name="close" color="red.500" />
               )
             ) : null}
           </InputRightElement>
         </InputGroup>
-        <FormHelperText>
-          {checkingUsername || username === currentUsername
-            ? null
-            : usernameAvailable
-            ? `${username} is available!`
-            : "It looks like that username isn't available"}
-        </FormHelperText>
+        <Box minH="25px" minW="500px">
+          <Text fontSize="md" opacity={0.5}>
+            {checkingUsername || username === currentUsername
+              ? null
+              : usernameAvailable
+              ? 'This username is available!'
+              : "It looks like that username isn't available"}
+          </Text>
+        </Box>
         <Button
           mt={3}
           isDisabled={checkingUsername || !usernameAvailable}

@@ -34,8 +34,14 @@ const downloadFile = async (fileURL: string) => {
   }
 };
 
+const isString = (s: any): s is string => typeof s === 'string';
+
 export const fetchGithubYML = async (req: NextApiRequest): Promise<FetchGithubYMLRes> => {
   const { repoURL } = req.query;
+
+  if (!isString(repoURL)) {
+    throw new Error('Invalid Repo URL');
+  }
 
   const { url: rawFileURL, repo, user } = getRepoFromURL(repoURL);
   const result = await downloadFile(rawFileURL);

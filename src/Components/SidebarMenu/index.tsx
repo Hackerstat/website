@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FunctionComponent } from 'react';
-import { Text, PseudoBox, Stack, useColorMode, Flex, Heading, Box } from '@chakra-ui/core';
+import { Text, Box, Stack, useColorMode, Flex, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 
 type SidebarMenuItemColors = {
@@ -29,10 +29,21 @@ interface SidebarMenuItemProps {
   colors: SidebarMenuItemColors;
 }
 
+/**
+ * @name SidebarMenuItem
+ * @description This component is the sidebar items for the settings menu.
+ * @author @LouisIV
+ * @param {SidebarMenuItemProps} props It is the prop object of the component.
+ * @param {boolean} props.selected This determines if the current sidebar item is selected or not.
+ * @param {string} props.href This is the URL that the sidebar menu item directs to when clicked on.
+ * @param {boolean} props.name This is the title of the sidebar menu item.
+ * @param {SidebarMenuItemColors} props.colors This an object of colors that vary between activeLink, inActiveLink, and highlightedLink.
+ * @returns {FunctionComponent<SidebarMenuItemProps>}
+ */
 const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = false, href, name, colors }) => {
   return (
     <Link href={href} passHref>
-      <PseudoBox
+      <Box
         role={'group'}
         as={'a'}
         cursor="pointer"
@@ -51,9 +62,9 @@ const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = f
             borderLeftColor: colors.highlighColor,
           }
         }
-        transition="all 0.15s ease"
+        transition="all 0.1s ease"
       >
-        <PseudoBox
+        <Box
           ml={1}
           py={1}
           transform={selected ? 'translate(10px)' : undefined}
@@ -72,8 +83,8 @@ const SidebarMenuItem: FunctionComponent<SidebarMenuItemProps> = ({ selected = f
           >
             {name}
           </Text>
-        </PseudoBox>
-      </PseudoBox>
+        </Box>
+      </Box>
     </Link>
   );
 };

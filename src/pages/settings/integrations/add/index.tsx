@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Grid } from '@chakra-ui/core';
+import { Flex, Grid } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 
@@ -33,6 +33,13 @@ interface IntegrationsProps {
   integrations: Array<Integration>;
 }
 
+/**
+ * @name integrations
+ * @description It is the component that displays all available integrations for the HackerStat user to add to their profile.
+ * @author @Cgunter1
+ * @param {Array<Integration>} integrations It is the list of integrations on HackerState that are either available or TBA.
+ * @returns
+ */
 const Integrations: FunctionComponent<IntegrationsProps> = ({ integrations }) => {
   return (
     <Flex flexDirection={'column'} width={'100%'} ml={3} justifySelf={'flex-start'}>

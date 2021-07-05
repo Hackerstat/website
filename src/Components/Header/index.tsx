@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Flex, Button, Heading, ButtonGroup, useColorMode } from '@chakra-ui/core';
+import { Box, Flex, Button, Heading, ButtonGroup } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import Link from '../Link';
 
+/**
+ * @DELETE
+ */
 const Header: FunctionComponent = () => {
-  const { colorMode } = useColorMode();
-
   return (
     <Box w={'100%'} p={4}>
       <Flex flexDirection={'row'} justifyContent={'space-between'} alignItems="center">
@@ -16,10 +17,10 @@ const Header: FunctionComponent = () => {
         </Flex>
         <NextLink href="/auth" passHref>
           <ButtonGroup>
-            <Button variant={'ghost'} variantColor={'brand'} marginX={1}>
+            <Button variant={'ghost'} colorScheme={'brand'} marginX={1}>
               Log In
             </Button>
-            <Button variant={'solid'} variantColor={'brand'} marginX={1}>
+            <Button variant={'solid'} colorScheme={'brand'} marginX={1}>
               Sign Up
             </Button>
           </ButtonGroup>

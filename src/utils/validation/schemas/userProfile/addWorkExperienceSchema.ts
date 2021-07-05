@@ -31,7 +31,7 @@ export const addWorkExperienceSchema = yup
       .string()
       .strict(true)
       .trim()
-      .test('length', 'name must be less than 31 chars', (name: string) => name.length <= 30)
+      .test('length', 'name must be less than 2000 chars', (name: string) => name.length <= 2000)
       .required(),
   })
   .strict(true)

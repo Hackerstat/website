@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/core';
+import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 interface LinkProps extends Omit<ChakraLinkProps, 'href'>, Pick<NextLinkProps, 'href' | 'shallow' | 'prefetch'> {

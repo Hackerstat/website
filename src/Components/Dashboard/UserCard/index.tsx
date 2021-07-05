@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps } from '@chakra-ui/core';
+import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
 import Card from '../../Card';
 import UserBadge from '../../UserBadge';
 
@@ -12,6 +12,18 @@ interface UserCardProps extends BoxProps {
 }
 const colors = { light: 'gray.800', dark: 'white' };
 
+/**
+ * @name UserCard
+ * @description This component displays a HackerStat user's username, first + last name, and Avatar Image.
+ * @author @LouisIV
+ * @param {UserCardProps} props This is the props for the component.
+ * @param {string} props.name This is a HackerStat user's fullname.
+ * @param {string} props.username This is a HackerStat user's username.
+ * @param {string} props.photo This is a HackerStat user's Avatar Image URL.
+ * @param {string} props.status This is a HackerStat user's current status.
+ * @param {() => void} props.rest.onClick This is a function that is initiated when the component is clicked.
+ * @returns {FunctionComponent<UserCardProps>}
+ */
 const UserCard: FunctionComponent<UserCardProps> = ({
   name = 'Louis Lombardo',
   username = 'Louisiv',

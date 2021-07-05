@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Stack } from '@chakra-ui/core';
+import { Stack } from '@chakra-ui/react';
 import { CopyrightNotice } from './Copyright-Notice';
 import Link from '../Link';
 import dynamic from 'next/dynamic';
@@ -16,6 +16,12 @@ const BottomBarLink = ({ href, children, ...rest }) => (
   </Link>
 );
 
+/**
+ * @name BottomBar
+ * @description This component displays the content of the Footer Bar like links to Terms and Privacy. Also, it shows the Dark Mode ColorPicker.
+ * @author @LouisIV
+ * @returns {FunctionComponent}
+ */
 const BottomBar: FunctionComponent = () => (
   <Stack isInline shouldWrapChildren spacing={8} my={3} alignItems={'center'}>
     <CopyrightNotice color={BOTTOM_BAR_COLOR} />

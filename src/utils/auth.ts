@@ -1,21 +1,21 @@
 import { initAuth0 } from '@auth0/nextjs-auth0';
 
 export default initAuth0({
-  domain: process.env.domain,
-  clientId: process.env.clientId,
+  baseURL: process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000',
+  issuerBaseURL: 'https://slack-clone-auth0.auth0.com',
+  clientID: process.env.clientId,
   clientSecret: process.env.clientSecret,
-  scope: 'openid profile username',
-  redirectUri: process.env.redirectUri,
-  postLogoutRedirectUri: process.env.postLogoutRedirectUri,
+  authorizationParams: {
+    scope: 'openid profile username',
+  },
+  routes: {
+    callback: '/api/callback',
+    postLogoutRedirect: '/',
+  },
+  secret: process.env.cookieSecret,
   session: {
-    cookieSecret: process.env.cookieSecret,
-    cookieLifetime: 60 * 60 * 8,
-    storeIdToken: false,
-    storeAccessToken: false,
-    storeRefreshToken: false,
+    rollingDuration: 60 * 60 * 8,
   },
-  oidcClient: {
-    httpTimeout: 2500,
-    clockTolerance: 10000,
-  },
+  httpTimeout: 2500,
+  clockTolerance: 10000,
 });

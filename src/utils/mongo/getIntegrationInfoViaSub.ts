@@ -1,11 +1,11 @@
 import { MongoClient } from 'mongodb';
 import { UserProfileType } from '../utils';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES } from './constants';
 import auth0 from '../auth';
 
-export const getIntegrationInfoViaSub = async (req: NextApiRequest): Promise<UserProfileType> => {
-  const { user } = await auth0.getSession(req);
+export const getIntegrationInfoViaSub = async (req: NextApiRequest, res: NextApiResponse): Promise<UserProfileType> => {
+  const { user } = await auth0.getSession(req, res);
   const { sub } = user;
 
   const client = await MongoClient.connect(URI, { useNewUrlParser: true });

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Grid } from '@chakra-ui/core';
+import { Flex, Grid } from '@chakra-ui/react';
 import SettingsPage from '../../../Components/SettingsPage';
 import Loader from '../../../Components/Loader';
 import AuthLayer from '../../../Components/AuthLayer';

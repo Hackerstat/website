@@ -1,33 +1,41 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import Card from '../../Card';
-import { Grid, useColorMode, Flex } from '@chakra-ui/core';
+import { Grid, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ExternalLink from '../../ExternalLink';
-import { faNpm } from '@fortawesome/free-brands-svg-icons';
+import { NPM } from '../../../utils/constants';
+import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
-interface NPMCardProps {
+interface NPMCardProps extends BoxProps {
   username: string;
+  verified: boolean;
 }
 
 const colors = { light: 'gray.800', dark: 'white' };
 const backgroundColors = { light: 'white', dark: 'gray.800' };
 
-const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
+/**
+ * @name NPMCard
+ * @description It is a component that displays on a user's profile to show their NPM packages and daily downloads.
+ * @author @LouisIV
+ * @param {MediumCardProps} props It is the prop object of the component.
+ * @param {string} props.username It is the NPM username of the HackerStat user.
+ * @param {boolean} props.verified It is the boolean value that shows if the NPM account displayed has already been verified to belong to the HackerStat user.
+ * @returns {FunctionComponent<NPMCardProps>}
+ */
+const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username, ...props }) => {
   const { colorMode } = useColorMode();
-  const [articles, setArticles] = useState([]);
   const [packages, setPackages] = useState<Array<Package>>();
-  const [fetchError, setFetchError] = useState<string>();
+  const [error, setError] = useState<string>('');
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const [color, setColor] = useState(colors['dark']);
+  const [color, setColor] = useState(colors[colorMode]);
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[colorMode]);
 
-  const GetNPMPackages = async (username) => {
+  const GetNPMPackages = async (username: string) => {
     try {
       if (!username) {
-        setFetchError('Required');
+        setError('Required');
         return;
       }
 
@@ -38,11 +46,11 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
       });
 
       if (result?.data?.error) {
-        setFetchError(result?.data?.error);
+        setError(result?.data?.error);
         throw new Error(result?.data?.error);
       }
 
-      setFetchError(null);
+      setError(null);
 
       if (result?.data?.length === 0) {
         setPackages([]);
@@ -51,8 +59,10 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
 
         setPackages(result?.data);
       }
+      setIsLoaded(true);
     } catch (err) {
       console.log(err);
+      setError(err);
     }
   };
 
@@ -69,35 +79,38 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ username }) => {
   }, [colorMode]);
 
   return (
-    <Card borderRadius={'lg'} padding={2} minW={['sm', 'md']} maxW={'lg'} width={'100%'} mt={3} color={color}>
-      <Flex alignItems={'center'} opacity={0.8}>
-        <FontAwesomeIcon icon={faNpm} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-        <ExternalLink
-          color={color}
-          ml={2}
-          href={`https://www.npmjs.com/${username}` || undefined}
-          isDisabled={!username}
-          fontWeight={'bold'}
+    <>
+      {!error ? (
+        <IntegrationWrapperCard
+          verified={verified}
+          pr={-3}
+          icon={NPM}
+          username={username}
+          link={`https://www.npmjs.com/~${username}`}
+          {...props}
         >
-          {username || '_______'}
-        </ExternalLink>
-      </Flex>
-      <Grid
-        mt={2}
-        gap={2}
-        gridTemplateColumns={'repeat(auto-fit, 400px)'}
-        maxH={'lg'}
-        minW={'sm'}
-        maxW={'lg'}
-        overflowY={'scroll'}
-        borderRadius={'lg'}
-      >
-        {!!packages &&
-          packages.map((packageInfo) => {
-            return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
-          })}
-      </Grid>
-    </Card>
+          <Skeleton isLoaded={isLoaded}>
+            <Grid
+              mt={2}
+              gap={2}
+              gridTemplateColumns={'repeat(auto-fit, 400px)'}
+              maxH={'lg'}
+              maxW={['xs', 'sm', 'md']}
+              overflowY={'scroll'}
+              overflowX={'hidden'}
+              borderRadius={'lg'}
+            >
+              {!!packages &&
+                packages.map((packageInfo) => {
+                  return <NPMPackage key={packageInfo.name} packageInfo={packageInfo} />;
+                })}
+            </Grid>
+          </Skeleton>
+        </IntegrationWrapperCard>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

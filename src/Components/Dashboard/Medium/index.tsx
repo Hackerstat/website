@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Heading, Box, Text, Stack, Flex, useColorMode, PseudoBox } from '@chakra-ui/core';
-import Card from '../../Card';
+import React, { useState, useEffect, FunctionComponent } from 'react';
+import { Box, Text, Stack, useColorMode, BoxProps, Skeleton } from '@chakra-ui/react';
 import Axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMedium } from '@fortawesome/free-brands-svg-icons';
-import ExternalLink from '../../ExternalLink';
+import IntegrationWrapperCard from '../IntegrationWrapperCard';
+import { MEDIUM } from '../../../utils/constants';
 
-function Feature({ color, title, date, link, ...rest }) {
+interface MediumCardProps extends BoxProps {
+  user: string;
+  verified: boolean;
+}
+interface FeatureProps extends BoxProps {
+  color: string;
+  title: string;
+  date: string;
+  link: string;
+}
+
+/**
+ * @name Feature
+ * @description It is a component that displays the title and date of a Medium Article that is wrapped in a link to the article.
+ * @author @Cgunter1
+ * @param {FeatureProps} props It is the prop object of the component.
+ * @param {string} props.color It is the font color of the Medium Article.
+ * @param {string} props.title It is the title of the Medium Article.
+ * @param {string} props.date It is the published date of the Medium Article.
+ * @param {string} props.link It is the URL link to the Medium Article.
+ * @param {string} props.rest It is the rest of the BoxProps props to include for the outermost Box attributes (i.e. width, height, etc).
+ * @returns {FunctionComponent<FeatureProps>}
+ */
+const Feature: FunctionComponent<FeatureProps> = ({ color, title, date, link, ...rest }) => {
   return (
-    <ExternalLink href={link}>
-      <PseudoBox
+    <a href={link} target="_blank" rel="noreferrer">
+      <Box
         _hover={{
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -22,20 +43,34 @@ function Feature({ color, title, date, link, ...rest }) {
         borderRadius={'lg'}
         {...rest}
       >
-        <Text color={color}>{title}</Text>
+        <Text color={color} fontSize={['sm', 'md', 'lg']}>
+          {title}
+        </Text>
         <Text color={color} fontSize={'xs'} opacity={0.5} mt={2}>
           {date}
         </Text>
-      </PseudoBox>
-    </ExternalLink>
+      </Box>
+    </a>
   );
-}
+};
 
 const colors = { light: 'gray.800', dark: 'white' };
 const backgroundColors = { light: 'white', dark: 'gray.800' };
 
-const MediumCard = ({ user, ...rest }) => {
+/**
+ * @name MediumCard
+ * @description It is a component that displays on a user's profile to show their Medium articles.
+ * @author @LouisIV @compile10
+ * @param {MediumCardProps} props It is the prop object of the component.
+ * @param {string} props.user It is the Medium username of the HackerStat user.
+ * @param {boolean} props.verified It is the boolean value that determines if the Medium Account is verified to belong to the HackerStat user.
+ * @param {string} props.rest It is the rest of the BoxProps props to include for the outermost Box attributes (i.e. width, height, etc).
+ * @returns {FunctionComponent<MediumCardProps>}
+ */
+const MediumCard: FunctionComponent<MediumCardProps> = ({ user, verified, ...rest }) => {
   const { colorMode } = useColorMode();
+  const [isLoaded, setisLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const [articles, setArticles] = useState([]);
 
   const [color, setColor] = useState(colors['dark']);
@@ -55,39 +90,47 @@ const MediumCard = ({ user, ...rest }) => {
       params: {
         user: user,
       },
-    }).then(function (response) {
-      setArticles(response.data.articles);
-    });
+    })
+      .then(function (response) {
+        setArticles(response.data.articles);
+        setisLoaded(true);
+      })
+      .catch(function (error) {
+        console.error(error);
+        setError(true);
+      });
   }, [user]);
 
   return (
-    <Card mt={3} borderRadius={'lg'} padding={2} maxW={'lg'} minW={['sm', 'md', 'lg']} {...rest}>
-      <Flex alignItems={'center'} opacity={0.8}>
-        <FontAwesomeIcon icon={faMedium} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
-        <ExternalLink
-          color={color}
-          ml={2}
-          href={`https://www.medium.com/${user}` || undefined}
-          isDisabled={!user}
-          fontWeight={'bold'}
+    <>
+      {!error ? (
+        <IntegrationWrapperCard
+          {...rest}
+          icon={MEDIUM}
+          link={`https://www.medium.com/${user}`}
+          username={user}
+          verified={verified}
         >
-          {user || '_______'}
-        </ExternalLink>
-      </Flex>
-      <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
-        {!!articles &&
-          articles.map((item, index) => (
-            <Feature
-              backgroundColor={backgroundColor}
-              color={color}
-              title={item.title}
-              date={item.date}
-              link={item.link}
-              key={index}
-            />
-          ))}
-      </Stack>
-    </Card>
+          <Skeleton isLoaded={isLoaded}>
+            <Stack spacing={2} mt={2} maxH={'lg'} overflowY={'scroll'} borderRadius={'lg'}>
+              {!!articles &&
+                articles.map((item, index) => (
+                  <Feature
+                    backgroundColor={backgroundColor}
+                    color={color}
+                    title={item.title}
+                    date={item.date}
+                    link={item.link}
+                    key={index}
+                  />
+                ))}
+            </Stack>
+          </Skeleton>
+        </IntegrationWrapperCard>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

@@ -8,3 +8,5 @@ export const mediumUserNameQuerySchema = yup.object().shape({
     .test('length', 'name must be no more than 50 chars', (name: string) => name.length <= 50)
     .required(),
 });
+
+export type MediumUsernameQuerySchemaType = yup.InferType<typeof mediumUserNameQuerySchema>;
