@@ -67,6 +67,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
           series={series}
           axes={axes}
           tooltip
+          options={{ maintainAspectRatio: false }}
         />
       </Box>
     </Box>

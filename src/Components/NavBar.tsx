@@ -13,6 +13,7 @@ import {
   DrawerFooter,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useFetchUser } from '../utils/user';
 import Link from './Link';
 import Logo from './Logo';
@@ -35,6 +36,7 @@ const LogoSizes = [30, 30, 40, 40];
 
 const Navbar: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const { user, loading } = useFetchUser();
   const [show, setShow] = React.useState(false);
   const dashboardID = 'dashboard';
@@ -57,6 +59,14 @@ const Navbar: FunctionComponent = () => {
         <UserBubble />
       </Box>
     );
+
+  useEffect(() => {
+    const closeDrawer = () => onClose();
+    router.events.on('routeChangeComplete', closeDrawer);
+    return () => {
+      router.events.off('routeChangeComplete', closeDrawer);
+    };
+  }, []);
 
   useEffect(() => {
     setBackgroundColor(backgroundColors[colorMode]);
@@ -147,9 +157,7 @@ const Navbar: FunctionComponent = () => {
           </DrawerBody>
           <DrawerFooter>
             <Flex w="100%" justifyContent="flex-end">
-              {/* <Button onClick={() => onClose()}> */}
               <FontAwesomeIcon cursor="pointer" onClick={() => onClose()} icon={faTimes} size="2x" />
-              {/* </Button> */}
             </Flex>
           </DrawerFooter>
         </DrawerContent>
