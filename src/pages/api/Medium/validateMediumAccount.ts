@@ -9,7 +9,7 @@ import auth0 from '../../../utils/auth';
  * @description The function validates if a user's Medium account is their's by checking the Medium user's profile bio for `http://hackerstat.io/{hackerStatUsername}`.
  * @author @Cgunter1
  * @authentication user: auth0 token
- * @param {string} username Medium Account Username
+ * @param {string} username Medium Account Username.
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
