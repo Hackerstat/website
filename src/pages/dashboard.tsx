@@ -34,11 +34,11 @@ const Dashboard: NextPage = () => {
   }, []);
   return (
     <PageBase>
-      <Heading>Dashboard</Heading>
+      <Heading my={4}>Dashboard</Heading>
       <Flex flexDirection={'row'} flexWrap={'wrap'}>
         <Grid
           flex={1}
-          gridGap={2}
+          gridGap={8}
           gridTemplateColumns={['repeat(1, 220px)', 'repeat(2, 220px)', 'repeat(5, 220px)']}
           justifyItems={'stretch'}
         >
@@ -46,8 +46,9 @@ const Dashboard: NextPage = () => {
             users.map((user) => {
               return (
                 <UserCard
+                  py={8}
                   key={user._id}
-                  photo={user?.picture || `https://api.adorable.io/avatars/285/${user.username}.png`}
+                  photo={user?.picture}
                   name={`${user?.info?.firstName || ''} ${user?.info?.lastName || ''}`}
                   username={user.username}
                   onClick={() => {

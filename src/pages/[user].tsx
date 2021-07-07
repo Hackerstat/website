@@ -113,7 +113,7 @@ const UserProfilePage: NextPage = () => {
       <Stack direction={['column', 'row']} justifyContent="flex-start" spacing={3} flexWrap={'wrap'} margin="0 auto">
         <UserProfileInfoCard
           maxW={'100%'}
-          photo={info?.photo || `https://api.adorable.io/avatars/285/${user}.png`}
+          photo={info?.photo}
           name={`${info?.firstName || ''} ${info?.lastName || ''}`}
           username={user as string}
           {...info}
@@ -124,7 +124,7 @@ const UserProfilePage: NextPage = () => {
         <Masonry
           style={{
             display: 'flex',
-            marginLeft: '-30px' /* gutter size offset */,
+            marginLeft: '0' /* gutter size offset */,
             width: 'auto',
           }}
           className="IntegrationGrid"

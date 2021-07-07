@@ -1,13 +1,26 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Avatar, Box, Skeleton, Flex, MenuList, MenuItem, MenuDivider, Menu, MenuButton } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Skeleton,
+  Flex,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Menu,
+  MenuButton,
+  useColorMode,
+} from '@chakra-ui/react';
 import { TriangleDownIcon } from '@chakra-ui/icons';
-import Axios from 'axios';
 import { useFetchUser, getCurrentUsername } from '../utils';
 import Link from 'next/link';
+
+const textColors = { light: 'black', dark: 'white' };
 
 const UserBubble: FunctionComponent = () => {
   const { user, loading } = useFetchUser();
   const [hackerStatUsername, setHackerStatUsername] = useState('');
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     getCurrentUsername()
@@ -16,7 +29,7 @@ const UserBubble: FunctionComponent = () => {
   });
 
   return (
-    <Box maxW="100%" overflow={'hidden'}>
+    <Box color={textColors[colorMode]} maxW="100%" overflow={'hidden'}>
       <Menu>
         <MenuButton>
           <Skeleton isLoaded={!loading}>

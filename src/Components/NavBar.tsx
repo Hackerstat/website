@@ -21,13 +21,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserBubble from './UserBubble';
 
-const MenuItems = ({ children, href }) => (
-  <Link href={href}>
-    <Box mt={{ base: 4, md: 0 }} mr={6} display="block">
-      {children}
-    </Box>
-  </Link>
-);
+const accentColors = { light: 'green.500', dark: 'green.300' };
+
+const MenuItems = ({ children, href }) => {
+  const { colorMode } = useColorMode();
+
+  return (
+    <Link href={href} _hover={{ textDecoration: 'none' }}>
+      <Box
+        transition={'all 0.1s ease'}
+        _hover={{ borderBottomWidth: 4, borderColor: accentColors[colorMode] }}
+        mt={{ base: 4, md: 0 }}
+        mr={6}
+        display="block"
+      >
+        {children}
+      </Box>
+    </Link>
+  );
+};
 
 const backgroundColors = { light: 'whiteAlpha.100', dark: 'gray.700' };
 const textColors = { light: 'black', dark: 'white' };
@@ -118,13 +130,14 @@ const Navbar: FunctionComponent = () => {
         display={[show ? 'block' : 'none', show ? 'block' : 'none', 'flex']}
         width={['full', 'full', 'auto']}
         flexDirection={['column', 'column', 'row']}
-        alignItems="center"
+        alignItems="flex-end"
         flexGrow={1}
         color={textColor}
         fontFamily={'monospace'}
         fontSize={'lg'}
         fontWeight={'bold'}
         letterSpacing={'wide'}
+        height="30px"
       >
         <MenuItems key={integrationID} href="/integrations">
           Integrations
@@ -147,7 +160,13 @@ const Navbar: FunctionComponent = () => {
               {isLoggedIn()}
             </Flex>
           </DrawerHeader>
-          <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
+          <DrawerBody
+            color={textColor[colorMode]}
+            fontFamily={'monospace'}
+            fontSize={'lg'}
+            fontWeight={'bold'}
+            letterSpacing={'wide'}
+          >
             <MenuItems key={integrationID} href="/integrations">
               Integrations
             </MenuItems>

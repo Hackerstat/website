@@ -44,6 +44,7 @@ const CalendarEventBox: FunctionComponent<CalendarEventBoxProps> = ({ color, con
           opacity={popUpShown ? 100 : 0}
           transition="opacity 1s ease-out"
           zIndex={1}
+          color="white"
         >
           <Text fontSize="xs">{`Contributions:${contributionCount}`}</Text>
           <Text fontSize="xs">{`${dateFormat(date)}`}</Text>
