@@ -12,6 +12,7 @@ import {
   DrawerBody,
   DrawerFooter,
   useDisclosure,
+  HStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useFetchUser } from '../utils/user';
@@ -32,7 +33,6 @@ const MenuItems = ({ children, href }) => {
         transition={'all 0.1s ease'}
         _hover={{ borderBottomWidth: 4, borderColor: accentColors[colorMode] }}
         mt={{ base: 4, md: 0 }}
-        mr={6}
         display="block"
       >
         {children}
@@ -137,14 +137,15 @@ const Navbar: FunctionComponent = () => {
         fontSize={'lg'}
         fontWeight={'bold'}
         letterSpacing={'wide'}
-        height="30px"
       >
-        <MenuItems key={integrationID} href="/integrations">
-          Integrations
-        </MenuItems>
-        <MenuItems key={dashboardID} href="/dashboard">
-          Dashboard
-        </MenuItems>
+        <HStack ml={5} height="30px" spacing={5}>
+          <MenuItems key={integrationID} href="/integrations">
+            Integrations
+          </MenuItems>
+          <MenuItems key={dashboardID} href="/dashboard">
+            Dashboard
+          </MenuItems>
+        </HStack>
       </Flex>
 
       <Box maxW="100%" display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>

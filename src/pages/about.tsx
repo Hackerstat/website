@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import PageBase from '../Components/Page';
-import { Heading } from '@chakra-ui/react';
+import { ABOUT_CONTENT } from '../utils/constants';
+import { Heading, Text, Flex, Box } from '@chakra-ui/react';
 
 /**
  * @name AboutPage
@@ -11,7 +12,16 @@ import { Heading } from '@chakra-ui/react';
  */
 const AboutPage: NextPage = () => (
   <PageBase>
-    <Heading color={'primary-bg'}>About Page</Heading>
+    <Flex w={{ base: '100%', md: '50%' }}>
+      <Box>
+        <Heading textAlign="center" color={'primary-bg'} mb={5}>
+          About Page
+        </Heading>
+        <Text fontSize="lg" as="p">
+          {ABOUT_CONTENT}
+        </Text>
+      </Box>
+    </Flex>
   </PageBase>
 );
 
