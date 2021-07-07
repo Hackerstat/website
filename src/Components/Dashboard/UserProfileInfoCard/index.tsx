@@ -47,9 +47,8 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
   ...rest
 }) => {
   const { colorMode } = useColorMode();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const [color, setColor] = useState(colors[colorMode]);
-  const [isHidden, setIsHidden] = useState(false);
 
   const onLoad = () => {
     setLoaded(true);
@@ -57,7 +56,6 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
 
   const onError = () => {
     console.log('Something went wrong');
-    setIsHidden(true);
   };
 
   useEffect(() => {

@@ -13,7 +13,6 @@ interface CalendarEventBoxProps {
 }
 
 const emptyEventColor = { light: 'gray.200', dark: 'gray.700' };
-const backgroundColors = { light: 'white', dark: 'gray.800' };
 const whiteColor = '#ebedf0';
 
 const dateFilter = (date: string): number => {
@@ -44,6 +43,7 @@ const CalendarEventBox: FunctionComponent<CalendarEventBoxProps> = ({ color, con
           opacity={popUpShown ? 100 : 0}
           transition="opacity 1s ease-out"
           zIndex={1}
+          color="white"
         >
           <Text fontSize="xs">{`Contributions:${contributionCount}`}</Text>
           <Text fontSize="xs">{`${dateFormat(date)}`}</Text>

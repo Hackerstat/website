@@ -12,7 +12,9 @@ import {
   DrawerBody,
   DrawerFooter,
   useDisclosure,
+  HStack,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { useFetchUser } from '../utils/user';
 import Link from './Link';
 import Logo from './Logo';
@@ -20,13 +22,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import UserBubble from './UserBubble';
 
-const MenuItems = ({ children, href }) => (
-  <Link href={href}>
-    <Box mt={{ base: 4, md: 0 }} mr={6} display="block">
-      {children}
-    </Box>
-  </Link>
-);
+const accentColors = { light: 'green.500', dark: 'green.300' };
+
+const MenuItems = ({ children, href }) => {
+  const { colorMode } = useColorMode();
+
+  return (
+    <Link href={href} _hover={{ textDecoration: 'none' }}>
+      <Box
+        transition={'all 0.1s ease'}
+        _hover={{ borderBottomWidth: 4, borderColor: accentColors[colorMode] }}
+        mt={{ base: 4, md: 0 }}
+        display="block"
+      >
+        {children}
+      </Box>
+    </Link>
+  );
+};
 
 const backgroundColors = { light: 'whiteAlpha.100', dark: 'gray.700' };
 const textColors = { light: 'black', dark: 'white' };
@@ -35,8 +48,8 @@ const LogoSizes = [30, 30, 40, 40];
 
 const Navbar: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const { user, loading } = useFetchUser();
-  const [show, setShow] = React.useState(false);
   const dashboardID = 'dashboard';
   const integrationID = 'integration';
 
@@ -57,6 +70,14 @@ const Navbar: FunctionComponent = () => {
         <UserBubble />
       </Box>
     );
+
+  useEffect(() => {
+    const closeDrawer = () => onClose();
+    router.events.on('routeChangeComplete', closeDrawer);
+    return () => {
+      router.events.off('routeChangeComplete', closeDrawer);
+    };
+  }, []);
 
   useEffect(() => {
     setBackgroundColor(backgroundColors[colorMode]);
@@ -105,10 +126,10 @@ const Navbar: FunctionComponent = () => {
       </Flex>
 
       <Flex
-        display={[show ? 'block' : 'none', show ? 'block' : 'none', 'flex']}
+        display={['none', 'none', 'flex']}
         width={['full', 'full', 'auto']}
         flexDirection={['column', 'column', 'row']}
-        alignItems="center"
+        alignItems="flex-end"
         flexGrow={1}
         color={textColor}
         fontFamily={'monospace'}
@@ -116,15 +137,17 @@ const Navbar: FunctionComponent = () => {
         fontWeight={'bold'}
         letterSpacing={'wide'}
       >
-        <MenuItems key={integrationID} href="/integrations">
-          Integrations
-        </MenuItems>
-        <MenuItems key={dashboardID} href="/dashboard">
-          Dashboard
-        </MenuItems>
+        <HStack ml={5} height="30px" spacing={5}>
+          <MenuItems key={integrationID} href="/integrations">
+            Integrations
+          </MenuItems>
+          <MenuItems key={dashboardID} href="/dashboard">
+            Dashboard
+          </MenuItems>
+        </HStack>
       </Flex>
 
-      <Box maxW="100%" display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
+      <Box maxW="100%" display={['none', 'none', 'block']} mt={{ base: 4, md: 0 }}>
         {isLoggedIn()}
       </Box>
 
@@ -137,7 +160,13 @@ const Navbar: FunctionComponent = () => {
               {isLoggedIn()}
             </Flex>
           </DrawerHeader>
-          <DrawerBody fontFamily={'monospace'} fontSize={'lg'} fontWeight={'bold'} letterSpacing={'wide'}>
+          <DrawerBody
+            color={textColor[colorMode]}
+            fontFamily={'monospace'}
+            fontSize={'lg'}
+            fontWeight={'bold'}
+            letterSpacing={'wide'}
+          >
             <MenuItems key={integrationID} href="/integrations">
               Integrations
             </MenuItems>
@@ -147,9 +176,7 @@ const Navbar: FunctionComponent = () => {
           </DrawerBody>
           <DrawerFooter>
             <Flex w="100%" justifyContent="flex-end">
-              {/* <Button onClick={() => onClose()}> */}
               <FontAwesomeIcon cursor="pointer" onClick={() => onClose()} icon={faTimes} size="2x" />
-              {/* </Button> */}
             </Flex>
           </DrawerFooter>
         </DrawerContent>

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Flex, SimpleGrid, Heading } from '@chakra-ui/react';
+import { Flex, SimpleGrid, Heading, Box } from '@chakra-ui/react';
 import Link from '../Link';
 import { FooterSection } from './FooterSection';
 import { BottomBar } from './BottomBar';
@@ -24,7 +24,9 @@ const Footer: FunctionComponent = () => (
       <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} spacing="40px">
         <Heading>Hackerstat</Heading>
         <FooterSection title={null}>
-          <Link href={'/about'}>About</Link>
+          <Box w="100%">
+            <Link href={'/about'}>About</Link>
+          </Box>
         </FooterSection>
       </SimpleGrid>
       <BottomBar />

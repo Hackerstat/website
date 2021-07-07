@@ -161,7 +161,7 @@ const UsernameSettingsPage = () => {
             ) : null}
           </InputRightElement>
         </InputGroup>
-        <Box minH="25px" minW="500px">
+        <Box minH="25px" maxW="100%">
           <Text fontSize="md" opacity={0.5}>
             {checkingUsername || username === currentUsername
               ? null

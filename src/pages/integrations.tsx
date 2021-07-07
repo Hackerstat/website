@@ -41,8 +41,8 @@ const Integrations: FunctionComponent<IntegrationsProps> = ({ integrations }) =>
   return (
     <Flex
       flexDirection={'column'}
-      width={'100%'}
-      ml={3}
+      width={'95%'}
+      ml={2}
       justifySelf={'flex-start'}
       justifyContent={'center'}
       alignItems={'center'}
@@ -50,7 +50,7 @@ const Integrations: FunctionComponent<IntegrationsProps> = ({ integrations }) =>
       <Heading fontSize={'3xl'} mt={16}>
         Show Off More Than Your GitHub
       </Heading>
-      <Grid gap={2} mt={16} gridTemplateColumns={'repeat(auto-fit, 100px)'} maxW={'lg'}>
+      <Grid gap={2} mt={16} gridTemplateColumns={{ base: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} maxW={'lg'}>
         {integrations.map((integration) => {
           return <IntegrationTile key={integration.name} {...integration} />;
         })}

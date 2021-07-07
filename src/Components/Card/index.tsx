@@ -4,7 +4,7 @@ import { useColorMode, BoxProps, Box } from '@chakra-ui/react';
 type CardProps = BoxProps;
 
 const bgColors = { light: 'gray.100', dark: '#2b2b2b' };
-const accentColors = { light: 'red.500', dark: 'green.500' };
+const accentColors = { light: 'green.500', dark: 'green.300' };
 const mainColors = { light: 'white', dark: 'gray.800' };
 
 /**

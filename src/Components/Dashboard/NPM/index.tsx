@@ -88,6 +88,7 @@ const NPMCard: FunctionComponent<NPMCardProps> = ({ verified, username, ...props
           username={username}
           link={`https://www.npmjs.com/~${username}`}
           {...props}
+          width={{ base: 'md', lg: 'md' }}
         >
           <Skeleton isLoaded={isLoaded}>
             <Grid

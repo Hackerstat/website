@@ -23,7 +23,7 @@ const BottomBarLink = ({ href, children, ...rest }) => (
  * @returns {FunctionComponent}
  */
 const BottomBar: FunctionComponent = () => (
-  <Stack isInline shouldWrapChildren spacing={8} my={3} alignItems={'center'}>
+  <Stack wrap="wrap" isInline shouldWrapChildren spacing={10} my={3} alignItems={'center'}>
     <CopyrightNotice color={BOTTOM_BAR_COLOR} />
     <BottomBarLink href={'/terms-of-use'}>Terms</BottomBarLink>
     <BottomBarLink href={'/privacy-policy'}>Privacy</BottomBarLink>

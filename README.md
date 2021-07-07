@@ -20,6 +20,9 @@ HackerStat enforces verification by OAuth or other means to these integrations:
 
 - GitHub
 - GitLab (WIP)
+- WakaTime
+- StackOverflow
+- Medium
 
 ### Tools
 

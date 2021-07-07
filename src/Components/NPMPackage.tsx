@@ -40,6 +40,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
       backgroundColor={'gray.800'}
       padding={3}
       borderWidth={2}
+      w={{ base: '300px', lg: '425px' }}
     >
       <Flex alignItems={'center'}>
         <FontAwesomeIcon icon={faNpm} size={'1x'} color={'white'} />
@@ -67,6 +68,7 @@ const NPMPackage: FunctionComponent<NPMPackageProps> = ({ packageInfo }) => {
           series={series}
           axes={axes}
           tooltip
+          options={{ maintainAspectRatio: false }}
         />
       </Box>
     </Box>

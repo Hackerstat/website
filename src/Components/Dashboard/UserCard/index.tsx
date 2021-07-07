@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
-import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
+import { Avatar, Text, Flex, Skeleton, useColorMode, BoxProps, useBreakpointValue } from '@chakra-ui/react';
 import Card from '../../Card';
 import UserBadge from '../../UserBadge';
 
@@ -27,18 +27,20 @@ const colors = { light: 'gray.800', dark: 'white' };
 const UserCard: FunctionComponent<UserCardProps> = ({
   name = 'Louis Lombardo',
   username = 'Louisiv',
-  photo,
+  photo = 'https://bit.ly/broken-link',
   status,
   ...rest
 }) => {
   const { colorMode } = useColorMode();
   const [color, setColor] = useState(colors['dark']);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const [isHidden, setIsHidden] = useState(false);
+  const variant = useBreakpointValue({ base: 'lg', md: '2xl' });
 
-  const onLoad = () => {
-    setLoaded(true);
-  };
+  // const onLoad = () => {
+  //   console.log('sad');
+  //   setLoaded(true);
+  // };
 
   const onError = () => {
     console.log('Something went wrong');
@@ -58,10 +60,10 @@ const UserCard: FunctionComponent<UserCardProps> = ({
 
   return (
     <Skeleton isLoaded={loaded} display={!loaded && isHidden ? 'none' : 'unset'}>
-      <Card height={'240px'} {...rest}>
+      <Card borderTopLeftRadius={10} borderTopRightRadius={10} width="100%" height={'100%'} {...rest}>
         {!!status && <UserBadge>{status}</UserBadge>}
         <Flex alignItems={'center'} flexDirection={'column'} justifyContent={'center'} height={'100%'}>
-          <Avatar mt={4} name={name} size={'2xl'} src={photo} onLoad={onLoad} />
+          <Avatar mt={4} name={name} size={'2xl'} src={photo} variant={variant} />
           <Text
             mt={2}
             textTransform={'uppercase'}
@@ -74,14 +76,14 @@ const UserCard: FunctionComponent<UserCardProps> = ({
             @{username}
           </Text>
           <Text
-            mt={-1}
+            mt={0}
             textTransform={'uppercase'}
             fontWeight={'bold'}
             letterSpacing={'wide'}
             color={color}
             fontSize={['sm', 'md', 'lg']}
           >
-            {name}
+            {name.toLowerCase()}
           </Text>
         </Flex>
       </Card>
