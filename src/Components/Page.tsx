@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Box, Flex, Stack } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 const PageBase: FunctionComponent = ({ children, ...rest }) => (
   <Box mx={[2, 0]} p={[0, 3]} {...rest}>

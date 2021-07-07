@@ -66,7 +66,8 @@ type WorkExperienceInstancesType = Array<WorkExperienceType>;
  */
 const UserProfilePage: NextPage = () => {
   const router = useRouter();
-  const { user, gitLabUsername = undefined } = router.query;
+  // const { user, gitLabUsername = undefined } = router.query;
+  const { user } = router.query;
 
   const [integrations, setIntegrations] = useState();
 

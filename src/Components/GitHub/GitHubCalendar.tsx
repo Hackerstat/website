@@ -13,7 +13,6 @@ interface CalendarEventBoxProps {
 }
 
 const emptyEventColor = { light: 'gray.200', dark: 'gray.700' };
-const backgroundColors = { light: 'white', dark: 'gray.800' };
 const whiteColor = '#ebedf0';
 
 const dateFilter = (date: string): number => {

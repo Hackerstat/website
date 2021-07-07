@@ -50,7 +50,6 @@ const Navbar: FunctionComponent = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { user, loading } = useFetchUser();
-  const [show, setShow] = React.useState(false);
   const dashboardID = 'dashboard';
   const integrationID = 'integration';
 
@@ -127,7 +126,7 @@ const Navbar: FunctionComponent = () => {
       </Flex>
 
       <Flex
-        display={[show ? 'block' : 'none', show ? 'block' : 'none', 'flex']}
+        display={['none', 'none', 'flex']}
         width={['full', 'full', 'auto']}
         flexDirection={['column', 'column', 'row']}
         alignItems="flex-end"
@@ -148,7 +147,7 @@ const Navbar: FunctionComponent = () => {
         </HStack>
       </Flex>
 
-      <Box maxW="100%" display={[show ? 'block' : 'none', show ? 'block' : 'none', 'block']} mt={{ base: 4, md: 0 }}>
+      <Box maxW="100%" display={['none', 'none', 'block']} mt={{ base: 4, md: 0 }}>
         {isLoggedIn()}
       </Box>
 
