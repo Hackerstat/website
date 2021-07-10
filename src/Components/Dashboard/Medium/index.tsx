@@ -86,7 +86,7 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, verified, ...res
       return;
     }
 
-    Axios.get('/api/Medium/fetchArticles', {
+    Axios.get('/api/medium/fetchArticles', {
       params: {
         user: user,
       },
