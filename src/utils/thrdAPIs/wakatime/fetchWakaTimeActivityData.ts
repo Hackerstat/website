@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { wakaTimeActivityBarDataValidator } from '../validation';
-import { WakaTimeActivityGraphDataPropsType } from '../utils';
+import { wakaTimeActivityBarDataValidator } from '../../validation';
+import { WakaTimeActivityGraphDataPropsType } from '../../utils';
 
 export const fetchWakaTimeActivityData = async (url: string): Promise<WakaTimeActivityGraphDataPropsType> => {
   const wakaTimeActivityBarData = (await Axios.get(url)).data;

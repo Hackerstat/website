@@ -1,8 +1,8 @@
 import YAML from 'yaml';
 import Axios from 'axios';
-import { verifyType, stripQueryParameters, addRefToURL } from '../hackerFile';
+import { verifyType, stripQueryParameters, addRefToURL } from '../../hackerFile';
 import { NextApiRequest } from 'next';
-import { HackerFile, FetchGithubYMLRes } from '../utils';
+import { HackerFile, FetchGithubYMLRes } from '../../utils';
 
 // https://raw.githubusercontent.com/LouisIV/next-starter/master/.hacker.yml
 // https://github.com/LouisIV/next-starter/blob/master/.hacker.yml

@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import cheerio, { Node } from 'cheerio';
-import { HACKERSTAT_VERIFICATION_URL } from '..';
+import { HACKERSTAT_VERIFICATION_URL } from '../..';
 
 interface NodeData extends Node {
   data: string;

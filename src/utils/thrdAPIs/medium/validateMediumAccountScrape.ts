@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import cheerio from 'cheerio';
+
 /**
  * @name validateMediumAccountScrape
  * @description The function scrapes a user's Medium Profile page and check for HackerStat Integration.

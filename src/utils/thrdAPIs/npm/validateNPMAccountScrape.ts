@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import cheerio from 'cheerio';
-import { GITHUB_USER_URL } from '../constants';
+import { GITHUB_USER_URL } from '../../constants';
 /**
  * @name validateNPMAccountScrape
  * @description The function scrapes a user's NPM Profile page and check for GitHub Integration for verification.

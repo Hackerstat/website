@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { HTTPCode } from '../../../utils/constants';
 import { checkStackOverflowUsernameValidator } from '../../../utils/validation';
-import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs/fetchStackOverflow';
+import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 import auth0 from '../../../utils/auth';
 
 /**
