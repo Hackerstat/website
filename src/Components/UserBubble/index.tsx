@@ -12,7 +12,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { TriangleDownIcon } from '@chakra-ui/icons';
-import { useFetchUser, getCurrentUsername } from '../utils';
+import { useFetchUser, getCurrentUsername } from '../../utils';
 import Link from 'next/link';
 
 const textColors = { light: 'black', dark: 'white' };

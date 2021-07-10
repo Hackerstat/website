@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import Head from 'next/head';
-import Footer from './Footer';
-import Navbar from './NavBar';
+import Footer from '../Footer';
+import Navbar from '../NavBar';
 
 interface LayoutProps {
   children: ReactNode;

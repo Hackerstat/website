@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Flex, Text, useColorMode } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Card from './Card';
+import Card from '../Card';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useRouter } from 'next/router';
 

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Flex, useColorMode } from '@chakra-ui/react';
-import SidebarMenu, { TSidebarMenuItem } from './SidebarMenu';
-import PageBase from './Page';
+import SidebarMenu, { TSidebarMenuItem } from '../SidebarMenu';
+import PageBase from '../Page';
 import { useRouter } from 'next/router';
 
 const backgroundColors = { light: 'gray.200', dark: 'gray.700' };

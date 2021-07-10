@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ExternalLink from './ExternalLink';
+import ExternalLink from '../ExternalLink';
 import { Chart } from 'react-charts';
-import { Package } from '../pages/settings/integrations/add/NPM';
+import { Package } from '../../pages/settings/integrations/add/NPM';
 import { faNpm } from '@fortawesome/free-brands-svg-icons';
 
 interface NPMPackageProps {

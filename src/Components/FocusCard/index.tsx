@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import Card from './Card';
+import Card from '../Card';
 
 const FocusCard: FunctionComponent = ({ children }) => {
   return (

@@ -15,12 +15,12 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { useFetchUser } from '../utils/user';
-import Link from './Link';
-import Logo from './Logo';
+import { useFetchUser } from '../../utils/user';
+import Link from '../Link';
+import Logo from '../Logo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import UserBubble from './UserBubble';
+import UserBubble from '../UserBubble';
 
 const accentColors = { light: 'green.500', dark: 'green.300' };
 

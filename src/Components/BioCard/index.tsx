@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import FocusCard from './FocusCard';
+import FocusCard from '../FocusCard';
 import { Text, useColorMode, Icon, Flex } from '@chakra-ui/react';
-import ExternalLink from './ExternalLink';
+import ExternalLink from '../ExternalLink';
 
 interface BioCardProps {
   bio: string;
