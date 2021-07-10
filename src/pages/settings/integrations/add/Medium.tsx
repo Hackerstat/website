@@ -36,7 +36,7 @@ interface MediumPostType {
  */
 const AddMediumIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/Medium/getUsername')
+    Axios.get('/api/medium/getUsername')
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -65,7 +65,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchingHackerFile(false);
         return;
       }
-      const mediumArticles = await Axios.get('/api/Medium/fetchArticles', {
+      const mediumArticles = await Axios.get('/api/medium/fetchArticles', {
         params: { user: username },
       });
 
@@ -89,7 +89,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchError('Required');
         setIsVerifying(false);
       }
-      const res = await Axios.get('/api/Medium/validateMediumAccount', { params: { username } });
+      const res = await Axios.get('/api/medium/validateMediumAccount', { params: { username } });
       if (res.data?.validated) {
         toast(verifiedToast as UseToastOptions);
       } else {
