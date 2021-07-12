@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addGitHubDataValidator } from '../../../utils/validation/validators';
-import { HTTPCode } from '../../../utils/constants';
 import auth0 from '../../../utils/auth';
 import { addGitHubData } from '../../../utils/mongo';
+import { handleRes, StatusTypes } from '../../../utils';
+
 /**
  * @name addRepos
  * @description Adds a user's authenticated GitHub repos to their HackerStat profile.
@@ -20,12 +21,12 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;
-      const resData = await addGitHubDataValidator(req.body);
-      await addGitHubData({ sub, gitHubData: resData });
-      res.status(HTTPCode.OK).json(resData);
+      const jsonData = await addGitHubDataValidator(req.body);
+      await addGitHubData({ sub, gitHubData: jsonData });
+      handleRes({ res, status: StatusTypes.OK, jsonData });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Fail');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 });

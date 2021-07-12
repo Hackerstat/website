@@ -1,8 +1,12 @@
-export const HTTPCode = {
-  OK: 200,
-  DELETED: 204,
-  BAD_REQUEST: 400,
-  SERVER_ERROR: 500,
+import { HTTPCodeType } from './utils';
+
+export const HTTPCode: HTTPCodeType = {
+  OK: [200, 'OK'],
+  CREATED: [203, 'CREATED'],
+  DELETED: [204, 'DELETED'],
+  BAD_REQUEST: [400, 'BAD REQUEST'],
+  NOT_FOUND: [404, 'NOT FOUND'],
+  SERVER_ERROR: [500, 'SERVER ERROR'],
 };
 
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
 import { addWorkExperienceValidator, updateWorkExperienceValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @name workexperience
@@ -16,42 +16,42 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
   if (req.method === 'GET') {
     try {
       const workExperience = await retrieveWorkExperience(req, res);
-      res.status(HTTPCode.OK).json({ workExperience: workExperience });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { workExperience } });
     } catch (e) {
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
   } else if (req.method === 'POST') {
     try {
       await addWorkExperienceValidator(req.body);
       await addWorkExperience(req, res);
-      res.status(HTTPCode.OK).send('OK');
+      handleRes({ res, status: StatusTypes.OK });
       return;
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
   } else if (req.method === 'PATCH') {
     try {
       await updateWorkExperienceValidator(req.body);
       await updateExperience(req, res);
-      res.status(HTTPCode.OK).send('UPDATED');
+      handleRes({ res, status: StatusTypes.OK, message: 'UPDATED' });
       return;
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
   } else if (req.method === 'DELETE') {
     try {
       await updateWorkExperienceValidator(req.query);
       await deleteExperience(req, res);
-      res.status(HTTPCode.DELETED).send('DELETED');
+      handleRes({ res, status: StatusTypes.DELETED, message: 'DELETED' });
       return;
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
   }

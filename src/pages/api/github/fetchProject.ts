@@ -1,6 +1,6 @@
 import { fetchGithubYML } from '../../../utils/thrdAPIs';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @name fetchProject
@@ -11,9 +11,9 @@ import { HTTPCode } from '../../../utils/constants';
  */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
-    const githubRes = await fetchGithubYML(req);
-    res.status(HTTPCode.OK).json(githubRes);
+    const jsonData = await fetchGithubYML(req);
+    handleRes({ res, status: StatusTypes.OK, jsonData });
   } catch (e) {
-    res.status(HTTPCode.BAD_REQUEST).send(e);
+    handleRes({ res, status: StatusTypes.OK, message: e });
   }
 };

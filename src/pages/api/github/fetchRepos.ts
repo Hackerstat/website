@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../../utils/constants';
 import { fetchGithubRepos } from '../../../utils/mongo';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @name fetchRepos
@@ -11,9 +11,8 @@ import { fetchGithubRepos } from '../../../utils/mongo';
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   if (req.method === 'GET') {
     const gitHubAccountData = await fetchGithubRepos(req, res);
-
-    res.status(HTTPCode.OK).json(gitHubAccountData || {});
+    handleRes({ res, status: StatusTypes.OK, jsonData: gitHubAccountData || {} });
   } else {
-    res.status(HTTPCode.BAD_REQUEST).send('Bad Method');
+    handleRes({ res, status: StatusTypes.OK, message: 'Bad Method' });
   }
 };

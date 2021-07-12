@@ -1,7 +1,6 @@
-import { HTTPCode } from '../../utils/constants';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { addIntegrationInSettingsValidator } from '../../utils/validation';
 import { addIntegrationInSettings } from '../../utils/mongo';
+import { handleRes, StatusTypes, addIntegrationInSettingsValidator } from '../../utils';
 import auth0 from '../../utils/auth';
 
 /**
@@ -17,14 +16,14 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
         const { integrationType, settings } = await addIntegrationInSettingsValidator(req.body);
         console.log(integrationType, settings);
       } catch ({ message }) {
-        res.status(HTTPCode.BAD_REQUEST).send(message);
+        handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
         return;
       }
       await addIntegrationInSettings(req, res);
-      res.status(HTTPCode.OK).send('Added Account');
+      handleRes({ res, status: StatusTypes.OK, message: 'Added Account' });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 });

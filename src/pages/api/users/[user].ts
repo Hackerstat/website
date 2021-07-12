@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { userQueryValidator } from '../../../utils/validation';
 import { getUser } from '../../../utils/mongo';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes, userQueryValidator } from '../../../utils';
 
 /**
  * @name [user]
@@ -16,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       try {
         await userQueryValidator(req.query);
       } catch ({ message }) {
-        res.status(HTTPCode.BAD_REQUEST).send(message);
+        handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
         return;
       }
       const userData = await getUser(req);
@@ -26,10 +25,10 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
         info: userData?.info,
         workExperience: userData?.workExperience,
       };
-      res.status(HTTPCode.OK).json(jsonResponse);
+      handleRes({ res, status: StatusTypes.OK, jsonData: jsonResponse });
     } catch (err) {
       console.log(err);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 };

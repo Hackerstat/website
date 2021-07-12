@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
-import { HTTPCode } from '../../../utils/constants';
 import { GitHubRepoDataType } from '../../../utils/utils';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @name queryParser
@@ -30,7 +30,7 @@ const queryParser = (query: string) => {
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     if (!Object(req.query).hasOwnProperty('code')) {
-      res.status(HTTPCode.BAD_REQUEST).send('No Access Code.');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message: 'No Access Code.' });
       return;
     }
     const accessRes = await Axios.get('https://github.com/login/oauth/access_token', {
@@ -78,7 +78,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     const repos = await Promise.all(reposPromises);
 
-    const gitHubAccountDump = {
+    const jsonData = {
       user: login,
       avatar_url,
       html_url,
@@ -90,9 +90,9 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       repos,
     };
 
-    res.status(HTTPCode.OK).json(gitHubAccountDump);
+    handleRes({ res, status: StatusTypes.OK, jsonData });
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send(e);
+    handleRes({ res, status: StatusTypes.SERVER_ERROR, message: e });
   }
 };

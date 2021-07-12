@@ -2,7 +2,7 @@ import YAML from 'yaml';
 import Axios from 'axios';
 import { verifyType, stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
 import { HackerFile } from '../../../types/hackerfile';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 // https://raw.githubusercontent.com/LouisIV/next-starter/master/.hacker.yml
 // https://github.com/LouisIV/next-starter/blob/master/.hacker.yml
@@ -46,12 +46,12 @@ export default async (req, res) => {
     const yaml: HackerFile = YAML.parse(result);
 
     if (!yaml.name) {
-      res.status(400).json({ error: 'Invalid Type' });
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, jsonData: { error: 'Invalid Type' } });
       return;
     }
 
     if (!verifyType(yaml.type)) {
-      res.status(400).json({ error: 'Invalid Type' });
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, jsonData: { error: 'Invalid Type' } });
       return;
     }
 
@@ -69,12 +69,12 @@ export default async (req, res) => {
       }
     }
 
-    res
-      .status(HTTPCode.OK)
-      .json({ result: file, repo: repo, user: user, repoURL: `https://gitlab.com/${user}/${repo}` });
+    const jsonData = { result: file, repo: repo, user: user, repoURL: `https://gitlab.com/${user}/${repo}` };
+
+    handleRes({ res, status: StatusTypes.OK, jsonData });
   } catch (err) {
     if (err.name === 'YAMLSyntaxError') {
-      res.status(HTTPCode.SERVER_ERROR).json({ error: 'Was not a valid YAML file' });
+      handleRes({ res, status: StatusTypes.SERVER_ERROR, jsonData: { error: 'Was not a valid YAML file' } });
     }
   }
 };

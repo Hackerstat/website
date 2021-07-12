@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios, { AxiosResponse } from 'axios';
 import { USERPROFILE_URL, REPO_URL, LANGUAGE_URL_GITLAB, REPO_SPECIFIC_URL_GITLAB } from '../../../utils/constants';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  *         Axios.get(USERPROFILE_URL, {
@@ -96,13 +96,13 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
         console.log(gitLabProfile);
 
-        res.status(HTTPCode.OK).json(gitLabProfile);
+        handleRes({ res, status: StatusTypes.OK, jsonData: gitLabProfile });
       } else {
-        res.status(HTTPCode.BAD_REQUEST).send('No Access Code');
+        handleRes({ res, status: StatusTypes.BAD_REQUEST, message: 'No Access Code' });
       }
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send(e);
+      handleRes({ res, status: StatusTypes.SERVER_ERROR, message: e });
     }
   }
 };

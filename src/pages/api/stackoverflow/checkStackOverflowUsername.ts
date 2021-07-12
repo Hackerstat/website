@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 import { checkStackOverflowUsernameValidator } from '../../../utils/validation';
 import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 import auth0 from '../../../utils/auth';
@@ -21,10 +21,10 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     try {
       const { username } = await checkStackOverflowUsernameValidator(req.query);
       const stackOverflowData = await fetchStackOverflowInfo(username);
-      res.status(HTTPCode.OK).json(stackOverflowData);
+      handleRes({ res, status: StatusTypes.OK, jsonData: stackOverflowData });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.BAD_REQUEST).send('FAIL');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST });
     }
   }
 });

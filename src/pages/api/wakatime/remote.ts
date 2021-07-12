@@ -8,13 +8,14 @@ import {
 import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
 
 import {
-  HTTPCode,
+  handleRes,
+  StatusTypes,
   WAKATIME,
   WAKATIME_LANGUAGE_URL,
   WAKATIME_ACTIVITY_URL,
   INTEGRATIONS,
   INTEGRATION_SETTINGS,
-} from '../../../utils/constants';
+} from '../../../utils';
 
 type wakaTimeRes = {
   wakaTimeLanguagesData: WakaTimeLanguagesGraphDataPropsType | null;
@@ -42,14 +43,8 @@ export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: 
   try {
     if (req.method === 'GET') {
       const wakaTimeInfo = await getRemoteWakaTimeData(req);
-      // if (
-      //   !Object(wakaTimeInfo).hasOwnProperty(INTEGRATIONS) &&
-      //   !Object(wakaTimeInfo).hasOwnProperty(INTEGRATION_SETTINGS) &&
-      //   !Object(wakaTimeInfo.integration_settings).hasOwnProperty(WAKATIME) &&
-      //   !wakaTimeInfo.integrations.includes(WAKATIME)
-      // ) {
       if (checkWakaTimeInfoObject(wakaTimeInfo)) {
-        res.status(HTTPCode.OK).json({});
+        handleRes({ res, status: StatusTypes.OK, jsonData: {} });
         return;
       }
       console.log(wakaTimeInfo);
@@ -61,12 +56,12 @@ export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: 
         const { wakaTimeCodingActivityURL } = wakaTimeInfo.integration_settings.wakatime;
         wakaTimeRes.wakaTimeActivityData = await fetchWakaTimeActivityData(wakaTimeCodingActivityURL);
       }
-      res.status(HTTPCode.OK).json({ ...wakaTimeRes });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { ...wakaTimeRes } });
     } else {
-      res.status(HTTPCode.BAD_REQUEST).send('Bad HTTP Request');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST });
     }
   } catch (err) {
     console.error(err);
-    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 }

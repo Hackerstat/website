@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../utils/auth';
+import { handleRes, StatusTypes } from '../../utils';
 
 /**
  * @name callback
@@ -22,6 +23,6 @@ export default async function callback(req: NextApiRequest, res: NextApiResponse
     });
   } catch (error) {
     console.error(error);
-    res.status(error.status || 500).end(error.message);
+    handleRes({ res, status: StatusTypes.SERVER_ERROR, message: error.message });
   }
 }

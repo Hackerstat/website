@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addWakaTimeIntegration } from '../../../utils/mongo';
-import { addWakaTimeIntegrationValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes, addWakaTimeIntegrationValidator } from '../../../utils';
 
 /**
  * @name addIntegration
@@ -22,10 +21,10 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { wakaTimeCodingActivityURL, wakaTimeLanguageURL } = await addWakaTimeIntegrationValidator(req.body);
       await addWakaTimeIntegration({ sub, wakaTimeCodingActivityURL, wakaTimeLanguageURL });
 
-      res.status(HTTPCode.OK).send('CREATED');
+      handleRes({ res, status: StatusTypes.CREATED });
     }
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 });

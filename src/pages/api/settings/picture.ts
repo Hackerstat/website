@@ -1,10 +1,10 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
+import auth0 from '../../../utils/auth';
+import { handleRes, StatusTypes } from '../../../utils';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
-import auth0 from '../../../utils/auth';
-import { HTTPCode } from '../../../utils/constants';
 
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -14,7 +14,8 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { newPicture } = req.body;
 
       if (!newPicture) {
-        res.status(HTTPCode.BAD_REQUEST).send('You need to provide a username');
+        const message = 'You need to provide a username';
+        handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
         return;
       }
 
@@ -35,9 +36,8 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
           { upsert: true },
         );
       client.close();
-    } catch (e) {
-      console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+    } catch ({ message }) {
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
     }
   } else if (req.method === 'GET') {
     try {
@@ -48,11 +48,11 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const client = await MongoClient.connect(uri, { useNewUrlParser: true });
       const currentUser = await client.db('Atlas').collection('userProfiles').findOne({ authID: sub });
 
-      res.status(HTTPCode.OK).json({ picture: currentUser?.picture || null });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { picture: currentUser?.picture || null } });
       client.close();
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST });
     }
   }
 });

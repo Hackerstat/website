@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getIntegrationInfo } from '../../../utils/mongo';
 import { mediumUserNameQueryValidator } from '../../../utils/validation';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @REMOVE
@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     try {
       await mediumUserNameQueryValidator(req.query);
     } catch ({ message }) {
-      res.status(HTTPCode.BAD_REQUEST).send(message);
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
       return;
     }
 
@@ -21,8 +21,8 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
 
     const npmInfo = await getIntegrationInfo(username);
     // perform actions on the collection object
-    res.status(HTTPCode.OK).json(JSON.stringify(npmInfo));
+    handleRes({ res, status: StatusTypes.BAD_REQUEST, jsonData: npmInfo });
   } catch (e) {
-    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 };

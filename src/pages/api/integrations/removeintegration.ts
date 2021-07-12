@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { removeIntegration } from '../../../utils/mongo';
 import { removeIntegrationInSettingsValidator } from '../../../utils/validation';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @REMOVE
@@ -12,14 +12,14 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     try {
       await removeIntegrationInSettingsValidator(req.body);
     } catch ({ message }) {
-      res.status(HTTPCode.BAD_REQUEST).send(message);
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
       return;
     }
 
     removeIntegration(req, res);
-    res.status(HTTPCode.OK).send('OK');
+    handleRes({ res, status: StatusTypes.OK });
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 });

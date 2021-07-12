@@ -10,7 +10,7 @@ export default auth0.withApiAuthRequired(async function me(req, res) {
     console.log(req);
     const { user } = await auth0.getSession(req, res);
     console.log(user);
-    res.status(HTTPCode.OK).json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
     res.status(error.status || HTTPCode.SERVER_ERROR).end(error.message);

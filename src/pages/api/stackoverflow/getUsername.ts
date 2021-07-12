@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getIntegrationUserName } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { HTTPCode, STACKOVERFLOW } from '../../../utils/constants';
+import { handleRes, StatusTypes, STACKOVERFLOW } from '../../../utils';
 
 /**
  * @name getUsername
@@ -13,10 +13,10 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
   if (req.method === 'GET') {
     try {
       const stackoverflowUserName = await getIntegrationUserName(req, res, STACKOVERFLOW);
-      res.status(HTTPCode.OK).json({ username: stackoverflowUserName });
-    } catch (e) {
-      console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Bad Header');
+      handleRes({ res, status: StatusTypes.OK, jsonData: { username: stackoverflowUserName } });
+    } catch ({ message }) {
+      console.error({ message });
+      handleRes({ res, status: StatusTypes.SERVER_ERROR, message });
     }
   }
 });

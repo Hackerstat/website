@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGithubReposRemote } from '../../../utils/mongo';
 import { usernameRemoteQueryValidator } from '../../../utils/validation';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 const API_KEY = process.env.GITHUB_API_KEY;
 
@@ -58,12 +58,12 @@ export default async function remoteGitHubRetrieval(req: NextApiRequest, res: Ne
 
       const response = await resu.json();
 
-      res.status(HTTPCode.OK).json({ ...response, ...gitHubInfo });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { ...response, ...gitHubInfo } });
       return;
     }
-    res.status(HTTPCode.OK).send('OK');
+    handleRes({ res, status: StatusTypes.OK });
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 }

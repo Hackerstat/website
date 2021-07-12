@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { fetchWakaTimeValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
 import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes, fetchWakaTimeValidator } from '../../../utils';
 
 /**
  * @name fetchWakaTimeData
@@ -20,16 +19,16 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
 
       if (dataType === 'bar') {
         const validatedData = await fetchWakaTimeActivityData(url);
-        res.status(HTTPCode.OK).json({ dataPoints: validatedData });
+        handleRes({ res, status: StatusTypes.OK, jsonData: { dataPoints: validatedData } });
       } else {
         const validatedData = await fetchWakaTimeLanguagesData(url);
-        res.status(HTTPCode.OK).json({ dataPoints: validatedData });
+        handleRes({ res, status: StatusTypes.OK, jsonData: { dataPoints: validatedData } });
       }
     } else {
-      res.status(HTTPCode.BAD_REQUEST).send('Bad HTTP Request');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message: 'Bad HTTP Request' });
     }
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 });

@@ -1,7 +1,7 @@
-import { HTTPCode } from '../../utils/constants';
 import { usernameCheckerAPI } from './../../utils/mongo';
 import { userNameCheckerQueryValidator } from '../../utils/validation';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { handleRes, StatusTypes } from '../../utils';
 
 /**
  * @name usernameChecker
@@ -15,28 +15,28 @@ export default async function usernameChecker(req: NextApiRequest, res: NextApiR
     try {
       await userNameCheckerQueryValidator(req.query);
     } catch ({ message }) {
-      res.status(HTTPCode.BAD_REQUEST).send(message);
+      handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
       return;
     }
     try {
       const possibleUser = await usernameCheckerAPI(req);
       switch (possibleUser.m) {
         case 'true':
-          res.status(HTTPCode.OK).json({ result: true });
+          handleRes({ res, status: StatusTypes.OK, jsonData: { result: true } });
           break;
         case 'false':
-          res.status(HTTPCode.OK).json({ result: false });
+          handleRes({ res, status: StatusTypes.OK, jsonData: { result: false } });
           break;
         case 'You need to provide a username':
-          res.status(HTTPCode.BAD_REQUEST).send(possibleUser.m);
+          handleRes({ res, status: StatusTypes.BAD_REQUEST, message: possibleUser.m });
           break;
         default:
           console.error('Should not be possible to be here');
           break;
       }
-    } catch (e) {
-      console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+    } catch ({ message }) {
+      console.error(message);
+      handleRes({ res, status: StatusTypes.SERVER_ERROR, message });
     }
   }
 }
