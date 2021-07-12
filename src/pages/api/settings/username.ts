@@ -1,8 +1,7 @@
-import { ValidationError } from 'yup';
 import { setUsername, getUsername } from '../../../utils/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { usernameQueryValidator } from '../../../utils/validation';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -22,7 +21,7 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       try {
         await usernameQueryValidator(req.body);
       } catch ({ message }) {
-        res.status(HTTPCode.BAD_REQUEST).send(message);
+        handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
         return;
       }
       if (!newUsername) {
@@ -31,20 +30,21 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       }
 
       if (await setUsername(newUsername, sub)) {
-        res.status(HTTPCode.OK).json({ result: true });
+        handleRes({ res, status: StatusTypes.OK, jsonData: { result: true } });
       } else {
-        res.status(HTTPCode.OK).json({ result: false });
+        handleRes({ res, status: StatusTypes.OK, jsonData: { result: false } });
       }
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   } else if (req.method === 'GET') {
     try {
       const currentUser = await getUsername(req, res);
-      res.status(HTTPCode.OK).json({ username: currentUser?.username || null });
+      const jsonData = { username: currentUser?.username || null };
+      handleRes({ res, status: StatusTypes.OK, jsonData });
     } catch (e) {
-      res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 });

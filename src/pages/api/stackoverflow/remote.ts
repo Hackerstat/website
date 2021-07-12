@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 import { usernameRemoteQueryValidator } from '../../../utils/validation';
 import { getRemoteStackOverflowUsername, addStackOverflowRemoteData } from '../../../utils/mongo';
 import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
@@ -23,13 +23,13 @@ export default async function remoteStackOverflow(req: NextApiRequest, res: Next
 
       await addStackOverflowRemoteData(username, stackOverFlowData);
 
-      res.status(HTTPCode.OK).json(stackOverFlowData);
+      handleRes({ res, status: StatusTypes.OK, jsonData: stackOverFlowData });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST });
     }
   } else {
     console.error('Wrong Header');
-    res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
+    handleRes({ res, status: StatusTypes.BAD_REQUEST });
   }
 }

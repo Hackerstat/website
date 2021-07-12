@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addGitLabDataValidator } from '../../../utils/validation/validators';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 import auth0 from '../../../utils/auth';
 import { addGitLabData } from '../../../utils/mongo';
 
@@ -15,12 +15,12 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;
-      const resData = await addGitLabDataValidator(req.body);
-      await addGitLabData({ sub, gitLabData: resData });
-      res.status(HTTPCode.OK).json(resData);
+      const jsonData = await addGitLabDataValidator(req.body);
+      await addGitLabData({ sub, gitLabData: jsonData });
+      handleRes({ res, status: StatusTypes.OK, jsonData });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Fail');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 });

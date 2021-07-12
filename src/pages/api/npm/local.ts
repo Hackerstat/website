@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { getLocalNPM } from '../../../utils/mongo';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @REMOVE
@@ -14,10 +14,10 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       // } = req;
 
       const npmLocalRes = await getLocalNPM(req, res);
-      res.status(HTTPCode.OK).json(npmLocalRes);
+      handleRes({ res, status: StatusTypes.OK, jsonData: npmLocalRes });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.SERVER_ERROR).send('Server Error');
+      handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   }
 });

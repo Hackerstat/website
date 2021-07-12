@@ -3,7 +3,7 @@ import { checkNPMUsernameValidator } from '../../../utils/validation';
 import { fetchGithubRepos } from '../../../utils/mongo';
 import { validateNPMAccountScrape } from '../../../utils/thrdAPIs';
 import auth0 from '../../../utils/auth';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 /**
  * @name validateNPMAccount
@@ -18,10 +18,11 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { username: npmUsername } = await checkNPMUsernameValidator(req.query);
       const { user: gitHubUsername } = await fetchGithubRepos(req, res);
       const isValidated = await validateNPMAccountScrape(npmUsername, gitHubUsername || '');
-      res.status(HTTPCode.OK).json({ validated: isValidated });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { validated: isValidated } });
     } catch (e) {
       console.error(e);
-      res.status(HTTPCode.BAD_REQUEST).send('Bad Header');
+      const message = 'Bad Header';
+      handleRes({ res, status: StatusTypes.OK, message });
     }
   }
 });

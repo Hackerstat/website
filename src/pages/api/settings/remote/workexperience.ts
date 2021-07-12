@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { usernameRemoteQueryValidator } from '../../../../utils/validation';
-import { HTTPCode } from '../../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../../utils';
 import { getWorkExperienceData } from '../../../../utils/mongo';
 
 /**
@@ -15,10 +15,10 @@ export default async function remoteRetrieveWorkExperience(req: NextApiRequest, 
     if (req.method === 'GET') {
       const { username } = await usernameRemoteQueryValidator(req.query);
       const listOfWorkExperiences = await getWorkExperienceData(username);
-      res.status(HTTPCode.OK).json({ listOfWorkExperiences });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { listOfWorkExperiences } });
     }
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('SERVER ERROR');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 }

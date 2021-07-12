@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../utils/constants';
+import { handleRes, StatusTypes } from '../../utils';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
@@ -23,10 +23,10 @@ export default async function batchusers(req: NextApiRequest, res: NextApiRespon
         .find({ username: { $exists: true } })
         .limit(20);
       const userInfo = await users.toArray();
-      res.status(200).json({ users: userInfo });
+      handleRes({ res, status: StatusTypes.OK, jsonData: { users: userInfo } });
     }
   } catch (e) {
     console.error(e);
-    res.status(HTTPCode.SERVER_ERROR).send('FAIL');
+    handleRes({ res, status: StatusTypes.SERVER_ERROR });
   }
 }

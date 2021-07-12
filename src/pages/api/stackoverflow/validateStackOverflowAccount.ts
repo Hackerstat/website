@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { mediumUserNameQueryValidator, HTTPCode } from '../../../utils';
 import { getUsername } from '../../../utils/mongo';
 import { validateStackOverflowAccountScrape } from '../../../utils/thrdAPIs';
+import { handleRes, StatusTypes, mediumUserNameQueryValidator } from '../../../utils';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -18,11 +18,11 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { username } = await mediumUserNameQueryValidator(req.query);
       const { username: hackerStatUsername } = await getUsername(req, res);
       const isValidated = await validateStackOverflowAccountScrape(username, hackerStatUsername || '');
-      res.status(HTTPCode.OK).json({ validated: isValidated });
-    } catch (e) {
-      res.status(HTTPCode.SERVER_ERROR).send(e.message);
+      handleRes({ res, status: StatusTypes.OK, jsonData: { validated: isValidated } });
+    } catch ({ message }) {
+      handleRes({ res, status: StatusTypes.SERVER_ERROR, message });
     }
   } else {
-    res.status(HTTPCode.BAD_REQUEST).send('Bad Request');
+    handleRes({ res, status: StatusTypes.BAD_REQUEST });
   }
 });

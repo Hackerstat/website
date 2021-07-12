@@ -326,3 +326,16 @@ export interface GetRemoteWakaTimeDataRes {
     };
   };
 }
+
+export interface HTTPCodeType {
+  [key: string]: [number, string];
+}
+
+export enum StatusTypes {
+  OK = 'OK',
+  DELETED = 'DELETED',
+  BAD_REQUEST = 'BAD REQUEST',
+  SERVER_ERROR = 'SERVER ERROR',
+  NOT_FOUND = 'NOT FOUND',
+  CREATED = 'CREATED',
+}

@@ -1,7 +1,7 @@
 const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HTTPCode } from '../../../utils/constants';
+import { handleRes, StatusTypes } from '../../../utils';
 
 const MAX_COUNT = 10;
 
@@ -34,7 +34,9 @@ export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextA
       const packageNames = [];
 
       if (!packages) {
-        res.status(404).send('Could not get packages');
+        const message = 'Could not get packages';
+        handleRes({ res, status: StatusTypes.NOT_FOUND, message });
+        return;
       }
 
       for (let i = 0; i <= Math.min(packages.length, MAX_COUNT); ++i) {
@@ -61,10 +63,10 @@ export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextA
         // await getRemoteNPM(req, username, packageNames);
       }
 
-      res.status(HTTPCode.OK).json(returnResults);
+      handleRes({ res, status: StatusTypes.OK, jsonData: returnResults });
     } catch (e) {
       console.log(e);
-      res.status(HTTPCode.BAD_REQUEST).send('FAIL');
+      handleRes({ res, status: StatusTypes.BAD_REQUEST });
     }
   }
 }
