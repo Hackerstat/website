@@ -339,3 +339,11 @@ export enum StatusTypes {
   NOT_FOUND = 'NOT FOUND',
   CREATED = 'CREATED',
 }
+
+export interface DribbblePiecesData {
+  img: string;
+  link: string;
+  title: string;
+}
+
+export type RetrieveDribbblePiecesScrape = Array<DribbblePiecesData>;
