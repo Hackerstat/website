@@ -21,7 +21,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
+import {
+  goodToast,
+  badToast,
+  verifiedToast,
+  notVerifiedToast,
+  ADD_INTEGRATION_URL,
+  IntegrationTypes,
+} from '../../../../utils';
 
 export interface Package {
   name: string;
@@ -149,13 +156,13 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   const addNPMToAccount = async (username) => {
     setSubmitLoading(true);
     try {
-      await Axios.post('/api/integration', {
-        integrationType: 'npm',
-        settings: { username: username },
+      await Axios.post(ADD_INTEGRATION_URL, {
+        integrationType: IntegrationTypes.NPM,
+        settings: { username },
       });
-      toast(goodToast as unknown);
+      toast(goodToast as UseToastOptions);
     } catch (err) {
-      toast(badToast as unknown);
+      toast(badToast as UseToastOptions);
     }
     setSubmitLoading(false);
   };

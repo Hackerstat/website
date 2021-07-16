@@ -6,13 +6,13 @@ export const HTTPCode: HTTPCodeType = {
   DELETED: [204, 'DELETED'],
   BAD_REQUEST: [400, 'BAD REQUEST'],
   NOT_FOUND: [404, 'NOT FOUND'],
-  SERVER_ERROR: [500, 'SERVER ERROR'],
+  SERVER_ERROR: [500, 'SERVER_ERROR'],
 };
 
 export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 export const HACKERSTAT_VERIFICATION_URL = (hackerStatUsername: string): string =>
-  `https://hackerstat.io/${hackerStatUsername}`;
+  `https://hackerstats.io/${hackerStatUsername}`;
 
 export const GITHUB_USER_URL = (gitHubUsername: string): string => `https://github.com/${gitHubUsername}`;
 
@@ -31,6 +31,8 @@ export const LANGUAGE_URL_GITLAB = (id: string): string => `https://gitlab.com/a
 export const REPO_SPECIFIC_URL_GITLAB = (id: string): string => `https://gitlab.com/api/v4/projects/${id}`;
 
 export const GITHUB_VERIFICATION_LINK = 'https://github.com/login/oauth/authorize?client_id=Iv1.fc62112d5b65b083';
+
+export const ADD_INTEGRATION_URL = '/api/integration';
 
 export const badGetWakaTimeToast = {
   title: 'Something Went Wrong',

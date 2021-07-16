@@ -1,13 +1,20 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Axios from 'axios';
-import { Flex, Heading, Button, Input, Stack, Text, Grid } from '@chakra-ui/react';
+import { Flex, Heading, Button, Input, Stack, Text, Grid, useToast, UseToastOptions } from '@chakra-ui/react';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { RetrieveDribbblePiecesScrape } from '../../../../utils';
 import { faDribbble } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
+import {
+  goodToast,
+  badToast,
+  verifiedToast,
+  notVerifiedToast,
+  RetrieveDribbblePiecesScrape,
+  IntegrationTypes,
+} from '../../../../utils';
 import DribbblePiece from '../../../../Components/DribbblePiece';
 
 /**
@@ -17,6 +24,7 @@ import DribbblePiece from '../../../../Components/DribbblePiece';
  * @returns {FunctionComponent}
  */
 const AddDribbbleIntegrationPage: FunctionComponent = () => {
+  const toast = useToast();
   const [dribbbleUsername, setDribbbleUsername] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isRetrievingDribbbleData, setIsRetrievingDribbbleData] = useState(false);
@@ -24,24 +32,59 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
   const [isAddingDribbbleData, setIsAddingDribbbleData] = useState(false);
 
   const retrieveDribbbleData = async () => {
+    setDribbbleWorkPieces([].slice());
     const RETRIEVE_DRIBBBLE_PIECES_URL = '/api/dribbble/retrieveDribbblePieces';
-    const { data: dribbblePieces } = await Axios.get(RETRIEVE_DRIBBBLE_PIECES_URL, {
-      params: { dribbbleUsername },
-    });
-    setDribbbleWorkPieces(dribbblePieces);
+    try {
+      const { data: dribbblePieces } = await Axios.get(RETRIEVE_DRIBBBLE_PIECES_URL, {
+        params: { dribbbleUsername },
+      });
+      setDribbbleWorkPieces(dribbblePieces);
+      setIsRetrievingDribbbleData(false);
+    } catch (err) {
+      console.error(err);
+      toast(badToast as UseToastOptions);
+    }
     setIsRetrievingDribbbleData(false);
   };
 
+  const validateDribbbleAccount = async () => {
+    const VALIDATE_DRIBBBLE_PIECES_URL = '/api/dribbble/validateDribbbleAccount';
+    try {
+      await Axios.get(VALIDATE_DRIBBBLE_PIECES_URL, { params: { dribbbleUsername } });
+      toast(verifiedToast as UseToastOptions);
+    } catch (err) {
+      console.error(err);
+      toast(notVerifiedToast as UseToastOptions);
+    }
+    setIsVerifying(false);
+  };
+
   const addDribbbleData = async () => {
-    /**
-     * Add Dribbble Data.
-     */
+    const VALIDATE_DRIBBBLE_PIECES_URL = '/api/dribbble/addDribbblePieces';
+
+    try {
+      await retrieveDribbbleData();
+      await Axios.post(VALIDATE_DRIBBBLE_PIECES_URL, {
+        integrationInfo: {
+          integrationType: IntegrationTypes.DRIBBBLE,
+          settings: {
+            username: dribbbleUsername,
+            integrationType: IntegrationTypes.DRIBBBLE,
+          },
+        },
+        dribbbleUsername,
+        dribbblePieces: dribbbleWorkPieces,
+      });
+      toast(goodToast as UseToastOptions);
+    } catch (err) {
+      toast(badToast as UseToastOptions);
+    }
     setIsAddingDribbbleData(false);
   };
 
   return (
     <AuthLayer>
-      <Flex ml={4} width={'100%'} flexDirection={'column'}>
+      <Flex width={'100%'} flexDirection={'column'}>
         <Flex mb={4}>
           <FontAwesomeIcon icon={faDribbble} size={'3x'} />
           <Heading ml={3}>Dribbble</Heading>
@@ -57,11 +100,12 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
             disabled={isAddingDribbbleData || isRetrievingDribbbleData}
             isLoading={isVerifying}
             loadingText="Verifying Account"
-            onClick={() => {
+            onClick={async () => {
               setIsVerifying(true);
+              await validateDribbbleAccount();
             }}
           >
-            Verify Account
+            Verify Dribbble Account
           </Button>
           <Button
             disabled={isAddingDribbbleData || isVerifying || dribbbleUsername.length === 0}
@@ -86,7 +130,17 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
             Add Dribbble Account Data
           </Button>
           <Flex w="100%" justifyContent="center">
-            <Grid gap={10} rowGap={0} gridTemplateColumns={'repeat(3, 1fr)'}>
+            <Grid
+              justifyContent="center"
+              width="100%"
+              gap={10}
+              rowGap={5}
+              gridTemplateColumns={[
+                'repeat(auto-fit, minmax(300px, max-content))',
+                'repeat(auto-fit, minmax(380px, max-content))',
+                'repeat(auto-fit, minmax(400px, max-content))',
+              ]}
+            >
               {dribbbleWorkPieces &&
                 dribbbleWorkPieces.map((dribbbleData) => (
                   <React.Fragment key={dribbbleData.link}>

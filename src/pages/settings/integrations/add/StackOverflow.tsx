@@ -13,7 +13,8 @@ import {
   useToast,
   UseToastOptions,
 } from '@chakra-ui/react';
-import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils/constants';
+import { IntegrationTypes } from '../../../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
 import SettingsPage from '../../../../Components/SettingsPage';
@@ -88,13 +89,13 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   const addStackOverflowToAccount = async (username: string) => {
     setAddIntegrationLoading(true);
     try {
-      await Axios.post('/api/integration', {
-        integrationType: 'stackoverflow',
+      await Axios.post(ADD_INTEGRATION_URL, {
+        integrationType: IntegrationTypes.STACKOVERFLOW,
         settings: { username: username },
       });
-      toast(goodToast as unknown);
+      toast(goodToast as UseToastOptions);
     } catch (e) {
-      toast(badToast as unknown);
+      toast(badToast as UseToastOptions);
     }
     setAddIntegrationLoading(false);
   };

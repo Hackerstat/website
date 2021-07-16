@@ -5,6 +5,7 @@ export const HACKERSTAT = 'HackerStat';
 export const USERPROFILES = 'userProfiles';
 export const GITHUBDATA = 'githubData';
 export const GITLABDATA = 'gitlabData';
+export const DRIBBBLEDATA = 'dribbbleData';
 export const STACKOVERFLOWDATA = 'stackOverFlowData';
 export const WAKATIME = 'wakatime';
 export const GITHUB = 'github';

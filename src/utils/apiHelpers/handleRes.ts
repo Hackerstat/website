@@ -12,5 +12,5 @@ interface HandleResType {
 export const handleRes = ({ res, status, message, jsonData }: HandleResType): void => {
   jsonData
     ? res.status(HTTPCode[status][0]).json(jsonData)
-    : res.status(HTTPCode[status][0]).send(message || HTTPCode[status][0]);
+    : res.status(HTTPCode[status][0]).send(message || HTTPCode[status][1]);
 };
