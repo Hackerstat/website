@@ -7,6 +7,7 @@ export const addDribbbleData = async ({
   sub,
   dribbbleUsername,
   dribbblePieces,
+  isValidated,
 }: AddDribbblePiecesType): Promise<void> => {
   const client = await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
   const session = client.startSession();
@@ -25,8 +26,9 @@ export const addDribbbleData = async ({
 
       const dribbbleProfile = await hackerStatDB
         .collection(DRIBBBLEDATA)
-        .updateOne({ userID: id }, { $set: { userID: id, ...dribbblePieces } }, { upsert: true });
+        .updateOne({ userID: id }, { $set: { userID: id, dribbblePieces } }, { upsert: true });
 
+      // It checks if the Dribbble Integrations has been created on the HackerStat user's profile already.
       if (dribbbleProfile.upsertedCount) {
         await hackerStatDB.collection(USERPROFILES).updateOne(
           { authID: sub },
@@ -36,6 +38,24 @@ export const addDribbbleData = async ({
               [`integration_settings.${integrationType}`]: {
                 id: dribbbleProfile.upsertedId._id,
                 username: dribbbleUsername,
+                isValidated,
+              },
+            },
+          },
+          { upsert: true },
+        );
+        // It checks if the Dribbble Integrations has been created on the HackerStat user's profile already.
+      }
+      // If so, just update the username and isValidated properties.
+      else {
+        await hackerStatDB.collection(USERPROFILES).updateOne(
+          { authID: sub },
+          {
+            $addToSet: { integrations: integrationType },
+            $set: {
+              [`integration_settings.${integrationType}`]: {
+                username: dribbbleUsername,
+                isValidated,
               },
             },
           },

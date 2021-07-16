@@ -1,6 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, addIntegrationInSettingsValidator, addDribbblePiecesValidator } from '../../../utils';
-import { addDribbbleData } from '../../../utils/mongo';
+import {
+  handleRes,
+  StatusTypes,
+  addIntegrationInSettingsValidator,
+  addDribbblePiecesValidator,
+  validateDribbbleAccountScrape,
+} from '../../../utils';
+import { addDribbbleData, getUsername } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -19,9 +25,13 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
         addDribbblePiecesValidator(req.body),
         addIntegrationInSettingsValidator(req.body?.integrationInfo),
       ]);
+
+      const { username: hackerStatUsername } = await getUsername(req, res);
+      const isValidated = await validateDribbbleAccountScrape(dribbbleUsername, hackerStatUsername);
+
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: Wierd TypeError Bug.
-      await addDribbbleData({ sub, dribbbleUsername, dribbblePieces });
+      await addDribbbleData({ sub, dribbbleUsername, dribbblePieces, isValidated });
       // await addIntegrationInSettings(req, res);
       handleRes({ res, status: StatusTypes.OK, message: 'Added Account' });
     } catch (e) {

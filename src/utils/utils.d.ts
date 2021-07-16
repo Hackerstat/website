@@ -334,7 +334,7 @@ export interface HTTPCodeType {
 export enum StatusTypes {
   OK = 'OK',
   DELETED = 'DELETED',
-  BAD_REQUEST = 'BAD REQUEST',
+  BAD_REQUEST = 'BAD_REQUEST',
   SERVER_ERROR = 'SERVER_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   CREATED = 'CREATED',
