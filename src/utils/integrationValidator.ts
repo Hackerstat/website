@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addIntegrationInSettingsValidator } from './validation';
-import { validateMediumAccountScrape, validateStackOverflowAccountScrape, validateNPMAccountScrape } from './';
+import {
+  validateMediumAccountScrape,
+  validateStackOverflowAccountScrape,
+  validateNPMAccountScrape,
+  validateDribbbleAccountScrape,
+} from './';
 import { getUsername, fetchGithubRepos } from './mongo';
 
 export const integrationValidator = async (req: NextApiRequest, res: NextApiResponse): Promise<boolean> => {
@@ -14,6 +19,8 @@ export const integrationValidator = async (req: NextApiRequest, res: NextApiResp
     case 'npm':
       const { user: gitHubUsername } = await fetchGithubRepos(req, res);
       return await validateNPMAccountScrape(settings.username, gitHubUsername);
+    case 'dribbble':
+      return await validateDribbbleAccountScrape(settings.username, hackerStatUsername);
     default:
       console.error('Invalid Integration');
   }

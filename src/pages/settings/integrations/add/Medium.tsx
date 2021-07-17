@@ -18,7 +18,14 @@ import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
 import { faMedium } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils/constants';
+import {
+  goodToast,
+  badToast,
+  verifiedToast,
+  notVerifiedToast,
+  ADD_INTEGRATION_URL,
+  IntegrationTypes,
+} from '../../../../utils';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 
@@ -110,8 +117,8 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   const addMediumAccount = async (username: string) => {
     setSubmitLoading(true);
     try {
-      await Axios.post('/api/integration', {
-        integrationType: 'medium',
+      await Axios.post(ADD_INTEGRATION_URL, {
+        integrationType: IntegrationTypes.MEDIUM,
         settings: { username: username },
       });
       toast(goodToast as UseToastOptions);

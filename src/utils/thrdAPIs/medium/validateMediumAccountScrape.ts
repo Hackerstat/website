@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import cheerio from 'cheerio';
+import { HACKERSTAT_VERIFICATION_URL } from '../..';
 
 /**
  * @name validateMediumAccountScrape
@@ -15,7 +16,7 @@ export const validateMediumAccountScrape = async (username: string, hackerStatUs
   const $ = cheerio.load(mediumProfilePage.data);
   const descriptionMetaData = $('meta[property=og:description]')['0']?.attribs?.content;
   if (descriptionMetaData !== undefined) {
-    if (descriptionMetaData.includes(hackerStatUsername)) {
+    if (descriptionMetaData.includes(HACKERSTAT_VERIFICATION_URL(hackerStatUsername))) {
       return true;
     }
   }

@@ -6,3 +6,4 @@ export * from './stackoverflow';
 export * from './wakatime';
 export * from './workExperience';
 export * from './user';
+export * from './dribbble';

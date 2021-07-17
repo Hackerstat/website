@@ -1,25 +1,35 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { faStackOverflow, faNpm, faTwitter, faGithub, faGitlab, faMedium } from '@fortawesome/free-brands-svg-icons';
+import {
+  faStackOverflow,
+  faNpm,
+  faTwitter,
+  faGithub,
+  faGitlab,
+  faMedium,
+  faDribbble,
+} from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExternalLink from '../../ExternalLink';
 import { BoxProps, Flex, useColorMode, Box } from '@chakra-ui/react';
 import Card from '../../Card';
-import { STACKOVERFLOW, WAKATIME, NPM, MEDIUM, GITHUB, GITLAB, TWITTER } from '../../../utils/constants';
+import { IntegrationTypes } from '../../../utils';
 import { VerifiedButton } from '../../VerifiedButton';
 
 const Integrations = {
-  stackoverflow: { icon: faStackOverflow, name: STACKOVERFLOW },
-  npm: { icon: faNpm, name: NPM },
-  twitter: { icon: faTwitter, name: TWITTER },
-  github: { icon: faGithub, name: GITHUB },
-  gitlab: { icon: faGitlab, name: GITLAB },
-  medium: { icon: faMedium, name: MEDIUM },
-  wakatime: { icon: undefined, name: WAKATIME },
+  stackoverflow: { icon: faStackOverflow, name: IntegrationTypes.STACKOVERFLOW },
+  npm: { icon: faNpm, name: IntegrationTypes.NPM },
+  twitter: { icon: faTwitter, name: IntegrationTypes.TWITTER },
+  github: { icon: faGithub, name: IntegrationTypes.GITHUB },
+  gitlab: { icon: faGitlab, name: IntegrationTypes.GITLAB },
+  medium: { icon: faMedium, name: IntegrationTypes.MEDIUM },
+  wakatime: { icon: undefined, name: IntegrationTypes.WAKATIME },
+  dribbble: { icon: faDribbble, name: IntegrationTypes.DRIBBBLE },
 };
 
 interface IntegrationWrapperCardProps extends BoxProps {
   children: Array<JSX.Element> | JSX.Element;
-  icon: string;
+  // icon: string;
+  icon: IntegrationTypes;
   username?: string;
   link?: string;
   verified?: boolean;

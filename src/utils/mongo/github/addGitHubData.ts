@@ -1,18 +1,17 @@
 import { MongoClient } from 'mongodb';
 
-import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA, GITHUB } from '../constants';
+import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA } from '../constants';
 import { AddGitHubDataType } from '../../validation/schemas';
-import { UserProfileType } from '../../utils';
+import { UserProfileType, IntegrationTypes } from '../..';
+
+interface AddGitHubDataProps {
+  sub: any;
+  gitHubData: AddGitHubDataType;
+}
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-export const addGitHubData = async ({
-  sub,
-  gitHubData,
-}: {
-  sub: any;
-  gitHubData: AddGitHubDataType;
-}): Promise<void> => {
+export const addGitHubData = async ({ sub, gitHubData }: AddGitHubDataProps): Promise<void> => {
   const client = await connectToClient();
 
   const session = client.startSession();
@@ -23,7 +22,7 @@ export const addGitHubData = async ({
         await client.db(HACKERSTAT).collection(USERPROFILES).findOne({ authID: sub })
       );
 
-      const integrationType = GITHUB;
+      const integrationType = IntegrationTypes.GITHUB;
 
       const id = userProfile._id;
 

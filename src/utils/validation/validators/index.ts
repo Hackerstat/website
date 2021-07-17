@@ -9,3 +9,4 @@ export * from './gitlab';
 export * from './remote';
 export * from './medium';
 export * from './npm';
+export * from './dribbble';

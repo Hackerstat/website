@@ -334,8 +334,33 @@ export interface HTTPCodeType {
 export enum StatusTypes {
   OK = 'OK',
   DELETED = 'DELETED',
-  BAD_REQUEST = 'BAD REQUEST',
-  SERVER_ERROR = 'SERVER ERROR',
-  NOT_FOUND = 'NOT FOUND',
+  BAD_REQUEST = 'BAD_REQUEST',
+  SERVER_ERROR = 'SERVER_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
   CREATED = 'CREATED',
+}
+
+export enum IntegrationTypes {
+  STACKOVERFLOW = 'stackoverflow',
+  GITHUB = 'github',
+  DRIBBBLE = 'dribbble',
+  GITLAB = 'gitlab',
+  MEDIUM = 'medium',
+  NPM = 'npm',
+  TWITTER = 'twitter',
+  WAKATIME = 'wakatime',
+}
+
+export interface DribbblePiecesData {
+  img: string;
+  link: string;
+  title: string;
+}
+
+export type RetrieveDribbblePiecesScrape = Array<DribbblePiecesData>;
+
+export interface DribbbleRemoteJSONDataType {
+  isValidated: boolean;
+  dribbbleUsername: string;
+  dribbbleData: RetrieveDribbblePiecesScrape;
 }

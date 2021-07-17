@@ -9,7 +9,14 @@ import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 import WorkExperienceCard from '../Components/Dashboard/WorkExperience';
-import { WorkExperienceType } from '../utils/utils';
+import { WorkExperienceType, IntegrationTypes } from '../utils';
+
+const Dribbble = dynamic(() => import('../Components/Dashboard/Dribbble'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
+Dribbble.displayName = IntegrationTypes.DRIBBBLE;
 
 const WakaTime = dynamic(() => import('../Components/Dashboard/WakaTime'), {
   // eslint-disable-next-line react/display-name
@@ -76,25 +83,6 @@ const UserProfilePage: NextPage = () => {
   const [integrationSettings, setIntegrationSettings] = useState();
 
   const [workExperienceInstances, setWorkExperienceInstances] = useState<WorkExperienceInstancesType>([]);
-
-  // const integrationComponents = [
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   !!integrationSettings && integrationSettings?.github?.id && (
-  //     <GitHub
-  //       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //       // @ts-ignore
-  //       username={user as string}
-  //     />
-  //   ),
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   !!integrationSettings && integrationSettings?.medium?.username && (
-  //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //     // @ts-ignore
-  //     <Medium user={`@${integrationSettings?.medium?.username}`} />
-  //   ),
-  // ];
 
   useEffect(() => {
     if (!user) {
@@ -200,31 +188,22 @@ const UserProfilePage: NextPage = () => {
                 mx={2}
               />
             ),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            !!integrationSettings && integrationSettings?.dribbble?.username && (
+              <Dribbble
+                username={user as string}
+                mx={2}
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                dribbbleUsername={integrationSettings?.dribbble?.username}
+              />
+            ),
           ]}
         </Masonry>
       </Flex>
     </PageBase>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const username = context?.params?.user;
-
-//   console.log('USERNAME', context);
-
-//   try {
-//     const integrationData = await Axios.get(`/api/users/${username}`);
-//     console.log(integrationData);
-//     return {
-//       props: { ...integrationData.data }, // will be passed to the page component as props
-//     };
-//   } catch (err) {
-//     console.error('ERROR', err);
-//   }
-
-//   return {
-//     props: {}, // will be passed to the page component as props
-//   };
-// };
 
 export default UserProfilePage;

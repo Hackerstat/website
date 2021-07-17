@@ -18,7 +18,7 @@ import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaT
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils/constants';
+import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils';
 import Axios from 'axios';
 import {
   WakaTimeLanguagesGraphDataPropsType,

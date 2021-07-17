@@ -104,9 +104,9 @@ const integrations: Array<Integration> = [
     disabled: true,
   },
   {
-    name: 'Dribble',
+    name: 'Dribbble',
     icon: faDribbble,
-    disabled: true,
+    link: 'Dribbble',
   },
   {
     name: 'Medium',

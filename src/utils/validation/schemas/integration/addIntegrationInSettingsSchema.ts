@@ -6,7 +6,7 @@ export const addIntegrationInSettingsSchema = yup.object().shape({
     .string()
     .strict(true)
     .trim()
-    .test('type', 'integration type is valid', (name: string) => INTEGRATIONS.includes(name.toLowerCase()))
+    .test('type', 'integration type is not valid', (name: string) => name && INTEGRATIONS.includes(name.toLowerCase()))
     .required(),
   settings: yup
     .object()
@@ -40,6 +40,13 @@ export const addIntegrationInSettingsSchema = yup.object().shape({
     .when('integrationType', {
       is: 'github',
       then: yup.object(),
+    })
+    .when('integrationType', {
+      is: 'dribbble',
+      then: yup.object({
+        username: yup.string().strict(true).required(),
+        isValidated: yup.boolean().default(false),
+      }),
     })
     .required(),
 });

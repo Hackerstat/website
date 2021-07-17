@@ -17,7 +17,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast } from '../../../../utils/constants';
+import { goodToast, badToast, IntegrationTypes, ADD_INTEGRATION_URL } from '../../../../utils';
 import Axios from 'axios';
 
 /**
@@ -68,8 +68,8 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
    */
   const addTwitterToAccount = async (username: string) => {
     try {
-      await Axios.post('/api/integration', {
-        integrationType: 'twitter',
+      await Axios.post(ADD_INTEGRATION_URL, {
+        integrationType: IntegrationTypes.TWITTER,
         settings: { username: username },
       });
       toast(goodToast as unknown);

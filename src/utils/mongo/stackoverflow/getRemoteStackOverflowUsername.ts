@@ -14,7 +14,7 @@ export const getRemoteStackOverflowUsername = async (username: string): Promise<
   const client = await connectToClient();
 
   const {
-    integrations: integrations,
+    integrations,
     integration_settings: {
       stackoverflow: { username: stackoverflowUsername },
     },
