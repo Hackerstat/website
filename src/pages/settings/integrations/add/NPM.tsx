@@ -1,11 +1,9 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import {
-  Flex,
   Input,
   FormLabel,
   FormControl,
-  Heading,
   Button,
   Stack,
   Text,
@@ -16,8 +14,6 @@ import {
 } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
-import { faNpm } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Axios from 'axios';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
@@ -29,6 +25,7 @@ import {
   ADD_INTEGRATION_URL,
   IntegrationTypes,
 } from '../../../../utils';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 export interface Package {
   name: string;
@@ -168,11 +165,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faNpm} size={'3x'} />
-        <Heading ml={3}>NPM</Heading>
-      </Flex>
+    <SettingsIntegrationContainer integration={IntegrationTypes.NPM}>
       <Stack spacing={3}>
         <Text>
           {
@@ -206,7 +199,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
           Add NPM
         </Button>
       </Stack>
-    </Flex>
+    </SettingsIntegrationContainer>
   );
 };
 

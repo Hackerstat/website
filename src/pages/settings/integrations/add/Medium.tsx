@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import {
-  Flex,
   Input,
   FormLabel,
   FormControl,
@@ -16,8 +15,6 @@ import {
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
-import { faMedium } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   goodToast,
   badToast,
@@ -28,6 +25,7 @@ import {
 } from '../../../../utils';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 interface MediumPostType {
   title: string;
@@ -129,11 +127,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faMedium} size={'3x'} />
-        <Heading ml={3}>Medium</Heading>
-      </Flex>
+    <SettingsIntegrationContainer integration={IntegrationTypes.MEDIUM}>
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Medium Username</FormLabel>
@@ -170,7 +164,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
           Add Medium
         </Button>
       </Stack>
-    </Flex>
+    </SettingsIntegrationContainer>
   );
 };
 

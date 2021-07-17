@@ -349,6 +349,7 @@ export enum IntegrationTypes {
   NPM = 'npm',
   TWITTER = 'twitter',
   WAKATIME = 'wakatime',
+  BEHANCE = 'behance',
 }
 
 export interface DribbblePiecesData {

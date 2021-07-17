@@ -1,14 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import { Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
+import { Button, Stack, Text } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import { GITHUB_VERIFICATION_LINK } from '../../../../utils/constants';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 import Loader from '../../../../Components/Loader';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
+import { IntegrationTypes } from '../../../../utils';
 
 /**
  * @name AddGithubIntegrationPage
@@ -28,31 +27,25 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <AuthLayer>
-      <Flex ml={4} width={'100%'} flexDirection={'column'}>
-        <Flex mb={4}>
-          <FontAwesomeIcon icon={faGithub} size={'3x'} />
-          <Heading ml={3}>GitHub</Heading>
-        </Flex>
-        <Stack spacing={10}>
-          <Text>
-            {
-              'In order to add the GitHub integration to your file you need to verify your account via Logging into your GitHub Account. Then you can select which GitHub Repos you want to show then save it to your account.'
-            }
-          </Text>
-          <Button
-            isLoading={isVerifying}
-            loadingText="Verifying Account"
-            onClick={() => {
-              setIsVerifying(true);
-              router.push(GITHUB_VERIFICATION_LINK);
-            }}
-          >
-            Verify Account
-          </Button>
-        </Stack>
-      </Flex>
-    </AuthLayer>
+    <SettingsIntegrationContainer integration={IntegrationTypes.GITHUB}>
+      <Stack spacing={10}>
+        <Text>
+          {
+            'In order to add the GitHub integration to your file you need to verify your account via Logging into your GitHub Account. Then you can select which GitHub Repos you want to show then save it to your account.'
+          }
+        </Text>
+        <Button
+          isLoading={isVerifying}
+          loadingText="Verifying Account"
+          onClick={() => {
+            setIsVerifying(true);
+            router.push(GITHUB_VERIFICATION_LINK);
+          }}
+        >
+          Verify Account
+        </Button>
+      </Stack>
+    </SettingsIntegrationContainer>
   );
 };
 

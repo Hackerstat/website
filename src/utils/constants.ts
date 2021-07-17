@@ -1,4 +1,25 @@
-import { HTTPCodeType } from './utils';
+import { HTTPCodeType, IntegrationTypes } from './';
+import {
+  faBehance,
+  faStackOverflow,
+  faDribbble,
+  faGithub,
+  faGitlab,
+  faNpm,
+  faTwitter,
+  faMedium,
+} from '@fortawesome/free-brands-svg-icons';
+
+export const INTEGRATION_ICONS = {
+  [IntegrationTypes.BEHANCE]: faBehance,
+  [IntegrationTypes.STACKOVERFLOW]: faStackOverflow,
+  [IntegrationTypes.DRIBBBLE]: faDribbble,
+  [IntegrationTypes.GITHUB]: faGithub,
+  [IntegrationTypes.GITLAB]: faGitlab,
+  [IntegrationTypes.NPM]: faNpm,
+  [IntegrationTypes.TWITTER]: faTwitter,
+  [IntegrationTypes.MEDIUM]: faMedium,
+};
 
 export const HTTPCode: HTTPCodeType = {
   OK: [200, 'OK'],
