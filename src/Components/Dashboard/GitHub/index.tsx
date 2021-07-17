@@ -1,10 +1,9 @@
 import React, { useState, useEffect, FunctionComponent } from 'react';
 import Axios from 'axios';
-import { BoxProps, Stack, useColorMode, Box, Skeleton } from '@chakra-ui/react';
+import { BoxProps, Stack, useColorMode, Skeleton } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
-import { GITHUB } from '../../../utils/constants';
 import { GitHubRepoDataRow, GitHubUserData, GitHubCalendar } from '../../GitHub';
-import { GitHubRemoteAPIReturnDataType } from '../../../utils/utils';
+import { GitHubRemoteAPIReturnDataType, IntegrationTypes } from '../../../utils';
 
 interface GitHubCardProps extends BoxProps {
   username: string;
@@ -35,7 +34,7 @@ const GitHubCard: FunctionComponent<GitHubCardProps> = ({ username, ...props }) 
   return (
     <>
       {!error && (
-        <IntegrationWrapperCard icon={GITHUB} {...props} verified>
+        <IntegrationWrapperCard icon={IntegrationTypes.GITHUB} {...props} verified>
           <Skeleton maxH={'md'} isLoaded={loading}>
             <GitHubUserData
               isLinked={true}

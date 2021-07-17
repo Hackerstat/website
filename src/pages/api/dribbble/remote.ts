@@ -5,6 +5,7 @@ import {
   retrieveDribbblePiecesScrape,
   usernameRemoteQueryValidator,
   validateDribbbleAccountScrape,
+  DribbbleRemoteJSONDataType,
 } from '../../../utils';
 
 /**
@@ -24,7 +25,9 @@ export default async function remoteDribble(req: NextApiRequest, res: NextApiRes
       await addDribbbleRemoteData({ dribbbleDataID, dribbbleData });
       const isValidated = await validateDribbbleAccountScrape(dribbbleUsername, hackerStatUsername);
 
-      handleRes({ res, status: StatusTypes.OK, jsonData: { dribbbleData, dribbbleUsername, isValidated } });
+      const remoteDribbbleRes: DribbbleRemoteJSONDataType = { dribbbleData, dribbbleUsername, isValidated };
+
+      handleRes({ res, status: StatusTypes.OK, jsonData: remoteDribbbleRes });
     } catch (e) {
       console.error(e);
       handleRes({ res, status: StatusTypes.SERVER_ERROR });

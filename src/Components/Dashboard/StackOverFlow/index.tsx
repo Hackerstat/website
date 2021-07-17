@@ -4,7 +4,7 @@ import { Stack, useColorMode, BoxProps } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
 import { FetchStackOverflowInfoRes } from '../../../utils/utils';
-import { STACKOVERFLOW } from '../../../utils/constants';
+import { IntegrationTypes } from '../../../utils';
 
 const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 
@@ -78,7 +78,7 @@ const StackOverflowCard: StackOverflowCardType = ({ username, stackOverFlowUsern
         <>
           <IntegrationWrapperCard
             verified={verified}
-            icon={STACKOVERFLOW}
+            icon={IntegrationTypes.STACKOVERFLOW}
             link={`https://stackoverflow.com/users/${stackOverFlowUsername}?tab=profile`}
             {...rest}
           >

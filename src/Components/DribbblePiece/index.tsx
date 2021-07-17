@@ -41,7 +41,7 @@ const DribbblePiece: FunctionComponent<DribbblePiecesData> = ({ img, title, link
         borderBottomRadius={20}
         color="white"
       >
-        <Text minH={['10px', '40px']} w="90%" noOfLines={2} fontSize={['sm', 'md']}>
+        <Text minH={['10px', '40px']} w="100%" noOfLines={2} fontSize={['sm', 'md']}>
           <strong>{title}</strong>
         </Text>
         <ExternalLink href={link}>

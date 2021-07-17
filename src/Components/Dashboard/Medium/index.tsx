@@ -2,7 +2,7 @@ import React, { useState, useEffect, FunctionComponent } from 'react';
 import { Box, Text, Stack, useColorMode, BoxProps, Skeleton } from '@chakra-ui/react';
 import Axios from 'axios';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
-import { MEDIUM } from '../../../utils/constants';
+import { IntegrationTypes } from '../../../utils';
 
 interface MediumCardProps extends BoxProps {
   user: string;
@@ -106,7 +106,7 @@ const MediumCard: FunctionComponent<MediumCardProps> = ({ user, verified, ...res
       {!error ? (
         <IntegrationWrapperCard
           {...rest}
-          icon={MEDIUM}
+          icon={IntegrationTypes.MEDIUM}
           link={`https://www.medium.com/${user}`}
           username={user}
           verified={verified}

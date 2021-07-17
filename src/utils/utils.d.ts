@@ -358,3 +358,9 @@ export interface DribbblePiecesData {
 }
 
 export type RetrieveDribbblePiecesScrape = Array<DribbblePiecesData>;
+
+export interface DribbbleRemoteJSONDataType {
+  isValidated: boolean;
+  dribbbleUsername: string;
+  dribbbleData: RetrieveDribbblePiecesScrape;
+}
