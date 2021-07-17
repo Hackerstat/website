@@ -1,3 +1,5 @@
+import { Node } from 'cheerio';
+
 enum integrationTypes {
   npm,
   github,
@@ -365,3 +367,17 @@ export interface DribbbleRemoteJSONDataType {
   dribbbleUsername: string;
   dribbbleData: RetrieveDribbblePiecesScrape;
 }
+
+export interface ValidCheerioNode extends Node {
+  data: string;
+}
+
+export interface BehanceWorkPieceType {
+  link: string;
+  title: string;
+  image: string | undefined;
+  likes: number;
+  watches: number;
+}
+
+export type BehanceWorkPiecesType = Array<BehanceWorkPieceType>;

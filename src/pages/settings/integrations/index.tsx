@@ -116,7 +116,7 @@ const integrations: Array<Integration> = [
   {
     name: 'Behance',
     icon: faBehance,
-    disabled: true,
+    link: 'Behance',
   },
 ];
 

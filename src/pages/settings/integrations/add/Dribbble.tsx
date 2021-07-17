@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Axios from 'axios';
-import { Flex, Button, Input, Stack, Text, Grid, useToast, UseToastOptions } from '@chakra-ui/react';
+import { Button, Input, Stack, Text, useToast, UseToastOptions } from '@chakra-ui/react';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
+import ImagePieceList from '../../../../Components/ImagePieceList';
 import {
   goodToast,
   badToast,
@@ -122,26 +123,14 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
         >
           Add Dribbble Account Data
         </Button>
-        <Flex w="100%" justifyContent="center">
-          <Grid
-            justifyContent="center"
-            width="100%"
-            gap={10}
-            rowGap={5}
-            gridTemplateColumns={[
-              'repeat(auto-fit, minmax(300px, max-content))',
-              'repeat(auto-fit, minmax(380px, max-content))',
-              'repeat(auto-fit, minmax(400px, max-content))',
-            ]}
-          >
-            {dribbbleWorkPieces &&
-              dribbbleWorkPieces.map((dribbbleData) => (
-                <React.Fragment key={dribbbleData.link}>
-                  <DribbblePiece {...dribbbleData} />
-                </React.Fragment>
-              ))}
-          </Grid>
-        </Flex>
+        <ImagePieceList>
+          {dribbbleWorkPieces &&
+            dribbbleWorkPieces.map((dribbbleData) => (
+              <React.Fragment key={dribbbleData.link}>
+                <DribbblePiece {...dribbbleData} />
+              </React.Fragment>
+            ))}
+        </ImagePieceList>
       </Stack>
     </SettingsIntegrationContainer>
   );
