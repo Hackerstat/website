@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { GitLabServerSideProps, IntegrationTypes } from '../../../../utils/utils';
+import { GitLabServerSideProps, IntegrationTypes } from '../../../../utils';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 /**

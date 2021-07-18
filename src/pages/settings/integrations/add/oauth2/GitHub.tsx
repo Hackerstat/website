@@ -6,7 +6,7 @@ import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
 import { GitHubRepoDataRow, GitHubUserData } from '../../../../../Components/GitHub';
 import AuthLayer from '../../../../../Components/AuthLayer';
-import { GitHubRepoDisplayDataType, GitHubUserAccountType } from '../../../../../utils/utils';
+import { GitHubRepoDisplayDataType, GitHubUserAccountType } from '../../../../../utils';
 import Axios from 'axios';
 
 interface GithubAuthenticatorPropsType {
