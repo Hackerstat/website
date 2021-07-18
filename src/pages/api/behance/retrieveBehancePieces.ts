@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, retrieveBehancePiecesValidator, retrieveBehanceAccountScrape } from '../../../utils';
+import { handleRes, retrieveBehancePiecesValidator, retrieveBehanceAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -10,7 +11,7 @@ import auth0 from '../../../utils/auth';
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { behanceUsername } = await retrieveBehancePiecesValidator(req.query);
 

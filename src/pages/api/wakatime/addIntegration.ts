@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addWakaTimeIntegration } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, addWakaTimeIntegrationValidator } from '../../../utils';
+import { handleRes, addWakaTimeIntegrationValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name addIntegration
@@ -14,7 +15,7 @@ import { handleRes, StatusTypes, addWakaTimeIntegrationValidator } from '../../.
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    if (req.method === 'POST') {
+    if (req.method === HttpCodes.POST) {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;
 

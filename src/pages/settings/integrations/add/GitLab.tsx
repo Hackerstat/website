@@ -7,8 +7,17 @@ import { useRouter } from 'next/router';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { GitLabServerSideProps, IntegrationTypes } from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
+
+interface GitLabServerSideProps {
+  state: string;
+  sha256OfState: string;
+  client_id: string;
+  redirect_uri: string;
+  scope: string;
+  code_verifier: string;
+}
 
 /**
  * @REDO
@@ -25,7 +34,6 @@ const AddGitHubIntegrationPage: FunctionComponent<{ props: GitLabServerSideProps
   useEffect(() => {
     console.log(sha256OfState, code_verifier);
     localStorage.setItem('code_verifier', code_verifier);
-    console.log('LOADED!');
   }, []);
 
   return (

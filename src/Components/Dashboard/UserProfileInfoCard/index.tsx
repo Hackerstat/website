@@ -90,7 +90,7 @@ const UserProfileInfoCard: FunctionComponent<Partial<UserProfileInfoCardProps>> 
             </Text>
             <Text
               overflow={'hidden'}
-              noOfLines={1}
+              noOfLines={2}
               mt={-1}
               textTransform={'uppercase'}
               fontWeight={'bold'}

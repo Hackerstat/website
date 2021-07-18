@@ -2,7 +2,7 @@ import React, { useState, useEffect, FunctionComponent } from 'react';
 import { Box, Text, Stack, useColorMode, BoxProps, Skeleton } from '@chakra-ui/react';
 import Axios from 'axios';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
-import { IntegrationTypes } from '../../../utils';
+import { IntegrationTypes } from '../../../types';
 
 interface MediumCardProps extends BoxProps {
   user: string;

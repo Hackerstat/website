@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 import WorkExperienceCard from '../Components/Dashboard/WorkExperience';
-import { WorkExperienceType, IntegrationTypes } from '../utils';
+import { IntegrationTypes, WorkExperienceType } from '../types';
 
 const Behance = dynamic(() => import('../Components/Dashboard/Behance'), {
   // eslint-disable-next-line react/display-name
@@ -66,8 +66,8 @@ const GitHub = dynamic(() => import('../Components/Dashboard/GitHub'), {
 GitHub.displayName = IntegrationTypes.GITHUB;
 
 interface UserInfo {
-  firstName: string;
-  lastName: string;
+  userFirstName: string;
+  userLastName: string;
   photo?: string;
   bio?: string;
 }
@@ -98,23 +98,28 @@ const UserProfilePage: NextPage = () => {
       return;
     }
 
-    Axios.get(`/api/users/${user}`).then((integrationData) => {
-      setIntegrations(integrationData.data.integrations);
-      setIntegrationSettings(integrationData.data.settings);
-      setInfo(integrationData.data.info);
-      setWorkExperienceInstances(integrationData.data.workExperience);
+    const USER_API = `/api/users/${user}`;
+
+    Axios.get(USER_API).then(({ data }) => {
+      const { firstName: userFirstName, lastName: userLastName, ...rest } = data.info;
+      setIntegrations(data.integrations);
+      setIntegrationSettings(data.settings);
+      setInfo({ userFirstName, userLastName, ...rest });
+      setWorkExperienceInstances(data.workExperience);
     });
   }, [user]);
+
+  const { userFirstName, userLastName, photo, ...restOfInfo } = info;
 
   return (
     <PageBase>
       <Stack direction={['column', 'row']} justifyContent="flex-start" spacing={3} flexWrap={'wrap'} margin="0 auto">
         <UserProfileInfoCard
           maxW={'100%'}
-          photo={info?.photo}
-          name={`${info?.firstName || ''} ${info?.lastName || ''}`}
+          photo={photo}
+          name={`${userFirstName || ''} ${userLastName || ''}`}
           username={user as string}
-          {...info}
+          {...restOfInfo}
         />
         <WorkExperienceCard listOfWorkExperiences={workExperienceInstances} />
       </Stack>
@@ -132,25 +137,29 @@ const UserProfilePage: NextPage = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.github?.id && (
-              <GitHub
-                mx={2}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                username={user as string}
-              />
+              <React.Fragment key={IntegrationTypes.GITHUB}>
+                <GitHub
+                  mx={2}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  username={user as string}
+                />
+              </React.Fragment>
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.medium?.username && (
-              <Medium
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                verified={integrationSettings?.medium?.isValidated}
-                mx={2}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                user={`@${integrationSettings?.medium?.username}`}
-              />
+              <React.Fragment key={IntegrationTypes.MEDIUM}>
+                <Medium
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  verified={integrationSettings?.medium?.isValidated}
+                  mx={2}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  user={`@${integrationSettings?.medium?.username}`}
+                />
+              </React.Fragment>
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
@@ -161,20 +170,24 @@ const UserProfilePage: NextPage = () => {
               integrations.includes('wakatime') && (
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                <WakaTime mx={2} username={user as string} />
+                <React.Fragment key={IntegrationTypes.WAKATIME}>
+                  <WakaTime mx={2} username={user as string} />
+                </React.Fragment>
               ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.npm?.username && (
-              <NPM
-                mx={2}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                verified={integrationSettings?.npm?.isValidated}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                username={integrationSettings?.npm?.username}
-              />
+              <React.Fragment key={IntegrationTypes.NPM}>
+                <NPM
+                  mx={2}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  verified={integrationSettings?.npm?.isValidated}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  username={integrationSettings?.npm?.username}
+                />
+              </React.Fragment>
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
@@ -186,32 +199,32 @@ const UserProfilePage: NextPage = () => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.stackoverflow?.username && (
-              <StackOverFlow
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                verified={integrationSettings?.stackoverflow?.isValidated}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
-                username={user as string}
-                mx={2}
-              />
+              <React.Fragment key={IntegrationTypes.STACKOVERFLOW}>
+                <StackOverFlow
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  verified={integrationSettings?.stackoverflow?.isValidated}
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  stackOverFlowUsername={integrationSettings?.stackoverflow?.username}
+                  username={user as string}
+                  mx={2}
+                />
+              </React.Fragment>
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.dribbble?.username && (
-              <Dribbble
-                username={user as string}
-                mx={2}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                dribbbleUsername={integrationSettings?.dribbble?.username}
-              />
+              <React.Fragment key={IntegrationTypes.DRIBBBLE}>
+                <Dribbble username={user as string} mx={2} />
+              </React.Fragment>
             ),
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             !!integrationSettings && integrationSettings?.behance?.username && (
-              <Behance username={user as string} mx={2} />
+              <React.Fragment key={IntegrationTypes.BEHANCE}>
+                <Behance username={user as string} mx={2} />
+              </React.Fragment>
             ),
           ]}
         </Masonry>

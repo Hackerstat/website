@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
-import { usernameRemoteQueryValidator } from '../../../utils/validation';
+import { handleRes, usernameRemoteQueryValidator, fetchStackOverflowInfo } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import { getRemoteStackOverflowUsername, addStackOverflowRemoteData } from '../../../utils/mongo';
-import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
 
 /**
  * @name remoteStackOverflow
@@ -12,7 +11,7 @@ import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
  * @returns {void}
  */
 export default async function remoteStackOverflow(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { username } = await usernameRemoteQueryValidator(req.body);
       const stackoverflowUsername = await getRemoteStackOverflowUsername(username);

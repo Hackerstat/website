@@ -1,8 +1,13 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { DeleteExperienceParams, UserProfileType } from '../../utils';
+import { UserProfileType } from '../types';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 import auth0 from '../../auth';
+
+interface DeleteExperienceParams {
+  i: string;
+  [key: string]: string | Array<string>;
+}
 
 export const deleteExperience = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const { user } = await auth0.getSession(req, res);

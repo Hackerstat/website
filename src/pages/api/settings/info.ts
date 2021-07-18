@@ -1,7 +1,8 @@
 import { updateInfo, getInfo } from '../../../utils/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, userInfoQueryValidator } from '../../../utils';
+import { handleRes, userInfoQueryValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name info
@@ -10,7 +11,7 @@ import { handleRes, StatusTypes, userInfoQueryValidator } from '../../../utils';
  * @param {userInfoSchema} info It is the user info (i.e. name, emaul) that is being to the HackerStat user's profile.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       try {
         await userInfoQueryValidator(req.body);
@@ -24,7 +25,7 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
     } catch (e) {
       res.status(500).send('Server Error');
     }
-  } else if (req.method === 'GET') {
+  } else if (req.method === HttpCodes.GET) {
     try {
       const info = await getInfo(req, res);
       handleRes({ res, status: StatusTypes.OK, jsonData: info });

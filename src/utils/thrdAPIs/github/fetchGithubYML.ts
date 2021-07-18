@@ -2,10 +2,17 @@ import YAML from 'yaml';
 import Axios from 'axios';
 import { verifyType, stripQueryParameters, addRefToURL } from '../../hackerFile';
 import { NextApiRequest } from 'next';
-import { HackerFile, FetchGithubYMLRes } from '../../utils';
+import { HackerFile } from '../../../types';
 
 // https://raw.githubusercontent.com/LouisIV/next-starter/master/.hacker.yml
 // https://github.com/LouisIV/next-starter/blob/master/.hacker.yml
+
+interface FetchGithubYMLRes {
+  result: any;
+  repo: string;
+  user: string;
+  repoURL: string;
+}
 
 /**
  * Given a project url, gets the hackerstats file

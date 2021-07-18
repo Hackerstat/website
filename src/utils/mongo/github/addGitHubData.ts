@@ -2,7 +2,8 @@ import { MongoClient } from 'mongodb';
 
 import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA } from '../constants';
 import { AddGitHubDataType } from '../../validation/schemas';
-import { UserProfileType, IntegrationTypes } from '../..';
+import { IntegrationTypes } from '../../../types';
+import { UserProfileType } from '../types';
 
 interface AddGitHubDataProps {
   sub: any;

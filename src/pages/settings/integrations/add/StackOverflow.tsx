@@ -10,20 +10,13 @@ import {
   Text,
   FormErrorMessage,
   useToast,
-  UseToastOptions,
 } from '@chakra-ui/react';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  ADD_INTEGRATION_URL,
-  IntegrationTypes,
-} from '../../../../utils';
+import Axios from 'axios';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 /**
@@ -34,7 +27,9 @@ import SettingsIntegrationContainer from '../../../../Components/SettingsIntegra
  */
 const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/stackoverflow/getUsername')
+    const STACKOVERFLOW_GET_USERNAME = '/api/stackoverflow/getUsername';
+
+    Axios.get(STACKOVERFLOW_GET_USERNAME)
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -54,9 +49,10 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const retrieveStackOverflowInfo = async () => {
+    const STACKOVERFLOW_CHECK_USERNAME = '/api/stackoverflow/checkStackOverflowUsername';
+
     setLoading(true);
-    const URL = '/api/stackoverflow/checkStackOverflowUsername';
-    const res = await Axios.get(URL, { params: { username: username } });
+    const res = await Axios.get(STACKOVERFLOW_CHECK_USERNAME, { params: { username: username } });
     setLoading(false);
     setStackOverflowInfo(res.data);
   };
@@ -68,17 +64,18 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const verifyStackOverflowAccount = async () => {
+    const STACKOVERFLOW_VALIDATE_ACCOUNT = '/api/stackoverflow/validateStackOverflowAccount';
+
     setVerifyLoading(true);
     try {
-      const URL = '/api/stackoverflow/validateStackOverflowAccount';
-      const res = await Axios.get(URL, { params: { username: username } });
+      const res = await Axios.get(STACKOVERFLOW_VALIDATE_ACCOUNT, { params: { username: username } });
       if (res.data?.validated) {
-        toast(verifiedToast as UseToastOptions);
+        toast(verifiedToast);
       } else {
-        toast(notVerifiedToast as UseToastOptions);
+        toast(notVerifiedToast);
       }
     } catch (err) {
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setVerifyLoading(false);
   };
@@ -97,9 +94,9 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
         integrationType: IntegrationTypes.STACKOVERFLOW,
         settings: { username: username },
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (e) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setAddIntegrationLoading(false);
   };

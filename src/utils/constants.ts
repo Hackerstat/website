@@ -1,4 +1,4 @@
-import { HTTPCodeType, IntegrationTypes } from './';
+import { UseToastOptions } from '@chakra-ui/react';
 import {
   faBehance,
   faStackOverflow,
@@ -9,6 +9,11 @@ import {
   faTwitter,
   faMedium,
 } from '@fortawesome/free-brands-svg-icons';
+import { IntegrationTypes } from '../types';
+
+export interface HTTPCodeType {
+  [key: string]: [number, string];
+}
 
 export const INTEGRATION_ICONS = {
   [IntegrationTypes.BEHANCE]: faBehance,
@@ -55,32 +60,32 @@ export const GITHUB_VERIFICATION_LINK = 'https://github.com/login/oauth/authoriz
 
 export const ADD_INTEGRATION_URL = '/api/integration';
 
-export const badGetWakaTimeToast = {
+export const badGetWakaTimeToast: UseToastOptions = {
   title: 'Something Went Wrong',
   status: 'error',
   description:
     'Could not retrieve your WakaTime Data from the URL provided. Please make sure that you put in the correct URL.',
 };
 
-export const badToast = {
+export const badToast: UseToastOptions = {
   title: 'Something Went Wrong',
   status: 'error',
   description: 'Could not add integration to your account. Please try again later.',
 };
 
-export const goodToast = {
+export const goodToast: UseToastOptions = {
   title: 'Added Integration',
   status: 'success',
   description: 'We added this integration to your account',
 };
 
-export const notVerifiedToast = {
+export const notVerifiedToast: UseToastOptions = {
   title: 'Not Verified',
   status: 'error',
   description: 'Could not verify your account. Please try again later.',
 };
 
-export const verifiedToast = {
+export const verifiedToast: UseToastOptions = {
   title: 'Verified Account',
   status: 'success',
   description: 'We verified that this is your account. Click the "Add" button to submit your integration.',

@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
-import { IntegrationTypes } from '../..';
+import { IntegrationTypes } from '../../../types';
 
 interface getRemoteBehanceUsernameResType {
   behanceUsername: string;

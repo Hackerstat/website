@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { WorkExperienceType, UserProfileType } from '../../utils';
+import { WorkExperienceType } from '../../../types';
+import { UserProfileType } from '../types';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 import auth0 from '../../auth';
 

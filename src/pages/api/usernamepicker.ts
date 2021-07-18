@@ -1,7 +1,7 @@
-import { usernameCheckerAPI } from './../../utils/mongo';
-import { userNameCheckerQueryValidator } from '../../utils/validation';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../utils';
+import { usernameCheckerAPI } from './../../utils/mongo';
+import { handleRes, userNameCheckerQueryValidator } from '../../utils';
+import { StatusTypes, HttpCodes } from '../../types';
 
 /**
  * @name usernameChecker
@@ -11,7 +11,7 @@ import { handleRes, StatusTypes } from '../../utils';
  * @returns {void}
  */
 export default async function usernameChecker(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       await userNameCheckerQueryValidator(req.query);
     } catch ({ message }) {

@@ -3,7 +3,7 @@ import { Grid, Skeleton, useColorMode, BoxProps } from '@chakra-ui/react';
 import NPMPackage from '../../NPMPackage';
 import { Package } from '../../../pages/settings/integrations/add/NPM';
 import Axios from 'axios';
-import { IntegrationTypes } from '../../../utils';
+import { IntegrationTypes } from '../../../types';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface NPMCardProps extends BoxProps {

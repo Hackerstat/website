@@ -5,7 +5,8 @@ import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast, IntegrationTypes, ADD_INTEGRATION_URL } from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import Axios from 'axios';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
@@ -17,7 +18,9 @@ import SettingsIntegrationContainer from '../../../../Components/SettingsIntegra
  */
 const AddTwitterIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/twitter/getUsername')
+    const TWITTER_GET_USERNAME = '/api/twitter/getUsername';
+
+    Axios.get(TWITTER_GET_USERNAME)
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../utils/auth';
-import { handleRes, StatusTypes } from '../../utils';
+import { StatusTypes } from '../../types';
+import { handleRes } from '../../utils';
 
 /**
  * @name callback

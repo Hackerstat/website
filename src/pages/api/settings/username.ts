@@ -1,7 +1,7 @@
 import { setUsername, getUsername } from '../../../utils/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { usernameQueryValidator } from '../../../utils/validation';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes, usernameQueryValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -12,7 +12,7 @@ import auth0 from '../../../utils/auth';
  * @argument {string} newUsername The new HackerStat username that the user wants for their profile.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;
@@ -38,7 +38,7 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       console.error(e);
       handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
-  } else if (req.method === 'GET') {
+  } else if (req.method === HttpCodes.GET) {
     try {
       const currentUser = await getUsername(req, res);
       const jsonData = { username: currentUser?.username || null };

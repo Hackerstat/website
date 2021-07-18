@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { removeIntegration } from '../../../utils/mongo';
 import { removeIntegrationInSettingsValidator } from '../../../utils/validation';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
 
 /**
  * @REMOVE

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addIntegrationInSettings } from '../../utils/mongo';
-import { handleRes, StatusTypes, addIntegrationInSettingsValidator } from '../../utils';
+import { handleRes, addIntegrationInSettingsValidator } from '../../utils';
+import { HttpCodes, StatusTypes } from '../../types';
 import auth0 from '../../utils/auth';
 
 /**
@@ -10,7 +11,7 @@ import auth0 from '../../utils/auth';
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       try {
         await addIntegrationInSettingsValidator(req.body);

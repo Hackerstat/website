@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, DRIBBBLEDATA } from '../constants';
-import { RetrieveDribbblePiecesScrape } from '../..';
+import { RetrieveDribbblePiecesScrape } from '../../../types';
 
 interface AddDribbbleRemoteDataPropsType {
   dribbbleDataID: string;

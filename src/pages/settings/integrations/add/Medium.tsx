@@ -10,21 +10,14 @@ import {
   FormErrorMessage,
   useToast,
   Box,
-  UseToastOptions,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  ADD_INTEGRATION_URL,
-  IntegrationTypes,
-} from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 interface MediumPostType {
@@ -41,7 +34,9 @@ interface MediumPostType {
  */
 const AddMediumIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/medium/getUsername')
+    const MEDIUM_GET_USERNAME = '/api/medium/getUsername';
+
+    Axios.get(MEDIUM_GET_USERNAME)
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -63,6 +58,8 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns
    */
   const CheckForHackerStatFile = async (username: string) => {
+    const MEDIUM_FETCH_ARTICLES = '/api/medium/fetchArticles';
+
     setFetchingHackerFile(true);
     try {
       if (!username) {
@@ -70,7 +67,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchingHackerFile(false);
         return;
       }
-      const mediumArticles = await Axios.get('/api/medium/fetchArticles', {
+      const mediumArticles = await Axios.get(MEDIUM_FETCH_ARTICLES, {
         params: { user: username },
       });
 
@@ -88,17 +85,19 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns {Promise<boolean>}
    */
   const verifyMediumAccount = async (username: string): Promise<void> => {
+    const VALIDATE_MEDIUM_ACCOUNT = '/api/medium/validateMediumAccount';
+
     setIsVerifying(true);
     try {
       if (!username) {
         setFetchError('Required');
         setIsVerifying(false);
       }
-      const res = await Axios.get('/api/medium/validateMediumAccount', { params: { username } });
+      const res = await Axios.get(VALIDATE_MEDIUM_ACCOUNT, { params: { username } });
       if (res.data?.validated) {
-        toast(verifiedToast as UseToastOptions);
+        toast(verifiedToast);
       } else {
-        toast(notVerifiedToast as UseToastOptions);
+        toast(notVerifiedToast);
       }
     } catch (err) {
       console.error(err);
@@ -119,9 +118,9 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         integrationType: IntegrationTypes.MEDIUM,
         settings: { username: username },
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (err) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setSubmitLoading(false);
   };

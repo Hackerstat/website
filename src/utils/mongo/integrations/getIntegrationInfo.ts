@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 
-import { UserProfileType } from '../../utils';
+import { UserProfileType } from '../types';
 
 export const getIntegrationInfo = async (username: string | Array<string>): Promise<UserProfileType> => {
   const client = await MongoClient.connect(URI, { useNewUrlParser: true });

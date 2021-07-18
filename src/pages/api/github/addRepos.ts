@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { addGitHubDataValidator } from '../../../utils/validation/validators';
 import auth0 from '../../../utils/auth';
 import { addGitHubData } from '../../../utils/mongo';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name addRepos
@@ -17,7 +18,7 @@ import { handleRes, StatusTypes } from '../../../utils';
  * @argument {gitRepoSchema} repos A user's GitHub repos.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;

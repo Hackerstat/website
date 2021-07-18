@@ -1,6 +1,18 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Box, Stack, useColorMode, Text } from '@chakra-ui/react';
-import { ContributionsCalendarType, ContributionWeekType, MONTHS } from '../../utils';
+import { MONTHS } from '../../utils';
+import { ContributionsCalendarType } from '../types';
+
+interface ContributionDayType {
+  color: string;
+  contributionCount: number;
+  date: string;
+}
+
+interface ContributionWeekType {
+  contributionDays: Array<ContributionDayType>;
+  month?: string;
+}
 
 interface GitHubCalendarProps {
   gitHubCalendarEvents: ContributionsCalendarType;

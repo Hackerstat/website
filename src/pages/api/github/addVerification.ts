@@ -1,7 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios from 'axios';
-import { GitHubRepoDataType } from '../../../utils/utils';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
+
+interface GitHubRepoDataType {
+  name: string;
+  owner: {
+    login: string;
+  };
+  private: string;
+  html_url: string;
+  description: string;
+  size: number;
+  updated_at: string;
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
+  languages_url: string;
+  // contributors_url: repo.contributors_url;
+  contributors_url: string;
+}
 
 /**
  * @name queryParser

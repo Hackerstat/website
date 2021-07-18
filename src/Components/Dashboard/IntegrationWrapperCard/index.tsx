@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExternalLink from '../../ExternalLink';
 import { BoxProps, Flex, useColorMode, Box } from '@chakra-ui/react';
 import Card from '../../Card';
-import { IntegrationTypes } from '../../../utils';
+import { IntegrationTypes } from '../../../types';
 import { VerifiedButton } from '../../VerifiedButton';
 
 const Integrations = {
@@ -53,7 +53,9 @@ const IntegrationWrapperCard: FunctionComponent<IntegrationWrapperCardProps> = (
   return (
     <Card borderRadius={'lg'} padding={2} maxW={['xs', 'sm', 'md']} mt={3} color={color} {...rest}>
       <Flex alignItems={'center'} opacity={0.8}>
-        <FontAwesomeIcon icon={Integrations[icon].icon} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
+        {Integrations[icon].icon && (
+          <FontAwesomeIcon icon={Integrations[icon].icon} size={'1x'} color={color !== 'gray.800' ? color : 'black'} />
+        )}
         <ExternalLink color={color} ml={2} href={link || undefined} fontWeight={'bold'}>
           {username || Integrations[icon].name}
         </ExternalLink>

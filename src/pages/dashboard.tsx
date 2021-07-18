@@ -8,7 +8,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 const getUsers = async () => {
-  const res = await axios.get('/api/batchusers');
+  const BATCH_USERS_ROUTE = '/api/batchusers';
+
+  const res = await axios.get(BATCH_USERS_ROUTE);
   return res.data;
 };
 
@@ -25,7 +27,6 @@ const Dashboard: NextPage = () => {
   useEffect(() => {
     getUsers()
       .then(({ users: fetchedUsers }) => {
-        console.log(fetchedUsers);
         setUsers(fetchedUsers);
       })
       .catch((err) => {

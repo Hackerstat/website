@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { URI, HACKERSTAT, USERPROFILES, GITHUBDATA, GITHUB } from '../constants';
 import { AddGitHubDataType } from '../../validation/schemas';
-import { UserProfileType } from '../../utils';
+import { UserProfileType } from '../types';
 import auth0 from '../../auth';
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });

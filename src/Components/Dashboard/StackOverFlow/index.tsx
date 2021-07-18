@@ -3,8 +3,8 @@ import Axios from 'axios';
 import { Stack, useColorMode, BoxProps } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import { UserInfo, TagRow } from '../../StackOverFlow';
-import { FetchStackOverflowInfoRes } from '../../../utils/utils';
-import { IntegrationTypes } from '../../../utils';
+import { FetchStackOverflowInfoRes } from '../../../types';
+import { IntegrationTypes } from '../../../types';
 
 const stackOverFlowRetrievalURL = '/api/stackoverflow/remote';
 

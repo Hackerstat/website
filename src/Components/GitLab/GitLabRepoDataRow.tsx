@@ -2,7 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { Box, Flex, Heading, Button, Stack, Text } from '@chakra-ui/react';
 import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType } from '../../utils/utils';
+import { GitHubRepoDisplayDataType } from '../../types';
+import { SetGitHubRepoDisplayDataType } from '../types';
 
 interface GitLabRepoDataRowProps {
   repos: Array<GitHubRepoDisplayDataType>;

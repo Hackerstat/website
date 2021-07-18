@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUser } from '../../../utils/mongo';
-import { handleRes, StatusTypes, userQueryValidator } from '../../../utils';
+import { handleRes, userQueryValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name [user]
@@ -10,7 +11,7 @@ import { handleRes, StatusTypes, userQueryValidator } from '../../../utils';
  * @returns {void}
  */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       try {
         await userQueryValidator(req.query);

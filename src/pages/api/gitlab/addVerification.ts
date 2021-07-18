@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios, { AxiosResponse } from 'axios';
-import { USERPROFILE_URL, REPO_URL, LANGUAGE_URL_GITLAB, REPO_SPECIFIC_URL_GITLAB } from '../../../utils/constants';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes, USERPROFILE_URL, REPO_URL, LANGUAGE_URL_GITLAB, REPO_SPECIFIC_URL_GITLAB } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  *         Axios.get(USERPROFILE_URL, {
@@ -33,7 +33,7 @@ import { handleRes, StatusTypes } from '../../../utils';
  * @returns {void}
  */
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       // const URL = `https://gitlab.com/oauth/token`;
       // const gitLabTokenInfo = await Axios.post(URL, {
@@ -45,9 +45,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
       // });
       // console.log(req.query.code);
       if (req.headers.gitlabtoken) {
-        console.log('asd');
         const { gitlabtoken: access_token } = req.headers;
-        console.log(access_token);
 
         const { avatar_url, email, username, name, id, followers, following, location } = (
           await Axios.get(USERPROFILE_URL, { params: { access_token } })
@@ -93,8 +91,6 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
           location,
           repos: userRepos,
         };
-
-        console.log(gitLabProfile);
 
         handleRes({ res, status: StatusTypes.OK, jsonData: gitLabProfile });
       } else {

@@ -1,7 +1,8 @@
 const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 const MAX_COUNT = 10;
 
@@ -23,7 +24,7 @@ const retrievePackagesFromUser = async (userName: string | string[]) => {
  * @author @LouisIV
  */
 export default async function remoteNPMRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { username: passedUsername } = req.query;
       const packages = await retrievePackagesFromUser(passedUsername);

@@ -1,7 +1,12 @@
 import { MongoClient } from 'mongodb';
-import { AddWakaTimeIntegrationProps } from '../../utils';
 
 import { URI, HACKERSTAT, USERPROFILES, WAKATIME } from '../constants';
+
+interface AddWakaTimeIntegrationProps {
+  sub: any;
+  wakaTimeCodingActivityURL: string;
+  wakaTimeLanguageURL: string;
+}
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 

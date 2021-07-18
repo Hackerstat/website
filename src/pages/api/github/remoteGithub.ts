@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGithubReposRemote } from '../../../utils/mongo';
 import { usernameRemoteQueryValidator } from '../../../utils/validation';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 const API_KEY = process.env.GITHUB_API_KEY;
 
@@ -43,7 +44,7 @@ const createQuery = (username: string): string => {
  * @returns {void} */
 export default async function remoteGitHubRetrieval(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    if (req.method === 'GET') {
+    if (req.method === HttpCodes.GET) {
       const { username } = await usernameRemoteQueryValidator(req.query);
 
       const gitHubInfo = await getGithubReposRemote(username as string);

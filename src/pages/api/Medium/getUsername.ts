@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getIntegrationUserName } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, MEDIUM } from '../../../utils';
+import { handleRes, MEDIUM } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name getUsername
@@ -11,7 +12,7 @@ import { handleRes, StatusTypes, MEDIUM } from '../../../utils';
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const mediumUserName = await getIntegrationUserName(req, res, MEDIUM);
       handleRes({ res, status: StatusTypes.OK, jsonData: { username: mediumUserName } });

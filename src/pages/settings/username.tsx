@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import useDebounce from 'react-use/lib/useDebounce';
 import Axios from 'axios';
-import {
-  useToast,
-  Input,
-  Flex,
-  InputGroup,
-  InputRightElement,
-  Box,
-  Spinner,
-  Text,
-  Button,
-  FormHelperText,
-} from '@chakra-ui/react';
+import { useToast, Input, Flex, InputGroup, InputRightElement, Box, Spinner, Text, Button } from '@chakra-ui/react';
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import { NextPage } from 'next';
 import AuthLayer from '../../Components/AuthLayer';
 import SettingsPage from '../../Components/SettingsPage';
 import Loader from '../../Components/Loader';
+
+const SETTINGS_USERNAME = '/api/settings/username';
 
 /**
  * @name getCurrentUsername
@@ -26,7 +17,7 @@ import Loader from '../../Components/Loader';
  * @returns {string}
  */
 export const getCurrentUsername = async (): Promise<string> => {
-  const result = await Axios.get('/api/settings/username');
+  const result = await Axios.get(SETTINGS_USERNAME);
   return result.data?.username;
 };
 
@@ -71,7 +62,7 @@ const UsernameSettingsPage = () => {
 
     try {
       setSettingUsername(true);
-      const result = await Axios.post('/api/settings/username', {
+      const result = await Axios.post(SETTINGS_USERNAME, {
         newUsername: newUsername,
       });
       toast({
@@ -102,13 +93,15 @@ const UsernameSettingsPage = () => {
    * @returns {boolean}
    */
   const checkUsername = async (newUsername: string): Promise<boolean> => {
+    const USERNAME_PICKER = '/api/usernamepicker';
+
     if (!newUsername) {
       return false;
     }
 
     try {
       setCheckingUsername(true);
-      const result = await Axios.get('/api/usernamepicker', {
+      const result = await Axios.get(USERNAME_PICKER, {
         params: {
           newUsername: newUsername,
         },

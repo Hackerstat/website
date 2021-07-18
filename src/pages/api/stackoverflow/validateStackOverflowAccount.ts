@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUsername } from '../../../utils/mongo';
-import { validateStackOverflowAccountScrape } from '../../../utils/thrdAPIs';
-import { handleRes, StatusTypes, mediumUserNameQueryValidator } from '../../../utils';
+import { handleRes, mediumUserNameQueryValidator, validateStackOverflowAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -13,7 +13,7 @@ import auth0 from '../../../utils/auth';
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { username } = await mediumUserNameQueryValidator(req.query);
       const { username: hackerStatUsername } = await getUsername(req, res);

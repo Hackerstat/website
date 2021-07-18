@@ -1,21 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getRemoteWakaTimeData } from '../../../utils/mongo';
 import {
-  WakaTimeActivityGraphDataPropsType,
-  WakaTimeLanguagesGraphDataPropsType,
-  GetRemoteWakaTimeDataRes,
-} from '../../../utils/utils';
-import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
-
-import {
+  fetchWakaTimeActivityData,
+  fetchWakaTimeLanguagesData,
   handleRes,
-  StatusTypes,
   WAKATIME,
   WAKATIME_LANGUAGE_URL,
   WAKATIME_ACTIVITY_URL,
   INTEGRATIONS,
   INTEGRATION_SETTINGS,
 } from '../../../utils';
+import {
+  StatusTypes,
+  HttpCodes,
+  WakaTimeActivityGraphDataPropsType,
+  WakaTimeLanguagesGraphDataPropsType,
+  GetRemoteWakaTimeDataRes,
+} from '../../../types';
 
 type wakaTimeRes = {
   wakaTimeLanguagesData: WakaTimeLanguagesGraphDataPropsType | null;
@@ -41,13 +42,12 @@ export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: 
     wakaTimeLanguagesData: null,
   };
   try {
-    if (req.method === 'GET') {
+    if (req.method === HttpCodes.GET) {
       const wakaTimeInfo = await getRemoteWakaTimeData(req);
       if (checkWakaTimeInfoObject(wakaTimeInfo)) {
         handleRes({ res, status: StatusTypes.OK, jsonData: {} });
         return;
       }
-      console.log(wakaTimeInfo);
       if (Object(wakaTimeInfo.integration_settings.wakatime).hasOwnProperty(WAKATIME_LANGUAGE_URL)) {
         const { wakaTimeLanguageURL } = wakaTimeInfo.integration_settings.wakatime;
         wakaTimeRes.wakaTimeLanguagesData = await fetchWakaTimeLanguagesData(wakaTimeLanguageURL);

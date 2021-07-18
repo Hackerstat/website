@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getIntegrationInfo } from '../../../utils/mongo';
 import { mediumUserNameQueryValidator } from '../../../utils/validation';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
 
 /**
  * @REMOVE

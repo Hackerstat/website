@@ -1,6 +1,8 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES, BEHANCEDATA } from '../constants';
-import { AddBehancePiecesSchemaType, UserProfileType, IntegrationTypes } from '../../';
+import { IntegrationTypes } from '../../../types';
+import { AddBehancePiecesSchemaType } from '../../';
+import { UserProfileType } from '../types';
 
 export const addBehanceData = async ({
   sub,

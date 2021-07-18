@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Card from '../Card';
 import { BoxProps, Flex, Box, HStack, Text } from '@chakra-ui/react';
 import { formatNums } from '../../utils/formatNums';
-import { Badges } from '../../utils/utils';
+import { Badges } from '../../types';
 
 enum Medals {
   gold = '#e5cb01',

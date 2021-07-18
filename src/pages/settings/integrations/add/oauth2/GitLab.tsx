@@ -2,13 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import { Box, Heading, Text, Flex, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import Axios from 'axios';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
 import { GitHubUserData, GitHubRepoDataRow } from '../../../../../Components/GitHub';
-// import { NextApiRequest, NextApiResponse } from 'next';
 import AuthLayer from '../../../../../Components/AuthLayer';
-import { GitLabRepoDisplayDataType, GitLabUserAccount } from '../../../../../utils';
-import Axios from 'axios';
+import { GitHubRepoLanguagesType } from '../../../../../types';
+
+export interface GitLabRepoDisplayDataType {
+  contributors: string;
+  des: string;
+  forks: number;
+  languages: GitHubRepoLanguagesType;
+  lastUpdated: string;
+  owner: string;
+  private: boolean;
+  repoName: string;
+  stars: number;
+  sz: number;
+  url: string;
+  watchers: number;
+}
+
+export interface GitLabUserAccount {
+  avatar_url: string;
+  email: string;
+  user: string;
+  name: string;
+  id: number;
+  followers: number;
+  following: number;
+  location: string;
+}
 
 /**
  * @REDO
@@ -22,7 +47,8 @@ const GitLabAuthenticator = ({ router: router }) => {
 
   const addGitLabData = async () => {
     setIsSaving(true);
-    await Axios.post('/api/gitlab/addRepos', {
+    const GITLAB_ADD_REPOS = '/api/gitlab/addRepos';
+    await Axios.post(GITLAB_ADD_REPOS, {
       ...gitLabAccountData,
       repos: gitLabUserRepos,
     });
@@ -46,8 +72,8 @@ const GitLabAuthenticator = ({ router: router }) => {
       const {
         data: { access_token },
       } = res;
-      console.log(access_token);
-      Axios.get('/api/gitlab/addVerification', { headers: { gitLabToken: access_token } })
+      const GITLAB_ADD_VERIFICATION = '/api/gitlab/addVerification';
+      Axios.get(GITLAB_ADD_VERIFICATION, { headers: { gitLabToken: access_token } })
         .then((res) => {
           const { repos, ...gitLabUserData } = res.data;
           setGitLabAccountData(gitLabUserData);

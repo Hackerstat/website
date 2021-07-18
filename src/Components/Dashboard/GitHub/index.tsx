@@ -2,11 +2,33 @@ import React, { useState, useEffect, FunctionComponent } from 'react';
 import Axios from 'axios';
 import { BoxProps, Stack, useColorMode, Skeleton } from '@chakra-ui/react';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
+import { IntegrationTypes, GitHubRepoDisplayDataType } from '../../../types';
+import { ContributionsCalendarType } from '../../types';
 import { GitHubRepoDataRow, GitHubUserData, GitHubCalendar } from '../../GitHub';
-import { GitHubRemoteAPIReturnDataType, IntegrationTypes } from '../../../utils';
 
 interface GitHubCardProps extends BoxProps {
   username: string;
+}
+
+interface ContributionsCollectionType {
+  startedAt: string;
+  endedAt: string;
+  hasAnyContributions: boolean;
+  hasActivityInThePast: boolean;
+  contributionCalendar: ContributionsCalendarType;
+}
+interface GitHubRemoteAPIReturnDataType {
+  data?: {
+    user?: {
+      contributionsCollection?: ContributionsCollectionType;
+    };
+  };
+  _id: string;
+  followers: number;
+  following: number;
+  avatar_url: string;
+  repos: Array<GitHubRepoDisplayDataType>;
+  user: string;
 }
 
 const GITHUB_URL = 'api/github/remoteGithub';

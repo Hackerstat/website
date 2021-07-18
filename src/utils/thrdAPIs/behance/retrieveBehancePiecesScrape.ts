@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import cheerio from 'cheerio';
-import { ValidCheerioNode, BehanceWorkPiecesType } from '../../utils';
+import { BehanceWorkPiecesType } from '../../../types';
+import { ValidCheerioNode } from '../types';
 
 const BEHANCE_LINKS_QUERY_SELECTOR = 'div.ProjectCoverNeue-info-4Ul span a.Title-title-3nk.e2e-Title-owner';
 const BEHANCE_IMAGES_QUERY_SELECTOR = 'div.Cover-content-2R2 img.ProjectCoverNeue-image-1MZ.js-cover-image';

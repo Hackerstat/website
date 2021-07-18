@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
 import { getRemoteDribbbleUsername, addDribbbleRemoteData } from '../../../utils/mongo';
 import {
   retrieveDribbblePiecesScrape,
   usernameRemoteQueryValidator,
   validateDribbbleAccountScrape,
-  DribbbleRemoteJSONDataType,
 } from '../../../utils';
+import { StatusTypes, HttpCodes, DribbbleRemoteJSONDataType } from '../../../types';
 
 /**
  * @name remoteDribble
@@ -16,7 +16,7 @@ import {
  * @returns {void}
  */
 export default async function remoteDribble(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { username: hackerStatUsername } = await usernameRemoteQueryValidator(req.body);
       const { dribbbleUsername, id: dribbbleDataID } = await getRemoteDribbbleUsername(hackerStatUsername);

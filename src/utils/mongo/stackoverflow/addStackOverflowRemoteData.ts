@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES, STACKOVERFLOWDATA } from '../constants';
-import { FetchStackOverflowInfoRes } from '../../utils';
+import { FetchStackOverflowInfoRes } from '../../../types';
 
 const connectToClient = async () => await MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 

@@ -12,21 +12,19 @@ import {
   useToast,
   LightMode,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import { CollapseableInstructionWrapper } from '../../../../Components/WakaTime/CollapseInstructionBox';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaTime/Graphs';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import {
-  goodToast,
-  badToast,
-  badGetWakaTimeToast,
-  WakaTimeLanguagesGraphDataPropsType,
-  WakaTimeActivityGraphDataPropsType,
-  WakaTimeLanguageDataType,
   IntegrationTypes,
-} from '../../../../utils';
+  WakaTimeLanguageDataType,
+  WakaTimeActivityGraphDataPropsType,
+  WakaTimeLanguagesGraphDataPropsType,
+} from '../../../../types';
+import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
@@ -98,7 +96,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       setDrawerCodingActivity(true);
     } catch (err) {
       console.log(err);
-      toast(badGetWakaTimeToast as unknown);
+      toast(badGetWakaTimeToast);
     }
   };
 
@@ -133,7 +131,6 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       };
 
       const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
-      console.log(res.data);
 
       res.data.dataPoints.forEach((dataPoint: WakaTimeLanguageDataType) => {
         pieDataPoints.labels.push(dataPoint.name);
@@ -147,7 +144,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       setDrawerLanguage(true);
     } catch (err) {
       console.log(err);
-      toast(badGetWakaTimeToast as unknown);
+      toast(badGetWakaTimeToast);
     }
   };
   /**
@@ -162,10 +159,10 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         wakaTimeCodingActivityURL: activityWakaTimeURL,
         wakaTimeLanguageURL: languagesWakaTimeURL,
       });
-      toast(goodToast as unknown);
+      toast(goodToast);
     } catch (e) {
       console.error(e);
-      toast(badToast as unknown);
+      toast(badToast);
     }
   };
 

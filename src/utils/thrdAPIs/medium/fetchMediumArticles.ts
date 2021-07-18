@@ -1,7 +1,12 @@
 import Parser from 'rss-parser';
 import { NextApiRequest } from 'next';
 import { stripQueryParameters, addRefToURL } from '../../hackerFile';
-import { FetchMediumArticlesRes } from '../../utils';
+
+interface FetchMediumArticlesRes {
+  title: string;
+  link: string;
+  date: string;
+}
 
 export const fetchMediumArticles = async (req: NextApiRequest): Promise<Array<FetchMediumArticlesRes>> => {
   const parser = new Parser();

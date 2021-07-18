@@ -1,19 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Axios from 'axios';
-import { Button, Input, Stack, Text, useToast, UseToastOptions } from '@chakra-ui/react';
+import { Button, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import ImagePieceList from '../../../../Components/ImagePieceList';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  RetrieveDribbblePiecesScrape,
-  IntegrationTypes,
-} from '../../../../utils';
+import { IntegrationTypes, RetrieveDribbblePiecesScrape } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils';
 import DribbblePiece from '../../../../Components/DribbblePiece';
 
 /**
@@ -41,7 +35,7 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
       setIsRetrievingDribbbleData(false);
     } catch (err) {
       console.error(err);
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsRetrievingDribbbleData(false);
   };
@@ -50,10 +44,10 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
     const VALIDATE_DRIBBBLE_PIECES_URL = '/api/dribbble/validateDribbbleAccount';
     try {
       await Axios.get(VALIDATE_DRIBBBLE_PIECES_URL, { params: { dribbbleUsername } });
-      toast(verifiedToast as UseToastOptions);
+      toast(verifiedToast);
     } catch (err) {
       console.error(err);
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setIsVerifying(false);
   };
@@ -74,9 +68,9 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
         dribbbleUsername,
         dribbblePieces: dribbbleWorkPieces,
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (err) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsAddingDribbbleData(false);
   };

@@ -51,7 +51,9 @@ const ProfileInfo = () => {
   });
 
   useEffect(() => {
-    Axios.get('/api/settings/info')
+    const SETTINGS_INFO = '/api/settings/info';
+
+    Axios.get(SETTINGS_INFO)
       .then((res) => {
         const data = res.data;
         const newFields = Object.create(fields);

@@ -2,14 +2,8 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import Axios from 'axios';
 import { NextPage } from 'next';
 import { Stack, Text, Input, Button, useToast, UseToastOptions } from '@chakra-ui/react';
-import {
-  IntegrationTypes,
-  BehanceWorkPiecesType,
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-} from '../../../../utils';
+import { IntegrationTypes, BehanceWorkPiecesType } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
@@ -34,10 +28,10 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
       if (!validated) {
         throw new Error(VALIDATION_ERROR);
       }
-      toast(verifiedToast as UseToastOptions);
+      toast(verifiedToast);
     } catch (e) {
       console.error(e);
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setIsVerifying(false);
   };
@@ -55,7 +49,7 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
       setBehanceData(behanceProjects);
     } catch (e) {
       console.error(e);
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsRetrievingBehanceData(false);
   };
@@ -75,10 +69,10 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
         behanceUsername,
         behanceWorkPieces: behanceData,
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (e) {
       console.error(e);
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsAddingBehanceData(false);
   };

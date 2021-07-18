@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { formatNums } from '../../utils/formatNums';
-import { Tag } from '../../utils/utils';
+import { Tag } from '../../types';
 
 interface TagRowProps {
   tag: Tag;
