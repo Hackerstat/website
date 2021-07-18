@@ -381,3 +381,9 @@ export interface BehanceWorkPieceType {
 }
 
 export type BehanceWorkPiecesType = Array<BehanceWorkPieceType>;
+
+export interface BehanceRemoteJSONDataType {
+  isValidated: boolean;
+  behanceUsername: string;
+  behanceData: BehanceWorkPiecesType;
+}

@@ -11,6 +11,13 @@ import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 import WorkExperienceCard from '../Components/Dashboard/WorkExperience';
 import { WorkExperienceType, IntegrationTypes } from '../utils';
 
+const Behance = dynamic(() => import('../Components/Dashboard/Behance'), {
+  // eslint-disable-next-line react/display-name
+  loading: () => <Spinner aria-busy="true" />,
+});
+
+Behance.displayName = IntegrationTypes.BEHANCE;
+
 const Dribbble = dynamic(() => import('../Components/Dashboard/Dribbble'), {
   // eslint-disable-next-line react/display-name
   loading: () => <Spinner aria-busy="true" />,
@@ -23,7 +30,7 @@ const WakaTime = dynamic(() => import('../Components/Dashboard/WakaTime'), {
   loading: () => <Spinner aria-busy="true" />,
 });
 
-WakaTime.displayName = 'WakaTime';
+WakaTime.displayName = IntegrationTypes.WAKATIME;
 
 const NPM = dynamic(() => import('../Components/Dashboard/NPM'), {
   // eslint-disable-next-line react/display-name
@@ -37,24 +44,26 @@ const StackOverFlow = dynamic(() => import('../Components/Dashboard/StackOverFlo
   loading: () => <Spinner aria-busy="true" />,
 });
 
-StackOverFlow.displayName = 'StackOverFlow';
+StackOverFlow.displayName = IntegrationTypes.STACKOVERFLOW;
 
 const Medium = dynamic(() => import('../Components/Dashboard/Medium'), {
   // eslint-disable-next-line react/display-name
   loading: () => <p>Loading...</p>,
 });
-Medium.displayName = 'Medium';
+Medium.displayName = IntegrationTypes.MEDIUM;
 
 const Twitter = dynamic(() => import('../Components/Dashboard/Twitter'), {
   // eslint-disable-next-line react/display-name
   loading: () => <p>Loading...</p>,
 });
-Twitter.displayName = 'Twitter';
+Twitter.displayName = IntegrationTypes.TWITTER;
 
 const GitHub = dynamic(() => import('../Components/Dashboard/GitHub'), {
   // eslint-disable-next-line react/display-name
   loading: () => <Spinner aria-busy="true" />,
 });
+
+GitHub.displayName = IntegrationTypes.GITHUB;
 
 interface UserInfo {
   firstName: string;
@@ -198,6 +207,11 @@ const UserProfilePage: NextPage = () => {
                 // @ts-ignore
                 dribbbleUsername={integrationSettings?.dribbble?.username}
               />
+            ),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            !!integrationSettings && integrationSettings?.behance?.username && (
+              <Behance username={user as string} mx={2} />
             ),
           ]}
         </Masonry>
