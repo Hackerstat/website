@@ -15,20 +15,12 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { dribbbleUsername } = await retrieveDribbblePiecesValidator(req.query);
       const { username: hackerStatUsername } = await getUsername(req, res);
       const validated = await validateDribbbleAccountScrape(dribbbleUsername, hackerStatUsername);
-      if (validated) {
-        handleRes({
-          res,
-          status: StatusTypes.OK,
-          jsonData: { validated },
-        });
-      } else {
-        handleRes({ res, status: StatusTypes.NOT_FOUND, jsonData: { validated } });
-      }
+      handleRes({ res, status: validated ? StatusTypes.OK : StatusTypes.NOT_FOUND, jsonData: { validated } });
     } catch (e) {
       console.error(e);
       handleRes({ res, status: StatusTypes.SERVER_ERROR });
     }
   } else {
-    handleRes({ res, status: StatusTypes.BAD_REQUEST, message: 'Bad Header' });
+    handleRes({ res, status: StatusTypes.BAD_REQUEST });
   }
 });

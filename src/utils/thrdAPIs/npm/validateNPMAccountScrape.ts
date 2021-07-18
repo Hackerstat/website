@@ -16,7 +16,6 @@ export const validateNPMAccountScrape = async (username: string, gitHubUsername:
     const $ = cheerio.load(npmrofilePage.data);
     const gitHubUserURL = GITHUB_USER_URL(gitHubUsername);
     const descriptionMetaData = $('a.truncate.no-underline.pr1')[0].attribs.href;
-    console.log(descriptionMetaData);
     if (descriptionMetaData !== undefined) {
       if (descriptionMetaData === gitHubUserURL) {
         return true;

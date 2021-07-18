@@ -59,11 +59,11 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
   };
 
   const addDribbbleData = async () => {
-    const VALIDATE_DRIBBBLE_PIECES_URL = '/api/dribbble/addDribbblePieces';
+    const ADD_DRIBBBLE_PIECES_URL = '/api/dribbble/addDribbblePieces';
 
     try {
       await retrieveDribbbleData();
-      await Axios.post(VALIDATE_DRIBBBLE_PIECES_URL, {
+      await Axios.post(ADD_DRIBBBLE_PIECES_URL, {
         integrationInfo: {
           integrationType: IntegrationTypes.DRIBBBLE,
           settings: {

@@ -19,7 +19,7 @@ const gitLabRepoSchema = yup.object().shape({
     .trim()
     .test(
       'Description Length',
-      'Length of Desceription have to be less than 20,000 characters',
+      'Length of Description have to be less than 20,000 characters',
       (des) => des.length <= 20_000,
     ),
   id: yup.number().strict(true),

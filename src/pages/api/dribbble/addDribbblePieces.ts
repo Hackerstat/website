@@ -20,6 +20,8 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     try {
       const { user } = await auth0.getSession(req, res);
 
+      console.log(req.body?.integrationInfo);
+
       const { sub } = user;
       const [{ dribbbleUsername, dribbblePieces }] = await Promise.all([
         addDribbblePiecesValidator(req.body),

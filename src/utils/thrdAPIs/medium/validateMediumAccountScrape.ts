@@ -12,13 +12,17 @@ import { HACKERSTAT_VERIFICATION_URL } from '../..';
  */
 
 export const validateMediumAccountScrape = async (username: string, hackerStatUsername: string): Promise<boolean> => {
-  const mediumProfilePage = await Axios.get(`https://${username}.medium.com/`);
-  const $ = cheerio.load(mediumProfilePage.data);
-  const descriptionMetaData = $('meta[property=og:description]')['0']?.attribs?.content;
-  if (descriptionMetaData !== undefined) {
-    if (descriptionMetaData.includes(HACKERSTAT_VERIFICATION_URL(hackerStatUsername))) {
-      return true;
+  try {
+    const mediumProfilePage = await Axios.get(`https://${username}.medium.com/`);
+    const $ = cheerio.load(mediumProfilePage.data);
+    const descriptionMetaData = $('meta[property=og:description]')['0']?.attribs?.content;
+    if (descriptionMetaData !== undefined) {
+      if (descriptionMetaData.includes(HACKERSTAT_VERIFICATION_URL(hackerStatUsername))) {
+        return true;
+      }
     }
+  } catch (e) {
+    console.error('e');
+    return false;
   }
-  return false;
 };

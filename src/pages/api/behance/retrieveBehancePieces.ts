@@ -2,6 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { handleRes, StatusTypes, retrieveBehancePiecesValidator, retrieveBehanceAccountScrape } from '../../../utils';
 import auth0 from '../../../utils/auth';
 
+/**
+ * @name retrieveBehancePieces
+ * @description It is a function that retrieves the Behance Work Pieces from a Behance username.
+ * @author @Cgunter1
+ * @argument {string} behanceUsername
+ * @returns {void}
+ */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {

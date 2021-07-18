@@ -25,21 +25,62 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
   const [behanceData, setBehanceData] = useState<BehanceWorkPiecesType>([]);
 
   const validateBehanceAccount = async () => {
+    const VALIDATION_ERROR = 'Could Not Validate Integration.';
+    const VALIDATE_BEHANCE_PIECES_URL = '/api/behance/validateBehanceAccount';
+    try {
+      const {
+        data: { validated },
+      } = await Axios.get(VALIDATE_BEHANCE_PIECES_URL, { params: { behanceUsername } });
+      if (!validated) {
+        throw new Error(VALIDATION_ERROR);
+      }
+      toast(verifiedToast as UseToastOptions);
+    } catch (e) {
+      console.error(e);
+      toast(notVerifiedToast as UseToastOptions);
+    }
     setIsVerifying(false);
-    toast(verifiedToast as UseToastOptions);
   };
 
   const retrieveBehanceData = async () => {
+    const RETRIEVAL_ERROR = `Could not find any behance project associated with ${behanceUsername}.`;
+    const RETRIEVE_BEHANCE_PIECES_URL = '/api/behance/retrieveBehancePieces';
     try {
       const {
         data: { behanceProjects },
-      } = await Axios.get('/api/behance/retrieveBehanceAccount', { params: { behanceUsername } });
+      } = await Axios.get(RETRIEVE_BEHANCE_PIECES_URL, { params: { behanceUsername } });
+      if (!behanceProjects || !behanceProjects.length) {
+        throw new Error(RETRIEVAL_ERROR);
+      }
       setBehanceData(behanceProjects);
     } catch (e) {
       console.error(e);
       toast(badToast as UseToastOptions);
     }
     setIsRetrievingBehanceData(false);
+  };
+
+  const addBehanceData = async () => {
+    const ADD_BEHANCE_PIECES_URL = '/api/behance/addBehancePieces';
+    try {
+      await retrieveBehanceData();
+      await Axios.post(ADD_BEHANCE_PIECES_URL, {
+        integrationInfo: {
+          integrationType: IntegrationTypes.BEHANCE,
+          settings: {
+            username: behanceUsername,
+            integrationType: IntegrationTypes.BEHANCE,
+          },
+        },
+        behanceUsername,
+        behanceWorkPieces: behanceData,
+      });
+      toast(goodToast as UseToastOptions);
+    } catch (e) {
+      console.error(e);
+      toast(badToast as UseToastOptions);
+    }
+    setIsAddingBehanceData(false);
   };
 
   return (
@@ -65,7 +106,7 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
         <Button
           disabled={isAddingBehanceData || isVerifying || behanceUsername.length === 0}
           isLoading={isRetrievingBehanceData}
-          loadingText="Retrieving Dribbble Work"
+          loadingText="Retrieving Behance Work"
           onClick={async () => {
             setIsRetrievingBehanceData(true);
             await retrieveBehanceData();
@@ -73,17 +114,17 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
         >
           Retrieve Behance Data
         </Button>
-        {/* <Button
-          disabled={isRetrievingDribbbleData || isVerifying || dribbbleWorkPieces.length === 0}
-          isLoading={isAddingDribbbleData}
-          loadingText="Adding Dribbble Work"
+        <Button
+          disabled={isRetrievingBehanceData || isVerifying || behanceData.length === 0}
+          isLoading={isAddingBehanceData}
+          loadingText="Adding Behance Work"
           onClick={async () => {
-            setIsAddingDribbbleData(true);
-            await addDribbbleData();
+            setIsAddingBehanceData(true);
+            await addBehanceData();
           }}
         >
-          Add Dribbble Account Data
-        </Button> */}
+          Add Behance Account Data
+        </Button>
         <ImagePieceList>
           {behanceData &&
             behanceData

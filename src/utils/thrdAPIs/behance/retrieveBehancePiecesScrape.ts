@@ -8,7 +8,7 @@ const BEHANCE_LIKES_AND_WATCHES_QUERY_SELECTOR = 'div.Stats-stats-1iI span';
 
 type RetrieveBehanceAccountScrapeResType = Promise<BehanceWorkPiecesType | null>;
 
-const MAX_BEHANCE_PIECES = 36;
+const MAX_BEHANCE_PIECES = 12;
 const NEXT_OFFSET = 12;
 
 export const retrieveBehanceAccountScrape = async (behanceUsername: string): RetrieveBehanceAccountScrapeResType => {
@@ -32,7 +32,7 @@ export const retrieveBehanceAccountScrape = async (behanceUsername: string): Ret
     }
     return behanceProjects;
   } catch (e) {
-    console.error(e);
+    // console.error(e);
     return null;
   }
 };
