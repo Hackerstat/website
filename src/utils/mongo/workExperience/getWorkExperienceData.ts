@@ -1,4 +1,4 @@
-import { WorkExperienceType } from '../../utils';
+import { WorkExperienceType } from '../../../types';
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 

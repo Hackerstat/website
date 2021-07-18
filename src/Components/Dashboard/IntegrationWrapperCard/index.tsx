@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExternalLink from '../../ExternalLink';
 import { BoxProps, Flex, useColorMode, Box } from '@chakra-ui/react';
 import Card from '../../Card';
-import { IntegrationTypes } from '../../../utils';
+import { IntegrationTypes } from '../../../types';
 import { VerifiedButton } from '../../VerifiedButton';
 
 const Integrations = {

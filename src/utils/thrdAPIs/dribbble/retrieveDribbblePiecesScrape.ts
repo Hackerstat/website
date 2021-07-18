@@ -1,6 +1,7 @@
 import cheerio from 'cheerio';
 import Axios from 'axios';
-import { RetrieveDribbblePiecesScrape, ValidCheerioNode } from '../../utils';
+import { ValidCheerioNode } from '../types';
+import { RetrieveDribbblePiecesScrape } from '../../../types';
 
 export const retrieveDribbblePiecesScrape = async (dribbbleUsername: string): Promise<RetrieveDribbblePiecesScrape> => {
   const BASE_URL = `https://dribbble.com`;

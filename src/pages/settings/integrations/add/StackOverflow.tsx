@@ -12,18 +12,12 @@ import {
   useToast,
   UseToastOptions,
 } from '@chakra-ui/react';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  ADD_INTEGRATION_URL,
-  IntegrationTypes,
-} from '../../../../utils';
+import Axios from 'axios';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 /**

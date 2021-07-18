@@ -1,13 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
   handleRes,
-  StatusTypes,
   usernameRemoteQueryValidator,
   retrieveBehanceAccountScrape,
   validateDribbbleAccountScrape,
-  BehanceRemoteJSONDataType,
-  HttpCodes,
 } from '../../../utils';
+import { StatusTypes, HttpCodes, BehanceRemoteJSONDataType } from '../../../types';
 import { getRemoteBehanceUsername, addBehanceRemoteData } from '../../../utils/mongo/behance';
 
 /**

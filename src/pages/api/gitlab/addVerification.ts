@@ -1,14 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Axios, { AxiosResponse } from 'axios';
-import {
-  handleRes,
-  StatusTypes,
-  HttpCodes,
-  USERPROFILE_URL,
-  REPO_URL,
-  LANGUAGE_URL_GITLAB,
-  REPO_SPECIFIC_URL_GITLAB,
-} from '../../../utils';
+import { handleRes, USERPROFILE_URL, REPO_URL, LANGUAGE_URL_GITLAB, REPO_SPECIFIC_URL_GITLAB } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  *         Axios.get(USERPROFILE_URL, {

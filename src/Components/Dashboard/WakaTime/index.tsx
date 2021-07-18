@@ -3,11 +3,11 @@ import Axios from 'axios';
 import { BoxProps, Grid, useColorMode } from '@chakra-ui/react';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../WakaTime/Graphs';
 import {
-  WakaTimeLanguagesGraphDataPropsType,
+  IntegrationTypes,
   WakaTimeLanguageDataType,
   WakaTimeActivityGraphDataPropsType,
-  IntegrationTypes,
-} from '../../../utils';
+  WakaTimeLanguagesGraphDataPropsType,
+} from '../../../types';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 
 interface WakaTimeProps extends BoxProps {

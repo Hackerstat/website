@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import Axios from 'axios';
 import { BoxProps, Box } from '@chakra-ui/react';
-import { BehanceRemoteJSONDataType, IntegrationTypes } from '../../../utils';
+import { IntegrationTypes, BehanceRemoteJSONDataType } from '../../../types';
 import BehancePiece from '../../BehancePiece';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 

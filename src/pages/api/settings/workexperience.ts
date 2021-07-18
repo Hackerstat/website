@@ -1,13 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import {
-  handleRes,
-  StatusTypes,
-  HttpCodes,
-  addWorkExperienceValidator,
-  updateWorkExperienceValidator,
-} from '../../../utils';
+import { handleRes, addWorkExperienceValidator, updateWorkExperienceValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name workexperience

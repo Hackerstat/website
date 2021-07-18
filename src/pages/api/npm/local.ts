@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { getLocalNPM } from '../../../utils/mongo';
-import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @REMOVE

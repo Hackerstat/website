@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
+import Axios from 'axios';
+import { useRouter } from 'next/router';
 import { Button, Stack, Text } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import { GITHUB_VERIFICATION_LINK } from '../../../../utils/constants';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 import Loader from '../../../../Components/Loader';
-import Axios from 'axios';
-import { useRouter } from 'next/router';
-import { IntegrationTypes } from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
 
 /**
  * @name AddGithubIntegrationPage

@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  handleRes,
-  StatusTypes,
-  HttpCodes,
-  usernameRemoteQueryValidator,
-  fetchStackOverflowInfo,
-} from '../../../utils';
+import { handleRes, usernameRemoteQueryValidator, fetchStackOverflowInfo } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import { getRemoteStackOverflowUsername, addStackOverflowRemoteData } from '../../../utils/mongo';
 
 /**

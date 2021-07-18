@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import Axios from 'axios';
 import { BoxProps, Box } from '@chakra-ui/react';
-import { DribbbleRemoteJSONDataType, IntegrationTypes } from '../../../utils';
+import { IntegrationTypes, DribbbleRemoteJSONDataType } from '../../../types';
 import IntegrationWrapperCard from '../IntegrationWrapperCard';
 import DribbblePiece from '../../DribbblePiece';
 

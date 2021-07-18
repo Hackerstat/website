@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { FetchStackOverflowInfoRes } from '../../utils';
+import { FetchStackOverflowInfoRes } from '../../../types';
 import { STACKOVERFLOW_URL_TAGS, STACKOVERFLOW_URL_USER } from '../../constants';
 
 export const fetchStackOverflowInfo = async (username: string): Promise<FetchStackOverflowInfoRes> => {

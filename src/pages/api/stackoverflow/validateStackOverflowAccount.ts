@@ -1,12 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUsername } from '../../../utils/mongo';
-import {
-  handleRes,
-  StatusTypes,
-  mediumUserNameQueryValidator,
-  HttpCodes,
-  validateStackOverflowAccountScrape,
-} from '../../../utils';
+import { handleRes, mediumUserNameQueryValidator, validateStackOverflowAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**

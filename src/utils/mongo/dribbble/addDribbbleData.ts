@@ -1,7 +1,9 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 import { DRIBBBLEDATA } from '../constants';
-import { UserProfileType, IntegrationTypes, AddDribbblePiecesType } from '../..';
+import { IntegrationTypes } from '../../../types';
+import { AddDribbblePiecesType } from '../..';
+import { UserProfileType } from '../types';
 
 export const addDribbbleData = async ({
   sub,

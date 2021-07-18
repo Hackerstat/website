@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addIntegrationInSettings } from '../../utils/mongo';
-import { handleRes, StatusTypes, addIntegrationInSettingsValidator, HttpCodes } from '../../utils';
+import { handleRes, addIntegrationInSettingsValidator } from '../../utils';
+import { HttpCodes, StatusTypes } from '../../types';
 import auth0 from '../../utils/auth';
 
 /**

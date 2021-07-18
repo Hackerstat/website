@@ -12,21 +12,19 @@ import {
   useToast,
   LightMode,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import { CollapseableInstructionWrapper } from '../../../../Components/WakaTime/CollapseInstructionBox';
 import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaTime/Graphs';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import {
-  goodToast,
-  badToast,
-  badGetWakaTimeToast,
-  WakaTimeLanguagesGraphDataPropsType,
-  WakaTimeActivityGraphDataPropsType,
-  WakaTimeLanguageDataType,
   IntegrationTypes,
-} from '../../../../utils';
+  WakaTimeLanguageDataType,
+  WakaTimeActivityGraphDataPropsType,
+  WakaTimeLanguagesGraphDataPropsType,
+} from '../../../../types';
+import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';

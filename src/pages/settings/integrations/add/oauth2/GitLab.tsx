@@ -2,13 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import { Box, Heading, Text, Flex, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import Axios from 'axios';
 import SettingsPage from '../../../../../Components/SettingsPage';
 import Loader from '../../../../../Components/Loader';
 import { GitHubUserData, GitHubRepoDataRow } from '../../../../../Components/GitHub';
-// import { NextApiRequest, NextApiResponse } from 'next';
 import AuthLayer from '../../../../../Components/AuthLayer';
-import { GitLabRepoDisplayDataType, GitLabUserAccount } from '../../../../../utils';
-import Axios from 'axios';
+import { GitHubRepoLanguagesType } from '../../../../../types';
+
+export interface GitLabRepoDisplayDataType {
+  contributors: string;
+  des: string;
+  forks: number;
+  languages: GitHubRepoLanguagesType;
+  lastUpdated: string;
+  owner: string;
+  private: boolean;
+  repoName: string;
+  stars: number;
+  sz: number;
+  url: string;
+  watchers: number;
+}
+
+export interface GitLabUserAccount {
+  avatar_url: string;
+  email: string;
+  user: string;
+  name: string;
+  id: number;
+  followers: number;
+  following: number;
+  location: string;
+}
 
 /**
  * @REDO

@@ -1,7 +1,8 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;

@@ -4,7 +4,8 @@ import { faEye, faThumbsUp, faExternalLinkAlt } from '@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageWorkPiece from '../ImageWorkPiece';
 import ExternalLink from '../ExternalLink';
-import { BehanceWorkPieceType } from '../../utils';
+// import { BehanceWorkPieceType } from '../../utils';
+import { BehanceWorkPieceType } from '../../types';
 
 const BehancePiece: FunctionComponent<BehanceWorkPieceType> = ({ image, title, link, likes, watches }) => (
   <ImageWorkPiece img={image}>

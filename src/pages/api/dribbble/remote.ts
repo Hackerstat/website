@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
 import { getRemoteDribbbleUsername, addDribbbleRemoteData } from '../../../utils/mongo';
 import {
   retrieveDribbblePiecesScrape,
   usernameRemoteQueryValidator,
   validateDribbbleAccountScrape,
-  DribbbleRemoteJSONDataType,
-  HttpCodes,
 } from '../../../utils';
+import { StatusTypes, HttpCodes, DribbbleRemoteJSONDataType } from '../../../types';
 
 /**
  * @name remoteDribble

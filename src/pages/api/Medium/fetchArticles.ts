@@ -2,7 +2,8 @@ import Parser from 'rss-parser';
 import { userQueryValidator } from '../../../utils/validation';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { stripQueryParameters, addRefToURL } from '../../../utils/hackerFile';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
 
 /**
  * @name fetchArticles

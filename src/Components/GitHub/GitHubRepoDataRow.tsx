@@ -2,8 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Box, Flex, Heading, Button, Stack, Text, useColorMode } from '@chakra-ui/react';
 import { faCodeBranch, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GitHubRepoDisplayDataType, SetGitHubRepoDisplayDataType, formatNums } from '../../utils';
-
+import { formatNums } from '../../utils';
+import { GitHubRepoDisplayDataType } from '../../types';
+import { SetGitHubRepoDisplayDataType } from '../types';
 interface GitHubRepoDataRowProps {
   repos?: Array<GitHubRepoDisplayDataType>;
   changeRepos?: SetGitHubRepoDisplayDataType;

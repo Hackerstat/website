@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getIntegrationUserName } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, MEDIUM, HttpCodes } from '../../../utils';
+import { handleRes, MEDIUM } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name getUsername

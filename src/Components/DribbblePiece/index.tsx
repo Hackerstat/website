@@ -4,7 +4,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ImageWorkPiece from '../ImageWorkPiece';
 import ExternalLink from '../ExternalLink';
-import { DribbblePiecesData } from '../../utils';
+import { DribbblePiecesData } from '../../types';
 
 const DribbblePiece: FunctionComponent<DribbblePiecesData> = ({ img, title, link }) => (
   <ImageWorkPiece img={img}>

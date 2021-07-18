@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
 import AuthLayer from '../AuthLayer';
-import { IntegrationTypes, INTEGRATION_ICONS } from '../../utils';
+import { IntegrationTypes } from '../../types';
+import { INTEGRATION_ICONS } from '../../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface SettingsIntegrationContainerProps {

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { fetchGithubRepos } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, HttpCodes, validateNPMAccountScrape, checkNPMUsernameValidator } from '../../../utils';
+import { handleRes, validateNPMAccountScrape, checkNPMUsernameValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name validateNPMAccount

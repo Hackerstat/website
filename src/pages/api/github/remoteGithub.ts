@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGithubReposRemote } from '../../../utils/mongo';
 import { usernameRemoteQueryValidator } from '../../../utils/validation';
-import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 const API_KEY = process.env.GITHUB_API_KEY;
 

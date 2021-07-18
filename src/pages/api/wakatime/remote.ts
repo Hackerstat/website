@@ -1,20 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getRemoteWakaTimeData } from '../../../utils/mongo';
 import {
-  WakaTimeActivityGraphDataPropsType,
-  WakaTimeLanguagesGraphDataPropsType,
-  GetRemoteWakaTimeDataRes,
-  HttpCodes,
   fetchWakaTimeActivityData,
   fetchWakaTimeLanguagesData,
   handleRes,
-  StatusTypes,
   WAKATIME,
   WAKATIME_LANGUAGE_URL,
   WAKATIME_ACTIVITY_URL,
   INTEGRATIONS,
   INTEGRATION_SETTINGS,
 } from '../../../utils';
+import {
+  StatusTypes,
+  HttpCodes,
+  WakaTimeActivityGraphDataPropsType,
+  WakaTimeLanguagesGraphDataPropsType,
+  GetRemoteWakaTimeDataRes,
+} from '../../../types';
 
 type wakaTimeRes = {
   wakaTimeLanguagesData: WakaTimeLanguagesGraphDataPropsType | null;

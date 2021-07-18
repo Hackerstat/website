@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { WakaTimeActivityGraphDataPropsType } from '../../../../utils/utils';
+import { WakaTimeActivityGraphDataPropsType } from '../../../../types';
 import { Bar } from 'react-chartjs-2';
 
 interface TimeBarProps {

@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import { getIntegrationInfoViaSub } from '../../../utils/mongo';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
 
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {

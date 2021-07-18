@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUser } from '../../../utils/mongo';
-import { handleRes, HttpCodes, StatusTypes, userQueryValidator } from '../../../utils';
+import { handleRes, userQueryValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name [user]

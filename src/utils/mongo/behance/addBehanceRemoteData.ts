@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { URI, HACKERSTAT, BEHANCEDATA } from '../constants';
-import { BehanceWorkPiecesType } from '../..';
+import { BehanceWorkPiecesType } from '../../../types';
 
 interface AddBehanceRemoteDataPropsType {
   behanceDataID: string;

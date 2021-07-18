@@ -1,7 +1,8 @@
 import { updateInfo, getInfo } from '../../../utils/mongo';
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, userInfoQueryValidator, HttpCodes } from '../../../utils';
+import { handleRes, userInfoQueryValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name info

@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import cheerio from 'cheerio';
-import { ValidCheerioNode } from '../..';
+import { ValidCheerioNode } from '../types';
 
 const BIO_ABRIDGED_QUERY = 'div.UserInfo-bio-YNh div.ReadMore-inline-3yb';
 const BIO_UNABRIDGED_QUERY = 'div.UserInfo-bio-YNh span';

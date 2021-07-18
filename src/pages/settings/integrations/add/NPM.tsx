@@ -17,14 +17,8 @@ import Loader from '../../../../Components/Loader';
 import Axios from 'axios';
 import NPMPackage from '../../../../Components/NPMPackage';
 import AuthLayer from '../../../../Components/AuthLayer';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  ADD_INTEGRATION_URL,
-  IntegrationTypes,
-} from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 export interface Package {

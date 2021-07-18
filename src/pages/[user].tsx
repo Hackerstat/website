@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 import Axios from 'axios';
 import UserProfileInfoCard from '../Components/Dashboard/UserProfileInfoCard';
 import WorkExperienceCard from '../Components/Dashboard/WorkExperience';
-import { WorkExperienceType, IntegrationTypes } from '../utils';
+import { IntegrationTypes, WorkExperienceType } from '../types';
 
 const Behance = dynamic(() => import('../Components/Dashboard/Behance'), {
   // eslint-disable-next-line react/display-name

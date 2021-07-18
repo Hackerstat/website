@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useColorMode, Box, Text, Flex, Stack, HStack } from '@chakra-ui/react';
-import { WorkExperienceType } from '../../../utils/utils';
+import { WorkExperienceType } from '../../../types';
 import { MONTHS } from '../../../utils';
 import Card from '../../Card';
 interface WorkExperienceCardProps {

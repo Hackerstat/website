@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, HttpCodes, addGitLabDataValidator } from '../../../utils';
+import { handleRes, addGitLabDataValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 import { addGitLabData } from '../../../utils/mongo';
 

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { usernameCheckerAPI } from './../../utils/mongo';
-import { handleRes, HttpCodes, StatusTypes, userNameCheckerQueryValidator } from '../../utils';
+import { handleRes, userNameCheckerQueryValidator } from '../../utils';
+import { StatusTypes, HttpCodes } from '../../types';
 
 /**
  * @name usernameChecker

@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, HttpCodes, usernameRemoteQueryValidator } from '../../../../utils';
+import { handleRes, usernameRemoteQueryValidator } from '../../../../utils';
+import { StatusTypes, HttpCodes } from '../../../../types';
 import { getWorkExperienceData } from '../../../../utils/mongo';
 
 /**

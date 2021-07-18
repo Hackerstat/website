@@ -6,14 +6,8 @@ import SettingsIntegrationContainer from '../../../../Components/SettingsIntegra
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import ImagePieceList from '../../../../Components/ImagePieceList';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  RetrieveDribbblePiecesScrape,
-  IntegrationTypes,
-} from '../../../../utils';
+import { IntegrationTypes, RetrieveDribbblePiecesScrape } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils';
 import DribbblePiece from '../../../../Components/DribbblePiece';
 
 /**

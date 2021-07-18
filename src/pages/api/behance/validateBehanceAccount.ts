@@ -1,12 +1,7 @@
 import auth0 from '../../../utils/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  handleRes,
-  StatusTypes,
-  retrieveBehancePiecesValidator,
-  validateBehanceAccountScrape,
-  HttpCodes,
-} from '../../../utils';
+import { handleRes, retrieveBehancePiecesValidator, validateBehanceAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import { getUsername } from '../../../utils/mongo';
 
 /**

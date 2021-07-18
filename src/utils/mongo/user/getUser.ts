@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest } from 'next';
-import { UserProfileType } from '../../utils';
+import { UserProfileType } from '../types';
 import { URI, HACKERSTAT, USERPROFILES } from '../constants';
 
 export const getUser = async (req: NextApiRequest): Promise<UserProfileType> => {

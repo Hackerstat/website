@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { wakaTimeLanguagePieDataValidator } from '../../validation';
-import { WakaTimeLanguagesGraphDataPropsType } from '../../utils';
+import { WakaTimeLanguagesGraphDataPropsType } from '../../../types';
 
 export const fetchWakaTimeLanguagesData = async (url: string): Promise<WakaTimeLanguagesGraphDataPropsType> => {
   const wakaTimeLanguagePieData = (await Axios.get(url)).data;

@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  handleRes,
-  StatusTypes,
-  retrieveDribbblePiecesValidator,
-  validateDribbbleAccountScrape,
-  HttpCodes,
-} from '../../../utils';
+import { handleRes, retrieveDribbblePiecesValidator, validateDribbbleAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import { getUsername } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
 

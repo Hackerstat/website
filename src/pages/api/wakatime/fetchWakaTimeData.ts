@@ -2,12 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
 import {
   handleRes,
-  StatusTypes,
   fetchWakaTimeValidator,
-  HttpCodes,
   fetchWakaTimeActivityData,
   fetchWakaTimeLanguagesData,
 } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name fetchWakaTimeData

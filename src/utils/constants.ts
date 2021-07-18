@@ -1,4 +1,3 @@
-import { HTTPCodeType, IntegrationTypes } from './';
 import {
   faBehance,
   faStackOverflow,
@@ -9,6 +8,11 @@ import {
   faTwitter,
   faMedium,
 } from '@fortawesome/free-brands-svg-icons';
+import { IntegrationTypes } from '../types';
+
+export interface HTTPCodeType {
+  [key: string]: [number, string];
+}
 
 export const INTEGRATION_ICONS = {
   [IntegrationTypes.BEHANCE]: faBehance,

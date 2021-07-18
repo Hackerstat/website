@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  handleRes,
-  StatusTypes,
-  retrieveBehancePiecesValidator,
-  retrieveBehanceAccountScrape,
-  HttpCodes,
-} from '../../../utils';
+import { handleRes, retrieveBehancePiecesValidator, retrieveBehanceAccountScrape } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**

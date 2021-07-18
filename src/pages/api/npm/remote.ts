@@ -1,7 +1,8 @@
 const NPM_URL_COUNT = 'https://api.npmjs.org/downloads/range/last-month';
 import npmUserPackages from 'npm-user-packages';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 const MAX_COUNT = 10;
 

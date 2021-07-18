@@ -1,6 +1,7 @@
 import { fetchGithubYML } from '../../../utils/thrdAPIs';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes } from '../../../types';
 
 /**
  * @name fetchProject

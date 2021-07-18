@@ -12,19 +12,13 @@ import {
   Box,
   UseToastOptions,
 } from '@chakra-ui/react';
+import Axios from 'axios';
 import SettingsPage from '../../../../Components/SettingsPage';
 import MediumArticle from '../../../../Components/MediumArticle';
 import Loader from '../../../../Components/Loader';
-import {
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-  ADD_INTEGRATION_URL,
-  IntegrationTypes,
-} from '../../../../utils';
+import { IntegrationTypes } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils';
 import AuthLayer from '../../../../Components/AuthLayer';
-import Axios from 'axios';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 interface MediumPostType {

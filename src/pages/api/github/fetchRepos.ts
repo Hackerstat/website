@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { fetchGithubRepos } from '../../../utils/mongo';
-import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
+import { handleRes } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name fetchRepos

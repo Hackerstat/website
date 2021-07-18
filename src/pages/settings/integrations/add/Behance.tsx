@@ -2,14 +2,8 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import Axios from 'axios';
 import { NextPage } from 'next';
 import { Stack, Text, Input, Button, useToast, UseToastOptions } from '@chakra-ui/react';
-import {
-  IntegrationTypes,
-  BehanceWorkPiecesType,
-  goodToast,
-  badToast,
-  verifiedToast,
-  notVerifiedToast,
-} from '../../../../utils';
+import { IntegrationTypes, BehanceWorkPiecesType } from '../../../../types';
+import { goodToast, badToast, verifiedToast, notVerifiedToast } from '../../../../utils';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';

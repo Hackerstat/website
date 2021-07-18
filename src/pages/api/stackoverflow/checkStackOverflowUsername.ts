@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import {
-  handleRes,
-  HttpCodes,
-  StatusTypes,
-  checkStackOverflowUsernameValidator,
-  fetchStackOverflowInfo,
-} from '../../../utils';
+import { handleRes, checkStackOverflowUsernameValidator, fetchStackOverflowInfo } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 import auth0 from '../../../utils/auth';
 
 /**

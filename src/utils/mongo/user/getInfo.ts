@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { RetrievedIUserProfileData } from '../../utils';
 import { URI, HACKERSTAT, USERPROFILES, INFO_PROPERTY } from '../constants';
+import { RetrievedIUserProfileData } from '../types';
 import auth0 from '../../auth';
 
 // TODO: Limit projected values from mongoDB queries.

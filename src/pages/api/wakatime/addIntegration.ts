@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { addWakaTimeIntegration } from '../../../utils/mongo';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, addWakaTimeIntegrationValidator, HttpCodes } from '../../../utils';
+import { handleRes, addWakaTimeIntegrationValidator } from '../../../utils';
+import { StatusTypes, HttpCodes } from '../../../types';
 
 /**
  * @name addIntegration

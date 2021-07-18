@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Box, Flex, Text, Image } from '@chakra-ui/react';
-import { GitHubUserAccountType, formatNums } from '../../utils';
+import { formatNums } from '../../utils';
+import { GitHubUserAccountType } from '../../types';
 import ExternalLink from '../../Components/ExternalLink';
 
 interface GitHubUserDataProps {

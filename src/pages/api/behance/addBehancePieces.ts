@@ -5,9 +5,8 @@ import {
   addIntegrationInSettingsValidator,
   validateBehanceAccountScrape,
   handleRes,
-  StatusTypes,
-  HttpCodes,
 } from '../../../utils';
+import { HttpCodes, StatusTypes } from '../../../types';
 import { getUsername, addBehanceData } from '../../../utils/mongo';
 
 /**

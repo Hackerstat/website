@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Flex, Box, Avatar, BoxProps } from '@chakra-ui/react';
-import { Badges, StackOverflowUserInfoType } from '../../utils/utils';
+import { Badges, StackOverflowUserInfoType } from '../../types';
 import { formatNums } from '../../utils/formatNums';
 import { MedalsInfo } from './MedalsInfo';
 

@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import { HTTPCode } from '../constants';
-import { StatusTypes } from '../utils';
+import { StatusTypes } from '../../types';
 
 interface HandleResType {
   res: NextApiResponse;
