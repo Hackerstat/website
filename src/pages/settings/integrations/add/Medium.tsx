@@ -41,7 +41,9 @@ interface MediumPostType {
  */
 const AddMediumIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/medium/getUsername')
+    const MEDIUM_GET_USERNAME = '/api/medium/getUsername';
+
+    Axios.get(MEDIUM_GET_USERNAME)
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -63,6 +65,8 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns
    */
   const CheckForHackerStatFile = async (username: string) => {
+    const MEDIUM_FETCH_ARTICLES = '/api/medium/fetchArticles';
+
     setFetchingHackerFile(true);
     try {
       if (!username) {
@@ -70,7 +74,7 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         setFetchingHackerFile(false);
         return;
       }
-      const mediumArticles = await Axios.get('/api/medium/fetchArticles', {
+      const mediumArticles = await Axios.get(MEDIUM_FETCH_ARTICLES, {
         params: { user: username },
       });
 
@@ -88,13 +92,15 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
    * @returns {Promise<boolean>}
    */
   const verifyMediumAccount = async (username: string): Promise<void> => {
+    const VALIDATE_MEDIUM_ACCOUNT = '/api/medium/validateMediumAccount';
+
     setIsVerifying(true);
     try {
       if (!username) {
         setFetchError('Required');
         setIsVerifying(false);
       }
-      const res = await Axios.get('/api/medium/validateMediumAccount', { params: { username } });
+      const res = await Axios.get(VALIDATE_MEDIUM_ACCOUNT, { params: { username } });
       if (res.data?.validated) {
         toast(verifiedToast as UseToastOptions);
       } else {

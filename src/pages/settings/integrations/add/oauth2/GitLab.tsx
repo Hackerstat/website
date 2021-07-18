@@ -22,7 +22,8 @@ const GitLabAuthenticator = ({ router: router }) => {
 
   const addGitLabData = async () => {
     setIsSaving(true);
-    await Axios.post('/api/gitlab/addRepos', {
+    const GITLAB_ADD_REPOS = '/api/gitlab/addRepos';
+    await Axios.post(GITLAB_ADD_REPOS, {
       ...gitLabAccountData,
       repos: gitLabUserRepos,
     });
@@ -46,8 +47,8 @@ const GitLabAuthenticator = ({ router: router }) => {
       const {
         data: { access_token },
       } = res;
-      console.log(access_token);
-      Axios.get('/api/gitlab/addVerification', { headers: { gitLabToken: access_token } })
+      const GITLAB_ADD_VERIFICATION = '/api/gitlab/addVerification';
+      Axios.get(GITLAB_ADD_VERIFICATION, { headers: { gitLabToken: access_token } })
         .then((res) => {
           const { repos, ...gitLabUserData } = res.data;
           setGitLabAccountData(gitLabUserData);

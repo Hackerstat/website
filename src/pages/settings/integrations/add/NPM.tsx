@@ -67,7 +67,9 @@ export interface Package {
  */
 const AddNPMIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/npm/getUserName')
+    const NPM_GET_USERNAME = '/api/npm/getUserName';
+
+    Axios.get(NPM_GET_USERNAME)
       .then((val) => setUsername(val.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -88,6 +90,8 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const GetNPMPackages = async (username: string) => {
+    const NPM_REMOTE = '/api/npm/remote';
+
     setFetchingHackerFile(true);
     try {
       if (!username) {
@@ -96,7 +100,7 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         return;
       }
 
-      const result = await Axios.get(`/api/npm/remote`, {
+      const result = await Axios.get(NPM_REMOTE, {
         params: {
           username: username,
         },
@@ -129,10 +133,11 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const verifyNPMAccount = async () => {
+    const NPM_VALIDATE_ACCOUNT = '/api/npm/validateNPMAccount';
+
     setVerifyLoading(true);
     try {
-      const URL = '/api/npm/validateNPMAccount';
-      const res = await Axios.get(URL, { params: { username } });
+      const res = await Axios.get(NPM_VALIDATE_ACCOUNT, { params: { username } });
       if (res.data?.validated) {
         toast(verifiedToast as UseToastOptions);
       } else {

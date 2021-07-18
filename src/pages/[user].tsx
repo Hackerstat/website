@@ -98,7 +98,9 @@ const UserProfilePage: NextPage = () => {
       return;
     }
 
-    Axios.get(`/api/users/${user}`).then(({ data }) => {
+    const USER_API = `/api/users/${user}`;
+
+    Axios.get(USER_API).then(({ data }) => {
       const { firstName: userFirstName, lastName: userLastName, ...rest } = data.info;
       setIntegrations(data.integrations);
       setIntegrationSettings(data.settings);

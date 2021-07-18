@@ -34,7 +34,9 @@ import SettingsIntegrationContainer from '../../../../Components/SettingsIntegra
  */
 const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   useEffect(() => {
-    Axios.get('/api/stackoverflow/getUsername')
+    const STACKOVERFLOW_GET_USERNAME = '/api/stackoverflow/getUsername';
+
+    Axios.get(STACKOVERFLOW_GET_USERNAME)
       .then((res) => setUsername(res.data?.username))
       .catch((e) => console.error(e));
   }, []);
@@ -54,9 +56,10 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const retrieveStackOverflowInfo = async () => {
+    const STACKOVERFLOW_CHECK_USERNAME = '/api/stackoverflow/checkStackOverflowUsername';
+
     setLoading(true);
-    const URL = '/api/stackoverflow/checkStackOverflowUsername';
-    const res = await Axios.get(URL, { params: { username: username } });
+    const res = await Axios.get(STACKOVERFLOW_CHECK_USERNAME, { params: { username: username } });
     setLoading(false);
     setStackOverflowInfo(res.data);
   };
@@ -68,10 +71,11 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
    * @returns {void}
    */
   const verifyStackOverflowAccount = async () => {
+    const STACKOVERFLOW_VALIDATE_ACCOUNT = '/api/stackoverflow/validateStackOverflowAccount';
+
     setVerifyLoading(true);
     try {
-      const URL = '/api/stackoverflow/validateStackOverflowAccount';
-      const res = await Axios.get(URL, { params: { username: username } });
+      const res = await Axios.get(STACKOVERFLOW_VALIDATE_ACCOUNT, { params: { username: username } });
       if (res.data?.validated) {
         toast(verifiedToast as UseToastOptions);
       } else {

@@ -27,6 +27,8 @@ const GithubAuthenticator = ({ router: router }: GithubAuthenticatorPropsType) =
   const [gitHubAccountData, setGitHubAccountData] = useState<GitHubUserAccountType>();
   const [gitHubUserRepos, setgitHubUserRepos] = useState<Array<GitHubRepoDisplayDataType>>([]);
 
+  const ADD_GITHUB_ROUTE = '/settings/integrations/add/GitHub';
+
   /**
    * @name addGitHubData
    * @description It is the function that adds the verified GitHub Repos to the user's HackerStat Profile. After it finishes, it goes back to the adding GitHub Integration.
@@ -35,19 +37,21 @@ const GithubAuthenticator = ({ router: router }: GithubAuthenticatorPropsType) =
    */
   const addGitHubData = async () => {
     setIsSaving(true);
+    const GITHUB_ADD_REPOS = '/api/github/addRepos';
     try {
-      await Axios.post('/api/github/addRepos', {
+      await Axios.post(GITHUB_ADD_REPOS, {
         ...gitHubAccountData,
         repos: gitHubUserRepos,
       });
     } catch (err) {
       console.error(err);
     }
-    router.push('/settings/integrations/add/GitHub');
+    router.push(ADD_GITHUB_ROUTE);
   };
 
   useEffect(() => {
-    Axios.get('/api/github/addVerification', { params: { code: router.query?.code } })
+    const GITHUB_ADD_VERIFICATION = '/api/github/addVerification';
+    Axios.get(GITHUB_ADD_VERIFICATION, { params: { code: router.query?.code } })
       .then((res) => {
         const { avatar_url, user, name, location, followers, following, repos } = res.data;
         setGitHubAccountData({ avatar_url, user, name, location, followers, following });
@@ -57,7 +61,7 @@ const GithubAuthenticator = ({ router: router }: GithubAuthenticatorPropsType) =
       .catch((err) => {
         console.error(err);
         setFailed(true);
-        router.push('/settings/integrations/add/GitHub');
+        router.push(ADD_GITHUB_ROUTE);
       });
   }, []);
   return (

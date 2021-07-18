@@ -21,7 +21,8 @@ const AddGithubIntegrationPage: FunctionComponent = () => {
   const router = useRouter();
 
   useEffect(() => {
-    Axios.get('/api/github/fetchRepos')
+    const GITHUB_FETCH_REPOS = '/api/github/fetchRepos';
+    Axios.get(GITHUB_FETCH_REPOS)
       .then((res) => console.log(res.data))
       .catch((e) => console.error(e));
   }, []);

@@ -38,7 +38,9 @@ function ExperienceSettings() {
   }
 
   useEffect(() => {
-    Axios.get('/api/settings/workexperience')
+    const SETTINGS_WORK_EXPERIENCE = '/api/settings/workexperience';
+
+    Axios.get(SETTINGS_WORK_EXPERIENCE)
       .then((res) => {
         setExperiences(res.data.workExperience || []);
       })
