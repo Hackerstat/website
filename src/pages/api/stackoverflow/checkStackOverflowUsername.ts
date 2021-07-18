@@ -1,7 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes } from '../../../utils';
-import { checkStackOverflowUsernameValidator } from '../../../utils/validation';
-import { fetchStackOverflowInfo } from '../../../utils/thrdAPIs';
+import {
+  handleRes,
+  HttpCodes,
+  StatusTypes,
+  checkStackOverflowUsernameValidator,
+  fetchStackOverflowInfo,
+} from '../../../utils';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -17,7 +21,7 @@ import auth0 from '../../../utils/auth';
  * @argument {string} username It is the HackerStat user's StackOverflow username.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { username } = await checkStackOverflowUsernameValidator(req.query);
       const stackOverflowData = await fetchStackOverflowInfo(username);

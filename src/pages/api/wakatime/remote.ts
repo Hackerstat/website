@@ -4,10 +4,9 @@ import {
   WakaTimeActivityGraphDataPropsType,
   WakaTimeLanguagesGraphDataPropsType,
   GetRemoteWakaTimeDataRes,
-} from '../../../utils/utils';
-import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
-
-import {
+  HttpCodes,
+  fetchWakaTimeActivityData,
+  fetchWakaTimeLanguagesData,
   handleRes,
   StatusTypes,
   WAKATIME,
@@ -41,13 +40,12 @@ export default async function remoteWakaTimeRetrieval(req: NextApiRequest, res: 
     wakaTimeLanguagesData: null,
   };
   try {
-    if (req.method === 'GET') {
+    if (req.method === HttpCodes.GET) {
       const wakaTimeInfo = await getRemoteWakaTimeData(req);
       if (checkWakaTimeInfoObject(wakaTimeInfo)) {
         handleRes({ res, status: StatusTypes.OK, jsonData: {} });
         return;
       }
-      console.log(wakaTimeInfo);
       if (Object(wakaTimeInfo.integration_settings.wakatime).hasOwnProperty(WAKATIME_LANGUAGE_URL)) {
         const { wakaTimeLanguageURL } = wakaTimeInfo.integration_settings.wakatime;
         wakaTimeRes.wakaTimeLanguagesData = await fetchWakaTimeLanguagesData(wakaTimeLanguageURL);

@@ -1,5 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { handleRes, StatusTypes, retrieveDribbblePiecesValidator, retrieveDribbblePiecesScrape } from '../../../utils';
+import {
+  handleRes,
+  StatusTypes,
+  retrieveDribbblePiecesValidator,
+  retrieveDribbblePiecesScrape,
+  HttpCodes,
+} from '../../../utils';
 import auth0 from '../../../utils/auth';
 
 /**
@@ -9,7 +15,7 @@ import auth0 from '../../../utils/auth';
  * @argument {string} dribbleUsername
  * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { dribbbleUsername } = await retrieveDribbblePiecesValidator(req.query);
       const dribbblePieces = await retrieveDribbblePiecesScrape(dribbbleUsername);

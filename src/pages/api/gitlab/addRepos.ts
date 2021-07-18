@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { addGitLabDataValidator } from '../../../utils/validation/validators';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes, StatusTypes, HttpCodes, addGitLabDataValidator } from '../../../utils';
 import auth0 from '../../../utils/auth';
 import { addGitLabData } from '../../../utils/mongo';
 
@@ -11,7 +10,7 @@ import { addGitLabData } from '../../../utils/mongo';
  * @description This function retrieves a user's own GitLab Repos.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;

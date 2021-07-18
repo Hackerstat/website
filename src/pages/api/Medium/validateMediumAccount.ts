@@ -1,8 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getUsername } from '../../../utils/mongo';
-import { validateMediumAccountScrape } from '../../../utils/thrdAPIs';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes, mediumUserNameQueryValidator } from '../../../utils';
+import {
+  handleRes,
+  StatusTypes,
+  mediumUserNameQueryValidator,
+  HttpCodes,
+  validateMediumAccountScrape,
+} from '../../../utils';
 
 /**
  * @name validateMediumAccount
@@ -13,7 +18,7 @@ import { handleRes, StatusTypes, mediumUserNameQueryValidator } from '../../../u
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const { username } = await mediumUserNameQueryValidator(req.query);
       const { username: hackerStatUsername } = await getUsername(req, res);

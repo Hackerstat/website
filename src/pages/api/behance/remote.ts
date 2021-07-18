@@ -6,8 +6,9 @@ import {
   retrieveBehanceAccountScrape,
   validateDribbbleAccountScrape,
   BehanceRemoteJSONDataType,
+  HttpCodes,
 } from '../../../utils';
-import { getRemoteBehanceUsername, addBehanceRemoteData } from '../../../utils/mongo';
+import { getRemoteBehanceUsername, addBehanceRemoteData } from '../../../utils/mongo/behance';
 
 /**
  * @name remoteBehance
@@ -17,7 +18,7 @@ import { getRemoteBehanceUsername, addBehanceRemoteData } from '../../../utils/m
  * @returns {void}
  */
 export default async function remoteDribble(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { username: hackerStatUsername } = await usernameRemoteQueryValidator(req.body);
       const { behanceUsername, id: behanceDataID } = await getRemoteBehanceUsername(hackerStatUsername);

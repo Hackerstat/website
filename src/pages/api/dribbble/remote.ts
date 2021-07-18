@@ -6,6 +6,7 @@ import {
   usernameRemoteQueryValidator,
   validateDribbbleAccountScrape,
   DribbbleRemoteJSONDataType,
+  HttpCodes,
 } from '../../../utils';
 
 /**
@@ -16,7 +17,7 @@ import {
  * @returns {void}
  */
 export default async function remoteDribble(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { username: hackerStatUsername } = await usernameRemoteQueryValidator(req.body);
       const { dribbbleUsername, id: dribbbleDataID } = await getRemoteDribbbleUsername(hackerStatUsername);

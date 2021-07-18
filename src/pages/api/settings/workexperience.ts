@@ -1,8 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { updateExperience, deleteExperience, retrieveWorkExperience, addWorkExperience } from '../../../utils/mongo';
-import { addWorkExperienceValidator, updateWorkExperienceValidator } from '../../../utils/validation';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes } from '../../../utils';
+import {
+  handleRes,
+  StatusTypes,
+  HttpCodes,
+  addWorkExperienceValidator,
+  updateWorkExperienceValidator,
+} from '../../../utils';
 
 /**
  * @name workexperience
@@ -13,7 +18,7 @@ import { handleRes, StatusTypes } from '../../../utils';
  * @argument {updateWorkExperienceSchema} updatedWorkExperience It is the workExperience object being updated or deleted on the HackerStat User's profile. The object should have an id to identify the specific work experience instance.
  * @returns {void} */
 export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-  if (req.method === 'GET') {
+  if (req.method === HttpCodes.GET) {
     try {
       const workExperience = await retrieveWorkExperience(req, res);
       handleRes({ res, status: StatusTypes.OK, jsonData: { workExperience } });
@@ -21,7 +26,7 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
       handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === HttpCodes.POST) {
     try {
       await addWorkExperienceValidator(req.body);
       await addWorkExperience(req, res);
@@ -32,7 +37,7 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
       handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
-  } else if (req.method === 'PATCH') {
+  } else if (req.method === HttpCodes.PATCH) {
     try {
       await updateWorkExperienceValidator(req.body);
       await updateExperience(req, res);
@@ -43,7 +48,7 @@ export default auth0.withApiAuthRequired(async (req: NextApiRequest, res: NextAp
       handleRes({ res, status: StatusTypes.SERVER_ERROR });
       return;
     }
-  } else if (req.method === 'DELETE') {
+  } else if (req.method === HttpCodes.DELETE) {
     try {
       await updateWorkExperienceValidator(req.query);
       await deleteExperience(req, res);

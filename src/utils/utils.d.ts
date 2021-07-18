@@ -387,3 +387,10 @@ export interface BehanceRemoteJSONDataType {
   behanceUsername: string;
   behanceData: BehanceWorkPiecesType;
 }
+
+export enum HttpCodes {
+  GET = 'GET',
+  POST = 'POST',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
+}

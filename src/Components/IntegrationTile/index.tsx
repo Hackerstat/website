@@ -46,13 +46,15 @@ const IntegrationTile: FunctionComponent<IntegrationTileProps> = ({ icon, name, 
         width={'100%'}
         color={color}
       >
-        <FontAwesomeIcon
-          icon={icon}
-          size={'3x'}
-          style={{
-            textAlign: 'center',
-          }}
-        />
+        {icon && (
+          <FontAwesomeIcon
+            icon={icon}
+            size={'3x'}
+            style={{
+              textAlign: 'center',
+            }}
+          />
+        )}
         <Text
           fontWeight={'bold'}
           letterSpacing={'wide'}

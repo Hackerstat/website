@@ -16,7 +16,7 @@ const SettingsIntegrationContainer: FunctionComponent<SettingsIntegrationContain
   <AuthLayer>
     <Flex ml={4} width={'100%'} flexDirection={'column'}>
       <Flex alignItems="center" mb={4}>
-        <FontAwesomeIcon icon={INTEGRATION_ICONS[integration]} size={'3x'} />
+        {INTEGRATION_ICONS[integration] && <FontAwesomeIcon icon={INTEGRATION_ICONS[integration]} size={'3x'} />}
         <Heading ml={3}>{integration.toLocaleUpperCase()}</Heading>
       </Flex>
       {children}

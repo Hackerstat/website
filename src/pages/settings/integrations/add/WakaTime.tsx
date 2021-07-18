@@ -133,7 +133,6 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       };
 
       const res = await Axios.get(fetchWakaTimeDataURL, { params: { url, dataType } });
-      console.log(res.data);
 
       res.data.dataPoints.forEach((dataPoint: WakaTimeLanguageDataType) => {
         pieDataPoints.labels.push(dataPoint.name);

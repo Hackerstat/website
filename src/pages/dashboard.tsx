@@ -25,7 +25,6 @@ const Dashboard: NextPage = () => {
   useEffect(() => {
     getUsers()
       .then(({ users: fetchedUsers }) => {
-        console.log(fetchedUsers);
         setUsers(fetchedUsers);
       })
       .catch((err) => {

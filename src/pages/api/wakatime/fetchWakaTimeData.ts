@@ -1,7 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
-import { fetchWakaTimeActivityData, fetchWakaTimeLanguagesData } from '../../../utils/thrdAPIs';
-import { handleRes, StatusTypes, fetchWakaTimeValidator } from '../../../utils';
+import {
+  handleRes,
+  StatusTypes,
+  fetchWakaTimeValidator,
+  HttpCodes,
+  fetchWakaTimeActivityData,
+  fetchWakaTimeLanguagesData,
+} from '../../../utils';
 
 /**
  * @name fetchWakaTimeData
@@ -14,7 +20,7 @@ import { handleRes, StatusTypes, fetchWakaTimeValidator } from '../../../utils';
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
-    if (req.method === 'GET') {
+    if (req.method === HttpCodes.GET) {
       const { url, dataType } = await fetchWakaTimeValidator(req.query);
 
       if (dataType === 'bar') {

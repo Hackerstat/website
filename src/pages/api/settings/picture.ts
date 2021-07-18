@@ -1,13 +1,13 @@
 import { MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import auth0 from '../../../utils/auth';
-import { handleRes, StatusTypes } from '../../../utils';
+import { handleRes, StatusTypes, HttpCodes } from '../../../utils';
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
 
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;
@@ -39,7 +39,7 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
     } catch ({ message }) {
       handleRes({ res, status: StatusTypes.BAD_REQUEST, message });
     }
-  } else if (req.method === 'GET') {
+  } else if (req.method === HttpCodes.GET) {
     try {
       const { user } = await auth0.getSession(req, res);
       const { sub } = user;

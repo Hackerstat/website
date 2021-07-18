@@ -6,6 +6,7 @@ import {
   validateBehanceAccountScrape,
   handleRes,
   StatusTypes,
+  HttpCodes,
 } from '../../../utils';
 import { getUsername, addBehanceData } from '../../../utils/mongo';
 
@@ -17,7 +18,7 @@ import { getUsername, addBehanceData } from '../../../utils/mongo';
  * @returns {void}
  */
 export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === HttpCodes.POST) {
     try {
       const { user } = await auth0.getSession(req, res);
 
