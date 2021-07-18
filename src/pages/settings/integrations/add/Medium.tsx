@@ -10,7 +10,6 @@ import {
   FormErrorMessage,
   useToast,
   Box,
-  UseToastOptions,
 } from '@chakra-ui/react';
 import Axios from 'axios';
 import SettingsPage from '../../../../Components/SettingsPage';
@@ -96,9 +95,9 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
       }
       const res = await Axios.get(VALIDATE_MEDIUM_ACCOUNT, { params: { username } });
       if (res.data?.validated) {
-        toast(verifiedToast as UseToastOptions);
+        toast(verifiedToast);
       } else {
-        toast(notVerifiedToast as UseToastOptions);
+        toast(notVerifiedToast);
       }
     } catch (err) {
       console.error(err);
@@ -119,9 +118,9 @@ const AddMediumIntegrationPage: FunctionComponent = () => {
         integrationType: IntegrationTypes.MEDIUM,
         settings: { username: username },
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (err) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setSubmitLoading(false);
   };

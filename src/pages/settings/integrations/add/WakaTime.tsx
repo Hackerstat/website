@@ -96,7 +96,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       setDrawerCodingActivity(true);
     } catch (err) {
       console.log(err);
-      toast(badGetWakaTimeToast as unknown);
+      toast(badGetWakaTimeToast);
     }
   };
 
@@ -144,7 +144,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
       setDrawerLanguage(true);
     } catch (err) {
       console.log(err);
-      toast(badGetWakaTimeToast as unknown);
+      toast(badGetWakaTimeToast);
     }
   };
   /**
@@ -159,10 +159,10 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
         wakaTimeCodingActivityURL: activityWakaTimeURL,
         wakaTimeLanguageURL: languagesWakaTimeURL,
       });
-      toast(goodToast as unknown);
+      toast(goodToast);
     } catch (e) {
       console.error(e);
-      toast(badToast as unknown);
+      toast(badToast);
     }
   };
 

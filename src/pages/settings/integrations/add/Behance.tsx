@@ -28,10 +28,10 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
       if (!validated) {
         throw new Error(VALIDATION_ERROR);
       }
-      toast(verifiedToast as UseToastOptions);
+      toast(verifiedToast);
     } catch (e) {
       console.error(e);
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setIsVerifying(false);
   };
@@ -49,7 +49,7 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
       setBehanceData(behanceProjects);
     } catch (e) {
       console.error(e);
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsRetrievingBehanceData(false);
   };
@@ -69,10 +69,10 @@ const AddBehanceIntegrationPage: FunctionComponent = () => {
         behanceUsername,
         behanceWorkPieces: behanceData,
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (e) {
       console.error(e);
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setIsAddingBehanceData(false);
   };

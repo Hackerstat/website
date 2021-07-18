@@ -10,7 +10,6 @@ import {
   Text,
   FormErrorMessage,
   useToast,
-  UseToastOptions,
 } from '@chakra-ui/react';
 import Axios from 'axios';
 import { IntegrationTypes } from '../../../../types';
@@ -71,12 +70,12 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
     try {
       const res = await Axios.get(STACKOVERFLOW_VALIDATE_ACCOUNT, { params: { username: username } });
       if (res.data?.validated) {
-        toast(verifiedToast as UseToastOptions);
+        toast(verifiedToast);
       } else {
-        toast(notVerifiedToast as UseToastOptions);
+        toast(notVerifiedToast);
       }
     } catch (err) {
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setVerifyLoading(false);
   };
@@ -95,9 +94,9 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
         integrationType: IntegrationTypes.STACKOVERFLOW,
         settings: { username: username },
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (e) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setAddIntegrationLoading(false);
   };

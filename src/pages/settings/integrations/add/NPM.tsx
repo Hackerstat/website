@@ -1,17 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import {
-  Input,
-  FormLabel,
-  FormControl,
-  Button,
-  Stack,
-  Text,
-  FormErrorMessage,
-  Grid,
-  useToast,
-  UseToastOptions,
-} from '@chakra-ui/react';
+import { Input, FormLabel, FormControl, Button, Stack, Text, FormErrorMessage, Grid, useToast } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import Axios from 'axios';
@@ -133,12 +122,12 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
     try {
       const res = await Axios.get(NPM_VALIDATE_ACCOUNT, { params: { username } });
       if (res.data?.validated) {
-        toast(verifiedToast as UseToastOptions);
+        toast(verifiedToast);
       } else {
-        toast(notVerifiedToast as UseToastOptions);
+        toast(notVerifiedToast);
       }
     } catch (err) {
-      toast(notVerifiedToast as UseToastOptions);
+      toast(notVerifiedToast);
     }
     setVerifyLoading(false);
   };
@@ -156,9 +145,9 @@ const AddNPMIntegrationPage: FunctionComponent = () => {
         integrationType: IntegrationTypes.NPM,
         settings: { username },
       });
-      toast(goodToast as UseToastOptions);
+      toast(goodToast);
     } catch (err) {
-      toast(badToast as UseToastOptions);
+      toast(badToast);
     }
     setSubmitLoading(false);
   };
