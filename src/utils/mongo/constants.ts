@@ -7,6 +7,7 @@ export const GITHUBDATA = 'githubData';
 export const GITLABDATA = 'gitlabData';
 export const DRIBBBLEDATA = 'dribbbleData';
 export const STACKOVERFLOWDATA = 'stackOverFlowData';
+export const BEHANCEDATA = 'behanceData';
 export const WAKATIME = 'wakatime';
 export const GITHUB = 'github';
 export const GITLAB = 'gitlab';

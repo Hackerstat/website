@@ -1,1 +1,3 @@
-export const INTEGRATIONS = ['npm', 'medium', 'github', 'gitlab', 'twitter', 'dribbble', 'stackoverflow', 'hackerrank'];
+import { IntegrationTypes } from '../..';
+
+export const INTEGRATIONS = Object.keys(IntegrationTypes).map((key) => IntegrationTypes[key]);

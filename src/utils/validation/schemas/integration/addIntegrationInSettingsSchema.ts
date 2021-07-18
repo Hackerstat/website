@@ -42,6 +42,13 @@ export const addIntegrationInSettingsSchema = yup.object().shape({
       then: yup.object(),
     })
     .when('integrationType', {
+      is: 'behance',
+      then: yup.object({
+        username: yup.string().strict(true).required(),
+        isValidated: yup.boolean().default(false),
+      }),
+    })
+    .when('integrationType', {
       is: 'dribbble',
       then: yup.object({
         username: yup.string().strict(true).required(),

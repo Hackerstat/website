@@ -4,3 +4,4 @@ export * from './npm';
 export * from './stackoverflow';
 export * from './wakatime';
 export * from './dribbble';
+export * from './behance';

@@ -1,24 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import {
-  Flex,
-  Input,
-  FormLabel,
-  FormControl,
-  Heading,
-  Button,
-  Stack,
-  FormErrorMessage,
-  useToast,
-} from '@chakra-ui/react';
+import { Flex, Input, FormLabel, FormControl, Button, Stack, FormErrorMessage, useToast } from '@chakra-ui/react';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TwitterCard from '../../../../Components/Dashboard/Twitter';
 import AuthLayer from '../../../../Components/AuthLayer';
 import { goodToast, badToast, IntegrationTypes, ADD_INTEGRATION_URL } from '../../../../utils';
 import Axios from 'axios';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 /**
  * @name AddTwitterIntegrationPage
@@ -79,11 +68,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faTwitter} size={'3x'} />
-        <Heading ml={3}>Twitter</Heading>
-      </Flex>
+    <SettingsIntegrationContainer integration={IntegrationTypes.TWITTER}>
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>Twitter Username</FormLabel>
@@ -117,7 +102,7 @@ const AddTwitterIntegrationPage: FunctionComponent = () => {
           Add Twitter
         </Button>
       </Stack>
-    </Flex>
+    </SettingsIntegrationContainer>
   );
 };
 

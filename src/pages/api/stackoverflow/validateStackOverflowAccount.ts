@@ -18,7 +18,11 @@ export default auth0.withApiAuthRequired(async function me(req: NextApiRequest, 
       const { username } = await mediumUserNameQueryValidator(req.query);
       const { username: hackerStatUsername } = await getUsername(req, res);
       const isValidated = await validateStackOverflowAccountScrape(username, hackerStatUsername || '');
-      handleRes({ res, status: StatusTypes.OK, jsonData: { validated: isValidated } });
+      handleRes({
+        res,
+        status: isValidated ? StatusTypes.OK : StatusTypes.NOT_FOUND,
+        jsonData: { validated: isValidated },
+      });
     } catch ({ message }) {
       handleRes({ res, status: StatusTypes.SERVER_ERROR, message });
     }

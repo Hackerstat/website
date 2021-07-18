@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import {
-  Flex,
   Input,
   FormLabel,
   FormControl,
@@ -13,14 +12,19 @@ import {
   useToast,
   UseToastOptions,
 } from '@chakra-ui/react';
-import { goodToast, badToast, verifiedToast, notVerifiedToast, ADD_INTEGRATION_URL } from '../../../../utils/constants';
-import { IntegrationTypes } from '../../../../utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStackOverflow } from '@fortawesome/free-brands-svg-icons';
+import {
+  goodToast,
+  badToast,
+  verifiedToast,
+  notVerifiedToast,
+  ADD_INTEGRATION_URL,
+  IntegrationTypes,
+} from '../../../../utils';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
 import Axios from 'axios';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 /**
  * @name AddStackOverflowIntegrationPage
@@ -101,11 +105,7 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <FontAwesomeIcon icon={faStackOverflow} size={'3x'} />
-        <Heading ml={3}>StackOverflow</Heading>
-      </Flex>
+    <SettingsIntegrationContainer integration={IntegrationTypes.STACKOVERFLOW}>
       <Stack spacing={3}>
         <FormControl isInvalid={!!fetchError}>
           <FormLabel>StackOverflow UserID</FormLabel>
@@ -150,7 +150,7 @@ const AddStackOverflowIntegrationPage: FunctionComponent = () => {
           Add StackOverflow
         </Button>
       </Stack>
-    </Flex>
+    </SettingsIntegrationContainer>
   );
 };
 

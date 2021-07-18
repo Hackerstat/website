@@ -20,22 +20,20 @@ export const validateStackOverflowAccountScrape = async (
   username: string,
   hackerStatUsername: string,
 ): Promise<boolean> => {
-  const stackOverFlowProfilePage = await Axios.get(`https://stackoverflow.com/users/${username}?tab=profile`);
-  // console.log(stackOverFlowProfilePage.status);
-  const $ = cheerio.load(stackOverFlowProfilePage.data);
-  const descriptionMetaData = $('div.profile-user--bio');
-  for (const node of descriptionMetaData.children()) {
-    for (const innerNode of node.children) {
-      const nodeData = (innerNode as NodeData)?.data;
-      if (nodeData && nodeData.includes(HACKERSTAT_VERIFICATION_URL(hackerStatUsername))) {
-        return true;
+  try {
+    const stackOverFlowProfilePage = await Axios.get(`https://stackoverflow.com/users/${username}?tab=profile`);
+    const $ = cheerio.load(stackOverFlowProfilePage.data);
+    const descriptionMetaData = $('div.profile-user--bio');
+    for (const node of descriptionMetaData.children()) {
+      for (const innerNode of node.children) {
+        const nodeData = (innerNode as NodeData)?.data;
+        if (nodeData && nodeData.includes(HACKERSTAT_VERIFICATION_URL(hackerStatUsername))) {
+          return true;
+        }
       }
     }
+  } catch (e) {
+    console.error(e);
   }
-  // if (descriptionMetaData !== undefined) {
-  //   if (descriptionMetaData.includes(hackerStatUsername)) {
-  //     return true;
-  //   }
-  // }
   return false;
 };

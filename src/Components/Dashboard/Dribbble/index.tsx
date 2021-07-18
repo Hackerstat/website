@@ -11,12 +11,12 @@ interface DribbbleCardProps extends BoxProps {
 
 /**
  * @name DribbbleCard
- * @description This component displays a HackerStat user's WakaTime Data.
+ * @description This component displays a HackerStat user's Behance Data.
  * @author @Cgunter1
- * @param {WakaTimeProps} props This is the props for the component.
+ * @param {DribbbleCardProps} props This is the props for the component.
  * @param {string} props.username This is the HackerStat user's username to find the .
  * @param {BoxProps} props.rest This is the rest of the object for the Card's attributes.
- * @returns {FunctionComponent<Partial<WakaTimeProps>>}
+ * @returns {FunctionComponent<DribbbleCardProps>}
  */
 const DribbbleCard: FunctionComponent<DribbbleCardProps> = ({ username, ...props }) => {
   const [error, setError] = useState<boolean>(false);

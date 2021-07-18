@@ -10,7 +10,7 @@ export const addDribbblePiecesSchema = yup.object().shape({
   sub: yup.mixed(),
   dribbbleUsername: yup.string().required().nullable(false).strict(true).trim(),
   dribbblePieces: yup.array(dribbblePieceSchema).required().nullable(false),
-  isValidated: yup.bool(),
+  isValidated: yup.bool().default(false),
 });
 
 export type AddDribbblePiecesType = yup.InferType<typeof addDribbblePiecesSchema>;

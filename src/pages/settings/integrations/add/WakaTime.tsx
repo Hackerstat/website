@@ -6,7 +6,6 @@ import {
   Input,
   FormLabel,
   FormControl,
-  Heading,
   Button,
   Stack,
   FormErrorMessage,
@@ -18,13 +17,17 @@ import { LanguagePieWrapper, TimeBarWrapper } from '../../../../Components/WakaT
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
 import AuthLayer from '../../../../Components/AuthLayer';
-import { goodToast, badToast, badGetWakaTimeToast } from '../../../../utils';
 import Axios from 'axios';
 import {
+  goodToast,
+  badToast,
+  badGetWakaTimeToast,
   WakaTimeLanguagesGraphDataPropsType,
   WakaTimeActivityGraphDataPropsType,
   WakaTimeLanguageDataType,
-} from '../../../../utils/utils';
+  IntegrationTypes,
+} from '../../../../utils';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 
 const fetchWakaTimeDataURL = '/api/wakatime/fetchWakaTimeData';
 const addWakaTimeIntegrationURL = '/api/wakatime/addIntegration';
@@ -142,8 +145,6 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
 
       setRetrievedPieData(pieDataPoints);
       setDrawerLanguage(true);
-
-      // console.log(res.data);
     } catch (err) {
       console.log(err);
       toast(badGetWakaTimeToast as unknown);
@@ -169,10 +170,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <Flex width={'100%'} flexDirection={'column'}>
-      <Flex mb={4}>
-        <Heading>WakaTime</Heading>
-      </Flex>
+    <SettingsIntegrationContainer integration={IntegrationTypes.WAKATIME}>
       <Stack spacing={3}>
         <CollapseableInstructionWrapper typeOfChartIsActivity={true} />
         <FormControl isInvalid={!!fetchError}>
@@ -254,7 +252,7 @@ const AddWakaTimeIntegrationPage: FunctionComponent = () => {
           Set WakaTimeURL
         </Button>
       </Stack>
-    </Flex>
+    </SettingsIntegrationContainer>
   );
 };
 

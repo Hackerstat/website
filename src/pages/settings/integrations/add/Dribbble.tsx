@@ -1,12 +1,11 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { NextPage } from 'next';
 import Axios from 'axios';
-import { Flex, Heading, Button, Input, Stack, Text, Grid, useToast, UseToastOptions } from '@chakra-ui/react';
-import AuthLayer from '../../../../Components/AuthLayer';
-import { faDribbble } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, Input, Stack, Text, useToast, UseToastOptions } from '@chakra-ui/react';
+import SettingsIntegrationContainer from '../../../../Components/SettingsIntegrationContainer';
 import SettingsPage from '../../../../Components/SettingsPage';
 import Loader from '../../../../Components/Loader';
+import ImagePieceList from '../../../../Components/ImagePieceList';
 import {
   goodToast,
   badToast,
@@ -60,11 +59,11 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
   };
 
   const addDribbbleData = async () => {
-    const VALIDATE_DRIBBBLE_PIECES_URL = '/api/dribbble/addDribbblePieces';
+    const ADD_DRIBBBLE_PIECES_URL = '/api/dribbble/addDribbblePieces';
 
     try {
       await retrieveDribbbleData();
-      await Axios.post(VALIDATE_DRIBBBLE_PIECES_URL, {
+      await Axios.post(ADD_DRIBBBLE_PIECES_URL, {
         integrationInfo: {
           integrationType: IntegrationTypes.DRIBBBLE,
           settings: {
@@ -83,75 +82,57 @@ const AddDribbbleIntegrationPage: FunctionComponent = () => {
   };
 
   return (
-    <AuthLayer>
-      <Flex width={'100%'} flexDirection={'column'}>
-        <Flex mb={4}>
-          <FontAwesomeIcon icon={faDribbble} size={'3x'} />
-          <Heading ml={3}>Dribbble</Heading>
-        </Flex>
-        <Stack spacing={5}>
-          <Text>{'Write out your Dribbble username to add your Dribbble account to your HackerStat Account.'}</Text>
-          <Input
-            value={dribbbleUsername}
-            placeholder={'Dribbble Username'}
-            onChange={(e) => setDribbbleUsername(e.target.value)}
-          />
-          <Button
-            disabled={isAddingDribbbleData || isRetrievingDribbbleData}
-            isLoading={isVerifying}
-            loadingText="Verifying Account"
-            onClick={async () => {
-              setIsVerifying(true);
-              await validateDribbbleAccount();
-            }}
-          >
-            Verify Dribbble Account
-          </Button>
-          <Button
-            disabled={isAddingDribbbleData || isVerifying || dribbbleUsername.length === 0}
-            isLoading={isRetrievingDribbbleData}
-            loadingText="Retrieving Dribbble Work"
-            onClick={async () => {
-              setIsRetrievingDribbbleData(true);
-              await retrieveDribbbleData();
-            }}
-          >
-            Retrieve Dribbble Data
-          </Button>
-          <Button
-            disabled={isRetrievingDribbbleData || isVerifying || dribbbleWorkPieces.length === 0}
-            isLoading={isAddingDribbbleData}
-            loadingText="Adding Dribbble Work"
-            onClick={async () => {
-              setIsAddingDribbbleData(true);
-              await addDribbbleData();
-            }}
-          >
-            Add Dribbble Account Data
-          </Button>
-          <Flex w="100%" justifyContent="center">
-            <Grid
-              justifyContent="center"
-              width="100%"
-              gap={10}
-              rowGap={5}
-              gridTemplateColumns={[
-                'repeat(auto-fit, minmax(300px, max-content))',
-                'repeat(auto-fit, minmax(380px, max-content))',
-                'repeat(auto-fit, minmax(400px, max-content))',
-              ]}
-            >
-              {dribbbleWorkPieces &&
-                dribbbleWorkPieces.map((dribbbleData) => (
-                  <React.Fragment key={dribbbleData.link}>
-                    <DribbblePiece {...dribbbleData} />
-                  </React.Fragment>
-                ))}
-            </Grid>
-          </Flex>
-        </Stack>
-      </Flex>
-    </AuthLayer>
+    <SettingsIntegrationContainer integration={IntegrationTypes.DRIBBBLE}>
+      <Stack spacing={5}>
+        <Text>{'Write out your Dribbble username to add your Dribbble account to your HackerStat Account.'}</Text>
+        <Input
+          value={dribbbleUsername}
+          placeholder={'Dribbble Username'}
+          onChange={(e) => setDribbbleUsername(e.target.value)}
+        />
+        <Button
+          disabled={isAddingDribbbleData || isRetrievingDribbbleData}
+          isLoading={isVerifying}
+          loadingText="Verifying Account"
+          onClick={async () => {
+            setIsVerifying(true);
+            await validateDribbbleAccount();
+          }}
+        >
+          Verify Dribbble Account
+        </Button>
+        <Button
+          disabled={isAddingDribbbleData || isVerifying || dribbbleUsername.length === 0}
+          isLoading={isRetrievingDribbbleData}
+          loadingText="Retrieving Dribbble Work"
+          onClick={async () => {
+            setIsRetrievingDribbbleData(true);
+            await retrieveDribbbleData();
+          }}
+        >
+          Retrieve Dribbble Data
+        </Button>
+        <Button
+          disabled={isRetrievingDribbbleData || isVerifying || dribbbleWorkPieces.length === 0}
+          isLoading={isAddingDribbbleData}
+          loadingText="Adding Dribbble Work"
+          onClick={async () => {
+            setIsAddingDribbbleData(true);
+            await addDribbbleData();
+          }}
+        >
+          Add Dribbble Account Data
+        </Button>
+        <ImagePieceList>
+          {dribbbleWorkPieces &&
+            dribbbleWorkPieces.map((dribbbleData) => (
+              <React.Fragment key={dribbbleData.link}>
+                <DribbblePiece {...dribbbleData} />
+              </React.Fragment>
+            ))}
+        </ImagePieceList>
+      </Stack>
+    </SettingsIntegrationContainer>
   );
 };
 

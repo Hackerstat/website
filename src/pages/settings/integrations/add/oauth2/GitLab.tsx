@@ -7,7 +7,7 @@ import Loader from '../../../../../Components/Loader';
 import { GitHubUserData, GitHubRepoDataRow } from '../../../../../Components/GitHub';
 // import { NextApiRequest, NextApiResponse } from 'next';
 import AuthLayer from '../../../../../Components/AuthLayer';
-import { GitLabRepoDisplayDataType, GitLabUserAccount } from '../../../../../utils/utils';
+import { GitLabRepoDisplayDataType, GitLabUserAccount } from '../../../../../utils';
 import Axios from 'axios';
 
 /**

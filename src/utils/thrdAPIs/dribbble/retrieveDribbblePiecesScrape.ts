@@ -1,10 +1,6 @@
-import cheerio, { Node } from 'cheerio';
+import cheerio from 'cheerio';
 import Axios from 'axios';
-import { RetrieveDribbblePiecesScrape } from '../../utils';
-
-interface ValidNode extends Node {
-  data: string;
-}
+import { RetrieveDribbblePiecesScrape, ValidCheerioNode } from '../../utils';
 
 export const retrieveDribbblePiecesScrape = async (dribbbleUsername: string): Promise<RetrieveDribbblePiecesScrape> => {
   const BASE_URL = `https://dribbble.com`;
@@ -22,7 +18,7 @@ export const retrieveDribbblePiecesScrape = async (dribbbleUsername: string): Pr
   const dribbblePiecesLinks = [];
   $(dribbbleLinksQuerySelector).map((i, el) => dribbblePiecesLinks.push(`${BASE_URL}` + el.attribs.href));
   const dribbblePiecesTitles = [];
-  $(dribbbleTitleQuerySelector).map((i, el) => dribbblePiecesTitles.push((el.children[0] as ValidNode)?.data));
+  $(dribbbleTitleQuerySelector).map((i, el) => dribbblePiecesTitles.push((el.children[0] as ValidCheerioNode)?.data));
 
   return dribbblePiecesImgs.map((img, i) => ({ img, link: dribbblePiecesLinks[i], title: dribbblePiecesTitles[i] }));
 };
